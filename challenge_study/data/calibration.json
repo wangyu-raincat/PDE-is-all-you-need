@@ -1,0 +1,161 @@
+{
+  "records": [
+    {
+      "family": "low_viscosity_burgers",
+      "role": "calibration",
+      "relative_l2": 1.9704664700214154e-11,
+      "max_absolute_error": 1.366367019528525e-10,
+      "relative_limit": 1e-05,
+      "max_absolute_limit": 0.0001,
+      "status": "passed",
+      "coarse_metadata": {
+        "kind": "independent numerical reference",
+        "is_measured_data": false,
+        "family": "low_viscosity_burgers",
+        "role": "calibration",
+        "index": 0,
+        "seed": 44000,
+        "reference_n": 512,
+        "max_dt": 0.002,
+        "refined": false,
+        "observed_nx": 128,
+        "initial_observed_sha256": "b6c0344847d07ecf183fa705fd2f61dc74ad7b041cb7feeeb1aeee3febfd1de2",
+        "certified_chaos": false,
+        "independent_of_discovery_forecast": true
+      },
+      "refined_metadata": {
+        "kind": "independent numerical reference",
+        "is_measured_data": false,
+        "family": "low_viscosity_burgers",
+        "role": "calibration",
+        "index": 0,
+        "seed": 44000,
+        "reference_n": 1024,
+        "max_dt": 0.001,
+        "refined": true,
+        "observed_nx": 128,
+        "initial_observed_sha256": "43062530f7f42674327d651ed442ec128668c023ed465ab91ff6021089410db8",
+        "certified_chaos": false,
+        "independent_of_discovery_forecast": true
+      }
+    },
+    {
+      "family": "ks_unstable",
+      "role": "calibration",
+      "relative_l2": 2.70993901972107e-07,
+      "max_absolute_error": 2.8289349862653523e-06,
+      "relative_limit": 1e-05,
+      "max_absolute_limit": 0.0001,
+      "status": "passed",
+      "coarse_metadata": {
+        "kind": "independent numerical reference",
+        "is_measured_data": false,
+        "family": "ks_unstable",
+        "role": "calibration",
+        "index": 0,
+        "seed": 44000,
+        "reference_n": 256,
+        "max_dt": 0.01,
+        "refined": false,
+        "observed_nx": 128,
+        "initial_observed_sha256": "50937aa7bca4b9555b4e9d8e06b72c2267a362cd4f25068ace11f4adb6afa384",
+        "certified_chaos": false,
+        "independent_of_discovery_forecast": true
+      },
+      "refined_metadata": {
+        "kind": "independent numerical reference",
+        "is_measured_data": false,
+        "family": "ks_unstable",
+        "role": "calibration",
+        "index": 0,
+        "seed": 44000,
+        "reference_n": 512,
+        "max_dt": 0.005,
+        "refined": true,
+        "observed_nx": 128,
+        "initial_observed_sha256": "420327b508ae16df9faf14ca4a5a6c7731689822e908044065083f5c7f715949",
+        "certified_chaos": false,
+        "independent_of_discovery_forecast": true
+      }
+    }
+  ],
+  "all_passed": true,
+  "formal_training_development_final_generated": false,
+  "thresholds_changed_after_results": false,
+  "protocol": {
+    "version": 1,
+    "kind": "independent clean numerical simulation; not measured data",
+    "method": "Kassam-Trefethen contour ETDRK4, 64 fixed upper-half unit-circle roots",
+    "spatial_discretization": "Fourier Galerkin with |integer mode| <= floor(N/3), quadratic two-thirds dealiasing",
+    "observation_rule": "retain every reference_N/128 spatial point; no interpolated observations",
+    "time_rule": "each observation interval has ceil(interval/max_dt) equal fixed substeps",
+    "observed_nx": 128,
+    "observed_nt": 101,
+    "role_counts": {
+      "calibration": 1,
+      "training": 3,
+      "development": 2,
+      "final": 2
+    },
+    "role_seed_bases": {
+      "calibration": 44000,
+      "training": 44100,
+      "development": 44200,
+      "final": 44300
+    },
+    "seed_rule": "role seed base plus zero-based trajectory index; refinement preserves seed",
+    "initial_mean": 0.1,
+    "initial_amplitude_factor": "independent uniform [0.8,1.2), followed by phases uniform [-pi,pi)",
+    "families": {
+      "low_viscosity_burgers": {
+        "period": 6.283185307179586,
+        "reference_n": 512,
+        "max_dt": 0.002,
+        "end_time": 1.5,
+        "modes": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "base_amplitudes": [
+          0.9,
+          0.3,
+          0.15,
+          0.08
+        ]
+      },
+      "ks_unstable": {
+        "period": 100.53096491487338,
+        "reference_n": 256,
+        "max_dt": 0.01,
+        "end_time": 20.0,
+        "modes": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16
+        ],
+        "base_amplitudes": [
+          0.5,
+          0.3,
+          0.2,
+          0.15,
+          0.12,
+          0.08
+        ]
+      }
+    },
+    "refinement": "double reference_N and halve max_dt, identical initial Fourier coefficients",
+    "calibration_role_only": true,
+    "calibration_relative_l2_limit": 1e-05,
+    "calibration_max_absolute_limit": 0.0001,
+    "failure_policy": "report source_quality_failure; do not change parameters or count failed references as scientific evidence",
+    "certified_chaos": false,
+    "units": "declared dimensionless benchmark coordinates"
+  },
+  "generator_sha256": "1f7d3329b0fe3e564113b6155018a5a6e3964d4223c5a58866e867404293cd4c",
+  "calibration_wall_seconds": 1.352779080003529
+}
