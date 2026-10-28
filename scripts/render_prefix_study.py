@@ -338,7 +338,7 @@ def main(output=DEFAULT_OUTPUT):
         summary['retrospective_comparison']['source_sha256'] = digest(RETROSPECTIVE)
         summary['retrospective_comparison']['not_pooled_with_fresh'] = True
     with (output/'summary.csv').open('w', newline='') as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(summary['conditions'][0]))
+        writer = csv.DictWriter(handle, fieldnames=list(summary['conditions'][0]), lineterminator='\n')
         writer.writeheader(); writer.writerows(summary['conditions'])
     (output/'summary.json').write_text(json.dumps(summary, indent=2, ensure_ascii=False, allow_nan=False)+'\n')
     render_figures(summary, output)
