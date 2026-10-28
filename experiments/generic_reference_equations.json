@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "intended_use": "SCORING ONLY, after all models and model-selection decisions are frozen. Do not import from discovery or selection code.",
+  "source_kind": "public_numerical_simulation",
+  "references": {
+    "burgers": {
+      "equation": "u_t = -u*u_x + 0.1*u_xx",
+      "terms": [
+        {
+          "name": "u*u_x",
+          "coefficient": -1
+        },
+        {
+          "name": "u_xx",
+          "coefficient": 0.1
+        }
+      ],
+      "source_urls": [
+        "https://github.com/dynamicslab/pysindy/blob/c4421fcec275c8f4cc5c1e93bebb961b212067ae/examples/1_feature_overview/example.py",
+        "https://github.com/snagcliffs/PDE-FIND/blob/86911349b9fac82996e35465a13d06205730cc05/supplement.pdf"
+      ],
+      "source_discrepancy_note": "Original Burgers notebook intro and supplement Table 3 'Correct PDE' omit the 0.1 diffusion coefficient. Table 3 identified clean-data coefficient is 0.100, and official PySINDy explicitly gives 0.1 while loading a byte-identical burgers.mat. This corroborated 0.1 is fixed before discovery, not inferred from our fitted result.",
+      "reference_resolution": "Author source discrepancy resolved by byte-identical official PySINDy reference."
+    },
+    "kdv": {
+      "equation": "u_t = -6*u*u_x - u_xxx",
+      "terms": [
+        {
+          "name": "u*u_x",
+          "coefficient": -6
+        },
+        {
+          "name": "u_xxx",
+          "coefficient": -1
+        }
+      ],
+      "source_urls": [
+        "https://github.com/snagcliffs/PDE-FIND/blob/86911349b9fac82996e35465a13d06205730cc05/supplement.pdf",
+        "https://github.com/snagcliffs/PDE-FIND/blob/86911349b9fac82996e35465a13d06205730cc05/Examples/TwoSolitonKDV.ipynb"
+      ],
+      "source_note": "Author supplement Table 2 and section 3.1.1, and author two-soliton notebook."
+    },
+    "ks": {
+      "equation": "u_t = -u*u_x - u_xx - u_xxxx",
+      "terms": [
+        {
+          "name": "u*u_x",
+          "coefficient": -1
+        },
+        {
+          "name": "u_xx",
+          "coefficient": -1
+        },
+        {
+          "name": "u_xxxx",
+          "coefficient": -1
+        }
+      ],
+      "source_urls": [
+        "https://github.com/snagcliffs/PDE-FIND/blob/86911349b9fac82996e35465a13d06205730cc05/supplement.pdf",
+        "https://github.com/snagcliffs/PDE-FIND/blob/86911349b9fac82996e35465a13d06205730cc05/Examples/KuraSiva.ipynb"
+      ],
+      "source_note": "Author supplement Table 6 and section 3.5. Negative second-derivative coefficient is intentional and stabilized by the negative fourth-derivative term."
+    }
+  }
+}

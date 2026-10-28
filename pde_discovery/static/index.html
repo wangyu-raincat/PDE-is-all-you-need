@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>方程发现实验室 · PDE Discovery Lab</title>
+  <style>
+    :root{--bg:#f3f6f7;--paper:#fff;--ink:#142e40;--muted:#607581;--line:#dce5e9;--green:#087f72;--green-light:#e6f4ee;--amber:#a66112;--amber-light:#fff4df;--blue:#37678f;--red:#b34743;--radius:18px;--shadow:0 5px 24px #15304405}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;font-size:14px;line-height:1.6}button,input,select,textarea{font:inherit}button,a,input,select,textarea{outline-offset:4px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #26aa99}button{cursor:pointer}button:disabled{cursor:wait;opacity:.55}a{color:var(--green);text-underline-offset:4px}h1,h2,h3,p{margin:0}h1{font-size:clamp(24px,2.25vw,34px);line-height:1.35;letter-spacing:-1px;font-weight:750}h2{font-size:17px;letter-spacing:-.3px}h3{font-size:14px;font-weight:650}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}.muted{color:var(--muted)}.small{font-size:12px}.hidden,[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}.shell{display:grid;grid-template-columns:308px minmax(0,1fr);min-height:100vh}.sidebar{padding:30px 23px 22px;background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:27px}.brand{display:flex;gap:11px;align-items:center}.brand-mark{width:42px;height:42px;display:grid;place-items:center;background:var(--ink);color:#a6ead5;border-radius:13px;font-size:27px;font-family:Georgia,serif;box-shadow:0 4px 12px #163d4120}.brand-name{font-size:17px;letter-spacing:.2px;font-weight:750}.brand-caption{font-size:10px;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;margin-top:1px}.aside-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.step-number{font-size:10px;font-weight:600;letter-spacing:1px;color:#8ca09e}.tabs{display:grid;grid-template-columns:1fr 1fr;background:#eff3f4;padding:4px;border-radius:10px;gap:4px;margin-bottom:16px}.tab{border:0;background:none;color:var(--muted);padding:8px 4px;border-radius:7px;font-size:12px}.tab[aria-selected=true]{background:#fff;color:var(--ink);font-weight:650;box-shadow:0 1px 4px #142e4010}.scenario-list{display:grid;gap:9px}.scenario{position:relative;display:block;cursor:pointer}.scenario input{position:absolute;opacity:0;width:1px;height:1px}.scenario-inner{display:flex;gap:11px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;transition:background .15s,border-color .15s}.scenario input:checked+.scenario-inner{border-color:#63b6a6;background:#f1faf6;box-shadow:0 0 0 1px #63b6a620}.scenario input:focus-visible+.scenario-inner{outline:3px solid #26aa99;outline-offset:3px}.scenario-title{font-weight:650;font-size:13px}.scenario-desc{display:block;color:var(--muted);font-size:11px;line-height:1.55;margin-top:3px}.scenario-icon{width:30px;height:30px;flex:none;background:#eff4f5;border-radius:8px;display:grid;place-items:center;color:#50717a;font-size:18px}.scenario input:checked+.scenario-inner .scenario-icon{color:var(--green);background:#dff1e8}.scenario input:checked+.scenario-inner .scenario-title{color:#086d60}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.field-label{display:block;font-size:12px;color:#45606d;margin-bottom:6px}.form-field{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:white;color:var(--ink);height:40px}input[type=number]{font-family:ui-monospace,monospace}.auto-box{display:flex;align-items:flex-start;gap:9px;margin-top:17px;cursor:pointer}.auto-box input{accent-color:var(--green);width:16px;height:16px;margin:3px 0 0;flex:none}.auto-box strong{font-size:12px;font-weight:650}.auto-box p{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.65}.run-button{display:flex;justify-content:center;align-items:center;gap:10px;width:100%;border:0;background:var(--green);border-radius:11px;padding:12px;color:white;font-weight:650;box-shadow:0 4px 10px #087f7220;margin-top:20px;min-height:47px}.run-button:hover:not(:disabled){background:#076e63}.play{font-size:14px}.spinner{width:15px;height:15px;border:2px solid #ffffff55;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.aside-note{margin-top:10px;color:var(--muted);font-size:11px;text-align:center}.scope{border-top:1px solid var(--line);padding-top:20px}.scope-list{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:9px;color:#5b727e;font-size:12px}.scope-list li{display:flex;align-items:flex-start;gap:8px}.scope-dot{width:5px;height:5px;border-radius:50%;background:#85b5ab;flex:none;margin-top:7px}.dictionary{display:flex;gap:5px;flex-wrap:wrap;margin-top:14px}.dictionary span{font-family:ui-monospace,monospace;font-size:12px;padding:3px 7px;border-radius:5px;background:#f1f5f6;color:#45616e}.aside-footer{margin-top:auto;padding-top:18px;font-size:10px;color:#7b909a;line-height:1.9}.upload-intro{font-size:12px;color:var(--muted);margin-bottom:12px}.upload-box{border:1px dashed #a4bcbf;background:#f8fbfa;border-radius:11px;padding:14px;text-align:center}.upload-box input{width:100%;font-size:11px;margin-top:10px}.upload-box input::file-selector-button{border:1px solid var(--line);background:white;color:var(--ink);padding:5px 7px;border-radius:5px;margin-right:6px}.upload-icon{font-size:23px;color:var(--green)}.paste-area{width:100%;min-height:125px;resize:vertical;margin-top:7px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fbfcfc;font-family:ui-monospace,monospace;font-size:11px;color:var(--ink)}.upload-hint{font-size:11px;color:var(--muted);margin-top:8px;overflow-wrap:anywhere}.sample-link{display:inline-block;margin-top:12px;font-size:12px}.main{max-width:1550px;width:100%;margin:0 auto;padding:28px 36px 24px;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:30px;color:var(--muted);font-size:11px}.breadcrumb{display:flex;align-items:center;gap:8px}.breadcrumb strong{color:#385360;font-weight:500}.live-badge{display:flex;align-items:center;gap:7px;color:#49766a;white-space:nowrap}.live-dot{width:6px;height:6px;border-radius:50%;background:#49a18a;box-shadow:0 0 0 4px #49a18a10}.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:23px}.eyebrow{color:var(--green);font-size:10px;font-weight:700;letter-spacing:2px;margin-bottom:9px}.hero-description{color:var(--muted);font-size:13px;margin-top:10px;max-width:670px;line-height:1.8}.outline-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #cddadd;background:#fff;color:#41616c;border-radius:9px;padding:8px 12px;font-size:12px;white-space:nowrap}.outline-button:hover:not(:disabled){background:#eef6f3}.outline-button:disabled{cursor:not-allowed}.error-banner{padding:13px 16px;background:#fff0ee;border:1px solid #f3cbc5;color:#9d3c35;border-radius:12px;margin-bottom:16px;font-size:13px;white-space:pre-line}.status-banner{display:flex;gap:10px;padding:13px 16px;background:#edf8f4;border:1px solid #c5e3d6;border-radius:12px;margin-bottom:16px;font-size:12px;color:#236b57}.status-banner.warning{background:var(--amber-light);border-color:#ecd7af;color:#875d20}.status-banner p+p{margin-top:3px}.discovery-card{display:grid;grid-template-columns:minmax(0,1fr) 225px;background:var(--ink);border-radius:var(--radius);overflow:hidden;margin-bottom:19px;box-shadow:0 7px 20px #142e400d}.equation-panel{padding:23px 27px;position:relative;min-height:198px;background:radial-gradient(ellipse at 95% 105%,#1f5656 0,transparent 65%)}.equation-heading{display:flex;justify-content:space-between;gap:10px;align-items:center}.dark-label{font-size:11px;color:#a6b9c5;letter-spacing:1px}.status-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid #ffffff25;padding:3px 9px;border-radius:20px;font-size:10px;color:#cad8df;white-space:nowrap}.status-pill.identified{background:#2c8d6a26;color:#b2f2cc;border-color:#78d49a40}.status-pill.ambiguous,.status-pill.insufficient{background:#d3aa4922;color:#f2d99b;border-color:#d3aa4940}.status-pill.running{color:#a1e7db;background:#258f801f}.status-pill.error{color:#ffd2c9;background:#d7774922}.equation{color:#e3fff4;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:clamp(22px,2.5vw,35px);letter-spacing:-1.1px;line-height:1.5;margin:21px 0 14px;overflow-wrap:anywhere}.equation-note{font-size:11px;color:#a8bdc8;max-width:610px;line-height:1.8}.metrics{display:grid;background:#10273899;grid-template-rows:1fr 1fr;padding:3px 21px}.metric{padding:17px 0}.metric+.metric{border-top:1px solid #ffffff12}.metric-label{font-size:10px;color:#a6b9c5;display:flex;align-items:center;gap:6px}.metric-value{font-size:27px;font-weight:550;letter-spacing:-.6px;color:#f2f9fa;margin-top:4px;font-family:ui-monospace,SFMono-Regular,monospace}.metric-unit{font-size:10px;letter-spacing:0;color:#86acae;margin-left:6px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.panel-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 23px 0}.panel-header p{font-size:11px;color:var(--muted);margin-top:4px}.panel-kicker{font-size:10px;color:#81969f;letter-spacing:.7px;white-space:nowrap}.charts-panel{margin-bottom:19px}.chart-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px;padding:23px 24px 20px}.chart-figure{margin:0;min-width:0}.chart-topline{display:flex;gap:7px;align-items:center;margin-bottom:11px;font-size:12px;font-weight:600}.legend-dot{width:6px;height:6px;background:var(--green);border-radius:2px}.legend-dot.blue{background:var(--blue)}.legend-dot.orange{background:#c28d54}.canvas-wrap{position:relative;padding:0 0 0 20px;min-height:177px}.chart-canvas{width:100%;height:160px;display:block;border-radius:7px;background:#f1f5f5;border:1px solid #e8eeee;image-rendering:auto}.chart-empty{position:absolute;inset:0 0 17px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#899ca2;font-size:11px;border-radius:7px;background:repeating-linear-gradient(0deg,transparent 0,transparent 31px,#e5ecec 32px),repeating-linear-gradient(90deg,transparent 0,transparent 31px,#e5ecec 32px),#f3f7f7}.chart-empty span{background:#f3f7f7;padding:5px 10px;border-radius:4px}.axis-y{position:absolute;left:-1px;top:50%;transform:translateY(-50%) rotate(-90deg);font-size:9px;color:#7d929a;letter-spacing:.5px}.axis-x{font-size:9px;color:#7d929a;display:flex;justify-content:space-between;padding-top:5px}.colorbar-row{display:flex;align-items:center;gap:7px;padding:9px 0 0 20px;font-size:9px;color:#789099}.colorbar{height:5px;flex:1;border-radius:4px;background:linear-gradient(90deg,#15384f,#25838c,#87cabc,#f1e6a7)}.colorbar.error-scale{background:linear-gradient(90deg,#f4f5ed,#e1be77,#9c4a36)}.chart-caption{margin:0 24px 17px;font-size:10px;color:#7b9099}.bottom-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:19px;margin-bottom:19px}.terms-body{padding:16px 23px 22px}.empty-content{padding:16px 0 11px;color:#81939d;font-size:12px;line-height:1.9}.terms-list{display:grid;gap:14px}.term-row{display:grid;grid-template-columns:58px minmax(0,1fr) 78px;gap:10px;align-items:center;font-size:12px}.term-symbol{font-family:ui-monospace,monospace;color:#43606f}.term-track{height:6px;background:#edf3f4;position:relative;border-radius:4px;overflow:hidden}.term-bar{height:100%;background:#3da38b;border-radius:4px;min-width:2px}.term-bar.negative{background:#547ea0}.term-value{font-family:ui-monospace,monospace;text-align:right;font-size:11px;color:#466471}.terms-note{font-size:10px;color:#81939d;margin-top:16px;border-top:1px solid #edf2f3;padding-top:12px}.trace{padding:19px 23px 21px;list-style:none;margin:0}.trace-item{display:flex;gap:12px;position:relative;padding-bottom:20px}.trace-item:last-child{padding-bottom:0}.trace-item:not(:last-child)::before{content:"";position:absolute;left:10px;top:24px;width:1px;bottom:3px;background:#e4ecea}.trace-dot{width:21px;height:21px;flex:none;border:1px solid #cce2da;background:#edf7f2;color:#27816b;border-radius:50%;font-size:10px;display:grid;place-items:center;margin-top:1px}.trace-dot.warning{background:#fff6e3;color:#a47730;border-color:#eed9aa}.trace-dot.running{background:#eaf4f7;color:#3d7f8f;border-color:#c6e0e7}.trace-title{font-size:12px;font-weight:600}.trace-detail{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.8;overflow-wrap:anywhere}.trace-placeholder{display:flex;gap:11px;color:#7f949e;font-size:12px;line-height:1.9}.trace-placeholder-mark{width:30px;height:30px;background:#eef4f4;border:1px solid #e0eaea;border-radius:9px;display:grid;place-items:center;flex:none;color:#699a91}.candidate-panel{margin-bottom:19px}.candidate-list{display:grid;gap:10px;padding:17px 23px 22px}.candidate-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:12px 14px;background:#f7faf9;border:1px solid #e2eae7;border-radius:10px}.candidate-equation{font-size:13px;overflow-wrap:anywhere}.candidate-details{font-size:10px;color:var(--muted);margin-top:4px}.candidate-rank{color:#78a295;font-size:11px;padding:2px 0}.warning-list{padding:0;margin:0;list-style:none;display:grid;gap:6px}.warning-list li::before{content:"· ";font-weight:bold}.footer{display:flex;justify-content:space-between;gap:20px;color:#81939c;font-size:10px;padding:3px 2px;line-height:1.8}.footer-label{display:flex;align-items:center;gap:6px}.footer-pill{border:1px solid #d6e1e2;padding:1px 5px;border-radius:4px;font-size:9px;white-space:nowrap}.run-id{font-family:ui-monospace,monospace;overflow-wrap:anywhere;text-align:right}.progress-strip{height:3px;background:#d6eee6;margin:0 0 16px;border-radius:3px;overflow:hidden}.progress-strip::after{content:"";display:block;width:35%;height:3px;background:var(--green);animation:progress 1.7s ease-in-out infinite}@keyframes progress{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}.experiment-box{margin:0 0 19px;padding:16px 19px;border:1px solid #c4dfd3;border-radius:13px;background:#edf7f1;display:flex;gap:12px}.experiment-symbol{width:29px;height:29px;flex:none;display:grid;place-items:center;color:#1b7f65;background:#d9eee1;border-radius:9px}.experiment-box h3{font-size:12px;color:#266550}.experiment-box p{font-size:12px;color:#51766a;margin-top:3px;line-height:1.8}.schema-help{margin-top:11px;font-size:11px;color:var(--muted)}.schema-help summary{cursor:pointer}.schema-help pre{font-size:10px;white-space:pre-wrap;padding:9px;background:#f3f6f6;border-radius:7px;line-height:1.7}.chart-time-label{font-size:9px;color:#7d929a;text-align:right;margin-top:6px}.goal-description{font-size:11px;color:#658476;margin-top:3px}.mobile-brand{display:none}.table-scroll{overflow-x:auto}.visually-busy{opacity:.75}
+    @media(min-width:1450px){.shell{grid-template-columns:320px minmax(0,1fr)}.main{padding:32px 46px}.sidebar{padding:33px 27px}.chart-canvas{height:190px}.canvas-wrap{min-height:207px}}
+    @media(max-width:1150px){.main{padding:25px 23px}.shell{grid-template-columns:279px minmax(0,1fr)}.sidebar{padding:27px 19px}.discovery-card{grid-template-columns:minmax(0,1fr) 170px}.equation-panel{padding:20px}.equation{font-size:27px}.chart-grid{gap:12px;padding:21px 17px 17px}.panel-header{padding:18px 19px 0}.chart-canvas{height:140px}.canvas-wrap{min-height:157px}.chart-caption{margin-left:19px;margin-right:19px}.bottom-grid{gap:15px}.hero{align-items:flex-start}.hero .outline-button{margin-top:26px}.metric-value{font-size:23px}}
+    @media(max-width:900px){.shell{grid-template-columns:250px minmax(0,1fr)}.sidebar{padding:23px 16px}.main{padding:23px 20px}.topbar{margin-bottom:25px}.live-badge{display:none}.hero{display:block}.hero .outline-button{margin-top:13px}.discovery-card{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr;grid-template-rows:1fr;padding:0 20px}.metric{padding:13px 0}.metric+.metric{border-top:0;border-left:1px solid #ffffff12;padding-left:20px}.metric-value{font-size:24px}.equation-panel{min-height:180px}.bottom-grid{grid-template-columns:1fr}.chart-grid{grid-template-columns:1fr;gap:20px}.chart-canvas{height:170px}.canvas-wrap{min-height:187px}.chart-figure+.chart-figure{border-top:1px solid #edf2f3;padding-top:18px}.colorbar-row{max-width:250px}.brand-name{font-size:15px}.brand-caption{font-size:9px}.brand-mark{width:37px;height:37px}.footer{display:block}.run-id{text-align:left;margin-top:6px}}
+    @media(max-width:650px){.shell{display:flex;flex-direction:column}.sidebar{padding:20px;border-right:0;border-bottom:1px solid var(--line);gap:20px}.brand{margin-bottom:0}.aside-footer,.scope{display:none}.main{padding:25px 18px}.topbar{margin-bottom:23px}.hero-description{font-size:12px}.scenario-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.scenario-inner{display:block;padding:10px 8px;height:100%}.scenario-icon{margin-bottom:7px}.scenario-title{font-size:11px}.scenario-desc{font-size:10px;line-height:1.5}.form-grid{margin-top:13px}.auto-box{margin-top:13px}.run-button{margin-top:15px}.tabs{margin-bottom:12px}.aside-heading{margin-bottom:9px}.upload-box input{max-width:250px}.discovery-card{margin-bottom:15px}.hero{margin-bottom:18px}.chart-grid{grid-template-columns:1fr}.equation{font-size:27px}.equation-panel{min-height:175px;padding:21px}.metric-label{font-size:10px}.metric-value{font-size:25px}.panel-header{gap:8px}.panel-kicker{font-size:9px}.charts-panel,.bottom-grid{margin-bottom:15px}.hero .outline-button{position:static;margin-top:14px}.hero-description{padding-right:0}.hero{padding-bottom:0}.breadcrumb{font-size:10px}.topbar{margin-bottom:20px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+    .real-entry{display:flex;align-items:center;justify-content:space-between;gap:16px;background:#fff;border:1px solid #c8ded5;border-left:4px solid #16836c;border-radius:11px;padding:13px 17px;margin-bottom:18px;text-decoration:none;color:#285b4e}.real-entry strong{display:block;font-size:13px;font-weight:650}.real-entry small{display:block;font-size:11px;color:#6a827b;margin-top:2px;line-height:1.7}.real-entry-arrow{font-size:18px;color:#23866d;flex:none}.real-entry:hover{background:#f0f8f3}.real-entry-badge{font-size:9px;color:#4b8b73;letter-spacing:.5px;margin-left:8px;font-weight:500}
+  </style>
+</head>
+<body>
+  <a href="#results" class="sr-only">跳转到实验结果</a>
+  <div class="shell">
+    <aside class="sidebar" aria-label="实验配置">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">∂</div>
+        <div><div class="brand-name">方程发现实验室</div><div class="brand-caption">PDE Discovery Lab</div></div>
+      </div>
+
+      <section>
+        <div class="aside-heading"><h2 style="font-size:13px">配置一次发现任务</h2><span class="step-number">EXPERIMENT / 01</span></div>
+        <div class="tabs" role="tablist" aria-label="数据来源">
+          <button id="builtin-tab" class="tab" role="tab" aria-selected="true" aria-controls="builtin-panel" type="button">内置实验</button>
+          <button id="upload-tab" class="tab" role="tab" aria-selected="false" aria-controls="upload-panel" tabindex="-1" type="button">上传数据</button>
+        </div>
+        <form id="experiment-form">
+          <div id="builtin-panel" role="tabpanel" aria-labelledby="builtin-tab">
+            <div class="scenario-list" role="radiogroup" aria-label="选择演示工况">
+              <label class="scenario"><input type="radio" name="scenario" value="diffusion" checked><span class="scenario-inner"><span class="scenario-icon" aria-hidden="true">≈</span><span><span class="scenario-title">扩散方程</span><span class="scenario-desc">从多模态演化中识别扩散机制</span></span></span></label>
+              <label class="scenario"><input type="radio" name="scenario" value="advection_diffusion"><span class="scenario-inner"><span class="scenario-icon" aria-hidden="true">⇢</span><span><span class="scenario-title">对流与扩散</span><span class="scenario-desc">辨别平移和扩散的共同作用</span></span></span></label>
+              <label class="scenario"><input type="radio" name="scenario" value="ambiguity"><span class="scenario-inner"><span class="scenario-icon" aria-hidden="true">⋔</span><span><span class="scenario-title">歧义与追加实验</span><span class="scenario-desc">发现证据不足，并寻找区分方法</span></span></span></label>
+            </div>
+            <div class="form-grid">
+              <div><label class="field-label" for="noise">观测噪声</label><select class="form-field" id="noise"><option value="0">无噪声</option><option value="0.001">0.1%</option><option value="0.01">1%</option></select></div>
+              <div><label class="field-label" for="seed">随机种子</label><input class="form-field" id="seed" type="number" value="7" min="0" max="2147483647" step="1" required></div>
+            </div>
+            <label class="auto-box" for="auto-experiment"><input id="auto-experiment" type="checkbox" checked><span><strong>允许自动追加仿真实验</strong><p>遇到方程歧义时，尝试更有区分力的初始条件。仅在内置仿真实验室执行。</p></span></label>
+          </div>
+          <div id="upload-panel" role="tabpanel" aria-labelledby="upload-tab" hidden>
+            <p class="upload-intro">上传均匀时空网格上的观测数据。首版支持一维周期边界和同一方程的多条轨迹。</p>
+            <div class="upload-box"><div class="upload-icon" aria-hidden="true">↥</div><label for="data-file" class="small">选择 JSON 文件 · 最大 5 MB</label><input id="data-file" type="file" accept=".json,application/json"></div>
+            <label class="field-label" for="data-text" style="margin-top:13px">或粘贴 JSON 数据</label>
+            <textarea id="data-text" class="paste-area" spellcheck="false" placeholder='{"x": [...], "t": [...], "u": [[...], ...]}' aria-describedby="upload-hint"></textarea>
+            <p id="upload-hint" class="upload-hint">u 的形状为 [时间点数, 空间点数]。周期网格不要重复右端点。</p>
+            <a id="sample-link" class="sample-link" href="/api/example?scenario=diffusion&amp;kind=bundle" download="diffusion-example.json">↓ 下载示例数据（含独立验证轨迹）</a>
+            <details class="schema-help"><summary>查看数据格式</summary><pre>{
+  "training": [
+    {"x": [...], "t": [...], "u": [[...], ...]}
+  ],
+  "validation": {
+    "x": [...], "t": [...], "u": [[...], ...]
+  }
+}</pre><p>也可以直接提交单个 {x, t, u}。独立验证轨迹可选；缺少验证时，结果不能视为已完成验证。</p></details>
+          </div>
+          <button id="run-button" class="run-button" type="submit"><span id="run-icon" class="play" aria-hidden="true">▶</span><span id="run-label">开始发现方程</span></button>
+          <p class="aside-note" id="run-help">观测 → 稀疏识别 → 验证 → 调整</p>
+        </form>
+      </section>
+
+      <section class="scope">
+        <div class="aside-heading"><h3 style="font-size:12px">本次探索的范围</h3><span class="step-number">SCOPE</span></div>
+        <ul class="scope-list"><li><span class="scope-dot"></span><span>一维空间、常系数、周期边界</span></li><li><span class="scope-dot"></span><span>L1 筛项与系数重估</span></li><li><span class="scope-dot"></span><span>独立轨迹检验与可辨识性检查</span></li></ul>
+        <div class="dictionary" aria-label="候选项库"><span>1</span><span>u</span><span>u²</span><span>u³</span><span>uₓ</span><span>uₓₓ</span><span>u·uₓ</span></div>
+      </section>
+      <div class="aside-footer">科研原型 · 数值策略控制器<br>当前演示不依赖大模型或外部平台。<br>发现候选规律，保留验证证据。</div>
+    </aside>
+
+    <main class="main" id="results">
+      <div class="topbar"><div class="breadcrumb"><span>工作空间</span><span aria-hidden="true">/</span><strong>方程发现与验证</strong></div><div class="live-badge"><span class="live-dot" aria-hidden="true"></span>可复现的仿真实验</div></div>
+      <header class="hero"><div><div class="eyebrow">OBSERVE. DISCOVER. VERIFY.</div><h1>从观测出发，发现背后的方程。</h1><p class="hero-description">用稀疏回归寻找简洁的 PDE，用独立实验检验它。证据不足时，继续探索。</p></div><button id="download-button" class="outline-button" type="button" disabled><span aria-hidden="true">↓</span>导出实验记录</button></header>
+      <a class="real-entry" href="/discovery"><span><strong>跨方程 PDE 发现<span class="real-entry-badge">PDE DISCOVERY</span></strong><small>Burgers、KdV、KS 共用候选库：分别核对微分项、系数和留出预测。公开数值基准，非实测。</small></span><span class="real-entry-arrow" aria-hidden="true">↗</span></a>
+      <a class="real-entry" href="/real"><span><strong>真实测量数据实验<span class="real-entry-badge">REAL DATA</span></strong><small>复现公开热杆测量：在给定实测边界下，检验四个内部测点的温度预测。</small></span><span class="real-entry-arrow" aria-hidden="true">↗</span></a>
+
+      <div id="error-banner" class="error-banner" role="alert" hidden></div>
+      <div id="progress-strip" class="progress-strip" aria-hidden="true" hidden></div>
+      <div id="goal-banner" class="status-banner" role="status" hidden><span id="goal-symbol" aria-hidden="true">✓</span><div><p id="goal-reason"></p><p id="goal-description" class="goal-description"></p></div></div>
+
+      <section class="discovery-card" aria-label="发现结果" aria-live="polite" aria-atomic="true">
+        <div class="equation-panel"><div class="equation-heading"><span class="dark-label">识别出的候选方程</span><span id="status-pill" class="status-pill">等待开始</span></div><div class="equation" id="equation">uₜ = ?</div><p class="equation-note" id="equation-note">选择左侧实验，观察哪些候选项被保留，以及它们是否经得起新数据的检验。</p></div>
+        <div class="metrics"><div class="metric"><div class="metric-label">独立轨迹相对误差</div><div class="metric-value"><span id="validation-error">—</span><span class="metric-unit" id="validation-unit"></span></div></div><div class="metric"><div class="metric-label">保留的方程项</div><div class="metric-value"><span id="term-count">—</span><span class="metric-unit">/ 候选库</span></div></div></div>
+      </section>
+
+      <div id="experiment-box" class="experiment-box" hidden><div class="experiment-symbol" aria-hidden="true">↗</div><div style="min-width:0;flex:1"><h3 id="experiment-title">追加实验</h3><p id="experiment-description"></p><div id="probe-scores" style="display:flex;flex-wrap:wrap;gap:7px;margin-top:10px"></div><p id="probe-explanation" style="font-size:10px;margin-top:7px" hidden>区分度衡量候选模型预测的差异；数值越大，越有助于区分现有候选解释。</p></div></div>
+
+      <section class="panel charts-panel" aria-labelledby="field-title"><div class="panel-header"><div><h2 id="field-title">让预测回到观测中</h2><p id="chart-subtitle">在独立轨迹上，比较候选 PDE 的预测与参考观测。</p></div><span class="panel-kicker">SPACE × TIME</span></div>
+        <div class="chart-grid">
+          <figure class="chart-figure"><figcaption class="chart-topline"><span class="legend-dot"></span>参考观测</figcaption><div class="canvas-wrap"><span class="axis-y">时间 t ↓</span><canvas id="observed-canvas" class="chart-canvas" role="img" aria-label="参考观测温度或场变量的时空热力图"></canvas><div id="observed-empty" class="chart-empty"><span>运行后显示观测场</span></div><div class="axis-x"><span class="x-start">0</span><span>空间 x →</span><span class="x-end">—</span></div></div><div class="colorbar-row"><span id="observed-min">—</span><span class="colorbar" aria-hidden="true"></span><span id="observed-max">—</span></div></figure>
+          <figure class="chart-figure"><figcaption class="chart-topline"><span class="legend-dot blue"></span>候选方程预测</figcaption><div class="canvas-wrap"><span class="axis-y">时间 t ↓</span><canvas id="predicted-canvas" class="chart-canvas" role="img" aria-label="候选偏微分方程数值预测的时空热力图"></canvas><div id="predicted-empty" class="chart-empty"><span>运行后显示预测场</span></div><div class="axis-x"><span class="x-start">0</span><span>空间 x →</span><span class="x-end">—</span></div></div><div class="colorbar-row"><span id="predicted-min">—</span><span class="colorbar" aria-hidden="true"></span><span id="predicted-max">—</span></div></figure>
+          <figure class="chart-figure"><figcaption class="chart-topline"><span class="legend-dot orange"></span>绝对误差</figcaption><div class="canvas-wrap"><span class="axis-y">时间 t ↓</span><canvas id="error-canvas" class="chart-canvas" role="img" aria-label="参考观测与预测的绝对误差时空热力图"></canvas><div id="error-empty" class="chart-empty"><span>运行后显示误差场</span></div><div class="axis-x"><span class="x-start">0</span><span>空间 x →</span><span class="x-end">—</span></div></div><div class="colorbar-row"><span id="error-min">0</span><span class="colorbar error-scale" aria-hidden="true"></span><span id="error-max">—</span></div></figure>
+        </div><p class="chart-caption" id="chart-caption">观测场与预测场使用相同色标；误差场单独缩放。数值均为无量纲演示值。</p>
+      </section>
+
+      <div class="bottom-grid">
+        <section class="panel" aria-labelledby="terms-title"><div class="panel-header"><div><h2 id="terms-title">哪些项解释了变化？</h2><p>稀疏筛选后，重新估计保留项的系数。</p></div></div><div class="terms-body"><div id="terms-empty" class="empty-content">候选项已经就绪。<br>每个非零系数，都需要接受数据检验。</div><div class="terms-list" id="terms-list"></div><p class="terms-note" id="terms-note">条形表示系数绝对值，蓝色表示负系数。系数大小不直接代表物理重要性。</p></div></section>
+        <section class="panel" aria-labelledby="trace-title"><div class="panel-header"><div><h2 id="trace-title">这次探索如何推进</h2><p>每一步决策，都保留可检查的依据。</p></div><span class="panel-kicker">DECISION TRACE</span></div><ol class="trace" id="trace"><li class="trace-placeholder"><span class="trace-placeholder-mark" aria-hidden="true">⌁</span><span>提交观测数据后，这里会展示检查、识别、验证与追加实验的执行记录。</span></li></ol></section>
+      </div>
+
+      <section id="candidate-panel" class="panel candidate-panel" aria-labelledby="candidate-title" hidden><div class="panel-header"><div><h2 id="candidate-title">保留的候选解释</h2><p id="candidate-subtitle">多个模型可能解释同一组数据，需要更多证据区分。</p></div><span class="panel-kicker" id="candidate-count"></span></div><div class="candidate-list" id="candidate-list"></div></section>
+      <div id="warnings-banner" class="status-banner warning" hidden><span aria-hidden="true">!</span><ul id="warning-list" class="warning-list"></ul></div>
+      <footer class="footer"><div class="footer-label"><span class="footer-pill">RESEARCH PROTOTYPE</span><span>数值策略控制器 · 一维周期边界 · 无量纲演示</span></div><span class="run-id" id="run-id">尚未运行</span></footer>
+    </main>
+  </div>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const MAX_BYTES = 5 * 1024 * 1024;
+    const state = {source: 'builtin', busy: false, result: null, plot: null};
+    const names = {diffusion: '扩散方程', advection_diffusion: '对流扩散', ambiguity: '歧义实验', uploaded: '上传数据'};
+    const symbols = {'u_x': 'uₓ', 'u_xx': 'uₓₓ', 'u^2': 'u²', 'u^3': 'u³', 'u**2': 'u²', 'u**3': 'u³', 'u*u_x': 'u·uₓ', 'u u_x': 'u·uₓ', 'u_t': 'uₜ'};
+    const normalPalette = [[21,56,79],[37,131,140],[135,202,188],[241,230,167]];
+    const errorPalette = [[244,245,237],[225,190,119],[156,74,54]];
+
+    function formatNumber(value, digits=4) {
+      if (value === null || value === undefined || !Number.isFinite(Number(value))) return '—';
+      const n = Number(value);
+      if (n === 0) return '0';
+      return Math.abs(n) < 0.0001 || Math.abs(n) >= 10000 ? n.toExponential(2) : Number(n.toPrecision(digits)).toString();
+    }
+    function firstFinite(...values) { return values.find(v => typeof v === 'number' && Number.isFinite(v)); }
+    function errorPercent(value) { return typeof value === 'number' && Number.isFinite(value) ? formatNumber(value * 100, 3) : '—'; }
+    function prettyTerm(term) { return symbols[term] || String(term); }
+    function prettyEquation(equation) {
+      return String(equation).replace(/u_xx/g,'uₓₓ').replace(/u_x/g,'uₓ').replace(/u_t/g,'uₜ').replace(/u\*\*3|u\^3/g,'u³').replace(/u\*\*2|u\^2/g,'u²').replace(/\*/g,'·');
+    }
+    function makeElement(tag, className, text) { const el=document.createElement(tag); if(className)el.className=className; if(text!==undefined)el.textContent=text; return el; }
+    function clearError() { $('error-banner').hidden=true; $('error-banner').textContent=''; }
+    function showError(message) { $('error-banner').textContent=message; $('error-banner').hidden=false; $('error-banner').scrollIntoView({behavior:'smooth',block:'nearest'}); }
+
+    function setSource(source, focus=false) {
+      if(state.busy) return;
+      state.source=source;
+      ['builtin','upload'].forEach(s=>{
+        $(s+'-tab').setAttribute('aria-selected',String(s===source));
+        $(s+'-tab').tabIndex=s===source?0:-1;
+        $(s+'-panel').hidden=s!==source;
+      });
+      $('seed').required=source==='builtin';
+      $('run-label').textContent=source==='builtin'?'开始发现方程':'识别上传数据';
+      $('run-help').textContent=source==='builtin'?'观测 → 稀疏识别 → 验证 → 调整':'独立验证数据可选，建议同时提供';
+      clearError();
+      if(focus)$(source+'-tab').focus();
+    }
+    $('builtin-tab').addEventListener('click',()=>setSource('builtin'));
+    $('upload-tab').addEventListener('click',()=>setSource('upload'));
+    document.querySelector('.tabs').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();setSource(e.key==='Home'?'builtin':e.key==='End'?'upload':state.source==='builtin'?'upload':'builtin',true);}});
+
+    $('data-file').addEventListener('change',async e=>{
+      clearError();
+      const file=e.target.files[0];
+      if(!file)return;
+      if(file.size>MAX_BYTES){showError('文件超过 5 MB。请减小网格或时间范围后重试。');e.target.value='';return;}
+      try { const value=await file.text(); JSON.parse(value); $('data-text').value=value; $('upload-hint').textContent='已读取 '+file.name+'（'+formatNumber(file.size/1024,3)+' KB）。u 的形状应为 [时间点数, 空间点数]。'; }
+      catch(err){showError('无法读取 JSON：'+err.message);e.target.value='';}
+    });
+
+    function normalizeUpload(raw) {
+      if(!raw || typeof raw!=='object' || Array.isArray(raw))throw new Error('JSON 顶层应为对象。');
+      const payload = raw.training ? {training:raw.training,validation:raw.validation??null} : {training:[raw],validation:null};
+      if(!Array.isArray(payload.training)||payload.training.length===0)throw new Error('training 应为至少包含一条轨迹的数组。');
+      [...payload.training,...(payload.validation?[payload.validation]:[])].forEach((d,i)=>{
+        if(!d||!Array.isArray(d.x)||!Array.isArray(d.t)||!Array.isArray(d.u))throw new Error('轨迹 '+(i+1)+' 需要 x、t、u 三个数组。');
+        if(d.u.length!==d.t.length||d.u.some(row=>!Array.isArray(row)||row.length!==d.x.length))throw new Error('轨迹 '+(i+1)+' 的 u 形状应为 [t.length, x.length]。');
+      });
+      return payload;
+    }
+    function setBusy(busy) {
+      state.busy=busy;
+      $('experiment-form').querySelectorAll('button,input,select,textarea').forEach(el=>el.disabled=busy);
+      $('builtin-tab').disabled=busy;$('upload-tab').disabled=busy;
+      $('download-button').disabled=busy||!state.result;
+      $('run-icon').className=busy?'spinner':'play';$('run-icon').textContent=busy?'':'▶';
+      $('run-label').textContent=busy?'正在发现与验证…':state.source==='builtin'?'开始发现方程':'识别上传数据';
+      $('progress-strip').hidden=!busy;
+      $('experiment-form').setAttribute('aria-busy',String(busy));
+      $('results').setAttribute('aria-busy',String(busy));
+      if(busy){$('status-pill').className='status-pill running';$('status-pill').textContent='计算中';}
+    }
+    function renderStep(title, detail, stepState, index) {
+      const li=makeElement('li','trace-item');
+      const dot=makeElement('span','trace-dot'+(stepState==='warning'?' warning':stepState==='running'?' running':''),stepState==='warning'?'!':stepState==='running'?'·':'✓');
+      dot.setAttribute('aria-hidden','true');
+      const content=makeElement('div');content.append(makeElement('div','trace-title',String(index+1).padStart(2,'0')+'  '+title),makeElement('p','trace-detail',detail));
+      li.append(dot,content);return li;
+    }
+    function startTrace() {
+      $('trace').replaceChildren(renderStep('提交发现任务','正在运行数据检查、稀疏回归与独立验证。结果将由数值工具返回。','running',0));
+      $('error-banner').hidden=true;$('goal-banner').hidden=true;$('warnings-banner').hidden=true;$('experiment-box').hidden=true;
+    }
+
+    $('experiment-form').addEventListener('submit',async event=>{
+      event.preventDefault();if(state.busy)return;clearError();
+      let payload,url;
+      try {
+        if(state.source==='builtin'){
+          const seed=Number($('seed').value);
+          if(!Number.isInteger(seed)||seed<0||seed>2147483647)throw new Error('随机种子应为 0 到 2147483647 之间的整数。');
+          payload={scenario:document.querySelector('input[name=scenario]:checked').value,noise:Number($('noise').value),seed,auto_experiment:$('auto-experiment').checked};url='/api/run';
+        } else {
+          const text=$('data-text').value.trim();if(!text)throw new Error('请先选择 JSON 文件或粘贴数据。');
+          if(new Blob([text]).size>MAX_BYTES)throw new Error('数据超过 5 MB，请减少数据量后重试。');
+          payload=normalizeUpload(JSON.parse(text));url='/api/discover';
+        }
+      } catch(err){showError(err.message);return;}
+      setBusy(true);startTrace();
+      try {
+        const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        const body=await response.json().catch(()=>({detail:'服务未返回有效 JSON，请检查后端日志。'}));
+        if(!response.ok){let detail=body.detail||body.error||('请求失败：HTTP '+response.status);if(Array.isArray(detail))detail=detail.map(d=>d.msg||JSON.stringify(d)).join('\n');throw new Error(typeof detail==='string'?detail:JSON.stringify(detail));}
+        if(!body||typeof body!=='object'||!body.status)throw new Error('返回结果缺少状态信息，请检查服务接口。');
+        state.result=body;renderResult(body);
+      } catch(err){
+        showError(err.message||'连接失败，请确认本地服务正在运行。');
+        $('status-pill').className='status-pill error';$('status-pill').textContent='运行失败';
+        $('trace').replaceChildren(renderStep('任务未完成',err.message||'请检查服务连接后重试。','warning',0));
+        $('equation-note').textContent=state.result?'本次运行失败；上方方程与图像保留的是上次成功返回的结果。':'尚未得到有效结果，请修改输入或检查服务后重试。';
+      } finally {setBusy(false);}
+    });
+
+    function renderResult(result) {
+      const status=result.status;
+      const statusLabels={identified:'已识别候选方程',ambiguous:'存在多种解释',insufficient:'证据尚不足',validated:'已通过验证',failed:'验证未通过',candidate:'候选待验证',waiting_for_data:'等待独立验证数据'};
+      $('status-pill').className='status-pill '+(status==='validated'?'identified':['failed','candidate','waiting_for_data'].includes(status)?'insufficient':status);
+      $('status-pill').textContent=statusLabels[status]||status;
+      $('equation').textContent=result.equation?prettyEquation(result.equation):status==='ambiguous'?'多个候选 PDE':'等待更多证据';
+      const diagnostics=result.diagnostics||{};
+      const validationError=firstFinite(diagnostics.validation_relative_error,diagnostics.validation_error,result.validation_relative_error,result.validation_error);
+      $('validation-error').textContent=errorPercent(validationError);$('validation-unit').textContent=Number.isFinite(validationError)?'%':'';
+      const terms=Array.isArray(result.terms)?result.terms:[];
+      $('term-count').textContent=terms.length;
+      const note=status==='ambiguous'?'当前数据支持多个方程。需要有区分力的新观测，才能判断哪种解释更可靠。':['candidate','waiting_for_data'].includes(status)?'已从观测中拟合出候选方程，但尚缺独立验证。请提供不同初始条件下的验证轨迹。':status==='insufficient'?'当前证据未达到目标要求。请查看决策记录和诊断，再补充数据或调整实验。':'结果是在当前候选库与观测条件下得到的模型；独立预测检验不等于证明规律唯一。';
+      $('equation-note').textContent=note;
+      renderTerms(terms);
+      const initialCandidates=result.initial_evidence?.candidates;
+      const showInitial=result.experiment?.executed&&Array.isArray(initialCandidates)&&initialCandidates.length>1;
+      renderCandidates(showInitial?initialCandidates:result.candidates||[]);
+      $('candidate-title').textContent=showInitial?'追加实验前：这些方程同样解释了数据':'保留的候选解释';
+      $('candidate-subtitle').textContent=showInitial?'以下是首轮识别保留的竞争模型。追加独立证据后的结果显示在页面上方。':'多个模型可能解释同一组数据，需要更多证据区分。';
+      const steps=Array.isArray(result.steps)?result.steps:[];
+      $('trace').replaceChildren(...(steps.length?steps.map((s,i)=>renderStep(s.title||'执行步骤',s.detail||'',s.state||'complete',i)):[renderStep('计算完成','请查看候选方程、诊断指标与验证结果。','complete',0)]));
+      if(result.goal){
+        $('goal-banner').hidden=false;$('goal-banner').className='status-banner'+(result.goal.achieved?'':' warning');
+        $('goal-symbol').textContent=result.goal.achieved?'✓':'!';
+        $('goal-reason').textContent=result.goal.reason||(result.goal.achieved?'本次目标已达到。':'本次目标尚未达到。');
+        $('goal-description').textContent=result.goal.description||'';
+      }
+      const experiment=result.experiment||{};
+      $('experiment-box').hidden=!(experiment.proposed||experiment.executed);
+      $('experiment-title').textContent=experiment.executed?'已追加独立仿真实验':'建议下一次实验';
+      $('experiment-description').textContent=experiment.description||'尝试改变初始空间模态，区分现有候选方程。';
+      const probes=Array.isArray(experiment.probe_scores)?experiment.probe_scores:[];
+      $('probe-scores').replaceChildren(...probes.map(probe=>{
+        const selected=probe.initial_condition===experiment.selected_initial_condition;
+        const card=makeElement('span','mono',(selected?'✓ ':'')+(probe.label||probe.initial_condition)+' · '+formatNumber(probe.disagreement,3));
+        card.style.cssText='font-size:11px;border:1px solid '+(selected?'#75b39a':'#d2e3da')+';background:'+(selected?'#dff0e5':'#f7fbf8')+';border-radius:7px;padding:5px 9px;color:#376c56';
+        card.setAttribute('aria-label',(selected?'已选择实验：':'备选实验：')+(probe.label||probe.initial_condition)+'，区分度 '+formatNumber(probe.disagreement));return card;
+      }));
+      $('probe-explanation').hidden=!probes.length;
+      const warnings=Array.isArray(result.warnings)?result.warnings:[];
+      $('warnings-banner').hidden=!warnings.length;
+      $('warning-list').replaceChildren(...warnings.map(w=>makeElement('li','',typeof w==='string'?w:JSON.stringify(w))));
+      $('run-id').textContent=(names[result.scenario]||result.scenario||'数据发现')+' · '+(result.run_id||'运行完成');
+      renderPrediction(result.prediction);
+    }
+    function renderTerms(terms) {
+      $('terms-empty').hidden=terms.length>0;
+      const max=Math.max(...terms.map(t=>Math.abs(Number(t.coefficient)||0)),1e-15);
+      const rows=terms.map(term=>{
+        const coefficient=Number(term.coefficient);const row=makeElement('div','term-row');
+        const track=makeElement('div','term-track');const bar=makeElement('div','term-bar'+(coefficient<0?' negative':''));
+        bar.style.width=(Number.isFinite(coefficient)?Math.min(100,Math.abs(coefficient)/max*100):0)+'%';track.append(bar);
+        row.append(makeElement('span','term-symbol',prettyTerm(term.name||term.term||'?')),track,makeElement('span','term-value',formatNumber(coefficient,5)));return row;
+      });
+      $('terms-list').replaceChildren(...rows);
+    }
+    function renderCandidates(candidates) {
+      if(!Array.isArray(candidates))candidates=[];
+      $('candidate-panel').hidden=candidates.length<2;
+      $('candidate-count').textContent=candidates.length+' CANDIDATES';
+      $('candidate-list').replaceChildren(...candidates.slice(0,12).map((candidate,i)=>{
+        const card=makeElement('div','candidate-item');const info=makeElement('div');
+        info.append(makeElement('div','candidate-equation mono',prettyEquation(candidate.equation||'未命名候选')));
+        const validation=firstFinite(candidate.validation_error,candidate.validation_relative_error);
+        const fit=firstFinite(candidate.fit_error,candidate.fit_relative_error);
+        const detail='拟合相对误差 '+(Number.isFinite(fit)?errorPercent(fit)+'%':'未报告')+' · 独立验证 '+(Number.isFinite(validation)?errorPercent(validation)+'%':'未报告');
+        info.append(makeElement('p','candidate-details',detail));card.append(info,makeElement('span','candidate-rank',String(i+1).padStart(2,'0')));return card;
+      }));
+    }
+
+    function isMatrix(data) {return Array.isArray(data)&&data.length>0&&Array.isArray(data[0])&&data[0].length>0&&data.every(row=>Array.isArray(row)&&row.length===data[0].length&&row.every(v=>typeof v==='number'&&Number.isFinite(v)));}
+    function rangeOf(matrix){let min=Infinity,max=-Infinity;for(const row of matrix)for(const v of row){if(v<min)min=v;if(v>max)max=v;}return [min,max];}
+    function paletteColor(value,palette){const scaled=Math.max(0,Math.min(1,value))*(palette.length-1);const i=Math.min(palette.length-2,Math.floor(scaled));const weight=scaled-i;return palette[i].map((v,c)=>Math.round(v+(palette[i+1][c]-v)*weight));}
+    function drawHeatmap(canvas,matrix,min,max,error=false) {
+      const rows=matrix.length,cols=matrix[0].length;
+      const raw=document.createElement('canvas');raw.width=cols;raw.height=rows;
+      const ctx=raw.getContext('2d');const pixels=ctx.createImageData(cols,rows);const palette=error?errorPalette:normalPalette;
+      const span=max-min||1;
+      for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const i=(y*cols+x)*4;const color=paletteColor((matrix[y][x]-min)/span,palette);pixels.data[i]=color[0];pixels.data[i+1]=color[1];pixels.data[i+2]=color[2];pixels.data[i+3]=255;}
+      ctx.putImageData(pixels,0,0);
+      const ratio=Math.min(window.devicePixelRatio||1,2);const rect=canvas.getBoundingClientRect();canvas.width=Math.max(1,Math.round(rect.width*ratio));canvas.height=Math.max(1,Math.round(rect.height*ratio));
+      const target=canvas.getContext('2d');target.imageSmoothingEnabled=true;target.drawImage(raw,0,0,canvas.width,canvas.height);
+      canvas.setAttribute('aria-label',(error?'绝对误差':canvas.id==='observed-canvas'?'参考观测':'方程预测')+'热力图，'+rows+' 个时间点、'+cols+' 个空间点，数值范围 '+formatNumber(min)+' 至 '+formatNumber(max)+'。');
+    }
+    function clearCharts(message='运行后显示') {
+      state.plot=null;
+      ['observed','predicted','error'].forEach(id=>{const el=$(id+'-empty');el.hidden=false;el.firstElementChild.textContent=message;$(id+'-min').textContent=id==='error'?'0':'—';$(id+'-max').textContent='—';});
+      document.querySelectorAll('.x-start').forEach(el=>el.textContent='0');document.querySelectorAll('.x-end').forEach(el=>el.textContent='—');
+      $('chart-subtitle').textContent='暂无可用的独立轨迹预测。提供验证数据或完成追加实验后查看。';
+    }
+    function renderPrediction(prediction) {
+      if(!prediction){clearCharts('暂无独立预测');return;}
+      const observed=prediction.observed||prediction.reference||prediction.u;
+      const predicted=prediction.predicted||prediction.prediction;
+      if(!isMatrix(observed)||!isMatrix(predicted)||observed.length!==predicted.length||observed[0].length!==predicted[0].length){clearCharts('预测数据不可用');return;}
+      let errors=prediction.absolute_error||prediction.error;
+      if(!isMatrix(errors)||errors.length!==observed.length||errors[0].length!==observed[0].length)errors=observed.map((row,i)=>row.map((v,j)=>Math.abs(v-predicted[i][j])));
+      const a=rangeOf(observed),b=rangeOf(predicted),maxError=rangeOf(errors)[1];const min=Math.min(a[0],b[0]),max=Math.max(a[1],b[1]);
+      state.plot={observed,predicted,errors,min,max,maxError};drawPlots();
+      const x=prediction.x||[];const t=prediction.t||[];
+      document.querySelectorAll('.x-start').forEach(el=>el.textContent=x.length?formatNumber(x[0],3):'0');
+      document.querySelectorAll('.x-end').forEach(el=>el.textContent=x.length?formatNumber(x[x.length-1],3):String(observed[0].length-1));
+      $('chart-subtitle').textContent='独立轨迹 · '+observed.length+' 个时间点 × '+observed[0].length+' 个空间点'+(t.length?' · t = '+formatNumber(t[0],3)+' 至 '+formatNumber(t[t.length-1],3):'');
+      $('chart-caption').textContent='观测与预测使用相同色标；误差场单独缩放。时间从上向下递增。上传数据沿用输入单位，内置实验为无量纲值。';
+    }
+    function drawPlots(){
+      const p=state.plot;if(!p)return;
+      [['observed',p.observed,p.min,p.max,false],['predicted',p.predicted,p.min,p.max,false],['error',p.errors,0,p.maxError,true]].forEach(([id,matrix,min,max,error])=>{
+        $(id+'-empty').hidden=true;drawHeatmap($(id+'-canvas'),matrix,min,max,error);$(id+'-min').textContent=formatNumber(min,3);$(id+'-max').textContent=formatNumber(max,3);
+      });
+    }
+    let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(drawPlots,100);});
+    $('download-button').addEventListener('click',()=>{
+      if(!state.result)return;const blob=new Blob([JSON.stringify(state.result,null,2)],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const anchor=document.createElement('a');anchor.href=url;anchor.download='pde-discovery-'+String(state.result.run_id||Date.now()).replace(/[^a-zA-Z0-9_-]/g,'_')+'.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    });
+  </script>
+</body>
+</html>

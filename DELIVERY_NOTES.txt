@@ -1,0 +1,19 @@
+当前主包：pde-discovery-generic.zip。解压后进入 pde-discovery，安装 requirements-repro.txt，运行 python -m pde_discovery serve --port 8765，打开 http://localhost:8765/discovery。
+
+项目目标是从时空数据发现 PDE 的项与系数。最新分支对 Burgers、KdV、KS 使用同一九项 L1 候选库，无必选右端项。三组均找到全部参考项，但都保留多余项，严格项集合恢复为 0/3；不能用很低的预测误差替代结构成功。三组是外部公开数值基准，不是真实仪器测量。首轮最终评分已完成，未来重跑属于复现。
+
+主包包含当前完整代码、静态界面、固定依赖、128 项验收测试、来源和协议、导入修订及失败记录、各轮已归档候选与评分 JSON、冻结模型、最新四张跨方程科学图，以及此前47份Mendeley CSV和ATMC示例。优先阅读 README.md 与 experiments/GENERIC_REPORT.md。
+
+为满足每个附件10 MiB的限制，39张此前科学PNG放在 pde-discovery-history-figures.zip 中。需要查看 /external、/validation、/refined、/real 的旧图时，将补充包解压到与主包相同父目录，合并 pde-discovery 文件夹。旧报告和分数已在主包；未合并时旧图接口可能返回404。新 /discovery 页面完整图表仅需主包。39张图与此前交付字节一致，未重绘，也没有删除本地历史文件。
+
+历史补充包 pde-discovery-trajectories.zip 保存此前31份科学NPZ；可按同样方式合并。不包含独立教学热实验或最新PDE-FIND原始观测。报告的 trajectory_available 沿用计算时状态，直接读数组需补充包或复现；网页展示不依赖NPZ。
+
+外部教学热实验来源及 PDE-FIND 原仓库未发现明确再分发许可；主包及补充包不含它们的原始TXT、MAT、prepared NPZ或含完整观测的trajectories.npz。交付固定提交下载器、字节哈希、来源说明和派生结果。查看新保存结果不需要网络；复现新三类基准先运行：
+python -m pde_discovery generic-benchmark --phase download
+python -m pde_discovery generic-benchmark --phase prepare
+python -m pde_discovery generic-benchmark --phase freeze --output artifacts/generic_pde_reproduction
+python -m pde_discovery generic-benchmark --phase evaluate --output artifacts/generic_pde_reproduction
+
+下载器不运行作者代码。三类数据各按时间60/20/20划分；所有模型冻结后才最终评分。准备步骤机械解码完整MAT，不声称从未读取最终数值。最终推进只用该段首帧，不注入未来场或实测边界。KdV周期闭合仍是明确的数值假设；范围限一维标量常系数均匀周期网格。旧热杆分支使用实测两端边界预测四内点，其物理先验参数识别不能当作通用PDE发现证据。
+
+主包不含浏览器截图/导出副本、18次旧合成运行的完整逐次JSON以及重复合成轨迹；保留验收日志、合成汇总与复现命令。完整旧版包仍在同一私有交付页中。Mendeley来源许可为CC BY4.0，不能套用于其他来源。没有接入华为平台、大模型、付费服务或公开发布。
