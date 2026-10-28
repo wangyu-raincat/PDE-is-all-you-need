@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "families": [
+    "allen_cahn",
+    "low_viscosity_burgers",
+    "ks_unstable"
+  ],
+  "methods": [
+    "plain",
+    "adaptive",
+    "weak_adaptive"
+  ],
+  "sampling": [
+    "full",
+    "coarse"
+  ],
+  "noise_conditions": [
+    {
+      "label": "clean",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "label": "noise0p1_s43",
+      "level": 0.001,
+      "seed": 43
+    },
+    {
+      "label": "noise0p1_s71",
+      "level": 0.001,
+      "seed": 71
+    },
+    {
+      "label": "noise1_s43",
+      "level": 0.01,
+      "seed": 43
+    },
+    {
+      "label": "noise1_s71",
+      "level": 0.01,
+      "seed": 71
+    }
+  ],
+  "declared_configurations": 90,
+  "data_scope": "New initial conditions from three known numerical PDE families. No newly unknown PDE families or real measured source.",
+  "retrospective_scope": "Old challenge90 and all development probes already viewed; no prospective claims for their results.",
+  "roles": {
+    "calibration": 1,
+    "training": 3,
+    "development": 2,
+    "final": 3
+  },
+  "noise": "Additive Gaussian sigma=level times full clean training equal-trajectory RMS. Fixed for all roles. Corruption alone sees clean data/sigma. Models get only x,t,u,boundary.",
+  "noise_seed_rule": "SeedSequence[77000,family_id,role_id,index,noise_seed], full grid then within-role stride; full/coarse and noise levels paired.",
+  "new_seeds": "Generator role bases66000/66100/66200/66300, family-separated. Noise seeds43/71. Final ICs first generated after all90models frozen.",
+  "source_quality": "Separate calibration IC base vs doubleN/halfdt, relL2<=1e-5 and maxabs<=1e-4. Keep failures, never replace with easier ICs.",
+  "weak_method": "Space-time Fourier/compact polynomial weak tests on original samples. Same9terms and adaptiveL1path as prior. Fixed menu selected with identical development forecast RMSE selector. No exact derivatives, family labels, reference coefficients or true sigma in fitting.",
+  "variant_menu_status": "frozen",
+  "development_selection": "Across all declared variants and supports: sqrt(mean(trajectory MSE)) from noisyfirstframe to noisyfuture, within1.05best+1e-12 fewestterms thenRMSEthenstableID. Variants/failures retained. No crosslambda penalty or frequency.",
+  "freeze": "Method/menu and protocol before fresh train/dev generation; fit90 then hashglobalindex before final3perfamily generation. No finalparameterchanges.",
+  "final": "From noisyfirstframe; cleanfuture onlyscoring, also noisyfuture metric; excludeinitial. 270planned rollouts share9underlyingfinalICs; not270independentexperiments.",
+  "promotion_candidate": "weak_adaptive",
+  "primary_comparator": "adaptive",
+  "plain_role": "unchanged baseline diagnostic",
+  "primary_metrics": [
+    "exact_support",
+    "missing_terms",
+    "spurious_terms",
+    "coefficient_relative_l2",
+    "per_true_term_relative_error"
+  ],
+  "gate": {
+    "complete": 90,
+    "source_quality_all": true,
+    "minimum_new_exact_conditions": 2,
+    "minimum_gain_families": 2,
+    "no_clean_support_regression": true,
+    "total_extra_not_increased": true,
+    "total_missing_not_increased": true,
+    "total_forecast_failures_not_increased": true,
+    "clean_each_true_term_max": 0.1,
+    "noise0p1_each_true_term_max": 0.1,
+    "noise1_each_true_term_max": 0.25,
+    "per_config_vector_error_max": "max(1.25*adaptive,.01)",
+    "per_config_prediction_max": "max(1.25*adaptive,.05)",
+    "all_tests_pass_required": true,
+    "failure_action": "keep baseline, no merge",
+    "pass_action": "eligible for review only"
+  },
+  "limits": "Engineering gates, no statistical significance claim; pairedconditions notindependent. Uniform periodic autonomous 1D constant-coefficient scalar9term scope.",
+  "weak_variants": {
+    "compact": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.125
+    },
+    "low": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.03125
+    },
+    "resolved": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.25
+    }
+  },
+  "weak_engine_protocol": {
+    "version": 1,
+    "variants": {
+      "compact": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.125
+      },
+      "low": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.03125
+      },
+      "resolved": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.25
+      }
+    },
+    "terms": [
+      "1",
+      "u",
+      "u^2",
+      "u^3",
+      "u_x",
+      "u_xx",
+      "u_xxx",
+      "u_xxxx",
+      "u*u_x"
+    ],
+    "spatial_tests": "nonnegative Fourier modes; real/imaginary rows, nonzero modes sqrt(2) weighted",
+    "temporal_test": "(1-z*z)^4 on [-1,1], zero outside; analytic first derivative",
+    "products": "2N zero-padded real trigonometric interpolation; retain selected observed-grid Fourier modes",
+    "noise_correction": "none",
+    "no_observed_derivatives": true,
+    "spatial_mode_rule": "min(Nx//4, max(8, floor(Nx*variant_fraction)))",
+    "quadrature": "composite degree-nine Newton-Cotes on original samples, eight subintervals per panel",
+    "window_stride": "max(1, window_intervals//4)",
+    "selection": "unchanged L1 path, normalized OLS debias and development forecast selection",
+    "reference_used_for_selection": false
+  }
+}
