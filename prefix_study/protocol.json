@@ -1,0 +1,416 @@
+{
+  "version": 1,
+  "families": [
+    "allen_cahn",
+    "low_viscosity_burgers",
+    "ks_unstable"
+  ],
+  "methods": [
+    "weak_resolved",
+    "denoised_median",
+    "prefix_weak",
+    "prefix_median"
+  ],
+  "sampling": [
+    "full",
+    "coarse"
+  ],
+  "noise_conditions": [
+    {
+      "label": "clean",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "label": "noise0p1_s71",
+      "level": 0.001,
+      "seed": 71
+    },
+    {
+      "label": "noise0p1_s103",
+      "level": 0.001,
+      "seed": 103
+    },
+    {
+      "label": "noise1_s71",
+      "level": 0.01,
+      "seed": 71
+    },
+    {
+      "label": "noise1_s103",
+      "level": 0.01,
+      "seed": 103
+    }
+  ],
+  "declared_configurations": 120,
+  "roles": {
+    "calibration": 1,
+    "training": 3,
+    "development": 2,
+    "final": 3
+  },
+  "data_scope": "Same three known numerical PDE families, physics, grids and initial-condition distribution. New role seeds148000/148100/148200/148300. No new real measurements. Extend each generated trajectory to 1.1T: history0..0.1T, full future0.1T..1.1T.",
+  "noise": "Levels0/.001/.01 times full-grid clean training forecast-segment equal-trajectory RMS. Noise seeds71/103, base159000. Noise added before splitting history/future or subsampling. Only corruption knows clean values and scale.",
+  "four_arm_design": {
+    "weak_resolved": "Unchanged weak candidates and raw observed cutoff frame, factor4 forecast.",
+    "denoised_median": "Weak candidates plus training-only exact-support medians, filtered cutoff frame, factor4 forecast.",
+    "prefix_weak": "Unchanged weak candidates, prefix-aligned average state, factor4 future forecast.",
+    "prefix_median": "Weak candidates plus training-only exact-support medians, prefix-aligned average state, factor4 future forecast."
+  },
+  "variant_menu_status": "frozen",
+  "weak_variants": {
+    "compact": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.125
+    },
+    "low": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.03125
+    },
+    "resolved": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.25
+    }
+  },
+  "weak_engine_protocol": {
+    "version": 1,
+    "variants": {
+      "compact": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.125
+      },
+      "low": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.03125
+      },
+      "resolved": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.25
+      }
+    },
+    "terms": [
+      "1",
+      "u",
+      "u^2",
+      "u^3",
+      "u_x",
+      "u_xx",
+      "u_xxx",
+      "u_xxxx",
+      "u*u_x"
+    ],
+    "spatial_tests": "nonnegative Fourier modes; real/imaginary rows, nonzero modes sqrt(2) weighted",
+    "temporal_test": "(1-z*z)^4 on [-1,1], zero outside; analytic first derivative",
+    "products": "2N zero-padded real trigonometric interpolation; retain selected observed-grid Fourier modes",
+    "noise_correction": "none",
+    "no_observed_derivatives": true,
+    "spatial_mode_rule": "min(Nx//4, max(8, floor(Nx*variant_fraction)))",
+    "quadrature": "composite degree-nine Newton-Cotes on original samples, eight subintervals per panel",
+    "window_stride": "max(1, window_intervals//4)",
+    "selection": "unchanged L1 path, normalized OLS debias and development forecast selection",
+    "reference_used_for_selection": false
+  },
+  "forecast_protocol": {
+    "version": 1,
+    "default_spatial_factor": 4,
+    "diagnostic_spatial_factors": [
+      1,
+      2,
+      4
+    ],
+    "factor_selection": "fixed before new training/development generation; not family dependent",
+    "initial_interpolation": "real periodic Fourier interpolation of the observed initial frame; scipy.signal.resample handles even-grid Nyquist splitting",
+    "internal_grid": "Nx*factor equally spaced points on the same period, starting at the observed x[0]",
+    "solver": "unchanged pde_discovery.generic_engine.forecast on the internal grid",
+    "output": "direct restriction to every factor-th internal point at the original output times",
+    "time_substeps": 32,
+    "maximum_internal_points": 2048,
+    "budget_failure": "reject; never silently reduce factor",
+    "extra_points_are_measurements": false,
+    "truth_or_future_input": false,
+    "scope": "uniform periodic scalar autonomous constant-coefficient nine-term PDE"
+  },
+  "development_selection": "Medians generated from training only. Original candidates preserved. Prefix augmented pool scored on observed development future, independently select original subset for prefix_weak. RMSE sqrt(mean trajectory MSE); within1.05best+1e-12 choose fewest terms,error,ID. Same prefix predictor in development and final.",
+  "freeze": "Method/protocol frozen before new formal training/development. All120 models frozen and hashes verified before9 final trajectories generated. Failures retained, no final selection or tuning.",
+  "final": "360 planned forecasts, 120 models, shared9 final ICs, not360 independent experiments. 11 full or6 coarse history frames ending at forecast cutoff for prefix arms; single-frame controls use same cutoff observation. Clean and noisy future used only for scoring, cutoff frame excluded. Unchanged future horizons AC0.5, Burgers1.5, KS20.",
+  "source_quality": "SeparatecalibrationIC doubleNhalfdt, relL2<=1e-5 andmaxabs<=1e-4. Keepfailure, noreplacement/no thresholdchange.",
+  "primary_metrics": [
+    "exact_support",
+    "spurious_terms",
+    "missing_terms",
+    "coefficient_vector_error",
+    "per_true_term_error"
+  ],
+  "promotion_candidate": "prefix_median",
+  "primary_comparator": "weak_resolved",
+  "additional_comparator": "denoised_median",
+  "gate": {
+    "complete": 120,
+    "candidate": "prefix_median",
+    "source_quality_all": true,
+    "target": {
+      "candidate": "prefix_median",
+      "metric": "maximum across condition means of final-trajectory relative L2; exclude initial frame",
+      "relative_l2_limit": 0.05,
+      "condition_count": 30,
+      "trajectories_per_condition": 3,
+      "individual_trajectory_limit": null,
+      "all_conditions_required": true,
+      "failure_action": "target not achieved; retain failed condition",
+      "conditioning": "observed prefix before forecast start; 11 full or 6 coarse frames",
+      "forecast_duration": {
+        "allen_cahn": 0.5,
+        "low_viscosity_burgers": 1.5,
+        "ks_unstable": 20.0
+      },
+      "history_fraction_of_forecast_horizon": 0.1
+    },
+    "exact_structure_each_condition": true,
+    "each_true_term_max": {
+      "clean": 0.1,
+      "noise0p1": 0.1,
+      "noise1": 0.25
+    },
+    "noninferiority_each_comparator": [
+      "weak_resolved",
+      "denoised_median"
+    ],
+    "per_configuration_coefficient": "<=max(1.25*comparator,.01)",
+    "family_tail_noninferiority": "maxtrue-termerrorperfamily<=max(1.25*eachcomparatormax,.01)",
+    "all_tests_required": true,
+    "failure_action": "keepbaseline,no merge",
+    "pass_action": "eligibleforreviewonly"
+  },
+  "absolute_prediction_diagnostic": "All30 condition means over3 final trajectories <=5%. Report maximum individual and count above5% separately. User approved prefix, not guaranteed all individual forecasts<=5%.",
+  "retrospective_diagnosis": "Old fusion KS final ICs extended to22 time units, new predictor tested with fixed old coefficients, future2..22. This development probe is retrospective in initial conditions, not a new holdout.",
+  "limits": "1D uniform periodic scalar autonomous constant-coefficient nine-term library; same known synthetic families with sparse initial spectra. Prefix filtering can remove weak or broadband physical modes. No arbitrary PDE or real-measurement generalization claim.",
+  "data_protocol": {
+    "kind": "synthetic observations; no measured data",
+    "role_counts": {
+      "training": 3,
+      "development": 2,
+      "final": 3
+    },
+    "family_ids": {
+      "allen_cahn": 0,
+      "low_viscosity_burgers": 1,
+      "ks_unstable": 2
+    },
+    "role_ids": {
+      "training": 0,
+      "development": 1,
+      "final": 2
+    },
+    "noise_levels": [
+      0.0,
+      0.001,
+      0.01
+    ],
+    "nonzero_noise_seeds": [
+      71,
+      103
+    ],
+    "clean_noise_seed": 0,
+    "seed_sequence": "[159000, family_id, role_id, trajectory_index, noise_seed]",
+    "scale": "noise_level * full-grid clean training FORECAST-segment equal-trajectory RMS",
+    "sampling_order": "full-role noise first, then stride 1 or 2 in space and time",
+    "coarse_is_nested_observation": true,
+    "observation_interface": "x,t,u,boundary,prefix_t,prefix_u; prefix ends at forecast t[0]; no noise oracle",
+    "prefix_intervals_full": 10,
+    "forecast_intervals_full": 100,
+    "forecast_horizon_unchanged": true,
+    "prefix_endpoint_shared_observation": true
+  },
+  "median_ablation": "prefix_weak versus prefix_median isolates candidate augmentation under same prefix observation/forecast rule.",
+  "initial_protocol": {
+    "version": 1,
+    "input": "one observed initial frame and its uniform periodic spatial grid only",
+    "spectrum": "real FFT divided by N",
+    "scale_band": "integer modes floor(N/4) <= k < floor(N/2); DC and real Nyquist excluded",
+    "coefficient_noise_rms": "median(abs(normalized FFT in scale band))/sqrt(log(2))",
+    "estimated_spatial_sigma": "coefficient_noise_rms*sqrt(N)",
+    "threshold": "coefficient_noise_rms*sqrt(2*log(N))",
+    "rule": "retain coefficients with magnitude >= threshold, always preserve DC; hard threshold only",
+    "retained_modes": "data dependent, no fixed physical modes and no family-specific rule",
+    "phase": "retained complex coefficients unchanged; irfft handles real Nyquist",
+    "maximum_observed_points": 512,
+    "maximum_absolute_state": 1000000.0,
+    "scale_assumption": "additive spatial white Gaussian noise; upper-band majority is noise rather than signal",
+    "limitations": "single-frame sparse-spectrum prior; broadband signal can bias scale upward and weak physical modes can be removed",
+    "future_input": false,
+    "reference_or_true_noise_input": false,
+    "additional_measurements": false
+  },
+  "denoised_forecast_protocol": {
+    "version": 1,
+    "name": "denoised_resolved_factor4",
+    "initial_filter": "spectral_hard",
+    "initial_filter_protocol": {
+      "version": 1,
+      "input": "one observed initial frame and its uniform periodic spatial grid only",
+      "spectrum": "real FFT divided by N",
+      "scale_band": "integer modes floor(N/4) <= k < floor(N/2); DC and real Nyquist excluded",
+      "coefficient_noise_rms": "median(abs(normalized FFT in scale band))/sqrt(log(2))",
+      "estimated_spatial_sigma": "coefficient_noise_rms*sqrt(N)",
+      "threshold": "coefficient_noise_rms*sqrt(2*log(N))",
+      "rule": "retain coefficients with magnitude >= threshold, always preserve DC; hard threshold only",
+      "retained_modes": "data dependent, no fixed physical modes and no family-specific rule",
+      "phase": "retained complex coefficients unchanged; irfft handles real Nyquist",
+      "maximum_observed_points": 512,
+      "maximum_absolute_state": 1000000.0,
+      "scale_assumption": "additive spatial white Gaussian noise; upper-band majority is noise rather than signal",
+      "limitations": "single-frame sparse-spectrum prior; broadband signal can bias scale upward and weak physical modes can be removed",
+      "future_input": false,
+      "reference_or_true_noise_input": false,
+      "additional_measurements": false
+    },
+    "refined_forecast_protocol": {
+      "version": 1,
+      "default_spatial_factor": 4,
+      "diagnostic_spatial_factors": [
+        1,
+        2,
+        4
+      ],
+      "factor_selection": "fixed before new training/development generation; not family dependent",
+      "initial_interpolation": "real periodic Fourier interpolation of the observed initial frame; scipy.signal.resample handles even-grid Nyquist splitting",
+      "internal_grid": "Nx*factor equally spaced points on the same period, starting at the observed x[0]",
+      "solver": "unchanged pde_discovery.generic_engine.forecast on the internal grid",
+      "output": "direct restriction to every factor-th internal point at the original output times",
+      "time_substeps": 32,
+      "maximum_internal_points": 2048,
+      "budget_failure": "reject; never silently reduce factor",
+      "extra_points_are_measurements": false,
+      "truth_or_future_input": false,
+      "scope": "uniform periodic scalar autonomous constant-coefficient nine-term PDE"
+    },
+    "first_prediction_frame": "filtered observed first frame, not an additional measured frame",
+    "future_or_true_noise_input": false,
+    "rule_selection": "fixed filter, consistently applied in development and final forecasting"
+  },
+  "target_protocol": {
+    "candidate": "prefix_median",
+    "metric": "maximum across condition means of final-trajectory relative L2; exclude initial frame",
+    "relative_l2_limit": 0.05,
+    "condition_count": 30,
+    "trajectories_per_condition": 3,
+    "individual_trajectory_limit": null,
+    "all_conditions_required": true,
+    "failure_action": "target not achieved; retain failed condition",
+    "conditioning": "observed prefix before forecast start; 11 full or 6 coarse frames",
+    "forecast_duration": {
+      "allen_cahn": 0.5,
+      "low_viscosity_burgers": 1.5,
+      "ks_unstable": 20.0
+    },
+    "history_fraction_of_forecast_horizon": 0.1
+  },
+  "prefix_engine_protocol": {
+    "version": 1,
+    "methods": [
+      "weak_resolved",
+      "denoised_median",
+      "prefix_weak",
+      "prefix_median"
+    ],
+    "candidate_training": {
+      "version": 1,
+      "methods": [
+        "weak_resolved",
+        "fused_median",
+        "denoised_weak",
+        "denoised_median"
+      ],
+      "candidate_generation": "unchanged three fixed weak variants, adaptive L1, normalized OLS debias, fit once",
+      "old_controls": "unchanged weak_resolved and original-support-anchored fused_median rules",
+      "median_generation": "training-only; group successful candidate fits by exact term-name set",
+      "variant_deduplication": "one candidate per fixed variant/support by minimum stable training candidate ID",
+      "vector_deduplication": "exact equal physical coefficient vectors within support contribute once, retaining all aliases",
+      "minimum_median_contributors": 2,
+      "median": "coordinatewise median of distinct physical coefficient vectors, no development filter",
+      "median_failure": "zero or nonfinite median rejects only the new candidate; no silent term deletion",
+      "original_candidates_preserved": true,
+      "old_support_anchor_for_new_arms": false,
+      "cross_support_averaging": false,
+      "path_frequency_weighting": false,
+      "development_predictor": "fixed spectral-hard-filter first frame then resolved factor4",
+      "development_score": "sqrt(mean(trajectory_MSE)); first frame excluded",
+      "development_selection": "within near_factor*best+absolute_tolerance choose fewest terms, error, stable ID",
+      "shared_scoring": "score augmented denoised pool once, then independently select its original-candidate subset for denoised_weak",
+      "near_factor": 1.05,
+      "absolute_tolerance": 1e-12,
+      "true_noise_or_family_or_reference_input": false,
+      "median_members_are_independent_estimates": false
+    },
+    "training_segment": "forecast segment only; prefix observations excluded from weak fitting",
+    "median_generation": "same training-only exact-support distinct-vector rule as five_study",
+    "selection": "same trajectory-equal RMSE; within1.05best+1e-12 fewestterms,error,stableID",
+    "prefix_prediction": "fixed filtered propagation-to-cutoff average followed by full-horizon forecast",
+    "single_frame_controls": "same forecast-start timestamp and complete future horizon; only last prefix observation used",
+    "reference_or_noise_or_family_input": false,
+    "future_holdout_used_for_selection": false
+  },
+  "prefix_forecast_protocol": {
+    "version": 1,
+    "name": "prefix_aligned_resolved_factor4",
+    "history": "observed frames at or before forecast start only; endpoint shared once",
+    "estimator": "independently filter each prefix frame, propagate each to cutoff with candidate PDE, equal mean of terminal states",
+    "weights": "fixed equal per observed prefix frame, no development or final fitting",
+    "filter": {
+      "version": 1,
+      "input": "one observed initial frame and its uniform periodic spatial grid only",
+      "spectrum": "real FFT divided by N",
+      "scale_band": "integer modes floor(N/4) <= k < floor(N/2); DC and real Nyquist excluded",
+      "coefficient_noise_rms": "median(abs(normalized FFT in scale band))/sqrt(log(2))",
+      "estimated_spatial_sigma": "coefficient_noise_rms*sqrt(N)",
+      "threshold": "coefficient_noise_rms*sqrt(2*log(N))",
+      "rule": "retain coefficients with magnitude >= threshold, always preserve DC; hard threshold only",
+      "retained_modes": "data dependent, no fixed physical modes and no family-specific rule",
+      "phase": "retained complex coefficients unchanged; irfft handles real Nyquist",
+      "maximum_observed_points": 512,
+      "maximum_absolute_state": 1000000.0,
+      "scale_assumption": "additive spatial white Gaussian noise; upper-band majority is noise rather than signal",
+      "limitations": "single-frame sparse-spectrum prior; broadband signal can bias scale upward and weak physical modes can be removed",
+      "future_input": false,
+      "reference_or_true_noise_input": false,
+      "additional_measurements": false
+    },
+    "solver": {
+      "version": 1,
+      "default_spatial_factor": 4,
+      "diagnostic_spatial_factors": [
+        1,
+        2,
+        4
+      ],
+      "factor_selection": "fixed before new training/development generation; not family dependent",
+      "initial_interpolation": "real periodic Fourier interpolation of the observed initial frame; scipy.signal.resample handles even-grid Nyquist splitting",
+      "internal_grid": "Nx*factor equally spaced points on the same period, starting at the observed x[0]",
+      "solver": "unchanged pde_discovery.generic_engine.forecast on the internal grid",
+      "output": "direct restriction to every factor-th internal point at the original output times",
+      "time_substeps": 32,
+      "maximum_internal_points": 2048,
+      "budget_failure": "reject; never silently reduce factor",
+      "extra_points_are_measurements": false,
+      "truth_or_future_input": false,
+      "scope": "uniform periodic scalar autonomous constant-coefficient nine-term PDE"
+    },
+    "max_prefix_frames": 32,
+    "minimum_prefix_frames": 2,
+    "forecast_horizon": "unchanged after cutoff; prefix not counted as predicted future",
+    "conditional_forecast": true,
+    "future_observations_input": false,
+    "limitations": "candidate-model bias and sparse-spectrum initial-filter prior; not independent propagated estimates"
+  },
+  "prefix_budget": {
+    "history_fraction": 0.1,
+    "full_frames": 11,
+    "coarse_frames": 6,
+    "horizons": {
+      "allen_cahn": 0.5,
+      "low_viscosity_burgers": 1.5,
+      "ks_unstable": 20.0
+    },
+    "weights": "equal, fixed, no tuning"
+  }
+}
