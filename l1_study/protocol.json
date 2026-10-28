@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "purpose": "Isolated retrospective public-data comparison plus prospective fixed analytic initial-condition suite; no production code edits",
+  "reference_repository": "changsongjin/pde-l1-analytic",
+  "reference_commit": "271c6ab556c0788cad5d60e86537c8b0d6dab9e0",
+  "methods": [
+    "plain",
+    "adaptive",
+    "irl1"
+  ],
+  "promotion_candidate_fixed_before_fitting": "irl1",
+  "public_cases": [
+    "burgers",
+    "kdv",
+    "ks"
+  ],
+  "public_label": "retrospective; all final segments previously viewed",
+  "public_representation": "unchanged integrated regression; one original trajectory only",
+  "analytic_families": [
+    "advdiff",
+    "linear_high_order",
+    "burgers_cole_hopf"
+  ],
+  "analytic_derivatives": [
+    "integrated",
+    "pointwise_estimated",
+    "pointwise_exact"
+  ],
+  "training_trajectory_counts": [
+    1,
+    3
+  ],
+  "analytic_trajectory_roles": {
+    "training": 3,
+    "development": 2,
+    "final": 2
+  },
+  "analytic_grid": {
+    "nx": 64,
+    "nt": 81,
+    "x": "[0,2pi), periodic",
+    "t": "[0,0.8]"
+  },
+  "analytic_noise": 0.0,
+  "analytic_row_budget": "Within each derivative backend: B=3*floor(minimum training trajectory rows/3), both single and joint use B total rows; deterministic linspace index selection; equal trajectory weights",
+  "analytic_derivative_scope": "Pointwise exact versus estimated contrasts analytic derivatives with numerical differentiation AND spectral field/library projection; Cole-Hopf is not strictly band-limited. Integrated versus pointwise additionally changes regression form. Exact is privileged analytical input, not observable deployment performance. All fields are analytically generated, not measurements.",
+  "selection": "Per-method development sqrt(mean(per-trajectory MSE)), <=1.05*best +1e-12 then fewest terms, RMSE, deterministic candidate_id",
+  "forbidden_selection": [
+    "reference support or coefficients",
+    "final scores",
+    "cross-lambda penalized objective",
+    "lambda path occurrence frequency"
+  ],
+  "final_guard": "All 63 unique predeclared model identities and matching metadata must be frozen before final arrays generated/read or scoring references parsed. Production baseline archives remain unchanged.",
+  "primary_metrics": [
+    "exact_support",
+    "missing_terms",
+    "spurious_terms",
+    "coefficient_relative_l2"
+  ],
+  "secondary_metrics": [
+    "free_rollout_rmse",
+    "free_rollout_relative_l2",
+    "forecast_failures"
+  ],
+  "gate": {
+    "candidate": "irl1",
+    "public_exact_support_min": 2,
+    "public_spurious_total_max": 2,
+    "missing_or_forecast_failures_may_increase": false,
+    "non_oracle_analytic_scope": [
+      "integrated",
+      "pointwise_estimated"
+    ],
+    "analytic_exact_count_not_lower_than_plain": true,
+    "analytic_at_least_one_strict_structure_gain": true,
+    "no_success_to_failure_case": true,
+    "coefficient_per_case_limit": "max(1.10*plain,1e-4)",
+    "prediction_per_case_limit": "max(1.25*plain,1e-3)",
+    "all_existing_and_new_tests_must_pass": true,
+    "no_gain_action": "do not merge, keep unchanged original project as active baseline",
+    "interpretation": "engineering acceptance gate, not statistical significance; old public datasets remain retrospective"
+  },
+  "scope_limits": [
+    "finite shared nine-term library",
+    "scalar constant-coefficient one-dimensional periodic grids",
+    "no measured-data robustness established",
+    "no tuning after final scoring",
+    "no coefficient threshold changes after viewing results"
+  ]
+}

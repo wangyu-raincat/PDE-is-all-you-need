@@ -1,0 +1,11 @@
+--- a/redo_two.py
++++ b/redo_two.py
+@@ -81,7 +81,7 @@
+     u = (2.0 * np.pi * s) ** -0.5 * np.exp(-(xi**2) / (2.0 * s))
+     u_x = u * (-xi / s)
+     u_xx = u * (xi**2 / s**2 - 1.0 / s)
+-    u_xxx = u_x * (xi**2 / s**2 - 1.0 / s) + u * (2.0 * xi / s**2 - 2.0 * xi**3 / s**3 + 2.0 * xi / s**2)
++    u_xxx = u * (3.0 * xi / s**2 - xi**3 / s**3)
+     # ∂t log u = -ν/s + c ξ/s + ν ξ²/s²，已手算并与 -c u_x + ν u_xx 对齐
+     u_t = u * (-NU / s + C * xi / s + NU * xi**2 / s**2)
+     return u, u_t, u_x, u_xx, u_xxx
