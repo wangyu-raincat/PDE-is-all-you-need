@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "families": [
+    "allen_cahn",
+    "low_viscosity_burgers",
+    "ks_unstable"
+  ],
+  "methods": [
+    "plain",
+    "adaptive",
+    "irl1"
+  ],
+  "sampling": [
+    "full",
+    "coarse"
+  ],
+  "noise_conditions": [
+    {
+      "label": "clean",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "label": "noise0p1_s17",
+      "level": 0.001,
+      "seed": 17
+    },
+    {
+      "label": "noise0p1_s29",
+      "level": 0.001,
+      "seed": 29
+    },
+    {
+      "label": "noise1_s17",
+      "level": 0.01,
+      "seed": 17
+    },
+    {
+      "label": "noise1_s29",
+      "level": 0.01,
+      "seed": 29
+    }
+  ],
+  "declared_configurations": 90,
+  "discovery": "unchanged l1_study.engine.integrated_block and fit_blocks; original9terms,alphapath,normalization,supportthreshold,weights,debias,solverallunchanged",
+  "training_trajectories": {
+    "allen_cahn": 1,
+    "low_viscosity_burgers": 3,
+    "ks_unstable": 3
+  },
+  "development_trajectories": {
+    "allen_cahn": 1,
+    "low_viscosity_burgers": 2,
+    "ks_unstable": 2
+  },
+  "final_trajectories": {
+    "allen_cahn": 1,
+    "low_viscosity_burgers": 2,
+    "ks_unstable": 2
+  },
+  "source_quality": "Independent calibration IC; base and doubledN/halfdt contourETDRK4 references at same observation points; relativeL2<=1e-5 and maxabs<=1e-4, failfamilyexplicitly ifnotmet; no generatorparameter tuning afterscores",
+  "noise": "Gaussian additive. sigma=level*sqrt(mean(clean training trajectory mean square)), fullgrid. Same train-fixedsigma allroles. Onlycorruptionlayeraccessesclean/sigma; fittingandselectiononlynoisy{x,t,u}.",
+  "noise_seeds": "SeedSequence[55000,familyid,roleid,index,condition_seed]; rolesdisjoint. Samplingnotinseed: corruptfullrolethenstride, sofull/coarsearenestedpairedobservations.",
+  "sampling_rule": "Rolesfirst; fullstride1, coarsestride2inbothspaceandtime; nointerpolationorfilteradded",
+  "development_selection": "unchanged development sqrt(mean(per-trajectory MSE)), noisyinitialframe, noisyfutureobservationsonly; 1.05*best+1e-12 thenfewestterms/error/id; nosigma/noisefloorcorrection",
+  "final_isolation": "All90uniqueidentities,code/protocol/datahashes frozenfirst. OnlythengeneratesyntheticfinalorloadACfinal. ACcompressedMATmechanicallydecodedandrolesplitinprepare, disclosed; nofinalvaluesfittingorselection.",
+  "final_prediction": "Initializefromnoisyfirstframe, nevercleaninitial. Cleanfuturefieldsusedonlyforscoringafterfreeze; reportcleanrelativeL2primarypredictionplusnoisyrelativeL2secondary, excludinginitialframe.",
+  "primary_metrics": [
+    "exact_support",
+    "missing_terms",
+    "spurious_terms",
+    "coefficient_vector_relative_l2",
+    "per_true_term_relative_error_including_small_AC_diffusion"
+  ],
+  "promotion_candidate": "adaptive",
+  "gate": {
+    "complete_unique_configurations": 90,
+    "source_quality_all_pass": true,
+    "minimum_extra_exact_gains": 2,
+    "minimum_families_with_exact_gain": 2,
+    "clean_no_success_to_failure": true,
+    "extra_terms_total_max_fraction_of_plain": 0.75,
+    "missing_total_and_forecast_failure_total_cannot_increase": true,
+    "coefficient_per_configuration_limit": "max(1.25*plain,0.01)",
+    "clean_reference_term_relative_error_max": 0.1,
+    "prediction_per_configuration_limit": "max(1.25*plain,0.05) on mean clean-field relativeL2",
+    "regression_all_pass": true,
+    "failure_action": "keep prior active baseline; retain experiment, no merge",
+    "interpretation": "engineering gate; paired noise seeds are not independent datasets or significance testing"
+  },
+  "limits": [
+    "one new external numerical source, two independently generated numerical families; no realmeasurements",
+    "same equationwithin each family; three sourcefamilies not90independentPDEs",
+    "no noise-aware smoothing or weak spatial formulation added",
+    "KS trajectory not certified chaotic",
+    "all scoreddatafuture comparisons retrospective",
+    "samplingshareparentobservations; noise replicates sharecleantrajectory",
+    "no truth-dependent mandatorysupport, lambdaobjectivecomparison, pathfrequency, finaltuning"
+  ]
+}

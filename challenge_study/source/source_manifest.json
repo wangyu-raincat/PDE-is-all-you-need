@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "repo": "maziarraissi/PINNs",
+  "commit": "932f50a2d8ef4e80d1456bbae6887a73ff5166ef",
+  "source_kind": "public numerical simulation benchmark",
+  "is_measured_data": false,
+  "license": {
+    "repository_spdx": "MIT",
+    "separate_data_license_observed": false,
+    "notice_path": "source/LICENSE",
+    "notice_sha256": "d47ab7033e2e1034d0134527b80cef37cb45efa224725ec223f7934dcc0718f9",
+    "note": "Repository license applies to distributed software/documentation; no separate data license file was found. Preserve upstream license and attribution if redistributing repository content."
+  },
+  "selected_case": {
+    "id": "allen_cahn",
+    "file": {
+      "path": "main/Data/AC.mat",
+      "url": "https://raw.githubusercontent.com/maziarraissi/PINNs/932f50a2d8ef4e80d1456bbae6887a73ff5166ef/main/Data/AC.mat",
+      "bytes": 559196,
+      "sha256": "266e97eedd9ef543d7f6d370fa5f06388761aa7da2b97e476562dcf1d644a175",
+      "git_blob_sha1": "cd18945f3896e0571c4e2ed7c8a6099762056cb7"
+    },
+    "local_raw_path": "/workspace/pde-challenge-source-audit/source/main/Data/AC.mat",
+    "mat_keys": {
+      "x": "x",
+      "t": "tt",
+      "u": "uu"
+    },
+    "orientation": "space_time",
+    "field_shape": [
+      512,
+      201
+    ],
+    "coordinate_metadata": {
+      "decoded_variables": [
+        "x",
+        "tt"
+      ],
+      "field_uu_decoded": false,
+      "space_points": 512,
+      "time_points": 201,
+      "x_first": -1.0,
+      "x_last": 0.99609375,
+      "dx": 0.00390625,
+      "x_uniform": true,
+      "t_first": 0.0,
+      "t_last": 1.0,
+      "dt": 0.005,
+      "t_uniform": true,
+      "period_from_Ndx": 2.0,
+      "endpoint_span": 1.99609375,
+      "right_endpoint_duplicated": false,
+      "full_roles": {
+        "training": [
+          0,
+          120
+        ],
+        "development": [
+          120,
+          160
+        ],
+        "final": [
+          160,
+          201
+        ]
+      },
+      "role_counts": {
+        "training": {
+          "full": 120,
+          "coarse_own_role_time_stride2": 60,
+          "first": 0.0,
+          "last": 0.595,
+          "coarse_first": 0.0,
+          "coarse_last": 0.59
+        },
+        "development": {
+          "full": 40,
+          "coarse_own_role_time_stride2": 20,
+          "first": 0.6,
+          "last": 0.795,
+          "coarse_first": 0.6,
+          "coarse_last": 0.79
+        },
+        "final": {
+          "full": 41,
+          "coarse_own_role_time_stride2": 21,
+          "first": 0.8,
+          "last": 1.0,
+          "coarse_first": 0.8,
+          "coarse_last": 1.0
+        }
+      },
+      "coarse_space_points": 256,
+      "coarse_dx": 0.0078125,
+      "coarse_period": 2.0
+    },
+    "take_real_part": true,
+    "real_component_source": "Author AC.py line173: Exact=np.real(data[uu]).T. Predeclare real component as observation; do not invent an imaginary-roundoff threshold.",
+    "reference_equation": "u_t = 0.0001*u_xx + 5*u - 5*u^3",
+    "reference_terms": [
+      {
+        "name": "u_xx",
+        "coefficient": 0.0001
+      },
+      {
+        "name": "u",
+        "coefficient": 5.0
+      },
+      {
+        "name": "u^3",
+        "coefficient": -5.0
+      }
+    ],
+    "reference_for_scoring_only": true,
+    "domain_from_author": {
+      "space": [
+        -1,
+        1
+      ],
+      "time": [
+        0,
+        1
+      ],
+      "initial_condition": "x^2*cos(pi*x)"
+    },
+    "boundary": "periodic value and first spatial derivative",
+    "unit_interpretation": "author normalized coordinates; no SI units asserted",
+    "author_evidence": {
+      "script": {
+        "path": "main/discrete_time_inference (AC)/AC.py",
+        "url": "https://raw.githubusercontent.com/maziarraissi/PINNs/932f50a2d8ef4e80d1456bbae6887a73ff5166ef/main/discrete_time_inference%20%28AC%29/AC.py",
+        "bytes": 9362,
+        "sha256": "9891e5ced84f91a912b5d805ac9678ef7dd4f7e098bc8225b4b5deb9765be1cf",
+        "git_blob_sha1": "2691bcad5f6419744994692add6861fa5de6ee11"
+      },
+      "pde_line": 119,
+      "periodic_loss_lines": [
+        58,
+        59,
+        60
+      ],
+      "domain_lines": [
+        164,
+        165
+      ],
+      "boundary_points_line": 188,
+      "load_and_orientation_lines": [
+        169,
+        171,
+        172,
+        173
+      ],
+      "author_project_url": "https://maziarraissi.github.io/PINNs/",
+      "author_project_cached_sha256": "2dc8be23d00667b0736da638ed0dbb9adbeb6e3ba4d5c2e42790a2c88accd261",
+      "project_section": "Example (Allen-Cahn Equation), explicit PDE, x/t domain, u0 and periodic value/gradient conditions"
+    },
+    "fixed_adapter_before_field_decode": {
+      "coordinates_must_match": {
+        "nx": 512,
+        "nt": 201,
+        "x_first": -1.0,
+        "x_last": 0.99609375,
+        "dx": 0.00390625,
+        "t_first": 0.0,
+        "t_last": 1.0,
+        "dt": 0.005
+      },
+      "no_endpoint_removal": true,
+      "expected_period": 2.0,
+      "roles": {
+        "training": [
+          0,
+          120
+        ],
+        "development": [
+          120,
+          160
+        ],
+        "final": [
+          160,
+          201
+        ]
+      },
+      "coarse": {
+        "space_slice": "::2",
+        "time_slice": "within each already-separated role, ::2",
+        "spatial_points": 256,
+        "role_frame_counts": [
+          60,
+          20,
+          21
+        ],
+        "role_min_frames": 16
+      },
+      "no_interpolation": true,
+      "no_data_dependent_selection": true
+    },
+    "challenges": [
+      "small diffusion coefficient relative to linear/cubic reaction terms",
+      "thin phase interfaces and nonlinear reaction dynamics",
+      "noise amplified by spatial derivatives; coarse sampling changes resolution",
+      "coefficient vector error can mask diffusion error; also report per-term coefficients/errors"
+    ],
+    "field_inspection_status": {
+      "whosmat_metadata_only": true,
+      "x_tt_coordinates_decoded": true,
+      "uu_field_decoded": false,
+      "fitting_or_forecasting_executed": false
+    }
+  },
+  "alternative_candidate": {
+    "id": "pin_ns_kdv",
+    "file": {
+      "path": "main/Data/KdV.mat",
+      "url": "https://raw.githubusercontent.com/maziarraissi/PINNs/932f50a2d8ef4e80d1456bbae6887a73ff5166ef/main/Data/KdV.mat",
+      "bytes": 788239,
+      "sha256": "7c04e89a0c65692105dbe7fc8ba52cb90ce01a64e47e995a5736fbf1c06be220",
+      "git_blob_sha1": "cc184d6eae6d99fe38c6f3e23842e6d2bc94d933"
+    },
+    "mat_metadata": [
+      [
+        "tt",
+        [
+          1,
+          201
+        ],
+        "double"
+      ],
+      [
+        "uu",
+        [
+          512,
+          201
+        ],
+        "double"
+      ],
+      [
+        "x",
+        [
+          1,
+          512
+        ],
+        "double"
+      ]
+    ],
+    "reference_equation": "u_t=-u*u_x-0.0025*u_xxx",
+    "evidence": {
+      "path": "main/discrete_time_identification (KdV)/KdV.py",
+      "url": "https://raw.githubusercontent.com/maziarraissi/PINNs/932f50a2d8ef4e80d1456bbae6887a73ff5166ef/main/discrete_time_identification%20%28KdV%29/KdV.py",
+      "bytes": 12441,
+      "sha256": "bf172c4f84b4c66ab7dce74d31fb4ec1ed6ef1adab0d55eac67d8cfefe539c28",
+      "git_blob_sha1": "d29f2df0697caaeff121f58ed51d238b646220c6"
+    },
+    "reference_lines": [
+      129,
+      140,
+      226,
+      227,
+      305
+    ],
+    "boundary_status": "Not sufficiently established for current admission; project webpage has an operator-sign typo, whereas source F and Correct PDE agree. Do not treat as validated periodic yet.",
+    "selected": false,
+    "numeric_field_decoded": false
+  },
+  "excluded_candidate": {
+    "id": "burgers_shock",
+    "file": {
+      "path": "appendix/Data/burgers_shock.mat",
+      "url": "https://raw.githubusercontent.com/maziarraissi/PINNs/932f50a2d8ef4e80d1456bbae6887a73ff5166ef/appendix/Data/burgers_shock.mat",
+      "bytes": 207944,
+      "sha256": "f4d11e6798b8d29b6829984952b04adcc470d9bf70dd7e56c7985cd8e316c4bf",
+      "git_blob_sha1": "3df4f17279b519feede1e8c872aede1a0736cdc9"
+    },
+    "reference_equation": "u_t=-u*u_x+(0.01/pi)*u_xx",
+    "reason": "Author trains explicit endpoint Dirichlet data, not a periodic data/derivative boundary pair. Do not silently reuse periodic engine.",
+    "evidence_lines": [
+      140,
+      164,
+      165,
+      166,
+      167,
+      169
+    ],
+    "selected": false,
+    "numeric_field_decoded": false
+  }
+}
