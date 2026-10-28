@@ -1,0 +1,578 @@
+{
+  "sources": {
+    "experiments/generic_reference_equations.json": "74ef9ff6664049b3463a0434c5e17ea3d45f9cc081afd9c340b03a93f77a65d3",
+    "l1_study/__init__.py": "f60f17fc53ea9b395ceb87b36dd1ea6a558138c806ce1f481d80880068215461",
+    "l1_study/engine.py": "e91f3dfb634c09eef1083097ad8247cfc23c6a9d7058e701675fb229669b512f",
+    "l1_study/fixtures.py": "0869c9838647bebea5cd8a589724422e062f93d1ac89c58f261442ef4d64e956",
+    "l1_study/gaussian_check.py": "9892a4330f72d756f58c315179e1e30bfe52bf60eb835c7697de7025a7004f51",
+    "l1_study/protocol.json": "119b27535b05151a171c5bfe897eeaafc1d15ba654b844884f7918c76efdc578",
+    "l1_study/reference_review/redo_two_gaussian_third_derivative.patch": "ea815b9a09b7ee77299742bb1768a0aee420601a1e6eee0435ec39654d2ad8c3",
+    "l1_study/reference_review/source_manifest.json": "420b9d4b2d15e161a89db3c714ca77038c61b3f9faab1688ba276d006d1648cf",
+    "l1_study/run.py": "0a23d9c7636b5d11ab1611c36438b09820b3d347c6fd3efea2226e3bc14accea",
+    "pde_discovery/generic_engine.py": "09f966462d823ea23d68a211a34c1a5c499075a8599394d0f8d32417d36e670a",
+    "pde_discovery/generic_experiment.py": "e5ec3d9d25517ac1099c4b74d47c251915728fe0f48c8f89ee4001e9a4c2f9cf"
+  },
+  "preparation_sha256": "cf20a017d3578b0665f8196694797dc878f87806d2a03ff1391272232e4aa76d",
+  "data_sha256": {
+    "artifacts/generic_pde/burgers/frozen_model.json": "efb8abbd3889f232f8c096b32b9e540ebdc4f62e28f959e03f803c72600d131d",
+    "artifacts/generic_pde/kdv/frozen_model.json": "f45a79d690eab82a659538e402cff3e6e31cc317c767e148890ae4abfeffd51f",
+    "artifacts/generic_pde/ks/frozen_model.json": "ab1734f9f3d892de753d6d61e3ce459fa219daba5fc1f281289f4d634f01ac85",
+    "l1_study/data/advdiff/development/0.npz": "7f96dc5e134a73307909e8f18b8adc2d406ffaa629d8f13e14ee360edbeb2de7",
+    "l1_study/data/advdiff/development/1.npz": "891a6b1e3b2740f64fef042b60d2feb7d9e7199250fc31adc522e12637decf61",
+    "l1_study/data/advdiff/training/0.npz": "93fc6f3f691475e5b686124df1f632840c0c0c80cdee476228f8cfed585c2e91",
+    "l1_study/data/advdiff/training/1.npz": "79e3f469350e5870c7c095b36446ecbc9e3a705fe89703ce9ec4da42dee1f112",
+    "l1_study/data/advdiff/training/2.npz": "202d4162df9efc9a531336ad4c3453d4a075aad6322f13cd02709a820172eca7",
+    "l1_study/data/burgers_cole_hopf/development/0.npz": "4d73ae2a8c54e13711e75404d90e9529a761c8dfdf2e5c38e3de4ae42953e981",
+    "l1_study/data/burgers_cole_hopf/development/1.npz": "d1b02c440c5cfb9aa2903b3e2dbd3d3ef72bba0a78557555af9a81af49e7fc0e",
+    "l1_study/data/burgers_cole_hopf/training/0.npz": "e32de009a73da6de84b9c93fb05acaf818210efedde753ec2d3df4a6050c595d",
+    "l1_study/data/burgers_cole_hopf/training/1.npz": "60714f356f00c292eda491ce57fcfaa60be06f94c11d12eef362adbb27cd7385",
+    "l1_study/data/burgers_cole_hopf/training/2.npz": "374d5e39902ffdd8145a9e35799994f25954195a934ad3214a84806ed6d67f6a",
+    "l1_study/data/linear_high_order/development/0.npz": "6e11c6cee47d62b2388e97434e14840642e69decf76e6cc0c7f834e7a5aa92c5",
+    "l1_study/data/linear_high_order/development/1.npz": "44f0df6beb003344a1ed06c611fb3ee38ffba239e5403fbb914e69fac6f9c585",
+    "l1_study/data/linear_high_order/training/0.npz": "ae6d474150f06d19d1deb4d88989d456af0bfc5586c89841cda80dce9ff88562",
+    "l1_study/data/linear_high_order/training/1.npz": "945fbb56df09a0833cc2f2f4fabb48460526e5190d65a5619bf6003f833d4c59",
+    "l1_study/data/linear_high_order/training/2.npz": "3717db93d2bef96d23bda444e4c823706b1550bd32e640fe2a7d41a3ab29d350",
+    "pde_discovery/data/generic_pde/prepared/burgers/development.npz": "0a08919a1e5f249fc9f9ab6707c1481e2dbe8119db40259e1aa6bdf0abd2cca4",
+    "pde_discovery/data/generic_pde/prepared/burgers/final.npz": "ecd06e44abff2c6ae514f55e3061fa9d37c6f2ff52ea8a7a022a4d6c3052d15e",
+    "pde_discovery/data/generic_pde/prepared/burgers/training.npz": "529db61165398b6e1830b552169968d19bbb1c3b3d316c8ba828032e6d5b972e",
+    "pde_discovery/data/generic_pde/prepared/kdv/development.npz": "16b4226b4d225cdab0ca2564d58b77f3e5d0ec606cf1fb43aab56134c14426a0",
+    "pde_discovery/data/generic_pde/prepared/kdv/final.npz": "8ce7f31f0c03f6c8946472e238edb968ed57a87cc52628306f293afa7a7f2a0d",
+    "pde_discovery/data/generic_pde/prepared/kdv/training.npz": "38f798f82b2494541805597ceebef99943bba5a212a54e6d49ebde6bcdd6ee47",
+    "pde_discovery/data/generic_pde/prepared/ks/development.npz": "2be67c8d79e1583500b33efb3c7aa34eab494ff7c47592a2e849a2c9481631f6",
+    "pde_discovery/data/generic_pde/prepared/ks/final.npz": "f61806a9a212a905d6bdb11a5febdb489440c4df97ddcec22b264063101bcd00",
+    "pde_discovery/data/generic_pde/prepared/ks/training.npz": "0bc31d7773f0865fe95e72e7d6a39c74f86e10a410c2b953caa4adabc0c00017"
+  },
+  "protocol": {
+    "version": 1,
+    "purpose": "Isolated retrospective public-data comparison plus prospective fixed analytic initial-condition suite; no production code edits",
+    "reference_repository": "changsongjin/pde-l1-analytic",
+    "reference_commit": "271c6ab556c0788cad5d60e86537c8b0d6dab9e0",
+    "methods": [
+      "plain",
+      "adaptive",
+      "irl1"
+    ],
+    "promotion_candidate_fixed_before_fitting": "irl1",
+    "public_cases": [
+      "burgers",
+      "kdv",
+      "ks"
+    ],
+    "public_label": "retrospective; all final segments previously viewed",
+    "public_representation": "unchanged integrated regression; one original trajectory only",
+    "analytic_families": [
+      "advdiff",
+      "linear_high_order",
+      "burgers_cole_hopf"
+    ],
+    "analytic_derivatives": [
+      "integrated",
+      "pointwise_estimated",
+      "pointwise_exact"
+    ],
+    "training_trajectory_counts": [
+      1,
+      3
+    ],
+    "analytic_trajectory_roles": {
+      "training": 3,
+      "development": 2,
+      "final": 2
+    },
+    "analytic_grid": {
+      "nx": 64,
+      "nt": 81,
+      "x": "[0,2pi), periodic",
+      "t": "[0,0.8]"
+    },
+    "analytic_noise": 0.0,
+    "analytic_row_budget": "Within each derivative backend: B=3*floor(minimum training trajectory rows/3), both single and joint use B total rows; deterministic linspace index selection; equal trajectory weights",
+    "analytic_derivative_scope": "Pointwise exact versus estimated contrasts analytic derivatives with numerical differentiation AND spectral field/library projection; Cole-Hopf is not strictly band-limited. Integrated versus pointwise additionally changes regression form. Exact is privileged analytical input, not observable deployment performance. All fields are analytically generated, not measurements.",
+    "selection": "Per-method development sqrt(mean(per-trajectory MSE)), <=1.05*best +1e-12 then fewest terms, RMSE, deterministic candidate_id",
+    "forbidden_selection": [
+      "reference support or coefficients",
+      "final scores",
+      "cross-lambda penalized objective",
+      "lambda path occurrence frequency"
+    ],
+    "final_guard": "All 63 unique predeclared model identities and matching metadata must be frozen before final arrays generated/read or scoring references parsed. Production baseline archives remain unchanged.",
+    "primary_metrics": [
+      "exact_support",
+      "missing_terms",
+      "spurious_terms",
+      "coefficient_relative_l2"
+    ],
+    "secondary_metrics": [
+      "free_rollout_rmse",
+      "free_rollout_relative_l2",
+      "forecast_failures"
+    ],
+    "gate": {
+      "candidate": "irl1",
+      "public_exact_support_min": 2,
+      "public_spurious_total_max": 2,
+      "missing_or_forecast_failures_may_increase": false,
+      "non_oracle_analytic_scope": [
+        "integrated",
+        "pointwise_estimated"
+      ],
+      "analytic_exact_count_not_lower_than_plain": true,
+      "analytic_at_least_one_strict_structure_gain": true,
+      "no_success_to_failure_case": true,
+      "coefficient_per_case_limit": "max(1.10*plain,1e-4)",
+      "prediction_per_case_limit": "max(1.25*plain,1e-3)",
+      "all_existing_and_new_tests_must_pass": true,
+      "no_gain_action": "do not merge, keep unchanged original project as active baseline",
+      "interpretation": "engineering acceptance gate, not statistical significance; old public datasets remain retrospective"
+    },
+    "scope_limits": [
+      "finite shared nine-term library",
+      "scalar constant-coefficient one-dimensional periodic grids",
+      "no measured-data robustness established",
+      "no tuning after final scoring",
+      "no coefficient threshold changes after viewing results"
+    ]
+  },
+  "engine_protocol": {
+    "version": 1,
+    "methods": [
+      "plain",
+      "adaptive",
+      "irl1"
+    ],
+    "terms": [
+      "1",
+      "u",
+      "u^2",
+      "u^3",
+      "u_x",
+      "u_xx",
+      "u_xxx",
+      "u_xxxx",
+      "u*u_x"
+    ],
+    "mandatory_terms": [],
+    "alpha_path": [
+      3e-06,
+      1e-05,
+      3e-05,
+      0.0001,
+      0.0003,
+      0.001,
+      0.003,
+      0.01,
+      0.03,
+      0.1
+    ],
+    "trajectory_weighting": "rows multiplied by sqrt(total_rows/(trajectory_count*own_rows)) before global RMS",
+    "normalization": "one pooled training feature RMS per column and one pooled training target RMS",
+    "ridge_pilot": "solve(X.T@X/n + alpha*I, X.T@y/n) in normalized coordinates",
+    "ridge_alpha": 1e-06,
+    "adaptive_weights": "clip(1/(abs(ridge_pilot)+epsilon), lower, upper)",
+    "weight_epsilon": 0.001,
+    "weight_bounds": [
+      0.01,
+      1000.0
+    ],
+    "adaptive_solves_per_alpha": 1,
+    "irl1_solves_per_alpha": 5,
+    "irl1_initialization": "independent same ridge pilot for each alpha; no warm starts across alpha",
+    "irl1_update": "same inverse-absolute-coefficient weights after each solve",
+    "weighted_objective": "||y-X*beta||^2/(2*n) + alpha*sum(weight*abs(beta))",
+    "lasso": {
+      "max_iter": 100000,
+      "tol": 1e-10,
+      "fit_intercept": false
+    },
+    "normalized_support_threshold": 1e-06,
+    "normalized_debiased_zero_threshold": 1e-08,
+    "debias": "OLS on original normalized candidate columns; rcond=1e-10",
+    "cross_alpha_objective_selection": false,
+    "path_frequency_selection": false,
+    "exact_derivatives": "analytic features and analytic u_t supplied independently, never reconstructed from a fitted PDE",
+    "pointwise_numerical": "baseline projected spatial library; np.gradient of projected u with edge_order=2; remove two frames at each end",
+    "pointwise_exact": "supplied exact feature and u_t arrays; remove same two frames at each end",
+    "integrated": "unchanged baseline Fourier features and Simpson window construction",
+    "development_selection": "sqrt(mean(trajectory_MSE)); within 1.05*best+1e-12 choose fewest terms, error, stable ID",
+    "forecast": "unchanged baseline forecast; each development trajectory initialized only from its own first frame",
+    "reference_used_for_selection": false
+  },
+  "fixture_protocol": {
+    "families": [
+      "advdiff",
+      "linear_high_order",
+      "burgers_cole_hopf"
+    ],
+    "kind": "deterministic analytic synthetic trajectories; not measurements",
+    "spatial_grid": {
+      "points": 64,
+      "start": 0.0,
+      "period": 6.283185307179586,
+      "duplicated_endpoint": false
+    },
+    "temporal_grid": {
+      "points": 81,
+      "start": 0.0,
+      "end": 0.8
+    },
+    "role_counts": {
+      "training": 3,
+      "development": 2,
+      "final": 2
+    },
+    "role_seed_base": {
+      "training": 1101,
+      "development": 2201,
+      "final": 3301
+    },
+    "seed_rule": "role_seed_base + zero-based trajectory index",
+    "initial_modes": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "linear_base_amplitudes": [
+      0.65,
+      0.3,
+      0.17,
+      0.09
+    ],
+    "cole_hopf_q_base_amplitudes": [
+      0.32,
+      0.15,
+      0.07,
+      0.03
+    ],
+    "amplitude_factor": "independent uniform [0.8,1.2) from declared generator seed",
+    "phase": "independent uniform [-pi,pi) after amplitude draws",
+    "linear_mean": 0.15,
+    "cole_hopf_q_mean": 1.0,
+    "noise": "none",
+    "all_initial_conditions_contain_all_four_modes": true,
+    "same_parameters_across_roles_and_initial_conditions": true,
+    "exact_derivatives": "analytic Fourier differentiation or Cole-Hopf quotient differentiation",
+    "exact_time_derivative_uses_discovered_pde": false,
+    "oracle_control": true,
+    "independent_final_initial_conditions": true
+  },
+  "records": [
+    {
+      "id": "public--burgers--integrated--n1--plain",
+      "file": "models/public--burgers--integrated--n1--plain.json",
+      "sha256": "cd032b2fb9c13069cb4d8e456ca77f27ff4cf5f637b5a5ecc2529c5e1d5f90e0"
+    },
+    {
+      "id": "public--burgers--integrated--n1--adaptive",
+      "file": "models/public--burgers--integrated--n1--adaptive.json",
+      "sha256": "18d6c620d5d6f57e00a18630656be40f7fb1e633062da3b2de1f60aa0d72df89"
+    },
+    {
+      "id": "public--burgers--integrated--n1--irl1",
+      "file": "models/public--burgers--integrated--n1--irl1.json",
+      "sha256": "e0955893bf94d143197c8a4b20d600c4d7e4fd4786bfa793b02c4651eb2ce8c8"
+    },
+    {
+      "id": "public--kdv--integrated--n1--plain",
+      "file": "models/public--kdv--integrated--n1--plain.json",
+      "sha256": "e9c55bbc5508dd8490ef6a0e86c55409c6bf3eb984c0d0f9a3e96c4b5a126f9d"
+    },
+    {
+      "id": "public--kdv--integrated--n1--adaptive",
+      "file": "models/public--kdv--integrated--n1--adaptive.json",
+      "sha256": "b053867ed3cb7f680a8031e1619c74ac50ef8c86cf8cdc0cf4046388aff0ef42"
+    },
+    {
+      "id": "public--kdv--integrated--n1--irl1",
+      "file": "models/public--kdv--integrated--n1--irl1.json",
+      "sha256": "31dbf705540dc08c861df6e6374b442c1b8c1774f27d3e1985e4b0b10e826f54"
+    },
+    {
+      "id": "public--ks--integrated--n1--plain",
+      "file": "models/public--ks--integrated--n1--plain.json",
+      "sha256": "6099bc99898d36252ed8213478ea0f2a2b7dc96cc7200f0c979ded49df884ecc"
+    },
+    {
+      "id": "public--ks--integrated--n1--adaptive",
+      "file": "models/public--ks--integrated--n1--adaptive.json",
+      "sha256": "b5502fbebca5be1eeb04c13a51a56a8ff7633a85e7b52df8a0107b1db2cecd24"
+    },
+    {
+      "id": "public--ks--integrated--n1--irl1",
+      "file": "models/public--ks--integrated--n1--irl1.json",
+      "sha256": "0979aeae59883e6392324b2ccfef26b7ba036b08d0a5b3290a828055317ccb53"
+    },
+    {
+      "id": "analytic--advdiff--integrated--n1--plain",
+      "file": "models/analytic--advdiff--integrated--n1--plain.json",
+      "sha256": "898f71dcc4d749d4ece2d59595365e1f3eb57c1f03c0e5f5ddfb756f924920df"
+    },
+    {
+      "id": "analytic--advdiff--integrated--n1--adaptive",
+      "file": "models/analytic--advdiff--integrated--n1--adaptive.json",
+      "sha256": "15b4a1cd0e54ca8aa7f6c7c5f2693abba2f491378dcb24069e8db55137182a86"
+    },
+    {
+      "id": "analytic--advdiff--integrated--n1--irl1",
+      "file": "models/analytic--advdiff--integrated--n1--irl1.json",
+      "sha256": "36857a0683cc717f04e6f3baf3eacb7569b0e832761088d8978c170e0b7f0d37"
+    },
+    {
+      "id": "analytic--advdiff--integrated--n3--plain",
+      "file": "models/analytic--advdiff--integrated--n3--plain.json",
+      "sha256": "a0951f3232991e56109216f8d32d707a4f5bb7d0eee4490a59cc54eb4288b497"
+    },
+    {
+      "id": "analytic--advdiff--integrated--n3--adaptive",
+      "file": "models/analytic--advdiff--integrated--n3--adaptive.json",
+      "sha256": "d5ea89c8bd702e3d3b26808c5ccdf17b9bbd1a7c0a67ca51ef6b70b1d63e6cad"
+    },
+    {
+      "id": "analytic--advdiff--integrated--n3--irl1",
+      "file": "models/analytic--advdiff--integrated--n3--irl1.json",
+      "sha256": "606696972c21556c451e3acc0806959878dac58be9cc0396dade3bce874b3cce"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_estimated--n1--plain",
+      "file": "models/analytic--advdiff--pointwise_estimated--n1--plain.json",
+      "sha256": "6fde712460983485b36db57216026052db90be1dcac8d87a09e1a7cd23d85010"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_estimated--n1--adaptive",
+      "file": "models/analytic--advdiff--pointwise_estimated--n1--adaptive.json",
+      "sha256": "8770a6022c0ab02c3e3cd13c08e4009bc91d4d1694f66f524d13b48295ee1611"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_estimated--n1--irl1",
+      "file": "models/analytic--advdiff--pointwise_estimated--n1--irl1.json",
+      "sha256": "e2d8104994205963b4f15fbbc1c15306d9f5c2f3c144e8d411709a963d3a337d"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_estimated--n3--plain",
+      "file": "models/analytic--advdiff--pointwise_estimated--n3--plain.json",
+      "sha256": "b98a80b9cf7852a62895fd7951d2277a5e00bb3967293ac3656f0054e19e946b"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_estimated--n3--adaptive",
+      "file": "models/analytic--advdiff--pointwise_estimated--n3--adaptive.json",
+      "sha256": "34bf6706d9be487de1652bb5a242ed62bc79fd75ee8c892f6a12db5fda6543f5"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_estimated--n3--irl1",
+      "file": "models/analytic--advdiff--pointwise_estimated--n3--irl1.json",
+      "sha256": "c4e901037848e433c67a1e2cd7335505081ef324d8a0814af1cf7575b543f658"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_exact--n1--plain",
+      "file": "models/analytic--advdiff--pointwise_exact--n1--plain.json",
+      "sha256": "e0d03a15cf1019c61b09ab7388063a6059f40530d8b3a6e48e0d395fdbecf3ba"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_exact--n1--adaptive",
+      "file": "models/analytic--advdiff--pointwise_exact--n1--adaptive.json",
+      "sha256": "5ac252458032847cbb226738be80ae2b003ed50929f958e43d9d14146918c107"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_exact--n1--irl1",
+      "file": "models/analytic--advdiff--pointwise_exact--n1--irl1.json",
+      "sha256": "e9809027ebc527dca28244539243af27e264bbbc9f547de28dc4abe1e6f5c041"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_exact--n3--plain",
+      "file": "models/analytic--advdiff--pointwise_exact--n3--plain.json",
+      "sha256": "beba00c62cdf665f91e97a973ead3454ff8bc982b1e8538cd21635029fd65b8e"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_exact--n3--adaptive",
+      "file": "models/analytic--advdiff--pointwise_exact--n3--adaptive.json",
+      "sha256": "63561693def1f0f25d9340eba0e4cb24a1eaadfdea597f32da65a2acbdab988b"
+    },
+    {
+      "id": "analytic--advdiff--pointwise_exact--n3--irl1",
+      "file": "models/analytic--advdiff--pointwise_exact--n3--irl1.json",
+      "sha256": "a3030ddbdffe60ea558eacabdc1ca43173da23d1e8df73387e12a92961441715"
+    },
+    {
+      "id": "analytic--linear_high_order--integrated--n1--plain",
+      "file": "models/analytic--linear_high_order--integrated--n1--plain.json",
+      "sha256": "b24611553272550486975a90ba31e497e964e55b30d0323f41c6a7896cdd6719"
+    },
+    {
+      "id": "analytic--linear_high_order--integrated--n1--adaptive",
+      "file": "models/analytic--linear_high_order--integrated--n1--adaptive.json",
+      "sha256": "6b0d75971f58bfe51241821ba901dfe4318229b33f2dcb6aa0edb6c7033f14b4"
+    },
+    {
+      "id": "analytic--linear_high_order--integrated--n1--irl1",
+      "file": "models/analytic--linear_high_order--integrated--n1--irl1.json",
+      "sha256": "5ce9ba386a2658e3504832f232323078116f299e20df060a7e249c37b8bd5fad"
+    },
+    {
+      "id": "analytic--linear_high_order--integrated--n3--plain",
+      "file": "models/analytic--linear_high_order--integrated--n3--plain.json",
+      "sha256": "8f0595dff6935761e5621fe06416cc10fb82b9af6cd655a59057ca2bca9cf631"
+    },
+    {
+      "id": "analytic--linear_high_order--integrated--n3--adaptive",
+      "file": "models/analytic--linear_high_order--integrated--n3--adaptive.json",
+      "sha256": "035b86cefcc43a10f6f174f8bd9d223f5fac89a1222b974a5571887c983abf13"
+    },
+    {
+      "id": "analytic--linear_high_order--integrated--n3--irl1",
+      "file": "models/analytic--linear_high_order--integrated--n3--irl1.json",
+      "sha256": "2a2edeeb9c9655190d7be889e4194909ba53f8dfaf3d8533dccfd4c3ecd42265"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_estimated--n1--plain",
+      "file": "models/analytic--linear_high_order--pointwise_estimated--n1--plain.json",
+      "sha256": "56325e1e1e09dcb037486ff79ab12cea267865184b43ba69f66237af7043a676"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_estimated--n1--adaptive",
+      "file": "models/analytic--linear_high_order--pointwise_estimated--n1--adaptive.json",
+      "sha256": "cfc496e66fef26298f0e7651756eca395db129c1223093863ae29c6a227a2e85"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_estimated--n1--irl1",
+      "file": "models/analytic--linear_high_order--pointwise_estimated--n1--irl1.json",
+      "sha256": "381b4235b5402982383359bcee3750ba7b783b299ad2c463e9ae6bf8983d1093"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_estimated--n3--plain",
+      "file": "models/analytic--linear_high_order--pointwise_estimated--n3--plain.json",
+      "sha256": "ad4c319d84698a0822252145fb8b6b20849a8f4412c2cc86fda9f58f0eb5c671"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_estimated--n3--adaptive",
+      "file": "models/analytic--linear_high_order--pointwise_estimated--n3--adaptive.json",
+      "sha256": "d9815c1399ad0428ce2217f75bef2e8c20b06096476f1d45e8e8aeac242a3cab"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_estimated--n3--irl1",
+      "file": "models/analytic--linear_high_order--pointwise_estimated--n3--irl1.json",
+      "sha256": "cc4b2fa35a0802180e9ae1a79aaaa11f0a4c05947614fa0ff3f3032f0947481c"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_exact--n1--plain",
+      "file": "models/analytic--linear_high_order--pointwise_exact--n1--plain.json",
+      "sha256": "1370e961cadfb821d48b18d7f1a506f586c971b293ec039f6c6c8feaced6e4c7"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_exact--n1--adaptive",
+      "file": "models/analytic--linear_high_order--pointwise_exact--n1--adaptive.json",
+      "sha256": "67a41f3689976dd86f5bbfd63e069efbb6d52dbbafc4384acebda66d24ae8479"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_exact--n1--irl1",
+      "file": "models/analytic--linear_high_order--pointwise_exact--n1--irl1.json",
+      "sha256": "a3b06a5c0c7ceefddc2115111d5bbdc86aefecf2bd4bfa5a69bbf5dd4ca70a1e"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_exact--n3--plain",
+      "file": "models/analytic--linear_high_order--pointwise_exact--n3--plain.json",
+      "sha256": "92e5f9545a965ac78b90392c1273ac18ee589451014daf4e32ba02418ddb3494"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_exact--n3--adaptive",
+      "file": "models/analytic--linear_high_order--pointwise_exact--n3--adaptive.json",
+      "sha256": "c40d8384ec218018e941dd7b928a46ab1a811e94554b7f743b69e4bca8571839"
+    },
+    {
+      "id": "analytic--linear_high_order--pointwise_exact--n3--irl1",
+      "file": "models/analytic--linear_high_order--pointwise_exact--n3--irl1.json",
+      "sha256": "8373c271cd34d160b28740954250dd8dc8cd60eac28e7a09269971056b08a71a"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--integrated--n1--plain",
+      "file": "models/analytic--burgers_cole_hopf--integrated--n1--plain.json",
+      "sha256": "497e167508053a9764e3ce785db055c8791bed4f21950a49ea5d1b7751ba7a6e"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--integrated--n1--adaptive",
+      "file": "models/analytic--burgers_cole_hopf--integrated--n1--adaptive.json",
+      "sha256": "768161fae422d10324dca0d81d3ba28618528a477c973882fa8cef9575723720"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--integrated--n1--irl1",
+      "file": "models/analytic--burgers_cole_hopf--integrated--n1--irl1.json",
+      "sha256": "26126c4cdcf3dee3a22c294b206315f238e26153db4379eaae00fcaa20afdd19"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--integrated--n3--plain",
+      "file": "models/analytic--burgers_cole_hopf--integrated--n3--plain.json",
+      "sha256": "f09f349d23126cc70ca2120fa873e221aa807fbef6e668b958840212cc9d89f8"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--integrated--n3--adaptive",
+      "file": "models/analytic--burgers_cole_hopf--integrated--n3--adaptive.json",
+      "sha256": "a92118ae597d0c473f61cac0443515a55f1e913ec679eb5f3441f852de7b0a65"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--integrated--n3--irl1",
+      "file": "models/analytic--burgers_cole_hopf--integrated--n3--irl1.json",
+      "sha256": "ed9bdf8571778851077b385351a4652e59db8ac3c851f0c98c7b9caf57fff062"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_estimated--n1--plain",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_estimated--n1--plain.json",
+      "sha256": "5880ba8405854528cc20d05d13d606c61fe635cde7d217e99595fbcd0279df5e"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_estimated--n1--adaptive",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_estimated--n1--adaptive.json",
+      "sha256": "b270ce3be8cc3226d466ec0026e6d4e64146ccb92888fc823e9cc522dfd70bf2"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_estimated--n1--irl1",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_estimated--n1--irl1.json",
+      "sha256": "51a8be60f789494e3271abb8561008fe69997efec0089c34c77463e5d6cadc11"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_estimated--n3--plain",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_estimated--n3--plain.json",
+      "sha256": "968b3f849be7e6ddff185054cfbd9526a0fa8403df0beb11c840e0f38abd8bdb"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_estimated--n3--adaptive",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_estimated--n3--adaptive.json",
+      "sha256": "f0dedb5b31bb228e7d5174838a3928461cf28f527b00dc071192298794e48c05"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_estimated--n3--irl1",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_estimated--n3--irl1.json",
+      "sha256": "339032a5b4eabe755f11feec69ab8817398e7f51de4bfe8f2d31419566045865"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_exact--n1--plain",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_exact--n1--plain.json",
+      "sha256": "a7f75dab81c2c047e4b76add6e02c020c12bc9eefaa760b99a97acd4cb429ce1"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_exact--n1--adaptive",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_exact--n1--adaptive.json",
+      "sha256": "b50cce9cd53820c246e21ae0d5b06ae8a3c2966f8a5dc19c507f60377fd2a19b"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_exact--n1--irl1",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_exact--n1--irl1.json",
+      "sha256": "a65e2cd6e6ce84665ee75bf732819b954248a552942c492b3c0026ea80b72728"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_exact--n3--plain",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_exact--n3--plain.json",
+      "sha256": "60c47664d204539a34cd42e244116b815943f707f46e89d8e26be48f8e2ccee3"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_exact--n3--adaptive",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_exact--n3--adaptive.json",
+      "sha256": "2e6ec2f877caa2b596ee833b17818e1d296475bb0a8a19d4a5e7e23391b331ad"
+    },
+    {
+      "id": "analytic--burgers_cole_hopf--pointwise_exact--n3--irl1",
+      "file": "models/analytic--burgers_cole_hopf--pointwise_exact--n3--irl1.json",
+      "sha256": "ac68b4d091da0eaca06bf8fb1554cba27976c366840871c774071f70f408c90d"
+    }
+  ],
+  "all_models_frozen_before_final": true,
+  "analytic_final_fields_generated": false
+}
