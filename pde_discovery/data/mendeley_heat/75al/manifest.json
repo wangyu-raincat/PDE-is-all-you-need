@@ -1,0 +1,90 @@
+{
+  "experiment": {
+    "title": "Mendeley 金属杆温度试验：75al，三次完整重复采集",
+    "source_url": "https://data.mendeley.com/datasets/sbcf36976g/1",
+    "doi": "10.17632/sbcf36976g.1",
+    "license": "CC BY 4.0",
+    "description": "已发表的真实金属杆热电偶测量数据；aluminum，75 温度档，同一预设试验组的文件 1/2/3 依次用于训练/开发/最终验证。仅使用六个原始温度测点，不增加空间插值点。",
+    "provenance_status": "published_experimental_dataset_user_supplied_archive",
+    "material": "aluminum",
+    "temperature_setting_label": "75",
+    "authors": [
+      "Lauren Tomanek",
+      "Daniel Stutts"
+    ],
+    "dataset_title": "Data on the Validation to Determine the Material Thermal Properties Estimation Via a One-Dimensional Transient Convection Model"
+  },
+  "spacing_m": 0.01,
+  "sensor_positions_m": [
+    0.0,
+    0.01,
+    0.02,
+    0.03,
+    0.04,
+    0.05
+  ],
+  "units": {
+    "time": "s",
+    "space": "m",
+    "temperature": "temperature excess above ambient, K (numerically equal to degrees C difference)"
+  },
+  "csv_format": {
+    "delimiter": ",",
+    "skiprows": 1,
+    "time_column": 0,
+    "temperature_columns": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "split_kind": "independent_repeated_acquisitions",
+  "splits": {
+    "training": {
+      "file": "../raw/75al1.csv",
+      "sha256": "8a923f40a6c3a6652576d0043f66dda90017a869eb061765c751c4320c194a5e"
+    },
+    "development": {
+      "file": "../raw/75al2.csv",
+      "sha256": "df151205c4bcb9573d3805d1ab3159fd127af2699c843cf2f6530f6980811297"
+    },
+    "final": {
+      "file": "../raw/75al3.csv",
+      "sha256": "32775a6d6e23526a025e65fd47e3b7fb5640547c8dc4d437b2fcc0de1fd6bfc7"
+    }
+  },
+  "selection_frozen_before_final": true,
+  "split_assignment_basis": "All nine material × temperature groups fixed by filenames before examining development/final numeric values; suffix 1 training, 2 development, 3 final; full acquisitions, no rows subsetting.",
+  "training_metadata_only": {
+    "rows": 1510,
+    "time_start_s": 0.0,
+    "time_end_s": 301.8,
+    "sampling_interval_median_s": 0.1999999999999993,
+    "sampling_interval_min_s": 0.19999999999998863,
+    "sampling_interval_max_s": 0.20000000000004547
+  },
+  "unused_columns": {
+    "7": "Power (1023 Max): author heater command column, not used for identification; not interpreted as watts."
+  },
+  "provenance": {
+    "author_code": "https://github.com/lbtcn6/oneDkhEstimator/blob/V1.0.0/oneDkhEstimator.py",
+    "author_code_git_blob_sha": "05b5e42485afa7f834478cb0b0ec8e2b63f11d09",
+    "author_code_geometry_lines": [
+      181,
+      204
+    ],
+    "paper_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8813594/",
+    "paper_doi": "10.1016/j.dib.2021.107632",
+    "archive_filename": "mendeley-sbcf36976g-dataset.zip",
+    "archive_sha256": "ad08f96e0273ac412830013d9db930e34414482bce4b7e1a29677f13099c8149",
+    "archive_source_claim": "User-supplied SOURCE.txt says all 80 data files were SHA-256 verified against Mendeley metadata on 2026-10-27.",
+    "independent_source_byte_verification": false,
+    "verification_performed": "Local archive SHA-256, ZIP CRC, byte-preserving extraction, per-file SHA-256. SOURCE.txt claim is preserved but remote source hashes were not independently checked here.",
+    "condition_note": "50/75/100 denote temperature-test groups, not wind speeds. Author Temp-mode code assigns VV=5 as wind-speed guess for all 9 files per material; this is code metadata, not an independently measured wind-speed log.",
+    "author_code_excerpt": "../author_oneDkhEstimator_V1.0.0_lines1-330.txt"
+  },
+  "provenance_note": "本次为论文作者采集并公开发布的真实金属杆实验数据复现（Mendeley Data，DOI: 10.17632/sbcf36976g.1；数据来源 https://data.mendeley.com/datasets/sbcf36976g/1），本项目未自行操作实验装置。输入来自用户提供的原始数据压缩包；已完成本地压缩包 CRC、SHA-256 与逐文件 SHA-256 校验，未独立核对远端 Mendeley 文件哈希。SOURCE.txt 中的远端哈希核对声明属于输入包附带声明。"
+}

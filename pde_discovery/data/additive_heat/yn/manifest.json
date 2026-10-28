@@ -1,0 +1,101 @@
+{
+  "experiment": {
+    "title": "增材 304L 热杆 yn：五次记录",
+    "source_url": "https://data.mendeley.com/datasets/sbcf36976g/1",
+    "doi": "10.17632/sbcf36976g.1",
+    "paper_doi": "10.1016/j.dib.2021.107632",
+    "associated_study_doi": "10.1016/j.addma.2021.101886",
+    "license": "CC BY 4.0",
+    "material": "additively manufactured 304L stainless steel",
+    "specimen": "yn",
+    "build_direction": "y",
+    "porosity_category": "non-high-porosity category (not zero porosity)",
+    "authors": [
+      "Lauren Tomanek",
+      "Daniel Stutts"
+    ]
+  },
+  "spacing_m": 0.007,
+  "sensor_positions_m": [
+    0,
+    0.007,
+    0.014,
+    0.021,
+    0.028,
+    0.035
+  ],
+  "units": {
+    "time": "s",
+    "space": "m",
+    "temperature": "K excess above ambient; equal numerically to Celsius difference"
+  },
+  "csv_format": {
+    "delimiter": ",",
+    "skiprows": 1,
+    "time_column": 0,
+    "temperature_columns": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "split_kind": "repeated_acquisitions_same_specimen",
+  "splits": {
+    "training": {
+      "repeat": 1,
+      "file": "../raw/yn1.csv",
+      "sha256": "53d3c2b2d0eea648daf6f106b97c8709c5ce82203a2e500d653666acb8922e00",
+      "byte_size": 176371,
+      "zip_crc32": "2dd5474d"
+    },
+    "development": {
+      "repeat": 2,
+      "file": "../raw/yn2.csv",
+      "sha256": "52d479572668aff47681ebe98ee0262f4c3f11c96a991214e6f691b006151e80",
+      "byte_size": 177289,
+      "zip_crc32": "c5ba8469"
+    }
+  },
+  "holdouts": [
+    {
+      "repeat": 3,
+      "file": "../raw/yn3.csv",
+      "sha256": "b9215ab62f4d4699fe8e8f4b44b34f4d7064cef8dd9750b5d43dfb98de225c62",
+      "byte_size": 176290,
+      "zip_crc32": "67b88b29"
+    },
+    {
+      "repeat": 4,
+      "file": "../raw/yn4.csv",
+      "sha256": "d54e8fa9d74264d0eba43fdd9ed530025e7a00eacfb1d2897cd2d079864055a6",
+      "byte_size": 176814,
+      "zip_crc32": "7a1efb38"
+    },
+    {
+      "repeat": 5,
+      "file": "../raw/yn5.csv",
+      "sha256": "b3be2f430b1c686ac0bf0c8e98449057fe48ca16c4a255a6942bd65d915d72bc",
+      "byte_size": 176020,
+      "zip_crc32": "b2be479f"
+    }
+  ],
+  "assignment": "File suffix 1 training, 2 development, 3/4/5 project-new holdout; complete acquisitions, no row slicing.",
+  "prior_numeric_use_by_this_project": false,
+  "scope_note": "Each specimen has five tests per published source; exact wind speed/heating and reset conditions per acquisition not independently verified. This is specimen-specific refitting, not zero-shot material transfer.",
+  "unused_columns": {
+    "7": "10-bit heater PWM instruction if present; not watts and not used."
+  },
+  "provenance": {
+    "archive_sha256": "ad08f96e0273ac412830013d9db930e34414482bce4b7e1a29677f13099c8149",
+    "author_code_url": "https://github.com/lbtcn6/oneDkhEstimator/blob/V1.0.0/oneDkhEstimator.py",
+    "author_code_git_blob_sha": "05b5e42485afa7f834478cb0b0ec8e2b63f11d09",
+    "sensor_coordinate_source_line": 225,
+    "metadata_file": "../metadata_verification.md",
+    "source_excerpts_file": "../source_excerpts.txt",
+    "remote_source_hash_independently_verified": false,
+    "performed": "ZIP SHA-256; CRC verified by reading each whitelisted member; byte-preserving copy; local per-file SHA-256. No CSV numeric parsing or XLSX reading at preparation."
+  }
+}

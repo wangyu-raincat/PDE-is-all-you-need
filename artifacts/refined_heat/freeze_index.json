@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "cases": [
+    "50ss",
+    "75ss",
+    "100ss",
+    "50al",
+    "75al",
+    "100al",
+    "50cu",
+    "75cu",
+    "100cu"
+  ],
+  "records": [
+    {
+      "case": "50ss",
+      "frozen_model_sha256": "7ff32f5565ab0e45a7b7ac3b57ac81c7664a40418638712a696320bf7533e2b9",
+      "manifest_sha256": "e626158dfa8b5bd8a44d2941b4b18f161203ebae1a4bd89775c108168ef2c7fa",
+      "selected_model": "D+h+c",
+      "failure_reason": null
+    },
+    {
+      "case": "75ss",
+      "frozen_model_sha256": "d7c5ea228d44c4cff275738201fc0121cf39648b4681ee5f39d7fe7d0b9d3473",
+      "manifest_sha256": "451ea6a453ec53b9008b3506a2157f97651e91f17447fb9e941a86b870a9a4ac",
+      "selected_model": "D+h+c",
+      "failure_reason": null
+    },
+    {
+      "case": "100ss",
+      "frozen_model_sha256": "59a99acb60997bf19506b57ff67b233d7d3adeef259e8f7fa7b54a9926d530fc",
+      "manifest_sha256": "ac5dbfc965eb1d50280fbac36096d0b1037d1fddb6b00755c85d8d4ff2b08e3a",
+      "selected_model": "D+h+c",
+      "failure_reason": null
+    },
+    {
+      "case": "50al",
+      "frozen_model_sha256": "9223f84ee31e2f5a5b9088b45092f50fb0a300b3f3fa8ab1c3f7213b7fe5785c",
+      "manifest_sha256": "0e2306da906e57c19abd87dd3976f960937b39ca6cb147b51d6cc4c004191446",
+      "selected_model": "D+h",
+      "failure_reason": null
+    },
+    {
+      "case": "75al",
+      "frozen_model_sha256": "7d9ad3eb0341012fb5be42b964436a848c6e58c9093c2f8eaad34209776dc302",
+      "manifest_sha256": "599e3d3e4f6b604d2e1dbbf030c2c147f5078155e9479e08e9be8e7f9fe423b8",
+      "selected_model": "D+h",
+      "failure_reason": null
+    },
+    {
+      "case": "100al",
+      "frozen_model_sha256": "abd999553445d275b3bcbf3d66900e61436037423b0f51fb83aa5955cb70da78",
+      "manifest_sha256": "1650be8b51053e995fd3acc4ed7d854a187f98af432e026a786cb2a70c0b0590",
+      "selected_model": "D+h",
+      "failure_reason": null
+    },
+    {
+      "case": "50cu",
+      "frozen_model_sha256": "c96c76959f58755e024d161a887256777ad705df85adebd6ba985ca6a8eb9613",
+      "manifest_sha256": "24785bcf8c19109623a86ea6b173a0ec55d8b312dab6bab8c040170f7f51de1d",
+      "selected_model": "D+h",
+      "failure_reason": null
+    },
+    {
+      "case": "75cu",
+      "frozen_model_sha256": "4d5b100e1bd4b696922eb412159859cbcfb2290655bdf35a8a0a97c85a801536",
+      "manifest_sha256": "32419fd1d9e9d7a2188e39a0fd103aeecf49c0968fbd6eae6ebf3402280e8e3f",
+      "selected_model": "D+h",
+      "failure_reason": null
+    },
+    {
+      "case": "100cu",
+      "frozen_model_sha256": "b4f74ac779a3b785941079cfc41b72b519e784e9cf7d4584d2975d7d14a79571",
+      "manifest_sha256": "0c29126dafa9e16fd0880de77b34ac94f91139e73b82d28bb98a57d75fd5c361",
+      "selected_model": "D+h",
+      "failure_reason": null
+    }
+  ],
+  "primary_case": "50ss",
+  "all_nine_cases": true,
+  "source_sha256": {
+    "real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1",
+    "refined_experiment.py": "26ece449cb4307baf0690384312e6dd7795cd9bd55c569ab2465fbbb79a3a277",
+    "real_heat.py": "8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc",
+    "real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04"
+  },
+  "protocol": {
+    "method": "physics_prior_trajectory_fitting",
+    "model_family": "theta_t = D theta_xx - h theta + c; D > 0, h >= 0",
+    "structure_comparison": [
+      "D",
+      "D+h",
+      "D+c",
+      "D+h+c"
+    ],
+    "is_l1_optimization": false,
+    "physical_prior": "扩散必选；线性衰减和常数源可选；四个预设结构比较，不是无先验方程发现。",
+    "fitting": {
+      "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+      "is_l1": false,
+      "equation_family": "theta_t = D theta_xx - h theta + c",
+      "model_names": [
+        "D",
+        "D+h",
+        "D+c",
+        "D+h+c"
+      ],
+      "physical_prior": "D > 0; h >= 0; no advection or quadratic reaction; source c optional",
+      "parameter_bounds": {
+        "D_m2_s": [
+          1e-08,
+          0.001
+        ],
+        "h_per_s": [
+          0.0,
+          1.0
+        ],
+        "c_K_s": [
+          -1.0,
+          1.0
+        ]
+      },
+      "initial_values_D_h_c": [
+        [
+          1e-06,
+          0.001,
+          0.0
+        ],
+        [
+          1e-05,
+          0.01,
+          0.0
+        ],
+        [
+          0.0001,
+          0.1,
+          0.0
+        ]
+      ],
+      "optimizer_coordinates": "log(D), h/0.01, c/0.1, with absent parameters omitted",
+      "optimizer": "scipy.optimize.least_squares, trf, linear loss, 2-point Jacobian",
+      "max_nfev_per_start": 250,
+      "ftol": 1e-09,
+      "xtol": 1e-09,
+      "gtol": 1e-09,
+      "training_residual": "four interior rollout errors excluding initial frame, divided by sqrt(count)",
+      "start_selection": "lowest training RMSE among successful starts; no development or final input",
+      "failed_start_handling": "record exception or failure and continue remaining fixed starts",
+      "failed_support_handling": "retain an explicit failed candidate and continue other fixed supports",
+      "propagator": "four-point sine eigenmodes with piecewise-linear measured boundary forcing",
+      "time_step_group_relative_tolerance": 1e-10,
+      "time_step_group_representative": "mean original dt within each numerically equal contiguous block",
+      "spatial_observation_count": 6,
+      "interior_state_count": 4,
+      "spatial_upsampling": false,
+      "data_smoothing": "none",
+      "parameter_boundary_hit_tolerance": "1e-5 of the optimizer-coordinate bound range",
+      "scope": "coarse-grid effective parameters; not a proof of a unique continuous PDE"
+    },
+    "selection_rule": "只用 repeat2 的四内点 RMSE；最优值1.05倍内先最少项，再最低RMSE，最后模型名称。",
+    "eligibility_rule": "训练优化收敛、局部参数敏感性Jacobian满列秩且开发预测有限；满秩不证明物理机制唯一。",
+    "near_optimal_factor": 1.05,
+    "fit_data": "完整 repeat1",
+    "selection_data": "完整 repeat2",
+    "comparison_data": "完整 repeat3（上一轮已查看）",
+    "prior_seen_test": true,
+    "previous_test_already_seen": true,
+    "new_blind_validation": false,
+    "final_data_selects_model": false,
+    "all_declared_cases_frozen_before_comparison_load": true,
+    "prediction_inputs": "两端完整实测温升 + 四个内部测点初始温升；无后续内部实测值。",
+    "scoring": "仅四内点；排除初始化首帧。",
+    "units": {
+      "time": "s",
+      "space": "m",
+      "temperature": "K above ambient"
+    },
+    "spatial_upsampling": false,
+    "smoothing": "none",
+    "stability_diagnostic": "训练记录按行数分成不重叠前半和后半，分别拟合已选支持；不选模，不作置信区间。",
+    "protocol_document_sha256": "71be6bee7c5e8e5fd8ea63bc12df1aa56071333a08c9c0ee0345856d997717bf",
+    "source_sha256": {
+      "real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1",
+      "refined_experiment.py": "26ece449cb4307baf0690384312e6dd7795cd9bd55c569ab2465fbbb79a3a277",
+      "real_heat.py": "8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc",
+      "real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04"
+    }
+  },
+  "prior_seen_test": true,
+  "new_blind_validation": false,
+  "final_numeric_values_loaded_in_freeze": false
+}

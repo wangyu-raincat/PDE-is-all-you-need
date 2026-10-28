@@ -1,0 +1,220 @@
+{
+  "equation": "u_t = 1 u_xx",
+  "terms": [
+    {
+      "name": "u_xx",
+      "coefficient": 1.000000017426653
+    }
+  ],
+  "status": "ambiguous",
+  "candidates": [
+    {
+      "equation": "u_t = 1 u_xx",
+      "terms": [
+        {
+          "name": "u_xx",
+          "coefficient": 1.000000017426653
+        }
+      ],
+      "fit_error": 8.884703519854472e-08,
+      "validation_error": null,
+      "validation_relative_error": null,
+      "validation_failure": null
+    },
+    {
+      "equation": "u_t = - 1 u",
+      "terms": [
+        {
+          "name": "u",
+          "coefficient": -1.0000000174266528
+        }
+      ],
+      "fit_error": 8.884703522808313e-08,
+      "validation_error": null,
+      "validation_relative_error": null,
+      "validation_failure": null
+    }
+  ],
+  "diagnostics": {
+    "training_trajectories": 1,
+    "regression_samples": 2816,
+    "candidate_library": [
+      "1",
+      "u",
+      "u²",
+      "u³",
+      "u_x",
+      "u_xx",
+      "u·u_x"
+    ],
+    "high_frequency_fraction": 1.65201179610558e-16,
+    "derivative_method": "空间低通谱导数（保留前6个模态）+ 时间平滑与局部积分回归",
+    "boundary": "periodic",
+    "ambiguous_pairs": [
+      {
+        "terms": [
+          "u",
+          "u_xx"
+        ],
+        "correlation": -0.9999999999999993
+      }
+    ],
+    "alias_correlation_threshold": 0.995,
+    "alias_tolerance_rule": "保留等稀疏替换：训练误差增加不超过 max(基础容差, 2√(1−相关系数²))",
+    "needs_validation": true,
+    "validation_relative_error": null,
+    "validation_threshold": 0.05,
+    "validation_role": "最终留出评估；不参与拟合、候选排序或解除训练歧义",
+    "condition_number": 1013619329300380.5,
+    "fit_relative_error": 8.884703519854472e-08,
+    "sparse_candidates_evaluated": 2,
+    "competing_candidates": 2,
+    "unresolved_ambiguity": true
+  },
+  "warnings": [
+    "结果仅适用于当前有限候选库、周期边界和数据覆盖范围，不是唯一真实规律的证明。",
+    "多个稀疏方程仍可解释数据；应改变初始空间模态进行独立实验，不应直接宣布发现唯一规律。"
+  ],
+  "prediction": null,
+  "validation_relative_error": null,
+  "initial_evidence": {
+    "status": "ambiguous",
+    "equation": "u_t = 1 u_xx",
+    "candidates": [
+      {
+        "equation": "u_t = 1 u_xx",
+        "terms": [
+          {
+            "name": "u_xx",
+            "coefficient": 1.000000017426653
+          }
+        ],
+        "fit_error": 8.884703519854472e-08,
+        "validation_error": null,
+        "validation_relative_error": null,
+        "validation_failure": null
+      },
+      {
+        "equation": "u_t = - 1 u",
+        "terms": [
+          {
+            "name": "u",
+            "coefficient": -1.0000000174266528
+          }
+        ],
+        "fit_error": 8.884703522808313e-08,
+        "validation_error": null,
+        "validation_relative_error": null,
+        "validation_failure": null
+      }
+    ],
+    "diagnostics": {
+      "training_trajectories": 1,
+      "regression_samples": 2816,
+      "candidate_library": [
+        "1",
+        "u",
+        "u²",
+        "u³",
+        "u_x",
+        "u_xx",
+        "u·u_x"
+      ],
+      "high_frequency_fraction": 1.65201179610558e-16,
+      "derivative_method": "空间低通谱导数（保留前6个模态）+ 时间平滑与局部积分回归",
+      "boundary": "periodic",
+      "ambiguous_pairs": [
+        {
+          "terms": [
+            "u",
+            "u_xx"
+          ],
+          "correlation": -0.9999999999999993
+        }
+      ],
+      "alias_correlation_threshold": 0.995,
+      "alias_tolerance_rule": "保留等稀疏替换：训练误差增加不超过 max(基础容差, 2√(1−相关系数²))",
+      "needs_validation": true,
+      "validation_relative_error": null,
+      "validation_threshold": 0.05,
+      "validation_role": "最终留出评估；不参与拟合、候选排序或解除训练歧义",
+      "condition_number": 1013619329300380.5,
+      "fit_relative_error": 8.884703519854472e-08,
+      "sparse_candidates_evaluated": 2,
+      "competing_candidates": 2,
+      "unresolved_ambiguity": true
+    }
+  },
+  "run_id": "23d1b83befba",
+  "created_at": "2026-10-27T09:57:18.708526+00:00",
+  "scenario": "ambiguity",
+  "steps": [
+    {
+      "title": "明确目标与范围",
+      "detail": "在限定候选库中识别无已检测歧义的 PDE，并在独立初始条件下达到相对预测误差 ≤ 5%。",
+      "state": "complete"
+    },
+    {
+      "title": "取得观测数据",
+      "detail": "独立隐藏方程仿真器提供 101×64 个观测值；识别器不读取真方程。",
+      "state": "complete"
+    },
+    {
+      "title": "稀疏识别",
+      "detail": "构造候选项，使用 L1 正则筛选，再对保留项重估系数。",
+      "state": "complete"
+    },
+    {
+      "title": "检测结构歧义",
+      "detail": "候选项共线或存在等价解释；当前数据不足以唯一选择方程。",
+      "state": "warning"
+    },
+    {
+      "title": "提出追加实验",
+      "detail": "建议追加 sin(3x) 初始状态：在有限备选实验中比较候选模型预测差异，优先获取更有辨识力的数据。",
+      "state": "complete"
+    },
+    {
+      "title": "目标检查",
+      "detail": "多个候选方程能够解释当前数据，需要有辨识力的新轨迹。",
+      "state": "warning"
+    }
+  ],
+  "experiment": {
+    "proposed": true,
+    "executed": false,
+    "description": "建议追加 sin(3x) 初始状态：在有限备选实验中比较候选模型预测差异，优先获取更有辨识力的数据。",
+    "policy": "对 3 个预设初始状态进行候选模型分歧评分；数值策略控制器，非大模型决策。",
+    "selected_initial_condition": "probe3",
+    "probe_scores": [
+      {
+        "initial_condition": "amplitude",
+        "label": "1.5 sin(x)",
+        "disagreement": 1.888255284249193e-16
+      },
+      {
+        "initial_condition": "probe2",
+        "label": "sin(2x)",
+        "disagreement": 0.38659161788985
+      },
+      {
+        "initial_condition": "probe3",
+        "label": "sin(3x)",
+        "disagreement": 0.5063456665336731
+      }
+    ],
+    "source": "独立隐藏真值仿真器；用户数据模式仅给建议，不自动制造证据。"
+  },
+  "goal": {
+    "description": "在限定候选库中识别无已检测歧义的 PDE，并在独立初始条件下达到相对预测误差 ≤ 5%。",
+    "achieved": false,
+    "reason": "多个候选方程能够解释当前数据，需要有辨识力的新轨迹。",
+    "validation_error_threshold": 0.05
+  },
+  "controller": {
+    "type": "deterministic_evidence_driven",
+    "llm_connected": false,
+    "max_discovery_rounds": 3,
+    "scope": "一维周期边界、常系数、固定低阶候选库；非任意 PDE 发现器"
+  }
+}

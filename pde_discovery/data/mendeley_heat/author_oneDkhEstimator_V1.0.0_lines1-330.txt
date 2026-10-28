@@ -1,0 +1,329 @@
+# This code uses the model outlined in https://doi.org/10.1016/j.applthermaleng.2020.116362.
+# To run the code. Set the file directiories, filename for results, material to test,
+# type of test to run, and then execute the code.
+#
+# The file output consists of a plot of the model fit to the data and an excel document
+# that will contain the filename,number of terms, and model results for the 
+# boundary condition, steady state model, and transient model.
+#
+# The code first bring in the data and formats the data. The code first finds the
+# initial guesses and the transient heating parameters. The code first uses the
+# first-order spatial derivative by using a second-order forward finite difference
+# approximation to estimate the heat flow through the boundary. The program then
+# uses the steady state model to get an initial guess for the thermal conductivity.
+# The transient model is then used to determine the unknown values.
+#
+# The estimation is performed by using the scipy.optimize.leastsq function. For 
+# each estimation, the optimal parameters, mean standard error, and individual
+# parameter uncertainties are calculated. 
+#
+#
+#
+# This code is copyrighted by the authors, but released under the MIT
+# license:
+#
+# Copyright (c) 2021 -- oneDkhEstimator.py
+#
+# S&T and the University of Missouri Board of Curators
+# license to you the right to use, modify, copy, and distribute this
+# code subject to the MIT license:
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+# DEALINGS IN THE SOFTWARE.
+#
+import sys
+from scipy.optimize import least_squares
+from scipy.stats import spearmanr
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
+import time #to allow time stamp on output
+import numpy as np
+from numpy import array
+from xlwt import Workbook # Writing to an excel
+import array as arr
+cur_version = sys.version_info # Test for Python version:
+wb = Workbook() # Workbook is created
+
+#select files to run. Files must be a .txt format with time, temperature
+filefolder="S:\\Parameter Estimation\\research\\data\\datamarch\\" #location of data
+excelsaveloc="S:\\Parameter Estimation\\research\\results\\datamarch\\" #location to save excel file of results
+plotsaveloc="S:\\Parameter Estimation\\research\\results\\datamarch\\" #location to save plots
+
+filesave='sstest'  #Excel filename
+
+# Select Wind, Temperature or additive rod to Test
+
+#Wind = True
+#Temp = True
+#XN = True
+#YN = True
+#XP = True
+YP = True
+
+# Select material:
+
+#Al = True
+#SS = True
+#Cu = True
+ADD = True
+
+try:
+    SS
+except NameError:
+    try:
+        Al
+    except NameError:
+        try:
+            Cu
+        except NameError:
+            try:
+                ADD
+            except NameError:
+                print("Incorrect Material Definition")
+            else:
+                Cu = False
+                SS = False
+                Al = False
+        else:
+            Al = False
+            SS = False
+            ADD = False
+    else:
+        Cu = False
+        SS = False
+        ADD = False
+else:
+    Al = False
+    Cu = False
+    ADD = False
+
+if ADD == True:
+    try:
+        XN
+    except NameError:
+        try:
+            YN
+        except NameError:
+            try:
+                XP
+            except NameError:
+                try:
+                    YP
+                except NameError:
+                    print("Incorrect Additive Rod Definition")
+                else:
+                    XN = False
+                    YN = False
+                    XP = False
+            else:
+                XN = False
+                YN = False
+                YP = False
+        else:
+            XN = False
+            XP = False
+            YP = False
+    else:
+        YN = False
+        XP = False
+        YP = False
+else:
+    try:
+        Wind
+    except NameError:
+        try:
+            Temp
+        except NameError:
+            print("Incorrect Test Definition")
+        else:
+            Wind = False
+    else:
+        Temp = False
+
+if Cu == True:
+#material properties and files to run
+#copper
+#X=[0,0.02013,0.02966,0.03982,0.05019,0.0607]
+    X=[0.000,0.015,0.030,0.045,0.060,0.075] #thermocouple locations in meters
+    if Temp == True:
+        filenames=['50cu1','50cu2','50cu3','75cu1','75cu2','75cu3','100cu1','100cu2','100cu3'] #list of files to run
+        VV=[5,5,5,5,5,5,5,5,5]  #wind speed guess
+        ymax=[60,60,60,90,90,90,120,120,120] #yaxis maximum temperature
+        Tinf=20.5
+    if Wind == True:
+        filenames=['cu1','cu2','cu3','cu4','cu5','cu6','cu7','cu8','cu9','cu10'] #list of files to run
+        VV=[1,2,3,4,5,6,7,8,9,10]  #wind speed guess
+        ymax=[90,90,90,90,90,90,90,90,90,90] #yaxis maximum temperature
+        Tinf=20.6
+    #filenames=['100cu3']
+    #ymax=[120]
+    rho=8912.93 #density
+    D=0.003175 #rod diameter
+    L=0.150 #length
+    c=384.93 # specific heat
+    pT=300 #plot time seconds
+if Al == True:
+    #aluminum
+    X=[0,0.01,0.02,0.03,0.04,0.05]
+    if Temp == True:
+        filenames=['50al1','50al2','50al3','75al1','75al2','75al3','100al1','100al2','100al3'] #list of files to run
+        VV=[5,5,5,5,5,5,5,5,5]  #wind speed guess
+        ymax=[60,60,60,90,90,90,120,120,120] #yaxis maximum temperature
+        Tinf=20.5
+    if Wind == True:
+        filenames=['al1','al2','al3','al4','al5','al6','al7','al8','al9','al10'] #list of files to run
+        VV=[1,2,3,4,5,6,7,8,9,10]  #wind speed guess
+        ymax=[90,90,90,90,90,90,90,90,90,90] #yaxis maximum temperature
+        Tinf=20.6
+    #filenames=['100al3']
+    #ymax=[120]
+    rho=2767.99 #density
+    D=0.003175 #rod diameter
+    L=0.150 #length
+    c=896 # specific heat
+    pT=300 #plot time seconds
+
+if SS == True:
+#stainless steel
+    X=[0,0.007,0.014,0.021,0.028,0.035]
+    if Temp == True:
+        filenames=['50ss1','50ss2','50ss3','75ss1','75ss2','75ss3','100ss1','100ss2','100ss3'] #list of files to run
+        VV=[5,5,5,5,5,5,5,5,5]  #wind speed guess
+        ymax=[60,60,60,90,90,90,120,120,120] #yaxis maximum temperature
+        Tinf=20.5
+    if Wind == True:
+        filenames=['ss1','ss2','ss3','ss4','ss5','ss6','ss7','ss8','ss9','ss10'] #list of files to run
+        VV=[1,2,3,4,5,6,7,8,9,10]  #wind speed guess
+        ymax=[90,90,90,90,90,90,90,90,90,90] #yaxis maximum temperature
+        Tinf=21.2
+    #filenames=['100ss1']
+    #ymax=[120]
+    rho=8030 #density
+    D=0.003175 #rod diameter
+    L=0.150 #length
+    c=502 # specific heat
+    pT=800 #plot time seconds
+    
+if ADD == True:
+#Additive Rod
+    X=[0,0.007,0.014,0.021,0.028,0.035]
+    if XN == True:
+        filenames=['xn1','xn2','xn3','xn4','xn5'] #list of files to run
+        D=6.287/1000
+        L=152.09/1000
+        rho=7812.98
+    if YN == True:
+        filenames=['yn1','yn2','yn3','yn4','yn5'] #list of files to run
+        D=6.230/1000
+        L=152.11/1000
+        rho=7828.79
+    if XP == True:
+        filenames=['xp1','xp2','xp3','xp4','xp5'] #list of files to run
+        D=5.302/1000
+        L=152.33/1000
+        rho=7392.47
+    if YP == True:
+        filenames=['yp1','yp2','yp3','yp4','yp5'] #list of files to run
+        D=6.206/1000
+        L=152.22/1000
+        rho=7756.86
+    VV=[5,5,5,5,5,5,5,5,5]  #wind speed guess
+    ymax=[80,80,80,80,80,80,80]
+    Tinf=20.8
+    c=502
+    pT=800    
+
+# Define the model:
+A=np.pi*D**2/4
+s=np.pi*D
+N=100 #Number of terms in Fourier Series
+#adding labels to excel document
+labels=['Transient model','h','k','Pss','standard_error','h error','k error','Pss error'] #labels for results
+sheet1 = wb.add_sheet(filesave)
+labels2=['N']
+labels0=['Finite difference boundary model','temp_grad','alpha','tau','standard_error','temp_grad error','alpha error','tau error']
+labels01=['Steady state model','temp_grad','h/k_ratio','standard_error','temp_grad error','h/k_ratio error']
+labels2.extend(labels0)
+labels2.append(' ')
+labels2.extend(labels01)
+labels2.append(' ')
+labels2.extend(labels)
+sheet1.write(0, 0, 'Variable')
+for i in range(0,len(labels2)):
+    sheet1.write(i+1, 0, labels2[i])
+for mm in range(0,len(filenames)): #cycles through array of filenames
+    v=VV[mm] #windspeed
+    filename=filenames[mm]
+    sheet1.write(0, mm+1, filenames[mm])
+    # Create empty lists:
+    TT = [[],[],[],[],[],[]]
+    xx = [[],[],[],[],[],[]]
+    t = []
+    T=[]
+    x=[]
+    Tss=[]
+    xss=[]
+
+    # Set the desired resolution:
+    res = 5000# Dpi.  Fine for EPS, but should use higher for PNG.
+
+    infile=filefolder+filename+".csv"
+    #plotname = ("S:\\Parameter Estimation\\research\\results\\datamarch\\"+filename+"5")
+    plotname = (plotsaveloc+filename) #plot save location
+    try:
+        data = open(infile, "r")# get array out of input file
+    except:
+        print ("Cannot find input file; Please try again.")
+        sys.exit(0)
+    
+    data.seek(0) # Reset file pointer to the beginning
+    linecount = 0
+    next(data) #skips the header in the file
+    # Read the data from the input file:
+    if cur_version[0]==3:# This is necesary due to the change in the type
+        for line in data:# returned by the map function in Python 3.x.x.
+            linedat = list(map(float, line.split(',')))
+            t.append(linedat[0])
+            for i in range(0, 6):
+                TT[i].append(linedat[i+1])
+            for i in range(6, 12):
+                xx[i-6]=([X[i-6]]*len(t))
+            linecount += 1
+    else:
+        for line in data:
+            linedat = map(float, line.split(','))
+            t.append(linedat[0])
+            for i in range(0, 6):
+                TT[i].append(linedat[i+1])
+            for i in range(6, 12):
+                xx[i-6]=([X[i-6]]*len(t))
+            linecount += 1
+    # Close the input file:
+    data.close()
+
+    #Arranging data into three column matrices
+    sheet1.write(1, mm+1, N)
+    T=array(TT[0])
+    x=array(xx[0])
+    tt = np.concatenate((array(t),array(t),array(t),array(t),array(t),array(t)),axis=0)
+    for i in range(1,6):
+        T=np.concatenate((T,array(TT[i])),axis=0)
+    for i in range(1,6):
+        x=np.concatenate((x,array(xx[i])),axis=0)
+
+    #h initial guess
