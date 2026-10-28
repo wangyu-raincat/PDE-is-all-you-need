@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "groups": [
+    "aluminum",
+    "brass"
+  ],
+  "methods": [
+    "physical",
+    "l1"
+  ],
+  "files": {
+    "aluminum": {
+      "lower": "Aluminum_26V_250mA.txt",
+      "holdout": "Aluminum_28V_269mA.txt"
+    },
+    "brass": {
+      "lower": "Brass_26V_245mA.txt",
+      "holdout": "Brass_29V_273mA.txt"
+    }
+  },
+  "training_fraction_of_lower_voltage": 0.6,
+  "training_rows_rule": "[0,floor(0.6*N))",
+  "development_rows_rule": "[floor(0.6*N),N)",
+  "holdout_rule": "complete higher-voltage acquisition for each material",
+  "temperature_reference": "mean of CH1..CH6 at first lower-voltage training frame, unchanged for all roles",
+  "reference_is_measured_ambient": false,
+  "spacing_m": 0.0127,
+  "source_channels": 8,
+  "selected_channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "boundary_channels": [
+    1,
+    6
+  ],
+  "predicted_channels": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "time_unit": "s",
+  "raw_temperature_unit": "degree C",
+  "centered_temperature_unit": "K difference",
+  "smoothing": "none",
+  "spatial_upsampling": false,
+  "physical_method": {
+    "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+    "is_l1": false,
+    "equation_family": "theta_t = D theta_xx - h theta + c",
+    "model_names": [
+      "D",
+      "D+h",
+      "D+c",
+      "D+h+c"
+    ],
+    "physical_prior": "D > 0; h >= 0; no advection or quadratic reaction; source c optional",
+    "parameter_bounds": {
+      "D_m2_s": [
+        1e-08,
+        0.001
+      ],
+      "h_per_s": [
+        0.0,
+        1.0
+      ],
+      "c_K_s": [
+        -1.0,
+        1.0
+      ]
+    },
+    "initial_values_D_h_c": [
+      [
+        1e-06,
+        0.001,
+        0.0
+      ],
+      [
+        1e-05,
+        0.01,
+        0.0
+      ],
+      [
+        0.0001,
+        0.1,
+        0.0
+      ]
+    ],
+    "optimizer_coordinates": "log(D), h/0.01, c/0.1, with absent parameters omitted",
+    "optimizer": "scipy.optimize.least_squares, trf, linear loss, 2-point Jacobian",
+    "max_nfev_per_start": 250,
+    "ftol": 1e-09,
+    "xtol": 1e-09,
+    "gtol": 1e-09,
+    "training_residual": "four interior rollout errors excluding initial frame, divided by sqrt(count)",
+    "start_selection": "lowest training RMSE among successful starts; no development or final input",
+    "failed_start_handling": "record exception or failure and continue remaining fixed starts",
+    "failed_support_handling": "retain an explicit failed candidate and continue other fixed supports",
+    "propagator": "four-point sine eigenmodes with piecewise-linear measured boundary forcing",
+    "time_step_group_relative_tolerance": 1e-10,
+    "time_step_group_representative": "mean original dt within each numerically equal contiguous block",
+    "spatial_observation_count": 6,
+    "interior_state_count": 4,
+    "spatial_upsampling": false,
+    "data_smoothing": "none",
+    "parameter_boundary_hit_tolerance": "1e-5 of the optimizer-coordinate bound range",
+    "scope": "coarse-grid effective parameters; not a proof of a unique continuous PDE"
+  },
+  "l1_method": {
+    "function": "real_experiment.select_model",
+    "alpha_path": [
+      1e-06,
+      3e-06,
+      1e-05,
+      3e-05,
+      0.0001,
+      0.0003,
+      0.001,
+      0.003,
+      0.01,
+      0.03,
+      0.1
+    ],
+    "window_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ],
+    "minimum_window": "two median sampling intervals"
+  },
+  "near_optimal_factor": 1.05,
+  "all_groups_and_methods_frozen_before_any_holdout_parse": true,
+  "future_interior_is_prediction_input": false,
+  "holdout_selects_model": false,
+  "is_zero_shot_transfer": false,
+  "unique_physical_equation_established": false,
+  "protocol_document_sha256": "3d62498591d2ba57b6bc055ee732302b8685a1dac26d9e3c8ad3820338fb731b",
+  "source_manifest_sha256": "43271b663f6a99b43d373de1c621df6c15fe96f6865d4c994bbe03c43c1dcce1",
+  "download_receipt_sha256": "12a6b22f85fe14898716ba25dbf429e2e75b8136bf85a6c187050b725c10cbc0",
+  "source_sha256": {
+    "external_experiment.py": "4f2838e7298cd2904f81bcc13027ae0b4281abe3ec73d10a01220ec9d0ce436a",
+    "real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1",
+    "real_heat.py": "8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc",
+    "real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04"
+  }
+}

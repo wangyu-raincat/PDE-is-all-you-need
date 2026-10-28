@@ -1,0 +1,223 @@
+{
+  "unit_tests": {
+    "passed": 128,
+    "log": "artifacts/generic-unit-tests.log"
+  },
+  "http_checks": {
+    "passed": 16,
+    "log": "artifacts/generic-http-checks.json"
+  },
+  "browser_checks": "artifacts/generic-ui/checks.json",
+  "browser_visual_inspection": "desktop, mobile and scientific summary inspected; Pages layout not previewed",
+  "historical_snapshot_files": 260,
+  "historical_files_unchanged": 257,
+  "intentional_changes": [
+    "pde_discovery/app.py",
+    "pde_discovery/__main__.py",
+    "artifacts/openapi.json"
+  ],
+  "is_measured_data": false,
+  "case_count": 3,
+  "exact_support_recovery_count": 0,
+  "all_reference_terms_recovered_count": 3,
+  "post_final_thresholding_or_tuning": false,
+  "all_models_frozen_before_final_scoring": true,
+  "final_evaluation_count_per_case": 1,
+  "reference_equations_used_for_selection": false,
+  "final_data_preparation": "mechanical full MAT decode, predeclared row split; final role excluded from fitting/selection",
+  "generic_scope": "scalar constant-coefficient 1D uniform periodic grid; finite 9-term library",
+  "results": [
+    {
+      "case": "burgers",
+      "support": {
+        "status": "evaluated",
+        "exact_support": false,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "true_positive_terms": [
+          "u*u_x",
+          "u_xx"
+        ],
+        "missing_terms": [],
+        "spurious_terms": [
+          "u^3",
+          "u_x"
+        ],
+        "coefficient_relative_l2": 3.72926019714868e-06,
+        "coefficient_comparison": [
+          {
+            "name": "u^3",
+            "reference": 0.0,
+            "discovered": -1.6193075021565106e-07,
+            "absolute_error": 1.6193075021565106e-07,
+            "relative_error": null
+          },
+          {
+            "name": "u_x",
+            "reference": 0.0,
+            "discovered": 1.688825556154641e-06,
+            "absolute_error": 1.688825556154641e-06,
+            "relative_error": null
+          },
+          {
+            "name": "u_xx",
+            "reference": 0.1,
+            "discovered": 0.09999907835220088,
+            "absolute_error": 9.216477991208505e-07,
+            "relative_error": 9.216477991208505e-06
+          },
+          {
+            "name": "u*u_x",
+            "reference": -1.0,
+            "discovered": -1.0000032122682705,
+            "absolute_error": 3.2122682704915917e-06,
+            "relative_error": 3.2122682704915917e-06
+          }
+        ],
+        "reference_terms": [
+          {
+            "name": "u*u_x",
+            "coefficient": -1
+          },
+          {
+            "name": "u_xx",
+            "coefficient": 0.1
+          }
+        ],
+        "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+      },
+      "prediction_relative_l2": 8.530507424273259e-07
+    },
+    {
+      "case": "kdv",
+      "support": {
+        "status": "evaluated",
+        "exact_support": false,
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "true_positive_terms": [
+          "u*u_x",
+          "u_xxx"
+        ],
+        "missing_terms": [],
+        "spurious_terms": [
+          "u_x"
+        ],
+        "coefficient_relative_l2": 0.03819690613449913,
+        "coefficient_comparison": [
+          {
+            "name": "u_x",
+            "reference": 0.0,
+            "discovered": -0.03148203980566307,
+            "absolute_error": 0.03148203980566307,
+            "relative_error": null
+          },
+          {
+            "name": "u_xxx",
+            "reference": -1.0,
+            "discovered": -0.9570565730245382,
+            "absolute_error": 0.04294342697546183,
+            "relative_error": 0.04294342697546183
+          },
+          {
+            "name": "u*u_x",
+            "reference": -6.0,
+            "discovered": -5.773841034083448,
+            "absolute_error": 0.22615896591655194,
+            "relative_error": 0.03769316098609199
+          }
+        ],
+        "reference_terms": [
+          {
+            "name": "u*u_x",
+            "coefficient": -6
+          },
+          {
+            "name": "u_xxx",
+            "coefficient": -1
+          }
+        ],
+        "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+      },
+      "prediction_relative_l2": 0.006496143097798648
+    },
+    {
+      "case": "ks",
+      "support": {
+        "status": "evaluated",
+        "exact_support": false,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "true_positive_terms": [
+          "u*u_x",
+          "u_xx",
+          "u_xxxx"
+        ],
+        "missing_terms": [],
+        "spurious_terms": [
+          "u^3"
+        ],
+        "coefficient_relative_l2": 1.2021075400211406e-05,
+        "coefficient_comparison": [
+          {
+            "name": "u^3",
+            "reference": 0.0,
+            "discovered": 1.3325502703617265e-07,
+            "absolute_error": 1.3325502703617265e-07,
+            "relative_error": null
+          },
+          {
+            "name": "u_xx",
+            "reference": -1.0,
+            "discovered": -0.9999877681522872,
+            "absolute_error": 1.2231847712818045e-05,
+            "relative_error": 1.2231847712818045e-05
+          },
+          {
+            "name": "u_xxxx",
+            "reference": -1.0,
+            "discovered": -0.9999880614923627,
+            "absolute_error": 1.193850763725468e-05,
+            "relative_error": 1.193850763725468e-05
+          },
+          {
+            "name": "u*u_x",
+            "reference": -1.0,
+            "discovered": -0.9999881107215797,
+            "absolute_error": 1.1889278420329497e-05,
+            "relative_error": 1.1889278420329497e-05
+          }
+        ],
+        "reference_terms": [
+          {
+            "name": "u*u_x",
+            "coefficient": -1
+          },
+          {
+            "name": "u_xx",
+            "coefficient": -1
+          },
+          {
+            "name": "u_xxxx",
+            "coefficient": -1
+          }
+        ],
+        "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+      },
+      "prediction_relative_l2": 3.605936103057338e-05
+    }
+  ],
+  "sha256": {
+    "pde_discovery/generic_engine.py": "09f966462d823ea23d68a211a34c1a5c499075a8599394d0f8d32417d36e670a",
+    "pde_discovery/generic_experiment.py": "e5ec3d9d25517ac1099c4b74d47c251915728fe0f48c8f89ee4001e9a4c2f9cf",
+    "pde_discovery/data/generic_pde/source_manifest.json": "c46172debe92740363838e8686a320144abcc74f7d4e567f9128b238c0fae434",
+    "experiments/GENERIC_PROTOCOL.md": "4b84a7f5004e47207c6d94f7997e70b56bb6f44fc8593abd4f3b508f347a6014",
+    "experiments/generic_reference_equations.json": "74ef9ff6664049b3463a0434c5e17ea3d45f9cc081afd9c340b03a93f77a65d3",
+    "artifacts/generic_pde/freeze_index.json": "ba9bac5b6e72ea44e73459cf9d7485d0e662dd324fff5cc4e55307a5dba57c2c",
+    "artifacts/generic_pde/benchmark.json": "dafd004c58ac930b8eec459ab8f79623954b978e41693e5e4f2c2a4f44f90daf",
+    "artifacts/generic-unit-tests.log": "c73d037718da35e7dd9b27ddac51881694932fe54ba86e9664246641a7c4019d"
+  }
+}

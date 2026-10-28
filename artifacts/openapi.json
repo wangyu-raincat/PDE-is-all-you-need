@@ -1,0 +1,857 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PDE 发现与验证工具",
+    "description": "周期仿真 PDE 发现与六测点实测热杆条件预测。固定候选库、训练/选模/留出隔离；未接入大模型。",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/generic-experiment": {
+      "get": {
+        "summary": "Generic Experiment Report",
+        "operationId": "read_generic_discovery",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "burgers",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/generic-experiment/benchmark": {
+      "get": {
+        "summary": "Generic Benchmark Report",
+        "operationId": "read_generic_benchmark",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/generic-experiment/plot": {
+      "get": {
+        "summary": "Generic Experiment Plot",
+        "operationId": "generic_discovery_plot",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "burgers",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/external-experiment": {
+      "get": {
+        "summary": "External Experiment Report",
+        "operationId": "read_external_holdout",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "aluminum",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/external-experiment/benchmark": {
+      "get": {
+        "summary": "External Benchmark Report",
+        "operationId": "read_external_benchmark",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/external-experiment/plot": {
+      "get": {
+        "summary": "External Experiment Plot",
+        "operationId": "external_holdout_plot",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "aluminum",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/additive-experiment": {
+      "get": {
+        "summary": "Additive Experiment Report",
+        "operationId": "read_additive_holdout",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "xn3",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/additive-experiment/benchmark": {
+      "get": {
+        "summary": "Additive Benchmark",
+        "operationId": "read_additive_benchmark",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/additive-experiment/plot": {
+      "get": {
+        "summary": "Additive Experiment Plot",
+        "operationId": "additive_holdout_plot",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "xn3",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/identifiability/summary": {
+      "get": {
+        "summary": "Identifiability Summary",
+        "operationId": "read_identifiability_summary",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/identifiability/plot": {
+      "get": {
+        "summary": "Identifiability Plot",
+        "operationId": "identifiability_plot",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/refined-experiment": {
+      "get": {
+        "summary": "Refined Experiment Report",
+        "operationId": "read_refined_measurement_comparison",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "50ss",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/refined-experiment/benchmark": {
+      "get": {
+        "summary": "Refined Measurement Benchmark",
+        "operationId": "read_refined_benchmark",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/refined-experiment/plot": {
+      "get": {
+        "summary": "Refined Experiment Plot",
+        "operationId": "refined_measurement_comparison_plot",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "50ss",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/real-experiment": {
+      "get": {
+        "summary": "Real Experiment Report",
+        "operationId": "read_real_measurement_experiment",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Reproduce Real Experiment",
+        "operationId": "reproduce_real_measurement_experiment",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "50ss",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/real-experiment/benchmark": {
+      "get": {
+        "summary": "Real Measurement Benchmark",
+        "operationId": "read_measured_benchmark",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/real-experiment/plot": {
+      "get": {
+        "summary": "Real Experiment Plot",
+        "operationId": "real_measurement_validation_plot",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/run": {
+      "post": {
+        "summary": "Run",
+        "description": "Run a bounded simulated goal-completion experiment. Never invokes real hardware.",
+        "operationId": "run_simulated_discovery",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "scenario": {
+                    "type": "string",
+                    "enum": [
+                      "advection_diffusion",
+                      "ambiguity",
+                      "diffusion"
+                    ],
+                    "default": "diffusion"
+                  },
+                  "noise": {
+                    "type": "number",
+                    "maximum": 0.03,
+                    "minimum": 0.0,
+                    "default": 0
+                  },
+                  "seed": {
+                    "type": "integer",
+                    "maximum": 2147483647.0,
+                    "minimum": 0.0,
+                    "default": 7
+                  },
+                  "auto_experiment": {
+                    "type": "boolean",
+                    "default": true
+                  }
+                },
+                "additionalProperties": false,
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/discover": {
+      "post": {
+        "summary": "Uploaded",
+        "description": "Identify PDE terms from observed periodic trajectories and independently validate.",
+        "operationId": "discover_pde_from_observations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "training": {
+                    "items": {
+                      "properties": {
+                        "x": {
+                          "items": {
+                            "type": "number"
+                          },
+                          "type": "array",
+                          "maxItems": 192,
+                          "minItems": 32
+                        },
+                        "t": {
+                          "items": {
+                            "type": "number"
+                          },
+                          "type": "array",
+                          "maxItems": 401,
+                          "minItems": 16
+                        },
+                        "u": {
+                          "items": {
+                            "items": {
+                              "type": "number"
+                            },
+                            "type": "array"
+                          },
+                          "type": "array"
+                        },
+                        "boundary": {
+                          "type": "string",
+                          "enum": [
+                            "periodic"
+                          ],
+                          "default": "periodic"
+                        }
+                      },
+                      "type": "object",
+                      "required": [
+                        "x",
+                        "t",
+                        "u"
+                      ]
+                    },
+                    "type": "array",
+                    "maxItems": 3,
+                    "minItems": 1
+                  },
+                  "validation": {
+                    "properties": {
+                      "x": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "type": "array",
+                        "maxItems": 192,
+                        "minItems": 32
+                      },
+                      "t": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "type": "array",
+                        "maxItems": 401,
+                        "minItems": 16
+                      },
+                      "u": {
+                        "items": {
+                          "items": {
+                            "type": "number"
+                          },
+                          "type": "array"
+                        },
+                        "type": "array"
+                      },
+                      "boundary": {
+                        "type": "string",
+                        "enum": [
+                          "periodic"
+                        ],
+                        "default": "periodic"
+                      }
+                    },
+                    "type": "object",
+                    "required": [
+                      "x",
+                      "t",
+                      "u"
+                    ]
+                  }
+                },
+                "type": "object",
+                "required": [
+                  "training"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/example": {
+      "get": {
+        "summary": "Example",
+        "operationId": "download_example_observations",
+        "parameters": [
+          {
+            "name": "scenario",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "diffusion",
+              "title": "Scenario"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "train",
+              "title": "Kind"
+            }
+          },
+          {
+            "name": "seed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 7,
+              "title": "Seed"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

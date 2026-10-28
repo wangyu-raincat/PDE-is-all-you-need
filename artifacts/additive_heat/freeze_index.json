@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "groups": [
+    "xn",
+    "xp",
+    "yn",
+    "yp"
+  ],
+  "records": [
+    {
+      "group": "xn",
+      "manifest_sha256": "101c39d34bf13e1b4f76c842d7cd0809da4fe538696b84266a70c8645d01453e",
+      "frozen_model_sha256": "b4f035c1e301cb1f5e6f0476d83bfaaf5484bcf6480d9c79a302d79d9f24367a",
+      "selected_model": "D+h+c",
+      "failure_reason": null
+    },
+    {
+      "group": "xp",
+      "manifest_sha256": "e3dcc9306182a49800e18379ab8a175f927310be5c60f023d49981956eefae57",
+      "frozen_model_sha256": "33c4f02120b4e1e01dae5494cda752d7973030063d0722455174da249c074c86",
+      "selected_model": "D+h+c",
+      "failure_reason": null
+    },
+    {
+      "group": "yn",
+      "manifest_sha256": "c295f2a32df4193cb066d0cc73c8b56a1cb9016630d5e5cc9073ea4e2928adc3",
+      "frozen_model_sha256": "42bfca6e584a0681166f16e4858e261eb043a555fa99ad66a69a6f2875393dd0",
+      "selected_model": "D+h+c",
+      "failure_reason": null
+    },
+    {
+      "group": "yp",
+      "manifest_sha256": "3bcadec0704e44be9a8c8cd1d8a59424e3e1bbbdd5d406093dba721bb13f5a0b",
+      "frozen_model_sha256": "a08d2b7ee448d2329ed35d15c332611af8769972facc56b06ca79416567baeea",
+      "selected_model": "D+h+c",
+      "failure_reason": null
+    }
+  ],
+  "all_four_groups": true,
+  "protocol": {
+    "method": "unchanged_physics_prior_trajectory_fitting",
+    "fitting": {
+      "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+      "is_l1": false,
+      "equation_family": "theta_t = D theta_xx - h theta + c",
+      "model_names": [
+        "D",
+        "D+h",
+        "D+c",
+        "D+h+c"
+      ],
+      "physical_prior": "D > 0; h >= 0; no advection or quadratic reaction; source c optional",
+      "parameter_bounds": {
+        "D_m2_s": [
+          1e-08,
+          0.001
+        ],
+        "h_per_s": [
+          0.0,
+          1.0
+        ],
+        "c_K_s": [
+          -1.0,
+          1.0
+        ]
+      },
+      "initial_values_D_h_c": [
+        [
+          1e-06,
+          0.001,
+          0.0
+        ],
+        [
+          1e-05,
+          0.01,
+          0.0
+        ],
+        [
+          0.0001,
+          0.1,
+          0.0
+        ]
+      ],
+      "optimizer_coordinates": "log(D), h/0.01, c/0.1, with absent parameters omitted",
+      "optimizer": "scipy.optimize.least_squares, trf, linear loss, 2-point Jacobian",
+      "max_nfev_per_start": 250,
+      "ftol": 1e-09,
+      "xtol": 1e-09,
+      "gtol": 1e-09,
+      "training_residual": "four interior rollout errors excluding initial frame, divided by sqrt(count)",
+      "start_selection": "lowest training RMSE among successful starts; no development or final input",
+      "failed_start_handling": "record exception or failure and continue remaining fixed starts",
+      "failed_support_handling": "retain an explicit failed candidate and continue other fixed supports",
+      "propagator": "four-point sine eigenmodes with piecewise-linear measured boundary forcing",
+      "time_step_group_relative_tolerance": 1e-10,
+      "time_step_group_representative": "mean original dt within each numerically equal contiguous block",
+      "spatial_observation_count": 6,
+      "interior_state_count": 4,
+      "spatial_upsampling": false,
+      "data_smoothing": "none",
+      "parameter_boundary_hit_tolerance": "1e-5 of the optimizer-coordinate bound range",
+      "scope": "coarse-grid effective parameters; not a proof of a unique continuous PDE"
+    },
+    "groups": [
+      "xn",
+      "xp",
+      "yn",
+      "yp"
+    ],
+    "holdout_repeats": [
+      3,
+      4,
+      5
+    ],
+    "is_l1_optimization": false,
+    "is_zero_shot_transfer": false,
+    "new_project_holdout": true,
+    "validation_scope": "new_to_this_project_holdout_records",
+    "claim_scope": "本项目此前未用于建模的记录；不宣称全世界未看过、统计独立、严格同条件或跨装置泛化。",
+    "fit_data": "每根杆完整编号1",
+    "selection_data": "每根杆完整编号2",
+    "holdout_data": "每根杆完整编号3/4/5，全部报告",
+    "selection_rule": "开发RMSE在最优值1.05倍以内先最少项，再较低RMSE，最后模型名称。",
+    "near_optimal_factor": 1.05,
+    "eligibility_rule": "训练优化收敛、参数敏感性Jacobian满列秩、开发预测有限；局部满秩不证明物性。",
+    "physical_prior": "正扩散必选，非负线性衰减与常数源可选；四个预设结构比较。",
+    "all_declared_groups_frozen_before_any_holdout_load": true,
+    "holdout_data_selects_model": false,
+    "prediction_inputs": "两端完整实测温升与四内点初始值，不传未来内部测量。",
+    "scoring": "仅四内点，排除初始化首帧。",
+    "units": {
+      "time": "s",
+      "space": "m",
+      "temperature": "K excess above ambient"
+    },
+    "spatial_upsampling": false,
+    "smoothing": "none",
+    "stability_diagnostic": "选模后对训练前后两个不重叠半段重拟合该结构，只作描述，不是置信区间。",
+    "protocol_document_sha256": "9cfda6f4c8410a8160f4c0a1bb873cfe3a80fa7c177bd658c4cea984d4f741ad",
+    "source_metadata_sha256": {
+      "metadata_verification.md": "4aae2accaa57e4cd9b0f291b533bf7a704f084f35e65124eaea2e19223aeb5f1",
+      "source_excerpts.txt": "631865630879a6a6047f0157bb9cf755c540edac6c1623d9a50c6702497dc8fb"
+    },
+    "source_sha256": {
+      "additive_experiment.py": "2657260ecb0eb502efbb702a2ae9ab7529d6a517291730672bf0eb8fe0001654",
+      "real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1",
+      "real_heat.py": "8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc",
+      "real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04"
+    }
+  },
+  "source_sha256": {
+    "additive_experiment.py": "2657260ecb0eb502efbb702a2ae9ab7529d6a517291730672bf0eb8fe0001654",
+    "real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1",
+    "real_heat.py": "8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc",
+    "real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04"
+  },
+  "holdout_numeric_values_loaded_in_freeze": false,
+  "validation_scope": "new_to_this_project_holdout_records"
+}

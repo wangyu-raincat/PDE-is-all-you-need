@@ -1,0 +1,72 @@
+{
+  "experiment": {
+    "title": "作者公开的铝杆热电偶采集示例数据",
+    "source_url": "https://github.com/dsstutts/ATMC/blob/master/MultiPoint_Harmonic_Method/al300test.csv",
+    "doi": "关联方法论文：10.1016/j.ijheatmasstransfer.2021.122467",
+    "license": "作者分析代码含 MIT 许可；CSV 未单独声明许可，勿将其误标为 Mendeley 的 CC BY 4.0。",
+    "description": "作者 ATMC 仓库附带 al300test.csv；测量属性依据配套采集与分析代码解释，具体采集日志未独立核实。6个热电偶、1 cm间距、0.2 s采样，共600 s。单次采集按时间60/20/20分割，检验未来120 s四内点。",
+    "material": "aluminum",
+    "authors": [
+      "Lauren B. Tomanek",
+      "Daniel S. Stutts"
+    ],
+    "dataset_repository": "dsstutts/ATMC",
+    "git_blob_sha": "4074927904fb65e3f4ac19ef0b7f32abf297997a",
+    "provenance_status": "author_experimental_example; acquisition log not independently verified"
+  },
+  "spacing_m": 0.01,
+  "csv_format": {
+    "delimiter": ",",
+    "skiprows": 0,
+    "time_column": 0,
+    "temperature_columns": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "split_kind": "chronological_single_acquisition",
+  "splits": {
+    "training": {
+      "file": "al300test.csv",
+      "sha256": "84ef6064bd3258f4ec7bf968bd2d5a339c70b877268103486b753ac4148c92c3",
+      "rows": [
+        0,
+        1800
+      ]
+    },
+    "development": {
+      "file": "al300test.csv",
+      "sha256": "84ef6064bd3258f4ec7bf968bd2d5a339c70b877268103486b753ac4148c92c3",
+      "rows": [
+        1800,
+        2400
+      ]
+    },
+    "final": {
+      "file": "al300test.csv",
+      "sha256": "84ef6064bd3258f4ec7bf968bd2d5a339c70b877268103486b753ac4148c92c3",
+      "rows": [
+        2400,
+        3001
+      ]
+    }
+  },
+  "selection_frozen_before_final": true,
+  "declared_total_rows": 3001,
+  "period_s_from_author_code": 300,
+  "unused_columns": {
+    "7": "PWM占空指令 iDC，非瓦特功率；本识别不使用。"
+  },
+  "provenance": {
+    "author_code": "https://github.com/dsstutts/ATMC/blob/master/MultiPoint_Harmonic_Method/mph_Estimator.py",
+    "author_readme": "https://github.com/dsstutts/ATMC/blob/master/README.md",
+    "source_fallback_reason": "Mendeley公开数据页和API返回HTTP403/error1010；使用作者另一个公开测量样例，非同一Mendeley数据集。",
+    "acquisition_code": "https://github.com/dsstutts/ATMC/blob/master/MultiPoint_Harmonic_Method/harmonic_boundary_heating.ino",
+    "csv_introduction_commit": "363a6ab8347074f3c772ad0b60d512d92cac91b8",
+    "csv_commit_message": "Added example CSV data file, al300test.csv"
+  }
+}
