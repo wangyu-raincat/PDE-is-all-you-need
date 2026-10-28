@@ -1,0 +1,510 @@
+{
+  "case": "ks",
+  "source": {
+    "repo": "snagcliffs/PDE-FIND",
+    "commit": "86911349b9fac82996e35465a13d06205730cc05",
+    "filename": "kuramoto_sivishinky.mat",
+    "url": "https://github.com/snagcliffs/PDE-FIND",
+    "kind": "public numerical simulation benchmark",
+    "is_measured_data": false,
+    "boundary_evidence": {
+      "status": "periodic_used_by_reference_analysis",
+      "source": "https://pysindy.readthedocs.io/en/stable/examples/10_PDEFIND_examples/example.html",
+      "note": "Official PySINDy PDE-FIND examples explicitly use periodic=True for this byte-identical MAT file; author supplement section 3.5 describes spectral generation, but original generator is absent."
+    }
+  },
+  "protocol": {
+    "groups": [
+      "burgers",
+      "kdv",
+      "ks"
+    ],
+    "split": "chronological 60/20/20; same original trajectory",
+    "library": [
+      "1",
+      "u",
+      "u^2",
+      "u^3",
+      "u_x",
+      "u_xx",
+      "u_xxx",
+      "u_xxxx",
+      "u*u_x"
+    ],
+    "engine": {
+      "version": 1,
+      "scope": "scalar autonomous constant-coefficient 1D PDE, uniform periodic spatial grid",
+      "left_hand_side": "u_t with coefficient fixed to 1",
+      "candidate_library": [
+        "1",
+        "u",
+        "u^2",
+        "u^3",
+        "u_x",
+        "u_xx",
+        "u_xxx",
+        "u_xxxx",
+        "u*u_x"
+      ],
+      "mandatory_right_hand_side_terms": [],
+      "data_class": "clean external numerical reference benchmark; not real measurements",
+      "spatial_projection": "retain integer Fourier modes |m| <= floor(Nx/3)",
+      "polynomial_products": "2*Nx zero-padded multiplication then truncate and project",
+      "nonlinear_transport": "u*u_x represented equivalently as one half d_x(u^2)",
+      "time_smoothing": "none",
+      "time_regression": "local integrated equations using original-time cumulative Simpson quadrature",
+      "window_intervals": "max(3,min(12,Nt//10))",
+      "window_starts": "4,Nt-window-4 exclusive, stride 2",
+      "overlapping_windows_are_independent_experiments": false,
+      "feature_normalization": "training column RMS and training target RMS",
+      "alpha_path": [
+        3e-06,
+        1e-05,
+        3e-05,
+        0.0001,
+        0.0003,
+        0.001,
+        0.003,
+        0.01,
+        0.03,
+        0.1
+      ],
+      "lasso": {
+        "fit_intercept": false,
+        "max_iter": 100000,
+        "tol": 1e-10
+      },
+      "normalized_support_threshold": 1e-06,
+      "debias": "least-squares on selected normalized support, rcond=1e-10",
+      "normalized_debiased_zero_threshold": 1e-08,
+      "eligibility": "all contributing LASSO fits converged, support full column rank, finite coefficients",
+      "selection_in_this_module": false,
+      "reference_equation_used": false,
+      "forecast": "Cox-Matthews ETDRK4, diagonal Fourier linear operator, stable complex phi functions",
+      "forecast_substeps_per_observation_interval": 32,
+      "forecast_max_steps": 20000,
+      "forecast_initial_state": "same fixed 2/3 Fourier projection of supplied initial frame",
+      "forecast_inputs": "coefficients, coordinates, initial frame only; no future observations",
+      "forward_operator_guard": "highest nonzero even spatial derivative must be dissipative; negative second derivative allowed with negative fourth derivative",
+      "forward_growth_guard": "finite states, maxabs <= max(100,1000*initial_maxabs); no truth-specific coefficient bounds"
+    },
+    "candidate_selection": "development RMSE <= 1.05*best, then fewest terms, RMSE, candidate_id",
+    "near_optimal_factor": 1.05,
+    "is_measured_data": false,
+    "is_l1_discovery": true,
+    "mandatory_physical_terms": [],
+    "reference_equations_used_for_selection": false,
+    "final_selects_model": false,
+    "all_three_models_frozen_before_final_scoring": true,
+    "prediction_inputs": "final-segment initial spatial field, x and requested times only",
+    "future_field_or_boundary_input": false,
+    "boundary_evidence": {
+      "burgers": {
+        "status": "periodic_used_by_reference_analysis",
+        "source": "https://github.com/dynamicslab/pysindy/blob/c4421fcec275c8f4cc5c1e93bebb961b212067ae/examples/1_feature_overview/example.py",
+        "note": "The official PySINDy feature overview uses periodic=True on the byte-identical source MAT file; original generator is absent."
+      },
+      "kdv": {
+        "status": "periodic_closure_is_an_assumption",
+        "source": "https://github.com/snagcliffs/PDE-FIND/blob/86911349b9fac82996e35465a13d06205730cc05/supplement.pdf",
+        "note": "Supplement section 3.1.1 states spectral generation but does not explicitly specify boundary conditions. A periodic numerical closure must be declared as an implementation assumption, with a train-only edge consistency check; original generator is absent."
+      },
+      "ks": {
+        "status": "periodic_used_by_reference_analysis",
+        "source": "https://pysindy.readthedocs.io/en/stable/examples/10_PDEFIND_examples/example.html",
+        "note": "Official PySINDy PDE-FIND examples explicitly use periodic=True for this byte-identical MAT file; author supplement section 3.5 describes spectral generation, but original generator is absent."
+      }
+    },
+    "reference_role": "structure/coefficient scoring only, parsed after global freeze verification",
+    "ingestion_full_array_decode_disclosed": true,
+    "protocol_document_sha256": "4b84a7f5004e47207c6d94f7997e70b56bb6f44fc8593abd4f3b508f347a6014",
+    "ingestion_amendment_sha256": "57642dcb5796e61831edded276e58ae5af54b7462cf8bdb8a040fd9cfd662e1b",
+    "reference_file_sha256_not_parsed": "74ef9ff6664049b3463a0434c5e17ea3d45f9cc081afd9c340b03a93f77a65d3",
+    "source_manifest_sha256": "c46172debe92740363838e8686a320144abcc74f7d4e567f9128b238c0fae434",
+    "download_receipt_sha256": "ce98fa5d15ce9bad958c33f257e80d9d976f3c7a1b293a13e2b399ef325463e7",
+    "preparation_record_sha256": "6a847305028b602c5406a317fd26bf32ac14c65243d3070af463275ae54259c3",
+    "source_sha256": {
+      "generic_experiment.py": "e5ec3d9d25517ac1099c4b74d47c251915728fe0f48c8f89ee4001e9a4c2f9cf",
+      "generic_engine.py": "09f966462d823ea23d68a211a34c1a5c499075a8599394d0f8d32417d36e670a",
+      "real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04"
+    }
+  },
+  "split": {
+    "raw_sha256": "0e3607e2fe46297e7651d883cecfd3dec587f6555aaaa11e496b320e17ca4528",
+    "raw_field_shape_space_time": [
+      1024,
+      251
+    ],
+    "space_points": 1024,
+    "total_frames": 251,
+    "x_first": 0.09817477042468103,
+    "x_last": 100.53096491487338,
+    "dx": 0.09817477042468103,
+    "dt": 0.4,
+    "periodic_domain_length": 100.53096491487338,
+    "real_component_conversion": {
+      "source_array_was_complex": false,
+      "applied": false,
+      "maximum_absolute_imaginary_component": 0.0,
+      "imaginary_to_real_l2_ratio": 0.0,
+      "rule": "author-defined real(usol) when source take_real_part=true; no magnitude gate",
+      "imaginary_component_is_not_asserted_to_be_roundoff": true
+    },
+    "parts": {
+      "training": {
+        "file": "prepared/ks/training.npz",
+        "sha256": "0bc31d7773f0865fe95e72e7d6a39c74f86e10a410c2b953caa4adabc0c00017",
+        "rows": [
+          0,
+          150
+        ],
+        "frames": 150,
+        "time_range": [
+          0.0,
+          59.6
+        ]
+      },
+      "development": {
+        "file": "prepared/ks/development.npz",
+        "sha256": "2be67c8d79e1583500b33efb3c7aa34eab494ff7c47592a2e849a2c9481631f6",
+        "rows": [
+          150,
+          200
+        ],
+        "frames": 50,
+        "time_range": [
+          60.0,
+          79.60000000000001
+        ]
+      },
+      "final": {
+        "file": "prepared/ks/final.npz",
+        "sha256": "f61806a9a212a905d6bdb11a5febdb489440c4df97ddcec22b264063101bcd00",
+        "rows": [
+          200,
+          251
+        ],
+        "frames": 51,
+        "time_range": [
+          80.0,
+          100.0
+        ]
+      }
+    }
+  },
+  "selected": {
+    "candidate_id": "lasso-3-5-7-8-3e-06",
+    "equation": "u_t = 1.33255027e-07 u^3 - 0.9999877682 u_xx - 0.9999880615 u_xxxx - 0.9999881107 u*u_x",
+    "terms": [
+      {
+        "name": "u^3",
+        "coefficient": 1.3325502703617265e-07
+      },
+      {
+        "name": "u_xx",
+        "coefficient": -0.9999877681522872
+      },
+      {
+        "name": "u_xxxx",
+        "coefficient": -0.9999880614923627
+      },
+      {
+        "name": "u*u_x",
+        "coefficient": -0.9999881107215797
+      }
+    ],
+    "support_size": 4,
+    "fit_success": true,
+    "fit_relative_error": 3.154187256384134e-05,
+    "fit_rmse": 4.099963230492158e-06,
+    "alpha_values": [
+      3e-06,
+      1e-05,
+      3e-05,
+      0.0001,
+      0.0003,
+      0.001,
+      0.003,
+      0.01,
+      0.03
+    ],
+    "failure_reason": null,
+    "diagnostics": {
+      "support_rank": 4,
+      "parameter_count": 4,
+      "condition_number": 14.359399336810695,
+      "full_library_rank": 9,
+      "full_library_condition_number": 15.446758994046144,
+      "lasso_all_support_runs_converged": true,
+      "lasso_runs": [
+        {
+          "alpha": 3e-06,
+          "iterations": 839,
+          "dual_gap": 9.997603012681612e-11,
+          "converged": true
+        },
+        {
+          "alpha": 1e-05,
+          "iterations": 839,
+          "dual_gap": 9.971599990016439e-11,
+          "converged": true
+        },
+        {
+          "alpha": 3e-05,
+          "iterations": 839,
+          "dual_gap": 9.947319490301745e-11,
+          "converged": true
+        },
+        {
+          "alpha": 0.0001,
+          "iterations": 839,
+          "dual_gap": 9.906078606725126e-11,
+          "converged": true
+        },
+        {
+          "alpha": 0.0003,
+          "iterations": 839,
+          "dual_gap": 9.830962997462957e-11,
+          "converged": true
+        },
+        {
+          "alpha": 0.001,
+          "iterations": 838,
+          "dual_gap": 9.871466822383071e-11,
+          "converged": true
+        },
+        {
+          "alpha": 0.003,
+          "iterations": 836,
+          "dual_gap": 9.798118256913842e-11,
+          "converged": true
+        },
+        {
+          "alpha": 0.01,
+          "iterations": 827,
+          "dual_gap": 9.946844032198827e-11,
+          "converged": true
+        },
+        {
+          "alpha": 0.03,
+          "iterations": 797,
+          "dual_gap": 9.810026295571543e-11,
+          "converged": true
+        }
+      ],
+      "projection_energy_fraction": 2.51402642966232e-16,
+      "correlated_columns": [],
+      "regression_rows": 66560,
+      "window_intervals": 12,
+      "integration_windows": 65,
+      "training_frames": 150,
+      "spatial_points": 1024,
+      "overlapping_windows": true,
+      "reference_equation_used": false,
+      "time_smoothing": "none"
+    },
+    "eligible": true,
+    "development": {
+      "rmse": 3.261344448670917e-05,
+      "mae": 1.905882279767491e-05,
+      "max_absolute_error": 0.00022118363715284417,
+      "relative_l2": 2.5245149876869094e-05,
+      "excluded_initial_frame": true,
+      "scored_frames": 49,
+      "space_points": 1024
+    }
+  },
+  "candidates": [
+    {
+      "candidate_id": "lasso-3-8-0.1",
+      "equation": "u_t = 0.008966862058 u^3 - 0.0651019777 u*u_x",
+      "terms": [
+        {
+          "name": "u^3",
+          "coefficient": 0.008966862057931665
+        },
+        {
+          "name": "u*u_x",
+          "coefficient": -0.06510197770045026
+        }
+      ],
+      "support_size": 2,
+      "fit_success": true,
+      "fit_relative_error": 0.9533017283566799,
+      "fit_rmse": 0.12391471133859061,
+      "alpha_values": [
+        0.1
+      ],
+      "failure_reason": null,
+      "diagnostics": {
+        "support_rank": 2,
+        "parameter_count": 2,
+        "condition_number": 1.005362292224541,
+        "full_library_rank": 9,
+        "full_library_condition_number": 15.446758994046144,
+        "lasso_all_support_runs_converged": true,
+        "lasso_runs": [
+          {
+            "alpha": 0.1,
+            "iterations": 5,
+            "dual_gap": 1.0931426704001542e-16,
+            "converged": true
+          }
+        ],
+        "projection_energy_fraction": 2.51402642966232e-16,
+        "correlated_columns": [],
+        "regression_rows": 66560,
+        "window_intervals": 12,
+        "integration_windows": 65,
+        "training_frames": 150,
+        "spatial_points": 1024,
+        "overlapping_windows": true,
+        "reference_equation_used": false,
+        "time_smoothing": "none"
+      },
+      "eligible": false,
+      "rejection_reason": "Nonlinear candidate exceeded the finite-state growth budget."
+    },
+    {
+      "candidate_id": "lasso-3-5-7-8-3e-06",
+      "equation": "u_t = 1.33255027e-07 u^3 - 0.9999877682 u_xx - 0.9999880615 u_xxxx - 0.9999881107 u*u_x",
+      "terms": [
+        {
+          "name": "u^3",
+          "coefficient": 1.3325502703617265e-07
+        },
+        {
+          "name": "u_xx",
+          "coefficient": -0.9999877681522872
+        },
+        {
+          "name": "u_xxxx",
+          "coefficient": -0.9999880614923627
+        },
+        {
+          "name": "u*u_x",
+          "coefficient": -0.9999881107215797
+        }
+      ],
+      "support_size": 4,
+      "fit_success": true,
+      "fit_relative_error": 3.154187256384134e-05,
+      "fit_rmse": 4.099963230492158e-06,
+      "alpha_values": [
+        3e-06,
+        1e-05,
+        3e-05,
+        0.0001,
+        0.0003,
+        0.001,
+        0.003,
+        0.01,
+        0.03
+      ],
+      "failure_reason": null,
+      "diagnostics": {
+        "support_rank": 4,
+        "parameter_count": 4,
+        "condition_number": 14.359399336810695,
+        "full_library_rank": 9,
+        "full_library_condition_number": 15.446758994046144,
+        "lasso_all_support_runs_converged": true,
+        "lasso_runs": [
+          {
+            "alpha": 3e-06,
+            "iterations": 839,
+            "dual_gap": 9.997603012681612e-11,
+            "converged": true
+          },
+          {
+            "alpha": 1e-05,
+            "iterations": 839,
+            "dual_gap": 9.971599990016439e-11,
+            "converged": true
+          },
+          {
+            "alpha": 3e-05,
+            "iterations": 839,
+            "dual_gap": 9.947319490301745e-11,
+            "converged": true
+          },
+          {
+            "alpha": 0.0001,
+            "iterations": 839,
+            "dual_gap": 9.906078606725126e-11,
+            "converged": true
+          },
+          {
+            "alpha": 0.0003,
+            "iterations": 839,
+            "dual_gap": 9.830962997462957e-11,
+            "converged": true
+          },
+          {
+            "alpha": 0.001,
+            "iterations": 838,
+            "dual_gap": 9.871466822383071e-11,
+            "converged": true
+          },
+          {
+            "alpha": 0.003,
+            "iterations": 836,
+            "dual_gap": 9.798118256913842e-11,
+            "converged": true
+          },
+          {
+            "alpha": 0.01,
+            "iterations": 827,
+            "dual_gap": 9.946844032198827e-11,
+            "converged": true
+          },
+          {
+            "alpha": 0.03,
+            "iterations": 797,
+            "dual_gap": 9.810026295571543e-11,
+            "converged": true
+          }
+        ],
+        "projection_energy_fraction": 2.51402642966232e-16,
+        "correlated_columns": [],
+        "regression_rows": 66560,
+        "window_intervals": 12,
+        "integration_windows": 65,
+        "training_frames": 150,
+        "spatial_points": 1024,
+        "overlapping_windows": true,
+        "reference_equation_used": false,
+        "time_smoothing": "none"
+      },
+      "eligible": true,
+      "development": {
+        "rmse": 3.261344448670917e-05,
+        "mae": 1.905882279767491e-05,
+        "max_absolute_error": 0.00022118363715284417,
+        "relative_l2": 2.5245149876869094e-05,
+        "excluded_initial_frame": true,
+        "scored_frames": 49,
+        "space_points": 1024
+      }
+    }
+  ],
+  "near_optimal_supports": [
+    [
+      "u*u_x",
+      "u^3",
+      "u_xx",
+      "u_xxxx"
+    ]
+  ],
+  "failure_reason": null,
+  "training_periodic_seam": {
+    "training_only": true,
+    "used_for_selection": false,
+    "seam_step_rms": 0.04757199069325271,
+    "adjacent_step_rms": 0.057096155484605796,
+    "seam_to_adjacent_ratio": 0.8331907864808694,
+    "interpretation": "A periodic-grid seam is one spatial step; this diagnostic does not certify the boundary condition."
+  },
+  "final_role_loaded_during_freeze": false,
+  "reference_equations_parsed_during_freeze": false
+}

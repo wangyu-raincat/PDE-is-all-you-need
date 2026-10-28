@@ -1,3 +1,30 @@
+# PDE is all you need
+
+从时空观测数据中识别 PDE 的项与系数。这里保存截至 2026-10-28 已完成并归档的代码、实验结果、图表与复现说明。
+
+## 仓库中的版本
+
+- `main`：默认普通 L1 原型及历史结果，可直接运行中文演示界面。
+- [`experiment/l1-analytic-assessment`](https://github.com/wangyu-raincat/PDE-is-all-you-need/tree/experiment/l1-analytic-assessment)：已完成的 63 组普通、自适应与迭代重加权 L1 对照，保留独立实验状态，未替换默认引擎。
+- [`baseline/frozen-generic`](https://github.com/wangyu-raincat/PDE-is-all-you-need/tree/baseline/frozen-generic)：原始冻结代码，提交历史保持不变。
+
+默认方法的旧三组数值基准严格结构恢复为 **0/3**；实验分支中的加权方法在相同已查看数据上的**回顾性比较为 3/3**。新解析轨迹的收益与限制、165 项回归记录见[实验报告](https://github.com/wangyu-raincat/PDE-is-all-you-need/blob/experiment/l1-analytic-assessment/l1_study/REPORT.md)。这不代表任意 PDE 或真实测量的普适发现能力；后续仍在开展的挑战实验不属于这次归档。
+
+## 从 GitHub 运行
+
+```bash
+git clone https://github.com/wangyu-raincat/PDE-is-all-you-need.git
+cd PDE-is-all-you-need
+python -m pip install -r requirements-repro.txt
+python -m pde_discovery serve --port 8765
+```
+
+建议 Python 3.12；打开 http://localhost:8765/discovery。历史 39 张科学图已随仓库保存。第三方原始 MAT、TXT 与完整观测 NPZ 按下文固定来源命令恢复；原始来源与许可说明保留在对应报告中。
+
+以下为已归档版本的原始项目说明，原有科学结论及实验边界保持不变。快照来源与压缩包校验值见 [GITHUB_SNAPSHOT.json](GITHUB_SNAPSHOT.json)。
+
+---
+
 # 方程发现实验室 · PDE Discovery Lab
 
 从时空观测数据 `u(x,t)` 中识别 PDE 微分项和系数的可运行科研原型。当前主线使用共同九项候选库与 L1 稀疏回归，在 Burgers、KdV、Kuramoto–Sivashinsky（KS）三个外部公开数值基准上验证发现能力：优先评价方程结构和系数，另行评价未来预测。

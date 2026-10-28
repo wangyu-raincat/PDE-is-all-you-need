@@ -1,0 +1,1155 @@
+{
+  "case": "75al",
+  "experiment": {
+    "title": "Mendeley 金属杆温度试验：75al，三次完整重复采集",
+    "source_url": "https://data.mendeley.com/datasets/sbcf36976g/1",
+    "doi": "10.17632/sbcf36976g.1",
+    "license": "CC BY 4.0",
+    "description": "已发表的真实金属杆热电偶测量数据；aluminum，75 温度档，同一预设试验组的文件 1/2/3 依次用于训练/开发/最终验证。仅使用六个原始温度测点，不增加空间插值点。",
+    "provenance_status": "published_experimental_dataset_user_supplied_archive",
+    "material": "aluminum",
+    "temperature_setting_label": "75",
+    "authors": [
+      "Lauren Tomanek",
+      "Daniel Stutts"
+    ],
+    "dataset_title": "Data on the Validation to Determine the Material Thermal Properties Estimation Via a One-Dimensional Transient Convection Model"
+  },
+  "protocol": {
+    "method": "physics_prior_trajectory_fitting",
+    "model_family": "theta_t = D theta_xx - h theta + c; D > 0, h >= 0",
+    "structure_comparison": [
+      "D",
+      "D+h",
+      "D+c",
+      "D+h+c"
+    ],
+    "is_l1_optimization": false,
+    "physical_prior": "扩散必选；线性衰减和常数源可选；四个预设结构比较，不是无先验方程发现。",
+    "fitting": {
+      "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+      "is_l1": false,
+      "equation_family": "theta_t = D theta_xx - h theta + c",
+      "model_names": [
+        "D",
+        "D+h",
+        "D+c",
+        "D+h+c"
+      ],
+      "physical_prior": "D > 0; h >= 0; no advection or quadratic reaction; source c optional",
+      "parameter_bounds": {
+        "D_m2_s": [
+          1e-08,
+          0.001
+        ],
+        "h_per_s": [
+          0.0,
+          1.0
+        ],
+        "c_K_s": [
+          -1.0,
+          1.0
+        ]
+      },
+      "initial_values_D_h_c": [
+        [
+          1e-06,
+          0.001,
+          0.0
+        ],
+        [
+          1e-05,
+          0.01,
+          0.0
+        ],
+        [
+          0.0001,
+          0.1,
+          0.0
+        ]
+      ],
+      "optimizer_coordinates": "log(D), h/0.01, c/0.1, with absent parameters omitted",
+      "optimizer": "scipy.optimize.least_squares, trf, linear loss, 2-point Jacobian",
+      "max_nfev_per_start": 250,
+      "ftol": 1e-09,
+      "xtol": 1e-09,
+      "gtol": 1e-09,
+      "training_residual": "four interior rollout errors excluding initial frame, divided by sqrt(count)",
+      "start_selection": "lowest training RMSE among successful starts; no development or final input",
+      "failed_start_handling": "record exception or failure and continue remaining fixed starts",
+      "failed_support_handling": "retain an explicit failed candidate and continue other fixed supports",
+      "propagator": "four-point sine eigenmodes with piecewise-linear measured boundary forcing",
+      "time_step_group_relative_tolerance": 1e-10,
+      "time_step_group_representative": "mean original dt within each numerically equal contiguous block",
+      "spatial_observation_count": 6,
+      "interior_state_count": 4,
+      "spatial_upsampling": false,
+      "data_smoothing": "none",
+      "parameter_boundary_hit_tolerance": "1e-5 of the optimizer-coordinate bound range",
+      "scope": "coarse-grid effective parameters; not a proof of a unique continuous PDE"
+    },
+    "selection_rule": "只用 repeat2 的四内点 RMSE；最优值1.05倍内先最少项，再最低RMSE，最后模型名称。",
+    "eligibility_rule": "训练优化收敛、局部参数敏感性Jacobian满列秩且开发预测有限；满秩不证明物理机制唯一。",
+    "near_optimal_factor": 1.05,
+    "fit_data": "完整 repeat1",
+    "selection_data": "完整 repeat2",
+    "comparison_data": "完整 repeat3（上一轮已查看）",
+    "prior_seen_test": true,
+    "previous_test_already_seen": true,
+    "new_blind_validation": false,
+    "final_data_selects_model": false,
+    "all_declared_cases_frozen_before_comparison_load": true,
+    "prediction_inputs": "两端完整实测温升 + 四个内部测点初始温升；无后续内部实测值。",
+    "scoring": "仅四内点；排除初始化首帧。",
+    "units": {
+      "time": "s",
+      "space": "m",
+      "temperature": "K above ambient"
+    },
+    "spatial_upsampling": false,
+    "smoothing": "none",
+    "stability_diagnostic": "训练记录按行数分成不重叠前半和后半，分别拟合已选支持；不选模，不作置信区间。",
+    "protocol_document_sha256": "71be6bee7c5e8e5fd8ea63bc12df1aa56071333a08c9c0ee0345856d997717bf",
+    "source_sha256": {
+      "real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1",
+      "refined_experiment.py": "26ece449cb4307baf0690384312e6dd7795cd9bd55c569ab2465fbbb79a3a277",
+      "real_heat.py": "8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc",
+      "real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04"
+    },
+    "split": {
+      "training": {
+        "file": "../raw/75al1.csv",
+        "sha256": "8a923f40a6c3a6652576d0043f66dda90017a869eb061765c751c4320c194a5e"
+      },
+      "development": {
+        "file": "../raw/75al2.csv",
+        "sha256": "df151205c4bcb9573d3805d1ab3159fd127af2699c843cf2f6530f6980811297"
+      },
+      "final": {
+        "file": "../raw/75al3.csv",
+        "sha256": "32775a6d6e23526a025e65fd47e3b7fb5640547c8dc4d437b2fcc0de1fd6bfc7"
+      }
+    },
+    "split_kind": "independent_repeated_acquisitions",
+    "spacing_m": 0.01
+  },
+  "prior_seen_test": true,
+  "new_blind_validation": false,
+  "generated_at": "2026-10-27T11:57:36.244184+00:00",
+  "frozen_model_sha256": "7d9ad3eb0341012fb5be42b964436a848c6e58c9093c2f8eaad34209776dc302",
+  "candidates": [
+    {
+      "candidate_id": "trajectory-D",
+      "model_name": "D",
+      "equation": "theta_t = 1.04316301e-05 theta_xx",
+      "terms": [
+        {
+          "name": "theta_xx",
+          "coefficient": 1.0431630119703883e-05
+        }
+      ],
+      "support_size": 1,
+      "fit_success": true,
+      "failure_reason": null,
+      "train_score": {
+        "relative_error": 0.22087261226330773,
+        "rmse": 6.489703302901042,
+        "mae": 5.955180564257296,
+        "max_absolute_error": 10.301788198312503,
+        "per_sensor_rmse": [
+          5.888017778646083,
+          8.265988726836245,
+          7.128765558819198,
+          3.8275807571226474
+        ],
+        "scored_rows": 1509,
+        "excluded_initial_row": true
+      },
+      "parameters": {
+        "D": 1.0431630119703883e-05,
+        "h": 0.0,
+        "c": 0.0
+      },
+      "diagnostics": {
+        "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+        "is_l1": false,
+        "starts": [
+          {
+            "start_index": 0,
+            "initial_D_h_c": [
+              1e-06,
+              0.001,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 39,
+            "njev": 39,
+            "training_rmse_K": 6.489703304443136,
+            "optimality": 0.0024488832450244714,
+            "fitted_parameters": {
+              "D": 1.0429688614066376e-05,
+              "h": 0.0,
+              "c": 0.0
+            }
+          },
+          {
+            "start_index": 1,
+            "initial_D_h_c": [
+              1e-05,
+              0.01,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 24,
+            "njev": 24,
+            "training_rmse_K": 6.489703303019842,
+            "optimality": 0.001901712110771731,
+            "fitted_parameters": {
+              "D": 1.0429889895660065e-05,
+              "h": 0.0,
+              "c": 0.0
+            }
+          },
+          {
+            "start_index": 2,
+            "initial_D_h_c": [
+              0.0001,
+              0.1,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 33,
+            "njev": 33,
+            "training_rmse_K": 6.489703302901042,
+            "optimality": 0.0028369050915430893,
+            "fitted_parameters": {
+              "D": 1.0431630119703883e-05,
+              "h": 0.0,
+              "c": 0.0
+            }
+          }
+        ],
+        "selected_start_index": 2,
+        "parameter_bounds_hit": [],
+        "jacobian_rank": 1,
+        "parameter_count": 1,
+        "scaled_jacobian_condition_number": 1.0,
+        "training_rows": 1510,
+        "scored_training_rows": 1509,
+        "spatial_observation_count": 6,
+        "predicted_interior_count": 4,
+        "dt_blocks": 1,
+        "identifiability_note": "local numerical rank is not proof of unique physical mechanism",
+        "future_interior_is_prediction_input": false
+      },
+      "eligible": true,
+      "development": {
+        "relative_error": 0.22189547538107435,
+        "rmse": 6.4208604927941275,
+        "mae": 5.891497318631462,
+        "max_absolute_error": 10.220943991244225,
+        "per_sensor_rmse": [
+          5.822685690807878,
+          8.17619526945468,
+          7.055947017756158,
+          3.7907218067439272
+        ],
+        "scored_rows": 1509,
+        "excluded_initial_row": true
+      }
+    },
+    {
+      "candidate_id": "trajectory-D-h",
+      "model_name": "D+h",
+      "equation": "theta_t = - 0.066443826 theta + 6.57440609e-05 theta_xx",
+      "terms": [
+        {
+          "name": "theta",
+          "coefficient": -0.06644382596881056
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 6.574406093877634e-05
+        }
+      ],
+      "support_size": 2,
+      "fit_success": true,
+      "failure_reason": null,
+      "train_score": {
+        "relative_error": 0.01220548960904321,
+        "rmse": 0.35862303351084485,
+        "mae": 0.3107105952436928,
+        "max_absolute_error": 0.677753740561247,
+        "per_sensor_rmse": [
+          0.2610437111022375,
+          0.3999495731053739,
+          0.0941108840105607,
+          0.5267652057944161
+        ],
+        "scored_rows": 1509,
+        "excluded_initial_row": true
+      },
+      "parameters": {
+        "D": 6.574406093877634e-05,
+        "h": 0.06644382596881056,
+        "c": 0.0
+      },
+      "diagnostics": {
+        "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+        "is_l1": false,
+        "starts": [
+          {
+            "start_index": 0,
+            "initial_D_h_c": [
+              1e-06,
+              0.001,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 12,
+            "njev": 12,
+            "training_rmse_K": 0.35862303351084485,
+            "optimality": 2.7640491783914847e-08,
+            "fitted_parameters": {
+              "D": 6.574406093877634e-05,
+              "h": 0.06644382596881056,
+              "c": 0.0
+            }
+          },
+          {
+            "start_index": 1,
+            "initial_D_h_c": [
+              1e-05,
+              0.01,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 10,
+            "njev": 10,
+            "training_rmse_K": 0.35862303351085484,
+            "optimality": 1.9347755271673766e-06,
+            "fitted_parameters": {
+              "D": 6.574405474711187e-05,
+              "h": 0.06644381940936903,
+              "c": 0.0
+            }
+          },
+          {
+            "start_index": 2,
+            "initial_D_h_c": [
+              0.0001,
+              0.1,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 9,
+            "njev": 8,
+            "training_rmse_K": 0.3586230335108454,
+            "optimality": 1.877515157627531e-08,
+            "fitted_parameters": {
+              "D": 6.574405891869402e-05,
+              "h": 0.0664438238210998,
+              "c": 0.0
+            }
+          }
+        ],
+        "selected_start_index": 0,
+        "parameter_bounds_hit": [],
+        "jacobian_rank": 2,
+        "parameter_count": 2,
+        "scaled_jacobian_condition_number": 54.36442423745441,
+        "training_rows": 1510,
+        "scored_training_rows": 1509,
+        "spatial_observation_count": 6,
+        "predicted_interior_count": 4,
+        "dt_blocks": 1,
+        "identifiability_note": "local numerical rank is not proof of unique physical mechanism",
+        "future_interior_is_prediction_input": false
+      },
+      "eligible": true,
+      "development": {
+        "relative_error": 0.012462126691445604,
+        "rmse": 0.360609321987658,
+        "mae": 0.304683622696782,
+        "max_absolute_error": 0.7980921035503243,
+        "per_sensor_rmse": [
+          0.277391879576464,
+          0.362712251979731,
+          0.0648923534257655,
+          0.5544717146016448
+        ],
+        "scored_rows": 1509,
+        "excluded_initial_row": true
+      }
+    },
+    {
+      "candidate_id": "trajectory-D-c",
+      "model_name": "D+c",
+      "equation": "theta_t = - 1 + 3.99262138e-05 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": -0.9999999999999973
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 3.992621376772772e-05
+        }
+      ],
+      "support_size": 2,
+      "fit_success": true,
+      "failure_reason": null,
+      "train_score": {
+        "relative_error": 0.06636432699587878,
+        "rmse": 1.9499239298466267,
+        "mae": 1.5205535944153348,
+        "max_absolute_error": 7.29341730167741,
+        "per_sensor_rmse": [
+          1.7797442347908436,
+          2.4158849744566244,
+          1.943108176881945,
+          1.5585744097129413
+        ],
+        "scored_rows": 1509,
+        "excluded_initial_row": true
+      },
+      "parameters": {
+        "D": 3.992621376772772e-05,
+        "h": 0.0,
+        "c": -0.9999999999999973
+      },
+      "diagnostics": {
+        "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+        "is_l1": false,
+        "starts": [
+          {
+            "start_index": 0,
+            "initial_D_h_c": [
+              1e-06,
+              0.001,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 13,
+            "njev": 13,
+            "training_rmse_K": 1.9499239298466267,
+            "optimality": 4.577749365141573e-06,
+            "fitted_parameters": {
+              "D": 3.992621376772772e-05,
+              "h": 0.0,
+              "c": -0.9999999999999973
+            }
+          },
+          {
+            "start_index": 1,
+            "initial_D_h_c": [
+              1e-05,
+              0.01,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 11,
+            "njev": 11,
+            "training_rmse_K": 1.9499239298466309,
+            "optimality": 6.072483837112917e-06,
+            "fitted_parameters": {
+              "D": 3.992621388290707e-05,
+              "h": 0.0,
+              "c": -0.9999999999999979
+            }
+          },
+          {
+            "start_index": 2,
+            "initial_D_h_c": [
+              0.0001,
+              0.1,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 9,
+            "njev": 9,
+            "training_rmse_K": 1.9499239298466664,
+            "optimality": 1.6189841021053584e-05,
+            "fitted_parameters": {
+              "D": 3.9926214363674615e-05,
+              "h": 0.0,
+              "c": -0.9999999999999866
+            }
+          }
+        ],
+        "selected_start_index": 0,
+        "parameter_bounds_hit": [
+          {
+            "parameter": "c",
+            "bound": "lower"
+          }
+        ],
+        "jacobian_rank": 2,
+        "parameter_count": 2,
+        "scaled_jacobian_condition_number": 58.621839196983714,
+        "training_rows": 1510,
+        "scored_training_rows": 1509,
+        "spatial_observation_count": 6,
+        "predicted_interior_count": 4,
+        "dt_blocks": 1,
+        "identifiability_note": "local numerical rank is not proof of unique physical mechanism",
+        "future_interior_is_prediction_input": false
+      },
+      "eligible": true,
+      "development": {
+        "relative_error": 0.0657348711586449,
+        "rmse": 1.9021317874850836,
+        "mae": 1.4524191627741874,
+        "max_absolute_error": 7.287430770618252,
+        "per_sensor_rmse": [
+          1.6968118848923956,
+          2.3057295149507273,
+          1.915540723916492,
+          1.6147959357254027
+        ],
+        "scored_rows": 1509,
+        "excluded_initial_row": true
+      }
+    },
+    {
+      "candidate_id": "trajectory-D-h-c",
+      "model_name": "D+h+c",
+      "equation": "theta_t = 0.203426541 - 0.0635605276 theta + 5.60069885e-05 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": 0.20342654092391613
+        },
+        {
+          "name": "theta",
+          "coefficient": -0.06356052764993052
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 5.600698853870684e-05
+        }
+      ],
+      "support_size": 3,
+      "fit_success": true,
+      "failure_reason": null,
+      "train_score": {
+        "relative_error": 0.011782515638479513,
+        "rmse": 0.34619516594645877,
+        "mae": 0.3241087540028612,
+        "max_absolute_error": 0.5688275434641241,
+        "per_sensor_rmse": [
+          0.36988517226074163,
+          0.36719774468525024,
+          0.16891495523015485,
+          0.4233472395541115
+        ],
+        "scored_rows": 1509,
+        "excluded_initial_row": true
+      },
+      "parameters": {
+        "D": 5.600698853870684e-05,
+        "h": 0.06356052764993052,
+        "c": 0.20342654092391613
+      },
+      "diagnostics": {
+        "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+        "is_l1": false,
+        "starts": [
+          {
+            "start_index": 0,
+            "initial_D_h_c": [
+              1e-06,
+              0.001,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 14,
+            "njev": 14,
+            "training_rmse_K": 0.3461951659464727,
+            "optimality": 1.7349624070688095e-07,
+            "fitted_parameters": {
+              "D": 5.600696938452429e-05,
+              "h": 0.06356051881845588,
+              "c": 0.20342685604267713
+            }
+          },
+          {
+            "start_index": 1,
+            "initial_D_h_c": [
+              1e-05,
+              0.01,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 11,
+            "njev": 11,
+            "training_rmse_K": 0.3461951659464602,
+            "optimality": 5.39797101378546e-08,
+            "fitted_parameters": {
+              "D": 5.600697612034253e-05,
+              "h": 0.06356052384313209,
+              "c": 0.20342679744082304
+            }
+          },
+          {
+            "start_index": 2,
+            "initial_D_h_c": [
+              0.0001,
+              0.1,
+              0.0
+            ],
+            "success": true,
+            "status": 2,
+            "message": "`ftol` termination condition is satisfied.",
+            "nfev": 13,
+            "njev": 11,
+            "training_rmse_K": 0.3461951659464587,
+            "optimality": 6.132487989857428e-07,
+            "fitted_parameters": {
+              "D": 5.600698853870684e-05,
+              "h": 0.06356052764993052,
+              "c": 0.20342654092391613
+            }
+          }
+        ],
+        "selected_start_index": 2,
+        "parameter_bounds_hit": [],
+        "jacobian_rank": 3,
+        "parameter_count": 3,
+        "scaled_jacobian_condition_number": 107.70351960069819,
+        "training_rows": 1510,
+        "scored_training_rows": 1509,
+        "spatial_observation_count": 6,
+        "predicted_interior_count": 4,
+        "dt_blocks": 1,
+        "identifiability_note": "local numerical rank is not proof of unique physical mechanism",
+        "future_interior_is_prediction_input": false
+      },
+      "eligible": true,
+      "development": {
+        "relative_error": 0.011926796758347784,
+        "rmse": 0.3451187906366474,
+        "mae": 0.3174477870389449,
+        "max_absolute_error": 0.6628048122210917,
+        "per_sensor_rmse": [
+          0.3756053400788071,
+          0.344452269479159,
+          0.14543002176163106,
+          0.4422118156804046
+        ],
+        "scored_rows": 1509,
+        "excluded_initial_row": true
+      }
+    }
+  ],
+  "discovery": {
+    "candidate_id": "trajectory-D-h",
+    "model_name": "D+h",
+    "equation": "theta_t = - 0.066443826 theta + 6.57440609e-05 theta_xx",
+    "terms": [
+      {
+        "name": "theta",
+        "coefficient": -0.06644382596881056
+      },
+      {
+        "name": "theta_xx",
+        "coefficient": 6.574406093877634e-05
+      }
+    ],
+    "support_size": 2,
+    "fit_success": true,
+    "failure_reason": null,
+    "train_score": {
+      "relative_error": 0.01220548960904321,
+      "rmse": 0.35862303351084485,
+      "mae": 0.3107105952436928,
+      "max_absolute_error": 0.677753740561247,
+      "per_sensor_rmse": [
+        0.2610437111022375,
+        0.3999495731053739,
+        0.0941108840105607,
+        0.5267652057944161
+      ],
+      "scored_rows": 1509,
+      "excluded_initial_row": true
+    },
+    "parameters": {
+      "D": 6.574406093877634e-05,
+      "h": 0.06644382596881056,
+      "c": 0.0
+    },
+    "diagnostics": {
+      "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+      "is_l1": false,
+      "starts": [
+        {
+          "start_index": 0,
+          "initial_D_h_c": [
+            1e-06,
+            0.001,
+            0.0
+          ],
+          "success": true,
+          "status": 2,
+          "message": "`ftol` termination condition is satisfied.",
+          "nfev": 12,
+          "njev": 12,
+          "training_rmse_K": 0.35862303351084485,
+          "optimality": 2.7640491783914847e-08,
+          "fitted_parameters": {
+            "D": 6.574406093877634e-05,
+            "h": 0.06644382596881056,
+            "c": 0.0
+          }
+        },
+        {
+          "start_index": 1,
+          "initial_D_h_c": [
+            1e-05,
+            0.01,
+            0.0
+          ],
+          "success": true,
+          "status": 2,
+          "message": "`ftol` termination condition is satisfied.",
+          "nfev": 10,
+          "njev": 10,
+          "training_rmse_K": 0.35862303351085484,
+          "optimality": 1.9347755271673766e-06,
+          "fitted_parameters": {
+            "D": 6.574405474711187e-05,
+            "h": 0.06644381940936903,
+            "c": 0.0
+          }
+        },
+        {
+          "start_index": 2,
+          "initial_D_h_c": [
+            0.0001,
+            0.1,
+            0.0
+          ],
+          "success": true,
+          "status": 2,
+          "message": "`ftol` termination condition is satisfied.",
+          "nfev": 9,
+          "njev": 8,
+          "training_rmse_K": 0.3586230335108454,
+          "optimality": 1.877515157627531e-08,
+          "fitted_parameters": {
+            "D": 6.574405891869402e-05,
+            "h": 0.0664438238210998,
+            "c": 0.0
+          }
+        }
+      ],
+      "selected_start_index": 0,
+      "parameter_bounds_hit": [],
+      "jacobian_rank": 2,
+      "parameter_count": 2,
+      "scaled_jacobian_condition_number": 54.36442423745441,
+      "training_rows": 1510,
+      "scored_training_rows": 1509,
+      "spatial_observation_count": 6,
+      "predicted_interior_count": 4,
+      "dt_blocks": 1,
+      "identifiability_note": "local numerical rank is not proof of unique physical mechanism",
+      "future_interior_is_prediction_input": false
+    },
+    "eligible": true,
+    "development": {
+      "relative_error": 0.012462126691445604,
+      "rmse": 0.360609321987658,
+      "mae": 0.304683622696782,
+      "max_absolute_error": 0.7980921035503243,
+      "per_sensor_rmse": [
+        0.277391879576464,
+        0.362712251979731,
+        0.0648923534257655,
+        0.5544717146016448
+      ],
+      "scored_rows": 1509,
+      "excluded_initial_row": true
+    },
+    "status": "ambiguous",
+    "near_optimal_supports": [
+      "D+h",
+      "D+h+c"
+    ],
+    "ambiguity_reasons": [
+      "开发误差近优池含多个预设结构。"
+    ],
+    "unique_physical_equation_established": false
+  },
+  "training_stability": {
+    "kind": "descriptive_training_half_refits_not_confidence_intervals",
+    "used_for_selection": false,
+    "segments": [
+      {
+        "segment": "first_half",
+        "rows": 755,
+        "time_start_s": 0.0,
+        "time_end_s": 150.8,
+        "fit_success": true,
+        "terms": [
+          {
+            "name": "theta",
+            "coefficient": -0.06673273589476339
+          },
+          {
+            "name": "theta_xx",
+            "coefficient": 6.591314345521323e-05
+          }
+        ],
+        "diagnostics": {
+          "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+          "is_l1": false,
+          "starts": [
+            {
+              "start_index": 0,
+              "initial_D_h_c": [
+                1e-06,
+                0.001,
+                0.0
+              ],
+              "success": true,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 11,
+              "njev": 11,
+              "training_rmse_K": 0.3336387796092654,
+              "optimality": 6.982702356090923e-07,
+              "fitted_parameters": {
+                "D": 6.591314465645617e-05,
+                "h": 0.06673273724147658,
+                "c": 0.0
+              }
+            },
+            {
+              "start_index": 1,
+              "initial_D_h_c": [
+                1e-05,
+                0.01,
+                0.0
+              ],
+              "success": true,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 9,
+              "njev": 9,
+              "training_rmse_K": 0.33363877960926275,
+              "optimality": 5.206434421778859e-07,
+              "fitted_parameters": {
+                "D": 6.591314345521323e-05,
+                "h": 0.06673273589476339,
+                "c": 0.0
+              }
+            },
+            {
+              "start_index": 2,
+              "initial_D_h_c": [
+                0.0001,
+                0.1,
+                0.0
+              ],
+              "success": true,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 6,
+              "njev": 6,
+              "training_rmse_K": 0.3336387796092731,
+              "optimality": 3.320697530523537e-08,
+              "fitted_parameters": {
+                "D": 6.591314995130498e-05,
+                "h": 0.06673274313663978,
+                "c": 0.0
+              }
+            }
+          ],
+          "selected_start_index": 1,
+          "parameter_bounds_hit": [],
+          "jacobian_rank": 2,
+          "parameter_count": 2,
+          "scaled_jacobian_condition_number": 40.2970680396057,
+          "training_rows": 755,
+          "scored_training_rows": 754,
+          "spatial_observation_count": 6,
+          "predicted_interior_count": 4,
+          "dt_blocks": 1,
+          "identifiability_note": "local numerical rank is not proof of unique physical mechanism",
+          "future_interior_is_prediction_input": false
+        },
+        "train_score": {
+          "relative_error": 0.01209750702404666,
+          "rmse": 0.33363877960926275,
+          "mae": 0.2868445374125692,
+          "max_absolute_error": 0.6485573049816384,
+          "per_sensor_rmse": [
+            0.26192445824420546,
+            0.3755989862375806,
+            0.0907414767807111,
+            0.47680845749532347
+          ],
+          "scored_rows": 754,
+          "excluded_initial_row": true
+        }
+      },
+      {
+        "segment": "second_half",
+        "rows": 755,
+        "time_start_s": 151.0,
+        "time_end_s": 301.8,
+        "fit_success": true,
+        "terms": [
+          {
+            "name": "theta",
+            "coefficient": -2.888237263011696e-25
+          },
+          {
+            "name": "theta_xx",
+            "coefficient": 6.8162265959185e-08
+          }
+        ],
+        "diagnostics": {
+          "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+          "is_l1": false,
+          "starts": [
+            {
+              "start_index": 0,
+              "initial_D_h_c": [
+                1e-06,
+                0.001,
+                0.0
+              ],
+              "success": true,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 17,
+              "njev": 15,
+              "training_rmse_K": 0.07889624836095296,
+              "optimality": 1.4597914927185168e-07,
+              "fitted_parameters": {
+                "D": 6.816235009382307e-08,
+                "h": 2.16589650137481e-28,
+                "c": 0.0
+              }
+            },
+            {
+              "start_index": 1,
+              "initial_D_h_c": [
+                1e-05,
+                0.01,
+                0.0
+              ],
+              "success": true,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 49,
+              "njev": 39,
+              "training_rmse_K": 0.07889624836058365,
+              "optimality": 6.819094697945936e-08,
+              "fitted_parameters": {
+                "D": 6.81622407797029e-08,
+                "h": 9.819811664200343e-17,
+                "c": 0.0
+              }
+            },
+            {
+              "start_index": 2,
+              "initial_D_h_c": [
+                0.0001,
+                0.1,
+                0.0
+              ],
+              "success": true,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 138,
+              "njev": 106,
+              "training_rmse_K": 0.07889624836041541,
+              "optimality": 6.384693048966567e-07,
+              "fitted_parameters": {
+                "D": 6.8162265959185e-08,
+                "h": 2.888237263011696e-25,
+                "c": 0.0
+              }
+            }
+          ],
+          "selected_start_index": 2,
+          "parameter_bounds_hit": [
+            {
+              "parameter": "h",
+              "bound": "lower"
+            }
+          ],
+          "jacobian_rank": 2,
+          "parameter_count": 2,
+          "scaled_jacobian_condition_number": 569.2232037308568,
+          "training_rows": 755,
+          "scored_training_rows": 754,
+          "spatial_observation_count": 6,
+          "predicted_interior_count": 4,
+          "dt_blocks": 1,
+          "identifiability_note": "local numerical rank is not proof of unique physical mechanism",
+          "future_interior_is_prediction_input": false
+        },
+        "train_score": {
+          "relative_error": 0.0025385945324893256,
+          "rmse": 0.07889624836041541,
+          "mae": 0.06489651822081066,
+          "max_absolute_error": 0.23220461655224156,
+          "per_sensor_rmse": [
+            0.07001657936665147,
+            0.06038969739371027,
+            0.06212237540445379,
+            0.11175887239047741
+          ],
+          "scored_rows": 754,
+          "excluded_initial_row": true
+        }
+      }
+    ],
+    "coefficient_changes": [
+      {
+        "term": "theta",
+        "whole_training": -0.06644382596881056,
+        "first_half": -0.06673273589476339,
+        "second_half": -2.888237263011696e-25,
+        "absolute_difference": 0.06673273589476339,
+        "difference_relative_to_full": 1.0043481831718788
+      },
+      {
+        "term": "theta_xx",
+        "whole_training": 6.574406093877634e-05,
+        "first_half": 6.591314345521323e-05,
+        "second_half": 6.8162265959185e-08,
+        "absolute_difference": 6.584498118925405e-05,
+        "difference_relative_to_full": 1.0015350474101636
+      }
+    ]
+  },
+  "validation": {
+    "status": "evaluated",
+    "kind": "已见重复实验的回顾性条件预测比较",
+    "rmse_K": 0.3643777902333063,
+    "relative_l2": 0.012360275085536375,
+    "relative_error": 0.012360275085536375,
+    "rmse": 0.3643777902333063,
+    "mae": 0.3124584420222539,
+    "max_absolute_error": 0.6730177455792337,
+    "per_sensor_rmse": [
+      0.26670033481007827,
+      0.3977791305844986,
+      0.0860468292266521,
+      0.5425157453244109
+    ],
+    "scored_rows": 1552,
+    "excluded_initial_row": true,
+    "per_sensor": [
+      {
+        "sensor": "TC2",
+        "rmse_K": 0.26670033481007827,
+        "x_m": 0.01
+      },
+      {
+        "sensor": "TC3",
+        "rmse_K": 0.3977791305844986,
+        "x_m": 0.02
+      },
+      {
+        "sensor": "TC4",
+        "rmse_K": 0.0860468292266521,
+        "x_m": 0.03
+      },
+      {
+        "sensor": "TC5",
+        "rmse_K": 0.5425157453244109,
+        "x_m": 0.04
+      }
+    ],
+    "baselines": {
+      "persistence": {
+        "label": "初始温升持久值",
+        "relative_error": 1.000142066083805,
+        "rmse": 29.48393570831079,
+        "mae": 27.131166237113405,
+        "max_absolute_error": 45.45,
+        "per_sensor_rmse": [
+          42.924671064762414,
+          30.26019305028827,
+          21.72635257021185,
+          15.715240817222597
+        ],
+        "scored_rows": 1552,
+        "excluded_initial_row": true
+      },
+      "linear_boundary": {
+        "label": "同边界线性空间插值",
+        "relative_error": 0.24799208978684795,
+        "rmse": 7.310744222643652,
+        "mae": 7.03034793814433,
+        "max_absolute_error": 9.73,
+        "per_sensor_rmse": [
+          6.470808934595527,
+          9.379396628429895,
+          8.10345740724482,
+          4.275213798536376
+        ],
+        "scored_rows": 1552,
+        "excluded_initial_row": true
+      }
+    },
+    "beats_both_baselines": true,
+    "below_descriptive_5pct": true,
+    "final_file": "../raw/75al3.csv",
+    "scored_sensor_count": 4,
+    "measured_boundary_sensor_count": 2,
+    "rows": 1553,
+    "time_start_s": 0.0,
+    "time_end_s": 310.4
+  },
+  "plot_available": true,
+  "trajectory_available": true,
+  "comparison": {
+    "kind": "retrospective_method_comparison",
+    "previous_test_already_seen": true,
+    "baseline_relative_l2": 0.010562568571801632,
+    "baseline_rmse_K": 0.31138185588479,
+    "baseline_support_size": 5,
+    "old_report_sha256": "f0b3581e6bdd79460de20d0d088e6b625b22d29fd882746984a28d7302faf598",
+    "improved": false,
+    "baseline_equation": "theta_t = 0.30568908 - 0.1511146 theta + 0.00058934446 theta^2 - 0.0033779788 theta_x + 6.3102897e-06 theta_xx",
+    "relative_l2_difference": 0.0017977065137347436
+  },
+  "conclusion": "物理先验模型 D+h 的回顾性条件预测相对 L2 为 1.236%，RMSE 为 0.3644 K。repeat3 已在上一轮查看；不属于新盲验，较少项或较低误差不证明真实 PDE 已唯一确定。",
+  "limitations": [
+    "本轮是已见过 repeat3 的回顾性方法比较，不是新独立盲验。",
+    "扩散项是物理先验必选项，四支持比较不是 L1 自动发现。",
+    "预测依赖两端全程实测温升，只计四个内点误差，不是无边界输入的自由预测。",
+    "参数是六原始测点的有效半离散系数，不自动等同连续材料物性。",
+    "训练分段稳定性是描述性诊断，不提供统计置信区间。",
+    "未自行操作实验设备，未验证跨装置泛化，未接入华为平台。"
+  ]
+}

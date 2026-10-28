@@ -1,0 +1,128 @@
+{
+  "kind": "training_only_identifiability_diagnostics",
+  "data_role": "only complete original repeat1 training records",
+  "model_role": "already frozen selected support and coefficients; never replaced",
+  "is_l1": false,
+  "used_for_model_selection": false,
+  "is_confidence_interval": false,
+  "unique_physical_equation_established": false,
+  "profile_multipliers": [
+    0.25,
+    0.4,
+    0.63,
+    0.8,
+    1.0,
+    1.25,
+    1.6,
+    2.5,
+    4.0
+  ],
+  "profile_reference": "existing frozen full-training D, not a newly chosen optimum",
+  "profile_bounds": [
+    1e-08,
+    0.001
+  ],
+  "profile_clipping": "clip to original D bounds, deduplicate identical clipped points, retain multiplier mappings",
+  "profile_refit": "D fixed; refit only h/c present in the already selected support",
+  "near_optimal_factor": 1.05,
+  "near_optimal_rule": "successful discrete profile RMSE <= minimum successful profile RMSE * 1.05; no interpolation or CI",
+  "loss_block_count": 5,
+  "loss_block_definition": "equal elapsed-time intervals on [original t0, original t_end]; first four right-open, last closed; initial row never scored",
+  "block_refit": "same selected support, all its parameters; delete only a block of interior observation residuals",
+  "propagation": "always original initial interior state, full original time axis and full measured boundaries",
+  "reference_sensitivity": "forward finite difference in old scaled optimizer coordinates; backward at upper bound",
+  "reference_sensitivity_step": 1e-05,
+  "rank_relative_threshold": 1e-08,
+  "rank_absolute_threshold": 1e-12,
+  "bound_hit_coordinate_range_fraction": 1e-05,
+  "fitting": {
+    "method": "prespecified physical supports with training-trajectory nonlinear least squares",
+    "is_l1": false,
+    "equation_family": "theta_t = D theta_xx - h theta + c",
+    "model_names": [
+      "D",
+      "D+h",
+      "D+c",
+      "D+h+c"
+    ],
+    "physical_prior": "D > 0; h >= 0; no advection or quadratic reaction; source c optional",
+    "parameter_bounds": {
+      "D_m2_s": [
+        1e-08,
+        0.001
+      ],
+      "h_per_s": [
+        0.0,
+        1.0
+      ],
+      "c_K_s": [
+        -1.0,
+        1.0
+      ]
+    },
+    "initial_values_D_h_c": [
+      [
+        1e-06,
+        0.001,
+        0.0
+      ],
+      [
+        1e-05,
+        0.01,
+        0.0
+      ],
+      [
+        0.0001,
+        0.1,
+        0.0
+      ]
+    ],
+    "optimizer_coordinates": "log(D), h/0.01, c/0.1, with absent parameters omitted",
+    "optimizer": "scipy.optimize.least_squares, trf, linear loss, 2-point Jacobian",
+    "max_nfev_per_start": 250,
+    "ftol": 1e-09,
+    "xtol": 1e-09,
+    "gtol": 1e-09,
+    "training_residual": "four interior rollout errors excluding initial frame, divided by sqrt(count)",
+    "start_selection": "lowest training RMSE among successful starts; no development or final input",
+    "failed_start_handling": "record exception or failure and continue remaining fixed starts",
+    "failed_support_handling": "retain an explicit failed candidate and continue other fixed supports",
+    "propagator": "four-point sine eigenmodes with piecewise-linear measured boundary forcing",
+    "time_step_group_relative_tolerance": 1e-10,
+    "time_step_group_representative": "mean original dt within each numerically equal contiguous block",
+    "spatial_observation_count": 6,
+    "interior_state_count": 4,
+    "spatial_upsampling": false,
+    "data_smoothing": "none",
+    "parameter_boundary_hit_tolerance": "1e-5 of the optimizer-coordinate bound range",
+    "scope": "coarse-grid effective parameters; not a proof of a unique continuous PDE"
+  },
+  "profile_start_rule": "old three fixed starts projected onto the free h/c coordinates; no sequential warm starts",
+  "failure_rule": "record each failed start; retain failed diagnostic points; an incomplete profile or deletion series is inconclusive",
+  "empty_block_rule": "a deletion interval containing no future observation is insufficient and is not refitted",
+  "frozen_reference_integrity": "verify each model JSON against its existing freeze_index SHA256 and each training manifest against the frozen model",
+  "reporting": "report all declared cases, profile grid edges, parameter bounds, and block parameter ranges",
+  "limitations": [
+    "Descriptive loss sensitivity is not statistical uncertainty or confidence coverage.",
+    "A locally full-rank Jacobian does not establish a unique physical law.",
+    "Parameters remain effective six-sensor discretization coefficients under a physical prior.",
+    "No development, old repeat3, or new held-out measurements enter this diagnostic."
+  ],
+  "cases": [
+    "50ss",
+    "75ss",
+    "100ss",
+    "50al",
+    "75al",
+    "100al",
+    "50cu",
+    "75cu",
+    "100cu"
+  ],
+  "source_sha256": {
+    "heat_identifiability.py": "c8be9a31c840c801f836a4c8df74fe1336a38ac261d10f42273c0b71c00b1a26",
+    "real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1"
+  },
+  "serialized_before_training_load": true,
+  "frozen_index_sha256": "1fe2d022166c6cdc0a39dedf1df8e3f445b241657c11f39b85129e2f8062f3c6"
+}

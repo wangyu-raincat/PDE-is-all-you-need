@@ -1,0 +1,1396 @@
+{
+  "experiment": {
+    "title": "Mendeley 金属杆温度试验：50ss，三次完整重复采集",
+    "source_url": "https://data.mendeley.com/datasets/sbcf36976g/1",
+    "doi": "10.17632/sbcf36976g.1",
+    "license": "CC BY 4.0",
+    "description": "已发表的真实金属杆热电偶测量数据；stainless steel，50 温度档，同一预设试验组的文件 1/2/3 依次用于训练/开发/最终验证。仅使用六个原始温度测点，不增加空间插值点。",
+    "provenance_status": "published_experimental_dataset_user_supplied_archive",
+    "material": "stainless steel",
+    "temperature_setting_label": "50",
+    "authors": [
+      "Lauren Tomanek",
+      "Daniel Stutts"
+    ],
+    "dataset_title": "Data on the Validation to Determine the Material Thermal Properties Estimation Via a One-Dimensional Transient Convection Model"
+  },
+  "protocol": {
+    "split": {
+      "training": {
+        "file": "../raw/50ss1.csv",
+        "sha256": "79a4ddaf74759d82b4e3d6d133e1c9bf8e050a5aeee91a526005a1ce705d8afa"
+      },
+      "development": {
+        "file": "../raw/50ss2.csv",
+        "sha256": "00ed8755ff68178f5a401907fdfc8a8d2ac4b1a6c13f1fa86a58e0af70ffb185"
+      },
+      "final": {
+        "file": "../raw/50ss3.csv",
+        "sha256": "3e0878b8f09af2b8c63b19ed6f2735eacdeaee3edea57cdc3f8c1664ebd88997"
+      }
+    },
+    "split_kind": "independent_repeated_acquisitions",
+    "units": {
+      "time": "s",
+      "space": "m",
+      "temperature": "K above ambient"
+    },
+    "spacing_m": 0.007,
+    "library": [
+      "1",
+      "theta",
+      "theta^2",
+      "theta_x",
+      "theta_xx"
+    ],
+    "alpha_path": [
+      1e-06,
+      3e-06,
+      1e-05,
+      3e-05,
+      0.0001,
+      0.0003,
+      0.001,
+      0.003,
+      0.01,
+      0.03,
+      0.1
+    ],
+    "window_fractions_of_training_duration": [
+      0.02,
+      0.05,
+      0.1
+    ],
+    "selection_rule": "开发集 RMSE 最小值的 1.05 倍内先取最少项，再取最低开发 RMSE；系数仅在训练集拟合。",
+    "eligibility_rule": "支持集满秩、该支持集全部 L1 来源收敛，且可在开发实验中稳定正向积分。",
+    "freeze_before_final_load": true,
+    "final_data_selects_model": false,
+    "smoothing": "none",
+    "spatial_upsampling": false,
+    "prediction_inputs": "两端全部实测温度 + 四内点首帧；不给未来内点。",
+    "scoring": "仅四内点，排除初始化首帧；不计边界点。",
+    "physical_constraint": "负扩散候选拒绝正向积分；未强制扩散项或衰减项必选。"
+  },
+  "plot_available": true,
+  "trajectory_available": true,
+  "generated_at": "2026-10-27T11:26:01.552862+00:00",
+  "frozen_model_sha256": "db135b1a42fd5be446773dacad45bafbe2693d1b1f2bebe7e1b1817f75c9b917",
+  "candidates": [
+    {
+      "equation": "theta_t = 0.0040961808 + 3.721404e-08 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": 0.004096180789506443
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 3.721403959658914e-08
+        }
+      ],
+      "fit_error": 0.9533443716486953,
+      "fit_relative_error": 0.9533443716486953,
+      "fit_rmse": 0.022003960751383313,
+      "condition_number": 2.99893824948595,
+      "support_size": 2,
+      "alpha_values": [
+        0.1
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 94.85462612463726,
+        "full_library_rank": 5,
+        "support_rank": 2,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9950824703698147
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9800930511583843
+          }
+        ],
+        "regression_rows": 984,
+        "integration_windows": 246,
+        "window_seconds_requested": 16.0326,
+        "window_seconds_min": 16.199999999999932,
+        "window_seconds_max": 16.210000000000036,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.1,
+            "iterations": 45,
+            "dual_gap": 8.770061461150843e-12,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 16.0326,
+      "candidate_id": "candidate-01",
+      "development": {
+        "relative_error": 0.4804056905175481,
+        "rmse": 3.0800289357158706,
+        "mae": 2.073157534927254,
+        "max_absolute_error": 9.223511650275013,
+        "per_sensor_rmse": [
+          5.519949941516418,
+          2.302345515005786,
+          0.9935909270512168,
+          1.0901595395882635
+        ],
+        "scored_rows": 4210,
+        "excluded_initial_row": true
+      },
+      "eligible": true
+    },
+    {
+      "equation": "theta_t = - 0.0090199135 - 0.023967184 theta - 0.00019040475 theta_x",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": -0.009019913541672468
+        },
+        {
+          "name": "theta",
+          "coefficient": -0.02396718441916666
+        },
+        {
+          "name": "theta_x",
+          "coefficient": -0.00019040474665214216
+        }
+      ],
+      "fit_error": 0.8030288897176158,
+      "fit_relative_error": 0.8030288897176158,
+      "fit_rmse": 0.018534557602742748,
+      "condition_number": 30.67616276205084,
+      "support_size": 3,
+      "alpha_values": [
+        0.01
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 94.85462612463726,
+        "full_library_rank": 5,
+        "support_rank": 3,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9950824703698147
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9800930511583843
+          }
+        ],
+        "regression_rows": 984,
+        "integration_windows": 246,
+        "window_seconds_requested": 16.0326,
+        "window_seconds_min": 16.199999999999932,
+        "window_seconds_max": 16.210000000000036,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.01,
+            "iterations": 3196,
+            "dual_gap": 9.988232102294544e-10,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 16.0326,
+      "candidate_id": "candidate-02",
+      "eligible": false,
+      "rejection_reason": "热杆候选积分超过40000次求值预算。"
+    },
+    {
+      "equation": "theta_t = 0.00080722135 - 0.0001272229 theta^2 + 1.5928779e-07 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": 0.0008072213481221064
+        },
+        {
+          "name": "theta^2",
+          "coefficient": -0.00012722289939340095
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 1.5928779287127697e-07
+        }
+      ],
+      "fit_error": 0.9347106390546295,
+      "fit_relative_error": 0.9347106390546295,
+      "fit_rmse": 0.021573879101095154,
+      "condition_number": 5.929052116390969,
+      "support_size": 3,
+      "alpha_values": [
+        0.03
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 94.85462612463726,
+        "full_library_rank": 5,
+        "support_rank": 3,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9950824703698147
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9800930511583843
+          }
+        ],
+        "regression_rows": 984,
+        "integration_windows": 246,
+        "window_seconds_requested": 16.0326,
+        "window_seconds_min": 16.199999999999932,
+        "window_seconds_max": 16.210000000000036,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.03,
+            "iterations": 73,
+            "dual_gap": 8.844593350392931e-11,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 16.0326,
+      "candidate_id": "candidate-03",
+      "eligible": false,
+      "rejection_reason": "热杆候选积分超过40000次求值预算。"
+    },
+    {
+      "equation": "theta_t = - 0.023083641 - 0.06639724 theta - 0.00047980563 theta^2 - 0.00076175265 theta_x - 2.133317e-06 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": -0.02308364064325097
+        },
+        {
+          "name": "theta",
+          "coefficient": -0.06639724037346362
+        },
+        {
+          "name": "theta^2",
+          "coefficient": -0.0004798056335185572
+        },
+        {
+          "name": "theta_x",
+          "coefficient": -0.0007617526453634763
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": -2.133316991341438e-06
+        }
+      ],
+      "fit_error": 0.5056766225936655,
+      "fit_relative_error": 0.5056766225936655,
+      "fit_rmse": 0.011671426283453547,
+      "condition_number": 94.85462612463726,
+      "support_size": 5,
+      "alpha_values": [
+        1e-06,
+        3e-06,
+        1e-05,
+        3e-05,
+        0.0001,
+        0.0003,
+        0.001,
+        0.003
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 94.85462612463726,
+        "full_library_rank": 5,
+        "support_rank": 5,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9950824703698147
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9800930511583843
+          }
+        ],
+        "regression_rows": 984,
+        "integration_windows": 246,
+        "window_seconds_requested": 16.0326,
+        "window_seconds_min": 16.199999999999932,
+        "window_seconds_max": 16.210000000000036,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 1e-06,
+            "iterations": 20326,
+            "dual_gap": 9.99398027749144e-10,
+            "converged": true
+          },
+          {
+            "alpha": 3e-06,
+            "iterations": 20190,
+            "dual_gap": 9.991575985730276e-10,
+            "converged": true
+          },
+          {
+            "alpha": 1e-05,
+            "iterations": 20169,
+            "dual_gap": 9.991675923854898e-10,
+            "converged": true
+          },
+          {
+            "alpha": 3e-05,
+            "iterations": 20163,
+            "dual_gap": 9.99221547419246e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.0001,
+            "iterations": 20148,
+            "dual_gap": 9.992003466725772e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.0003,
+            "iterations": 20105,
+            "dual_gap": 9.99081922883284e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.001,
+            "iterations": 19946,
+            "dual_gap": 9.997115041845588e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.003,
+            "iterations": 19407,
+            "dual_gap": 9.990572849583408e-10,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 16.0326,
+      "candidate_id": "candidate-04",
+      "eligible": false,
+      "rejection_reason": "负扩散系数候选不用于正向热传导验证。"
+    },
+    {
+      "equation": "theta_t = 0.0033781796 + 3.7807235e-08 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": 0.003378179561723274
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 3.7807234577621225e-08
+        }
+      ],
+      "fit_error": 0.9452277396714119,
+      "fit_relative_error": 0.9452277396714119,
+      "fit_rmse": 0.018371647555718927,
+      "condition_number": 3.0133828253405204,
+      "support_size": 2,
+      "alpha_values": [
+        0.1
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 100.11792211862954,
+        "full_library_rank": 5,
+        "support_rank": 2,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9953786163341073
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9802962373642436
+          }
+        ],
+        "regression_rows": 384,
+        "integration_windows": 96,
+        "window_seconds_requested": 40.081500000000005,
+        "window_seconds_min": 40.19999999999999,
+        "window_seconds_max": 40.210000000000036,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.1,
+            "iterations": 47,
+            "dual_gap": 6.4071710899800865e-12,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 40.081500000000005,
+      "candidate_id": "candidate-05",
+      "development": {
+        "relative_error": 0.4888928939113172,
+        "rmse": 3.1344430123017513,
+        "mae": 2.089348884390715,
+        "max_absolute_error": 9.284495698358278,
+        "per_sensor_rmse": [
+          5.635617229261021,
+          2.4451980474294683,
+          0.9382835029032417,
+          0.8242457229201625
+        ],
+        "scored_rows": 4210,
+        "excluded_initial_row": true
+      },
+      "eligible": true
+    },
+    {
+      "equation": "theta_t = - 0.038557753 theta + 0.00064342848 theta^2 - 0.00023840719 theta_x",
+      "terms": [
+        {
+          "name": "theta",
+          "coefficient": -0.03855775341652133
+        },
+        {
+          "name": "theta^2",
+          "coefficient": 0.0006434284817960588
+        },
+        {
+          "name": "theta_x",
+          "coefficient": -0.00023840718613225977
+        }
+      ],
+      "fit_error": 0.7704369332016501,
+      "fit_relative_error": 0.7704369332016501,
+      "fit_rmse": 0.01497437623403867,
+      "condition_number": 57.22492030884351,
+      "support_size": 3,
+      "alpha_values": [
+        0.01
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 100.11792211862954,
+        "full_library_rank": 5,
+        "support_rank": 3,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9953786163341073
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9802962373642436
+          }
+        ],
+        "regression_rows": 384,
+        "integration_windows": 96,
+        "window_seconds_requested": 40.081500000000005,
+        "window_seconds_min": 40.19999999999999,
+        "window_seconds_max": 40.210000000000036,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.01,
+            "iterations": 9106,
+            "dual_gap": 9.982626577217009e-10,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 40.081500000000005,
+      "candidate_id": "candidate-06",
+      "eligible": false,
+      "rejection_reason": "热杆候选积分超过40000次求值预算。"
+    },
+    {
+      "equation": "theta_t = 0.00090214768 - 9.492224e-05 theta^2 + 1.2924729e-07 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": 0.0009021476832615898
+        },
+        {
+          "name": "theta^2",
+          "coefficient": -9.492224010318467e-05
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 1.292472870781424e-07
+        }
+      ],
+      "fit_error": 0.930567549004095,
+      "fit_relative_error": 0.930567549004095,
+      "fit_rmse": 0.018086708969243238,
+      "condition_number": 5.979340692947927,
+      "support_size": 3,
+      "alpha_values": [
+        0.03
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 100.11792211862954,
+        "full_library_rank": 5,
+        "support_rank": 3,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9953786163341073
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9802962373642436
+          }
+        ],
+        "regression_rows": 384,
+        "integration_windows": 96,
+        "window_seconds_requested": 40.081500000000005,
+        "window_seconds_min": 40.19999999999999,
+        "window_seconds_max": 40.210000000000036,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.03,
+            "iterations": 140,
+            "dual_gap": 5.7444419591471764e-11,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 40.081500000000005,
+      "candidate_id": "candidate-07",
+      "eligible": false,
+      "rejection_reason": "热杆候选积分超过40000次求值预算。"
+    },
+    {
+      "equation": "theta_t = - 0.022498689 - 0.05724239 theta - 0.0006077753 theta^2 - 0.00069687933 theta_x - 2.0607301e-06 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": -0.022498689175467882
+        },
+        {
+          "name": "theta",
+          "coefficient": -0.05724238980687521
+        },
+        {
+          "name": "theta^2",
+          "coefficient": -0.0006077752952570437
+        },
+        {
+          "name": "theta_x",
+          "coefficient": -0.0006968793287581432
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": -2.0607301130381752e-06
+        }
+      ],
+      "fit_error": 0.47673052471930016,
+      "fit_relative_error": 0.47673052471930016,
+      "fit_rmse": 0.009265835958475549,
+      "condition_number": 100.11792211862954,
+      "support_size": 5,
+      "alpha_values": [
+        1e-06,
+        3e-06,
+        1e-05,
+        3e-05,
+        0.0001,
+        0.0003,
+        0.001,
+        0.003
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 100.11792211862954,
+        "full_library_rank": 5,
+        "support_rank": 5,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9953786163341073
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9802962373642436
+          }
+        ],
+        "regression_rows": 384,
+        "integration_windows": 96,
+        "window_seconds_requested": 40.081500000000005,
+        "window_seconds_min": 40.19999999999999,
+        "window_seconds_max": 40.210000000000036,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 1e-06,
+            "iterations": 22696,
+            "dual_gap": 9.998608237656488e-10,
+            "converged": true
+          },
+          {
+            "alpha": 3e-06,
+            "iterations": 22583,
+            "dual_gap": 9.991199349338824e-10,
+            "converged": true
+          },
+          {
+            "alpha": 1e-05,
+            "iterations": 22566,
+            "dual_gap": 9.992407271989616e-10,
+            "converged": true
+          },
+          {
+            "alpha": 3e-05,
+            "iterations": 22560,
+            "dual_gap": 9.992104921252576e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.0001,
+            "iterations": 22543,
+            "dual_gap": 9.996252344398233e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.0003,
+            "iterations": 22496,
+            "dual_gap": 9.991097578894899e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.001,
+            "iterations": 22321,
+            "dual_gap": 9.994568136069877e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.003,
+            "iterations": 21731,
+            "dual_gap": 9.994096661358753e-10,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 40.081500000000005,
+      "candidate_id": "candidate-08",
+      "eligible": false,
+      "rejection_reason": "负扩散系数候选不用于正向热传导验证。"
+    },
+    {
+      "equation": "theta_t = - 0.00015829534 theta^2 - 1.8150185e-05 theta_x",
+      "terms": [
+        {
+          "name": "theta^2",
+          "coefficient": -0.00015829534372856926
+        },
+        {
+          "name": "theta_x",
+          "coefficient": -1.81501847486327e-05
+        }
+      ],
+      "fit_error": 0.9084916329167035,
+      "fit_relative_error": 0.9084916329167035,
+      "fit_rmse": 0.013650280283516267,
+      "condition_number": 5.763413885801012,
+      "support_size": 2,
+      "alpha_values": [
+        0.01
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 112.76702250270112,
+        "full_library_rank": 5,
+        "support_rank": 2,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9957512320029664
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9804379883759703
+          }
+        ],
+        "regression_rows": 184,
+        "integration_windows": 46,
+        "window_seconds_requested": 80.16300000000001,
+        "window_seconds_min": 80.19999999999999,
+        "window_seconds_max": 80.21000000000004,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.01,
+            "iterations": 172,
+            "dual_gap": 6.595804482300161e-10,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 80.16300000000001,
+      "candidate_id": "candidate-09",
+      "eligible": false,
+      "rejection_reason": "热杆候选积分超过40000次求值预算。"
+    },
+    {
+      "equation": "theta_t = 0.0023556578 + 3.6872294e-08 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": 0.0023556578389986003
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 3.687229443910272e-08
+        }
+      ],
+      "fit_error": 0.93527039221094,
+      "fit_relative_error": 0.93527039221094,
+      "fit_rmse": 0.01405263684549977,
+      "condition_number": 3.0258437376208858,
+      "support_size": 2,
+      "alpha_values": [
+        0.1
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 112.76702250270112,
+        "full_library_rank": 5,
+        "support_rank": 2,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9957512320029664
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9804379883759703
+          }
+        ],
+        "regression_rows": 184,
+        "integration_windows": 46,
+        "window_seconds_requested": 80.16300000000001,
+        "window_seconds_min": 80.19999999999999,
+        "window_seconds_max": 80.21000000000004,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.1,
+            "iterations": 51,
+            "dual_gap": 8.122430264610676e-12,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 80.16300000000001,
+      "candidate_id": "candidate-10",
+      "development": {
+        "relative_error": 0.5184067999246619,
+        "rmse": 3.323665759495208,
+        "mae": 2.2632940231146397,
+        "max_absolute_error": 9.439001382371163,
+        "per_sensor_rmse": [
+          5.942618595418592,
+          2.7397917253197597,
+          1.0584144537072557,
+          0.4955811727674387
+        ],
+        "scored_rows": 4210,
+        "excluded_initial_row": true
+      },
+      "eligible": true
+    },
+    {
+      "equation": "theta_t = 0.0008911779 - 5.5773815e-05 theta^2 + 9.0866122e-08 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": 0.0008911779027479288
+        },
+        {
+          "name": "theta^2",
+          "coefficient": -5.5773814781462686e-05
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": 9.08661220403923e-08
+        }
+      ],
+      "fit_error": 0.9267843521979279,
+      "fit_relative_error": 0.9267843521979279,
+      "fit_rmse": 0.01392513228686905,
+      "condition_number": 6.03959738476865,
+      "support_size": 3,
+      "alpha_values": [
+        0.03
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 112.76702250270112,
+        "full_library_rank": 5,
+        "support_rank": 3,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9957512320029664
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9804379883759703
+          }
+        ],
+        "regression_rows": 184,
+        "integration_windows": 46,
+        "window_seconds_requested": 80.16300000000001,
+        "window_seconds_min": 80.19999999999999,
+        "window_seconds_max": 80.21000000000004,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 0.03,
+            "iterations": 145,
+            "dual_gap": 2.0727921794431218e-11,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 80.16300000000001,
+      "candidate_id": "candidate-11",
+      "eligible": false,
+      "rejection_reason": "热杆候选积分超过40000次求值预算。"
+    },
+    {
+      "equation": "theta_t = - 0.020396459 - 0.046884822 theta - 0.00063112668 theta^2 - 0.00059846158 theta_x - 1.8372152e-06 theta_xx",
+      "terms": [
+        {
+          "name": "1",
+          "coefficient": -0.02039645863085247
+        },
+        {
+          "name": "theta",
+          "coefficient": -0.04688482239124481
+        },
+        {
+          "name": "theta^2",
+          "coefficient": -0.0006311266787598673
+        },
+        {
+          "name": "theta_x",
+          "coefficient": -0.0005984615843750085
+        },
+        {
+          "name": "theta_xx",
+          "coefficient": -1.837215157755116e-06
+        }
+      ],
+      "fit_error": 0.4818232143567105,
+      "fit_relative_error": 0.4818232143567105,
+      "fit_rmse": 0.007239496418870005,
+      "condition_number": 112.76702250270112,
+      "support_size": 5,
+      "alpha_values": [
+        1e-06,
+        3e-06,
+        1e-05,
+        3e-05,
+        0.0001,
+        0.0003,
+        0.001,
+        0.003
+      ],
+      "diagnostics": {
+        "library": [
+          "1",
+          "theta",
+          "theta^2",
+          "theta_x",
+          "theta_xx"
+        ],
+        "full_library_condition_number": 112.76702250270112,
+        "full_library_rank": 5,
+        "support_rank": 5,
+        "correlated_columns": [
+          {
+            "terms": [
+              "theta",
+              "theta_x"
+            ],
+            "correlation": -0.9957512320029664
+          },
+          {
+            "terms": [
+              "theta_x",
+              "theta_xx"
+            ],
+            "correlation": -0.9804379883759703
+          }
+        ],
+        "regression_rows": 184,
+        "integration_windows": 46,
+        "window_seconds_requested": 80.16300000000001,
+        "window_seconds_min": 80.19999999999999,
+        "window_seconds_max": 80.21000000000004,
+        "overlapping_windows": true,
+        "spatial_observation_count": 6,
+        "evolution_equation_count": 4,
+        "spatial_upsampling": false,
+        "smoothing": "none",
+        "time_integration": "original-grid trapezoids",
+        "lasso_runs": [
+          {
+            "alpha": 1e-06,
+            "iterations": 28764,
+            "dual_gap": 9.992935947321791e-10,
+            "converged": true
+          },
+          {
+            "alpha": 3e-06,
+            "iterations": 28647,
+            "dual_gap": 9.995148283915905e-10,
+            "converged": true
+          },
+          {
+            "alpha": 1e-05,
+            "iterations": 28630,
+            "dual_gap": 9.99388822905352e-10,
+            "converged": true
+          },
+          {
+            "alpha": 3e-05,
+            "iterations": 28622,
+            "dual_gap": 9.995122410892375e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.0001,
+            "iterations": 28598,
+            "dual_gap": 9.999589562178935e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.0003,
+            "iterations": 28531,
+            "dual_gap": 9.998913388086373e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.001,
+            "iterations": 28283,
+            "dual_gap": 9.998174655339901e-10,
+            "converged": true
+          },
+          {
+            "alpha": 0.003,
+            "iterations": 27426,
+            "dual_gap": 9.996675564633258e-10,
+            "converged": true
+          }
+        ],
+        "lasso_all_support_runs_converged": true,
+        "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+      },
+      "window_seconds": 80.16300000000001,
+      "candidate_id": "candidate-12",
+      "eligible": false,
+      "rejection_reason": "负扩散系数候选不用于正向热传导验证。"
+    }
+  ],
+  "limitations": [
+    "公开真实测量数据复现；本项目未自行搭建或操作实验装置。",
+    "预测使用整个验证实验的两端实测边界，不是未知未来边界下的自由预测。",
+    "六点有限差分系数是粗网格有效系数，不是高精度材料物性测量。",
+    "只在固定五项候选库中比较；低误差不能证明唯一真实 PDE。",
+    "未进行跨装置、跨材料泛化验证，未接入华为平台。",
+    "本次为论文作者采集并公开发布的真实金属杆实验数据复现（Mendeley Data，DOI: 10.17632/sbcf36976g.1；数据来源 https://data.mendeley.com/datasets/sbcf36976g/1），本项目未自行操作实验装置。输入来自用户提供的原始数据压缩包；已完成本地压缩包 CRC、SHA-256 与逐文件 SHA-256 校验，未独立核对远端 Mendeley 文件哈希。SOURCE.txt 中的远端哈希核对声明属于输入包附带声明。"
+  ],
+  "discovery": {
+    "equation": "theta_t = 0.0040961808 + 3.721404e-08 theta_xx",
+    "terms": [
+      {
+        "name": "1",
+        "coefficient": 0.004096180789506443
+      },
+      {
+        "name": "theta_xx",
+        "coefficient": 3.721403959658914e-08
+      }
+    ],
+    "fit_error": 0.9533443716486953,
+    "fit_relative_error": 0.9533443716486953,
+    "fit_rmse": 0.022003960751383313,
+    "condition_number": 2.99893824948595,
+    "support_size": 2,
+    "alpha_values": [
+      0.1
+    ],
+    "diagnostics": {
+      "library": [
+        "1",
+        "theta",
+        "theta^2",
+        "theta_x",
+        "theta_xx"
+      ],
+      "full_library_condition_number": 94.85462612463726,
+      "full_library_rank": 5,
+      "support_rank": 2,
+      "correlated_columns": [
+        {
+          "terms": [
+            "theta",
+            "theta_x"
+          ],
+          "correlation": -0.9950824703698147
+        },
+        {
+          "terms": [
+            "theta_x",
+            "theta_xx"
+          ],
+          "correlation": -0.9800930511583843
+        }
+      ],
+      "regression_rows": 984,
+      "integration_windows": 246,
+      "window_seconds_requested": 16.0326,
+      "window_seconds_min": 16.199999999999932,
+      "window_seconds_max": 16.210000000000036,
+      "overlapping_windows": true,
+      "spatial_observation_count": 6,
+      "evolution_equation_count": 4,
+      "spatial_upsampling": false,
+      "smoothing": "none",
+      "time_integration": "original-grid trapezoids",
+      "lasso_runs": [
+        {
+          "alpha": 0.1,
+          "iterations": 45,
+          "dual_gap": 8.770061461150843e-12,
+          "converged": true
+        }
+      ],
+      "lasso_all_support_runs_converged": true,
+      "scope": "6点原测量网格的有效半离散系数，不自动等同连续材料物性"
+    },
+    "window_seconds": 16.0326,
+    "candidate_id": "candidate-01",
+    "development": {
+      "relative_error": 0.4804056905175481,
+      "rmse": 3.0800289357158706,
+      "mae": 2.073157534927254,
+      "max_absolute_error": 9.223511650275013,
+      "per_sensor_rmse": [
+        5.519949941516418,
+        2.302345515005786,
+        0.9935909270512168,
+        1.0901595395882635
+      ],
+      "scored_rows": 4210,
+      "excluded_initial_row": true
+    },
+    "eligible": true,
+    "status": "candidate",
+    "near_optimal_supports": [
+      [
+        "1",
+        "theta_xx"
+      ]
+    ],
+    "ambiguity_reasons": [],
+    "sparsity_achieved": true,
+    "unique_physical_equation_established": false
+  },
+  "validation": {
+    "status": "evaluated",
+    "kind": "独立重复实验：给定实测边界的四内点条件预测",
+    "rmse_K": 3.1133276543686015,
+    "relative_l2": 0.4881578953880578,
+    "relative_error": 0.4881578953880578,
+    "rmse": 3.1133276543686015,
+    "mae": 2.109461370420021,
+    "max_absolute_error": 9.237498714543765,
+    "per_sensor_rmse": [
+      5.588150773338405,
+      2.2971952862807825,
+      0.9814523831475617,
+      1.1416883570247631
+    ],
+    "scored_rows": 4119,
+    "excluded_initial_row": true,
+    "per_sensor": [
+      {
+        "sensor": "TC2",
+        "rmse_K": 5.588150773338405,
+        "x_m": 0.007
+      },
+      {
+        "sensor": "TC3",
+        "rmse_K": 2.2971952862807825,
+        "x_m": 0.014
+      },
+      {
+        "sensor": "TC4",
+        "rmse_K": 0.9814523831475617,
+        "x_m": 0.021
+      },
+      {
+        "sensor": "TC5",
+        "rmse_K": 1.1416883570247631,
+        "x_m": 0.028
+      }
+    ],
+    "baselines": {
+      "persistence": {
+        "label": "初始温升持久值",
+        "relative_error": 0.996595168753821,
+        "rmse": 6.3559912241610315,
+        "mae": 4.592279072590434,
+        "max_absolute_error": 12.489999999999998,
+        "per_sensor_rmse": [
+          11.755547986926507,
+          4.381642687833586,
+          1.9508249324247937,
+          0.6301418353847792
+        ],
+        "scored_rows": 4119,
+        "excluded_initial_row": true
+      },
+      "linear_boundary": {
+        "label": "同边界线性空间插值",
+        "relative_error": 1.3603935225825046,
+        "rmse": 8.676190254616623,
+        "mae": 8.264119203690216,
+        "max_absolute_error": 11.89,
+        "per_sensor_rmse": [
+          8.983437218422763,
+          11.214709948281477,
+          8.562219988123985,
+          4.61753556897617
+        ],
+        "scored_rows": 4119,
+        "excluded_initial_row": true
+      }
+    },
+    "final_file": "../raw/50ss3.csv",
+    "beats_both_baselines": true,
+    "below_descriptive_5pct": false,
+    "scored_sensor_count": 4,
+    "measured_boundary_sensor_count": 2,
+    "time_start_s": 0.0,
+    "time_end_s": 823.83,
+    "rows": 4120
+  },
+  "conclusion": "完成公开测量数据的重复实验检验：四内点 RMSE 3.113 K，相对 L2 误差 48.8%。这是限定候选库中的预测候选，尚不能证明物理机制唯一。"
+}
