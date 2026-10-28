@@ -303,7 +303,7 @@ def render_figures(summary, output):
                          padding=3, fontsize=9)
         ax.axhline(5, linestyle='--', linewidth=1, color='#777777', label='5% target for every condition mean')
         ax.set_xticks(range(3), FAMILY_LABELS)
-        ax.set(title=title, ylabel='Final forecast relative L2 (%)', ylim=(0, max(6., largest*1.25)))
+        ax.set(title=title, ylabel='Relative L2 vs clean numerical reference (%)', ylim=(0, max(6., largest*1.25)))
         ax.grid(axis='y', alpha=.2); ax.set_axisbelow(True)
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc='outside lower center', ncols=2, frameon=False)

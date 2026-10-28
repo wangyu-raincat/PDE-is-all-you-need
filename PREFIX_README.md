@@ -2,7 +2,9 @@
 
 本分支 `experiment/prefix-five-percent` 从单帧实验 `0b32f67` 分离，保留原基线和所有历史实验。默认应用尚未改为本方法。本实验使用合成 PDE 数据，不构成真实测量或华为平台集成验证。
 
-目标：30 个条件中，最差条件的三条最终轨迹平均相对 L2 预测误差 ≤5%。同时检查完整方程项、额外/缺失项、逐项系数误差与对照回归。单条轨迹可以超过5%，会单独披露。低预测误差不能豁免方程识别失败。
+本轮结果：**最坏条件平均预测误差4.0708%，30/30条件达到5%目标；方程项完整恢复30/30，无多余/缺失项**。同一批数据单帧滤波对照最坏均值8.0642%。但AC最坏逐项系数误差22.3396%，对照原弱形式13.9417%，预设检查156/157，因此**不合入默认版本**。2/90次单轨迹误差超过5%，最大5.3547%。全量396项测试通过。
+
+目标：30 个条件中，最差条件的三条最终轨迹平均相对 L2 预测误差（对干净数值参考）≤5%。同时检查完整方程项、额外/缺失项、逐项系数误差与对照回归。单条轨迹可以超过5%，会单独披露。低预测误差不能豁免方程识别失败。
 
 ## 输入和预测时长
 
@@ -51,7 +53,7 @@ prediction, diagnostics = forecast_with_diagnostics(
 python -m prefix_study.run prepare
 python -m prefix_study.run freeze --workers 3 --output prefix_study/results/reproduction
 python -m prefix_study.run evaluate --workers 3 --output prefix_study/results/reproduction
-python scripts/render_prefix_study.py --help
+python scripts/render_prefix_study.py --output prefix_study/results/reproduction
 ```
 
 `prepare` 在方法冻结后只生成9条训练、6条开发轨迹；最终9条轨迹必须在120个模型全量冻结及摘要验证后才会生成。首次报告位于 `prefix_study/REPORT.md`、`prefix_study/DECISION.json`，原始逐配置记录位于 `prefix_study/results/first_run/`。包内不放运行态的 `data/prepared.json`，审计副本保存在结果 provenance 目录，复现会生成新收据。
@@ -59,3 +61,15 @@ python scripts/render_prefix_study.py --help
 ## 边界
 
 只测试三个已知一维周期、标量、自治、常系数数值方程族与九项候选库。频谱滤波有稀疏频谱假设，可能误删真实弱模态或宽带信号。前缀平均依赖候选 PDE，传播后的误差不能当成独立样本。9条最终初值在所有采样/噪声/方法间共享，360次预测不是360个独立物理实验。最终测试只有每族3条轨迹，不能给出广泛分布或最坏单轨迹保证。旧初值延长的开发探针明确为回顾性分析。
+
+## 回退历史
+
+`pde-prefix-history.zip` 解压得到 `git-history.bundle`，包含基线与七个实验分支。
+
+```bash
+git clone git-history.bundle restored-pde
+cd restored-pde
+git switch experiment/prefix-five-percent
+```
+
+回到本轮之前的单帧实验可切换 `experiment/prediction-five-percent`，原通用基线为 `baseline/frozen-generic`。切换前保存自己的修改；本轮未修改默认应用或合并到这些分支。
