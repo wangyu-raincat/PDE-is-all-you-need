@@ -36,6 +36,6 @@ python -m resolved_study.run freeze --workers 3 --output resolved_study/results/
 python -m resolved_study.run evaluate --output resolved_study/results/reproduction
 ```
 
-已有准备、模型或部分最终场不覆盖。`first_run` 保存首轮记录；今后重新使用已评分数据改方法，应标回顾性或复现。运行时准备收据不随交付数组一起保留，审计副本在结果 `provenance/` 下，避免缺少数组却误判已准备。
+已有准备、模型或部分最终场不覆盖。`first_run` 保存首轮记录；今后重新使用已评分数据改方法，应标回顾性或复现。交付省略完整观测数组和运行时准备收据，收据审计副本在结果 `provenance/` 下，避免缺少数组却误判已准备。
 
 默认内部网格最多2048点，因此4倍加密最多接受512个观测空间点；超过预算明确拒绝，不静默降低分辨率。本方法仍限一维均匀周期标量自治常系数九项库。单校准初值的空间/步长加密检查不是每条正式轨迹的误差认证；加密也不能恢复观测初帧中本就不存在的真实高频信息。
