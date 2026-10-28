@@ -1,0 +1,545 @@
+{
+  "sources": {
+    "challenge_study/data.py": "8455303f18bed732c568891d1c5fe0e467ae2aa5675f06a7ff82c55f31afa960",
+    "challenge_study/generators.py": "1f7d3329b0fe3e564113b6155018a5a6e3964d4223c5a58866e867404293cd4c",
+    "fusion_study/__init__.py": "25930ef372c6a0de2862ac3447407d42c947fb07d4345efa8bf9146ef8f1e5ed",
+    "fusion_study/data.py": "d96e790ce7c7a084331a5832b4111e1341999bb935000adba9cd88fb0da2c71e",
+    "fusion_study/engine.py": "25bed3f5f1b33f620a1be99d7810f8fbd3f5148817f9d69020ce42baf903fc1c",
+    "fusion_study/generators.py": "7f232406b83325ef7b5344887984575fea392ccb8bbd5b72d9187cf709cd02d9",
+    "fusion_study/protocol.json": "bf0083ce8baba7a28cd7c1ec75b405a02a42805760e295e32d77f9a6a72c881b",
+    "fusion_study/references.json": "9a9829fe6da71b778761cea971c7eaab55bece289b81cd4d29b2f570ea52ed59",
+    "fusion_study/run.py": "2d8f616c1f5eb3f5ce4fc846cdbc07e5286809de6a69f37f837899e72b40bffe",
+    "l1_study/engine.py": "e91f3dfb634c09eef1083097ad8247cfc23c6a9d7058e701675fb229669b512f",
+    "pde_discovery/generic_engine.py": "09f966462d823ea23d68a211a34c1a5c499075a8599394d0f8d32417d36e670a",
+    "pde_discovery/generic_experiment.py": "e5ec3d9d25517ac1099c4b74d47c251915728fe0f48c8f89ee4001e9a4c2f9cf",
+    "resolved_study/forecast.py": "c0412cf5e5a27eac4b5558110fe6939bd1e666568b4743c99665b771bcc5cef4",
+    "resolved_study/selection.py": "7f93085fb10f7ef57c1c256b696a1fb1e9606290dea71e3a72c02d069335850d",
+    "weak_study/data.py": "59760dff581d23435b8d985d9142103b916583c04f4f5842d1c04b116a9398e9",
+    "weak_study/engine.py": "4a5344dbd203af8955d0962d480805ea7ba1c17729d26082365989e44d2409af",
+    "weak_study/generators.py": "ecefc5b5218681cffddc6aeb32b1305962317c6d104d72196c688b9e1022c56b"
+  },
+  "input_hashes": {
+    "fusion_study/data/calibration.json": "3037307fe98e8d78b8b12dbeb8cdb19d8451c5e4d1c8276c06e8cb305f913a3b",
+    "fusion_study/data/clean/allen_cahn/development/0.npz": "0dcd1446d635a3499dc6f208e64141f0d66cde6321ee312f6d152a272ffe79d4",
+    "fusion_study/data/clean/allen_cahn/development/1.npz": "d7fe00e588c696f81c188b0a41b542ecc4ea3c1256b2d0cc2c8f8b48cac1433f",
+    "fusion_study/data/clean/allen_cahn/training/0.npz": "82a37d4b9fdb3126d7830ab4c38e1776318022ea46b30a75410f4444a4fe3607",
+    "fusion_study/data/clean/allen_cahn/training/1.npz": "2c37d1f769506c19f2f15645891e822afbcafe7123ca0da33433071651ad77c2",
+    "fusion_study/data/clean/allen_cahn/training/2.npz": "e31c270b2065ab1532bc4bc8a4db4d62316dd95587e944ccc1202a30ce06b60a",
+    "fusion_study/data/clean/ks_unstable/development/0.npz": "5d267f4bff576b2a32d073ca191dde5771ea823bbc3aab45f83003d69c52c28b",
+    "fusion_study/data/clean/ks_unstable/development/1.npz": "2d27646cd8dd6523715f7f69428755a843b62983411e24fb131c36ba294db5b3",
+    "fusion_study/data/clean/ks_unstable/training/0.npz": "6681423a0e02269f697c1493964aa0fd3b26216fb03263a1d039da5373766caf",
+    "fusion_study/data/clean/ks_unstable/training/1.npz": "0d88b5dd2a77ebafbbdfec1e239f27c5171660a83412f7bbc2d57e0984692618",
+    "fusion_study/data/clean/ks_unstable/training/2.npz": "30b5552ea506a36746d7a9255308c64185faedea06bf5a7c06c3cd202a74c3ac",
+    "fusion_study/data/clean/low_viscosity_burgers/development/0.npz": "af31b53ca654cd109bf33fc4aa75dbd7b3357d8b5ff4ceb83491debf1ce74a4d",
+    "fusion_study/data/clean/low_viscosity_burgers/development/1.npz": "55cd617d67aa03c15e5a0d911d16da4fbadc49136d55e591e4db1826fdb840c7",
+    "fusion_study/data/clean/low_viscosity_burgers/training/0.npz": "256756a4f9fd5ede870e3f4b60847a7e5d41dcae71a5794f4baf27e03856d1d5",
+    "fusion_study/data/clean/low_viscosity_burgers/training/1.npz": "088cb1c31aa405d79abdda3d81366964bd225d96e686581012b72a78939902c6",
+    "fusion_study/data/clean/low_viscosity_burgers/training/2.npz": "ffc44c6b7963a845df0616717a396530b36fb965a962f2d7d807f116f6482b19"
+  },
+  "quality": {
+    "allen_cahn": {
+      "status": "passed",
+      "calibration": {
+        "family": "allen_cahn",
+        "role": "calibration",
+        "relative_l2": 6.853038757354137e-12,
+        "max_absolute_error": 1.0172307440825534e-11,
+        "relative_limit": 1e-05,
+        "max_absolute_limit": 0.0001,
+        "status": "passed",
+        "coarse_metadata": {
+          "kind": "fresh independent numerical reference",
+          "is_measured_data": false,
+          "family": "allen_cahn",
+          "role": "calibration",
+          "index": 0,
+          "seed_sequence": [
+            108000,
+            1
+          ],
+          "reference_n": 1024,
+          "max_dt": 0.001,
+          "refined": false,
+          "observed_nx": 256,
+          "initial_observed_sha256": "1437300b9b47d401bfa903093d1befe74a717d5172932829fdfe238df8ad983b",
+          "certified_chaos": false,
+          "independent_of_discovery_forecast": true
+        },
+        "refined_metadata": {
+          "kind": "fresh independent numerical reference",
+          "is_measured_data": false,
+          "family": "allen_cahn",
+          "role": "calibration",
+          "index": 0,
+          "seed_sequence": [
+            108000,
+            1
+          ],
+          "reference_n": 2048,
+          "max_dt": 0.0005,
+          "refined": true,
+          "observed_nx": 256,
+          "initial_observed_sha256": "c47a1c30114af067cea7f1557c749610b7bbf32f6adcc92858e34efdc1a9a7c4",
+          "certified_chaos": false,
+          "independent_of_discovery_forecast": true
+        }
+      }
+    },
+    "low_viscosity_burgers": {
+      "status": "passed",
+      "calibration": {
+        "family": "low_viscosity_burgers",
+        "role": "calibration",
+        "relative_l2": 5.2420034851137965e-09,
+        "max_absolute_error": 4.197198133493174e-08,
+        "relative_limit": 1e-05,
+        "max_absolute_limit": 0.0001,
+        "status": "passed",
+        "coarse_metadata": {
+          "kind": "fresh independent numerical reference",
+          "is_measured_data": false,
+          "family": "low_viscosity_burgers",
+          "role": "calibration",
+          "index": 0,
+          "seed_sequence": [
+            108000,
+            2
+          ],
+          "reference_n": 512,
+          "max_dt": 0.002,
+          "refined": false,
+          "observed_nx": 128,
+          "initial_observed_sha256": "1ad81d3cf3408500f13f41a290a07bd5fda09f6ac5ce522c5d266b96e4c30f12",
+          "certified_chaos": false,
+          "independent_of_discovery_forecast": true
+        },
+        "refined_metadata": {
+          "kind": "fresh independent numerical reference",
+          "is_measured_data": false,
+          "family": "low_viscosity_burgers",
+          "role": "calibration",
+          "index": 0,
+          "seed_sequence": [
+            108000,
+            2
+          ],
+          "reference_n": 1024,
+          "max_dt": 0.001,
+          "refined": true,
+          "observed_nx": 128,
+          "initial_observed_sha256": "a51ac21dbeea4026bba4154cfd373f36f75db7a5eafa8a85e6a86fda50c1f3f0",
+          "certified_chaos": false,
+          "independent_of_discovery_forecast": true
+        }
+      }
+    },
+    "ks_unstable": {
+      "status": "passed",
+      "calibration": {
+        "family": "ks_unstable",
+        "role": "calibration",
+        "relative_l2": 2.6214758334449245e-07,
+        "max_absolute_error": 2.44227676438058e-06,
+        "relative_limit": 1e-05,
+        "max_absolute_limit": 0.0001,
+        "status": "passed",
+        "coarse_metadata": {
+          "kind": "fresh independent numerical reference",
+          "is_measured_data": false,
+          "family": "ks_unstable",
+          "role": "calibration",
+          "index": 0,
+          "seed_sequence": [
+            108000,
+            3
+          ],
+          "reference_n": 256,
+          "max_dt": 0.01,
+          "refined": false,
+          "observed_nx": 128,
+          "initial_observed_sha256": "e55047aee8ff0d3b207b7500fd8fdec897d4ab9969bf31b271cde211e5d4712b",
+          "certified_chaos": false,
+          "independent_of_discovery_forecast": true
+        },
+        "refined_metadata": {
+          "kind": "fresh independent numerical reference",
+          "is_measured_data": false,
+          "family": "ks_unstable",
+          "role": "calibration",
+          "index": 0,
+          "seed_sequence": [
+            108000,
+            3
+          ],
+          "reference_n": 512,
+          "max_dt": 0.005,
+          "refined": true,
+          "observed_nx": 128,
+          "initial_observed_sha256": "2a7f86d1580f2f149bf073e9623ad83e1d37df8e2d88f3e271668dbe6a306741",
+          "certified_chaos": false,
+          "independent_of_discovery_forecast": true
+        }
+      }
+    }
+  },
+  "training_rms": {
+    "allen_cahn": 0.5963488363731649,
+    "low_viscosity_burgers": 0.7223521527425051,
+    "ks_unstable": 0.9177509085250849
+  },
+  "all_source_quality_passed": true,
+  "synthetic_final_generated": false,
+  "all_families_independently_generated": true,
+  "generator_protocol": {
+    "version": 1,
+    "kind": "new initial conditions in the same known numerical families; not measured data",
+    "method": "contour ETDRK4; 64 fixed upper-half unit-circle roots",
+    "spatial_discretization": "Fourier Galerkin, |mode| <= floor(N/3); quadratic 2/3 truncation; cubic product on 2N grid then project",
+    "observation_rule": "direct reference-grid subsampling; no interpolated observations",
+    "time_rule": "ceil(each observation interval/max_dt) equal substeps, exact output times",
+    "observed_nt": 101,
+    "role_counts": {
+      "calibration": 1,
+      "training": 3,
+      "development": 2,
+      "final": 3
+    },
+    "role_seed_bases": {
+      "calibration": 108000,
+      "training": 108100,
+      "development": 108200,
+      "final": 108300
+    },
+    "family_ids": {
+      "allen_cahn": 1,
+      "low_viscosity_burgers": 2,
+      "ks_unstable": 3
+    },
+    "seed_rule": "SeedSequence([role_seed_base + zero_based_index, family_id]); refinement preserves seed",
+    "initial_mean": 0.1,
+    "initial_amplitude_factor": "independent uniform [0.8,1.2), followed by phases uniform [-pi,pi)",
+    "families": {
+      "allen_cahn": {
+        "period": 2.0,
+        "x_left": -1.0,
+        "reference_n": 1024,
+        "observed_nx": 256,
+        "max_dt": 0.001,
+        "end_time": 0.5,
+        "modes": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          24
+        ],
+        "base_amplitudes": [
+          0.25,
+          0.15,
+          0.1,
+          0.05,
+          0.03,
+          0.02
+        ]
+      },
+      "low_viscosity_burgers": {
+        "period": 6.283185307179586,
+        "x_left": 0.0,
+        "reference_n": 512,
+        "observed_nx": 128,
+        "max_dt": 0.002,
+        "end_time": 1.5,
+        "modes": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "base_amplitudes": [
+          0.9,
+          0.3,
+          0.15,
+          0.08
+        ]
+      },
+      "ks_unstable": {
+        "period": 100.53096491487338,
+        "x_left": 0.0,
+        "reference_n": 256,
+        "observed_nx": 128,
+        "max_dt": 0.01,
+        "end_time": 20.0,
+        "modes": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16
+        ],
+        "base_amplitudes": [
+          0.5,
+          0.3,
+          0.2,
+          0.15,
+          0.12,
+          0.08
+        ]
+      }
+    },
+    "refinement": "double reference_N and halve max_dt, same initial Fourier coefficients",
+    "calibration_role_only": true,
+    "calibration_relative_l2_limit": 1e-05,
+    "calibration_max_absolute_limit": 0.0001,
+    "failure_policy": "retain source_quality_failure; never replace failed trajectories or relax thresholds",
+    "formal_final_generation": "caller must verify global model freeze before requesting final roles",
+    "certified_chaos": false,
+    "units": "declared dimensionless benchmark coordinates"
+  },
+  "protocol": {
+    "version": 1,
+    "families": [
+      "allen_cahn",
+      "low_viscosity_burgers",
+      "ks_unstable"
+    ],
+    "methods": [
+      "weak_original",
+      "weak_resolved",
+      "anchored_best",
+      "fused_median"
+    ],
+    "sampling": [
+      "full",
+      "coarse"
+    ],
+    "noise_conditions": [
+      {
+        "label": "clean",
+        "level": 0.0,
+        "seed": 0
+      },
+      {
+        "label": "noise0p1_s61",
+        "level": 0.001,
+        "seed": 61
+      },
+      {
+        "label": "noise0p1_s97",
+        "level": 0.001,
+        "seed": 97
+      },
+      {
+        "label": "noise1_s61",
+        "level": 0.01,
+        "seed": 61
+      },
+      {
+        "label": "noise1_s97",
+        "level": 0.01,
+        "seed": 97
+      }
+    ],
+    "declared_configurations": 120,
+    "roles": {
+      "calibration": 1,
+      "training": 3,
+      "development": 2,
+      "final": 3
+    },
+    "data_scope": "Same known three numerical PDE families/physics/grids/IC distributions; fresh roles seeds108000/108100/108200/108300. No new real measurements.",
+    "noise": "Additive Gaussian; level0/.001/.01 times full clean training equaltrajectoryRMS. Onlycorruption receivesclean/sigma. Seeds61/97,base119000; fullrolebeforestride. Noiselevels/sampling paired.",
+    "four_arm_design": {
+      "weak_original": "existingweakcandidates;originalgridselectorandfinalforecast",
+      "weak_resolved": "samecandidates;factor4selectorandfinalforecast",
+      "anchored_best": "originalweakstructureanchor;samesupportminimumfactor4devRMSE;factor4final",
+      "fused_median": "sameanchor;equalvariantcoordinatewisemedianofnearsamesupportfits;factor4devacceptanceelseanchored_best;factor4final"
+    },
+    "variant_menu_status": "frozen",
+    "weak_variants": {
+      "compact": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.125
+      },
+      "low": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.03125
+      },
+      "resolved": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.25
+      }
+    },
+    "weak_engine_protocol": {
+      "version": 1,
+      "variants": {
+        "compact": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.125
+        },
+        "low": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.03125
+        },
+        "resolved": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.25
+        }
+      },
+      "terms": [
+        "1",
+        "u",
+        "u^2",
+        "u^3",
+        "u_x",
+        "u_xx",
+        "u_xxx",
+        "u_xxxx",
+        "u*u_x"
+      ],
+      "spatial_tests": "nonnegative Fourier modes; real/imaginary rows, nonzero modes sqrt(2) weighted",
+      "temporal_test": "(1-z*z)^4 on [-1,1], zero outside; analytic first derivative",
+      "products": "2N zero-padded real trigonometric interpolation; retain selected observed-grid Fourier modes",
+      "noise_correction": "none",
+      "no_observed_derivatives": true,
+      "spatial_mode_rule": "min(Nx//4, max(8, floor(Nx*variant_fraction)))",
+      "quadrature": "composite degree-nine Newton-Cotes on original samples, eight subintervals per panel",
+      "window_stride": "max(1, window_intervals//4)",
+      "selection": "unchanged L1 path, normalized OLS debias and development forecast selection",
+      "reference_used_for_selection": false
+    },
+    "forecast_protocol": {
+      "version": 1,
+      "default_spatial_factor": 4,
+      "diagnostic_spatial_factors": [
+        1,
+        2,
+        4
+      ],
+      "factor_selection": "fixed before new training/development generation; not family dependent",
+      "initial_interpolation": "real periodic Fourier interpolation of the observed initial frame; scipy.signal.resample handles even-grid Nyquist splitting",
+      "internal_grid": "Nx*factor equally spaced points on the same period, starting at the observed x[0]",
+      "solver": "unchanged pde_discovery.generic_engine.forecast on the internal grid",
+      "output": "direct restriction to every factor-th internal point at the original output times",
+      "time_substeps": 32,
+      "maximum_internal_points": 2048,
+      "budget_failure": "reject; never silently reduce factor",
+      "extra_points_are_measurements": false,
+      "truth_or_future_input": false,
+      "scope": "uniform periodic scalar autonomous constant-coefficient nine-term PDE"
+    },
+    "development_selection": "Threefixedweakvariants fitonce; originalandresolved scores reused acrossarms. Fusionstructureusesoriginalgrid; coefficientsandmedianacceptanceusefactor4. Devscoresareselectionevidenceonly; noclaimofsinglepredictorallstages.",
+    "freeze": "Method/protocol frozenbeforeformalnewtrain/dev; all120models beforegenerating9finalICs. No finalroleaccessuntilglobalfreeze, allfailuredenominators retained.",
+    "final": "360plannedforecasts fromnoisyfirstframe, cleanfutureonlyscoring, also noisyfuturemetrics, initialexcluded. Shared9ICs, not360independentexperiments.",
+    "source_quality": "SeparatecalibrationIC doubleNhalfdt, relL2<=1e-5 andmaxabs<=1e-4. Keepfailure, noreplacement/no thresholdchange.",
+    "primary_metrics": [
+      "exact_support",
+      "spurious_terms",
+      "missing_terms",
+      "coefficient_vector_error",
+      "per_true_term_error"
+    ],
+    "promotion_candidate": "fused_median",
+    "primary_comparator": "weak_resolved",
+    "additional_comparator": "weak_original",
+    "gate": {
+      "complete": 120,
+      "source_quality_all": true,
+      "each_true_term_max": {
+        "clean": 0.1,
+        "noise0p1": 0.1,
+        "noise1": 0.25
+      },
+      "noninferiority_each_comparator": [
+        "weak_original",
+        "weak_resolved"
+      ],
+      "per_configuration_coefficient": "<=max(1.25*comparator,.01)",
+      "per_configuration_prediction": "<=max(1.25*comparator,.05)",
+      "no_clean_support_regression": true,
+      "total_exact_not_decreased": true,
+      "total_extra_not_increased": true,
+      "total_missing_not_increased": true,
+      "total_forecast_failures_not_increased": true,
+      "clear_gain_comparator": [
+        "weak_original",
+        "weak_resolved"
+      ],
+      "clear_gain_fixed_OR": {
+        "targeted_tail_path": "Atleastonefamily: maximum pertrue-termrelativeerror acrossall10conditions <=.75*eachcomparator maximum AND reduction>=.05absolute versus BOTHcomparators."
+      },
+      "all_tests_required": true,
+      "failure_action": "keepbaseline,no merge",
+      "pass_action": "eligibleforreviewonly",
+      "family_tail_noninferiority": "For eachfamilyandeachcomparator maxpertrue-termerror <=max(1.25*comparator_max,.01)",
+      "gain_rationale": "Targetremainingtailweakcoefficientfailures; structureandmedianerrorsalreadynearceiling. Fixed25%relativeand5percentagepointabsolute engineeringeffectsize; notstatisticalsignificance. No prediction-onlygain.",
+      "candidate": "fused_median"
+    },
+    "absolute_prediction_diagnostic": "report worstperfamily/method and countabove10%; 10%isnotadditionalpromotiongate and mustnotbeclaimedpassedbyrelativegate",
+    "retrospective_diagnosis": "Previouslyviewedresolved120conditions;60original/resolvedcontrolrecordsreused,60newfusiondecisionsfrozenonolddevbeforeoldfinalscoring. Retrospectiveonly,notnewholdout.",
+    "limits": "Uniform periodic1D scalar autonomousconstant-coefficient9termPDEs, syntheticdistributiononly; no independent significance frompairednoise/sampling.",
+    "fusion_engine_protocol": {
+      "version": 1,
+      "methods": [
+        "weak_original",
+        "weak_resolved",
+        "anchored_best",
+        "fused_median"
+      ],
+      "candidate_generation": "unchanged three fixed weak variants, adaptive L1, normalized OLS debias",
+      "structural_anchor": "original observed-grid development selector; exact selected support",
+      "coefficient_comparison": "refined factor4 development RMSE, restricted to anchor support",
+      "anchored_best": "minimum refined RMSE, stable candidate ID tie break",
+      "median_pool": "same-support eligible candidates within near_factor*best+absolute_tolerance",
+      "variant_deduplication": "one eligible same-support candidate per declared weak variant, minimum stable training candidate ID before near-optimal filtering",
+      "combination": "coordinatewise median of physical coefficients, equal weight per distinct weak variant",
+      "median_near_factor": 1.05,
+      "absolute_tolerance": 1e-12,
+      "single_variant": "retain anchored best, no fusion",
+      "median_acceptance": "same refined development RMSE <= same threshold; otherwise anchored best",
+      "support_preservation": "reject nonfinite or exactly zero median coefficients, never delete terms",
+      "final_predictor": "original grid for weak_original; factor4 for other three arms",
+      "cross_support_averaging": false,
+      "path_frequency_weighting": false,
+      "reference_used_for_selection": false,
+      "noise_scale_used_for_selection": false,
+      "variants_are_independent_estimates": false,
+      "development_reuse": "same development observations reused for support, coefficient and median screening; not independent validation"
+    },
+    "data_protocol": {
+      "kind": "synthetic observations; no measured data",
+      "role_counts": {
+        "training": 3,
+        "development": 2,
+        "final": 3
+      },
+      "family_ids": {
+        "allen_cahn": 0,
+        "low_viscosity_burgers": 1,
+        "ks_unstable": 2
+      },
+      "role_ids": {
+        "training": 0,
+        "development": 1,
+        "final": 2
+      },
+      "noise_levels": [
+        0.0,
+        0.001,
+        0.01
+      ],
+      "nonzero_noise_seeds": [
+        61,
+        97
+      ],
+      "clean_noise_seed": 0,
+      "seed_sequence": "[119000, family_id, role_id, trajectory_index, noise_seed]",
+      "scale": "noise_level * full-grid clean training equal-trajectory RMS",
+      "sampling_order": "full-role noise first, then stride 1 or 2 in space and time",
+      "coarse_is_nested_observation": true,
+      "observation_interface": "x,t,u,boundary only; no noise oracle or reference labels"
+    },
+    "median_ablation": "anchored_best vs fused_median reported for allconfigurations; tailgainwithoutablationgaincannotbeattributedtomedian."
+  }
+}

@@ -4,6 +4,8 @@
 
 最终成绩与合入决定见 `fusion_study/REPORT.md`、`fusion_study/DECISION.json`。`fusion_study/development/retrospective/` 是已查看旧数据上的回顾性分析；`fusion_study/results/first_run/` 是规则冻结后的新初值验证，不能混为同一批证据。
 
+新验证中，融合将 AC 家族最坏逐项系数误差从加密版的37.58%降为4.18%，但继承旧结构导致 KS 多出两项；完整恢复29/30，对照加密版30/30。最坏条件平均预测误差13.97%，对照9.52%。预设检查171/178，**不合并默认版本**；317项代码测试通过。完整改善与失败均保留。
+
 ## 安装与复现
 
 解压进入 `pde-discovery-fused-weak`，验证环境为 Python 3.12.14：
