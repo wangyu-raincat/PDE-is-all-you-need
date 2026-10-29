@@ -1,0 +1,582 @@
+{
+  "version": 1,
+  "variant_menu_status": "frozen",
+  "families": [
+    "allen_cahn",
+    "low_viscosity_burgers",
+    "ks_unstable"
+  ],
+  "methods": [
+    "prefix_baseline",
+    "stable_selection",
+    "noise_corrected",
+    "noise_stable"
+  ],
+  "sampling": [
+    "full",
+    "coarse"
+  ],
+  "noise_conditions": [
+    {
+      "label": "clean",
+      "level": 0.0,
+      "seed": 0
+    },
+    {
+      "label": "noise0p1_s79",
+      "level": 0.001,
+      "seed": 79
+    },
+    {
+      "label": "noise0p1_s109",
+      "level": 0.001,
+      "seed": 109
+    },
+    {
+      "label": "noise1_s79",
+      "level": 0.01,
+      "seed": 79
+    },
+    {
+      "label": "noise1_s109",
+      "level": 0.01,
+      "seed": 109
+    }
+  ],
+  "declared_configurations": 120,
+  "roles": {
+    "training": 3,
+    "development": 2,
+    "final": 3,
+    "calibration": 1
+  },
+  "weak_variants": {
+    "compact": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.125
+    },
+    "low": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.03125
+    },
+    "resolved": {
+      "time_fraction": 0.25,
+      "mode_fraction": 0.25
+    }
+  },
+  "weak_engine_protocol": {
+    "version": 1,
+    "variants": {
+      "compact": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.125
+      },
+      "low": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.03125
+      },
+      "resolved": {
+        "time_fraction": 0.25,
+        "mode_fraction": 0.25
+      }
+    },
+    "terms": [
+      "1",
+      "u",
+      "u^2",
+      "u^3",
+      "u_x",
+      "u_xx",
+      "u_xxx",
+      "u_xxxx",
+      "u*u_x"
+    ],
+    "spatial_tests": "nonnegative Fourier modes; real/imaginary rows, nonzero modes sqrt(2) weighted",
+    "temporal_test": "(1-z*z)^4 on [-1,1], zero outside; analytic first derivative",
+    "products": "2N zero-padded real trigonometric interpolation; retain selected observed-grid Fourier modes",
+    "noise_correction": "none",
+    "no_observed_derivatives": true,
+    "spatial_mode_rule": "min(Nx//4, max(8, floor(Nx*variant_fraction)))",
+    "quadrature": "composite degree-nine Newton-Cotes on original samples, eight subintervals per panel",
+    "window_stride": "max(1, window_intervals//4)",
+    "selection": "unchanged L1 path, normalized OLS debias and development forecast selection",
+    "reference_used_for_selection": false
+  },
+  "forecast_protocol": {
+    "version": 1,
+    "name": "prefix_aligned_resolved_factor4",
+    "history": "observed frames at or before forecast start only; endpoint shared once",
+    "estimator": "independently filter each prefix frame, propagate each to cutoff with candidate PDE, equal mean of terminal states",
+    "weights": "fixed equal per observed prefix frame, no development or final fitting",
+    "filter": {
+      "version": 1,
+      "input": "one observed initial frame and its uniform periodic spatial grid only",
+      "spectrum": "real FFT divided by N",
+      "scale_band": "integer modes floor(N/4) <= k < floor(N/2); DC and real Nyquist excluded",
+      "coefficient_noise_rms": "median(abs(normalized FFT in scale band))/sqrt(log(2))",
+      "estimated_spatial_sigma": "coefficient_noise_rms*sqrt(N)",
+      "threshold": "coefficient_noise_rms*sqrt(2*log(N))",
+      "rule": "retain coefficients with magnitude >= threshold, always preserve DC; hard threshold only",
+      "retained_modes": "data dependent, no fixed physical modes and no family-specific rule",
+      "phase": "retained complex coefficients unchanged; irfft handles real Nyquist",
+      "maximum_observed_points": 512,
+      "maximum_absolute_state": 1000000.0,
+      "scale_assumption": "additive spatial white Gaussian noise; upper-band majority is noise rather than signal",
+      "limitations": "single-frame sparse-spectrum prior; broadband signal can bias scale upward and weak physical modes can be removed",
+      "future_input": false,
+      "reference_or_true_noise_input": false,
+      "additional_measurements": false
+    },
+    "solver": {
+      "version": 1,
+      "default_spatial_factor": 4,
+      "diagnostic_spatial_factors": [
+        1,
+        2,
+        4
+      ],
+      "factor_selection": "fixed before new training/development generation; not family dependent",
+      "initial_interpolation": "real periodic Fourier interpolation of the observed initial frame; scipy.signal.resample handles even-grid Nyquist splitting",
+      "internal_grid": "Nx*factor equally spaced points on the same period, starting at the observed x[0]",
+      "solver": "unchanged pde_discovery.generic_engine.forecast on the internal grid",
+      "output": "direct restriction to every factor-th internal point at the original output times",
+      "time_substeps": 32,
+      "maximum_internal_points": 2048,
+      "budget_failure": "reject; never silently reduce factor",
+      "extra_points_are_measurements": false,
+      "truth_or_future_input": false,
+      "scope": "uniform periodic scalar autonomous constant-coefficient nine-term PDE"
+    },
+    "max_prefix_frames": 32,
+    "minimum_prefix_frames": 2,
+    "forecast_horizon": "unchanged after cutoff; prefix not counted as predicted future",
+    "conditional_forecast": true,
+    "future_observations_input": false,
+    "limitations": "candidate-model bias and sparse-spectrum initial-filter prior; not independent propagated estimates"
+  },
+  "coefficient_engine_protocol": {
+    "version": 1,
+    "methods": [
+      "prefix_baseline",
+      "stable_selection",
+      "noise_corrected",
+      "noise_stable"
+    ],
+    "baseline": "unchanged prefix_median candidate generation and prefix prediction selection",
+    "candidate_training": "three fixed weak variants, adaptive L1, normalized OLS debias, training-only support medians",
+    "training_segment": "full forecast segment; historical prefix excluded from coefficient fitting",
+    "corrected_training": "same weak blocks with observation-estimated white-Gaussian nonlinear moment correction",
+    "noise_correction": {
+      "version": 1,
+      "base_weak_protocol": {
+        "version": 1,
+        "variants": {
+          "compact": {
+            "time_fraction": 0.25,
+            "mode_fraction": 0.125
+          },
+          "low": {
+            "time_fraction": 0.25,
+            "mode_fraction": 0.03125
+          },
+          "resolved": {
+            "time_fraction": 0.25,
+            "mode_fraction": 0.25
+          }
+        },
+        "terms": [
+          "1",
+          "u",
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xx",
+          "u_xxx",
+          "u_xxxx",
+          "u*u_x"
+        ],
+        "spatial_tests": "nonnegative Fourier modes; real/imaginary rows, nonzero modes sqrt(2) weighted",
+        "temporal_test": "(1-z*z)^4 on [-1,1], zero outside; analytic first derivative",
+        "products": "2N zero-padded real trigonometric interpolation; retain selected observed-grid Fourier modes",
+        "noise_correction": "none",
+        "no_observed_derivatives": true,
+        "spatial_mode_rule": "min(Nx//4, max(8, floor(Nx*variant_fraction)))",
+        "quadrature": "composite degree-nine Newton-Cotes on original samples, eight subintervals per panel",
+        "window_stride": "max(1, window_intervals//4)",
+        "selection": "unchanged L1 path, normalized OLS debias and development forecast selection",
+        "reference_used_for_selection": false
+      },
+      "input": "one observed periodic x,t,u trajectory; no family, reference, or true noise scale",
+      "noise_model": "additive zero-mean spatially iid Gaussian noise, constant variance within a trajectory",
+      "noise_estimation": {
+        "spectrum": "real FFT divided by N",
+        "scale_band": "integer modes floor(N/4) <= k < floor(N/2); DC and real Nyquist excluded",
+        "pooling": "pool magnitudes across all supplied observed frames and upper-band modes",
+        "radial_rms": "median(pooled abs(rFFT(u)/N))/sqrt(log(2))",
+        "spatial_variance": "N * radial_rms**2",
+        "maximum_observed_points": 512,
+        "additional_filtering": false,
+        "reference_or_true_noise_used": false
+      },
+      "interpolation": "unchanged 2N real trigonometric interpolation, split even-grid real Nyquist equally",
+      "interpolated_variance": "odd N: sigma2 everywhere; even N: sigma2 at original points, sigma2*(1-1/N) at midpoints",
+      "second_moment": "interpolated_u**2 - interpolated_noise_variance",
+      "third_moment": "interpolated_u**3 - 3*interpolated_noise_variance*interpolated_u",
+      "advection_product": "one half spatial derivative of the corrected second moment",
+      "linear_features_and_target": "unchanged raw observed Fourier coefficients and original weak integration",
+      "quadrature_and_windows": "unchanged original weak_block rule for each variant",
+      "known_zero_variance": "exact original spectra; correction=False returns the original weak block",
+      "general_errors_in_variables_bias_removed": false,
+      "plug_in_estimated_variance_is_exactly_unbiased": false,
+      "overlapping_windows_are_independent": false,
+      "limits": "upper-band physical signal may bias the scale; colored, heteroskedastic or non-Gaussian noise is not covered"
+    },
+    "reliability_selection": {
+      "version": 1,
+      "prediction_pool": "existing eligible prefix scores <=1.05*best+1e-12",
+      "support_priority": "minimum nonzero term count within prediction pool",
+      "common_validation_variant": "resolved",
+      "common_validation_score": "sqrt(mean(development trajectory weak residual MSE)) / common training target RMS",
+      "common_validation_fields": "development observations only, same resolved block builder for every candidate",
+      "weak_pool": "within minimum support-count pool, weak score <=1.05*best+1e-12",
+      "final_order": "minimum worst-term leave-one-trajectory-out relative RMS displacement, weak score, prediction RMSE, stable ID",
+      "prediction_near_factor": 1.05,
+      "weak_near_factor": 1.05,
+      "absolute_tolerance": 1e-12,
+      "coefficient_refit": "fixed support normalized OLS, equal trajectory weighting, rcond1e-10; never refit selected coefficients",
+      "stability_resampling": "omit one complete training trajectory, never independent weak rows",
+      "minimum_training_trajectories": 3,
+      "stability_denominator": "max(abs(full coefficient),1e-6*common training target RMS/common training feature RMS)",
+      "normalized_coefficient_floor": 1e-06,
+      "median_refit": "refit participating variants on each fold, exact equal-vector aliases counted once, then coordinatewise median",
+      "median_variants_are_independent": false,
+      "stability_is_confidence_interval": false,
+      "failure_policy": "any required diagnostic failure retains original prediction-selected baseline with explicit fallback record",
+      "reference_or_final_or_true_noise_input": false,
+      "prediction_recomputed": false,
+      "limits": "stable coefficients can remain biased; common weak residuals have measurement error and correlated windows"
+    },
+    "shared_scoring": "score each raw/corrected augmented pool once using the same fixed prefix predictor",
+    "forecast_budget": "unchanged prefix11/6 frames and full future horizon for all arms",
+    "reference_or_true_noise_or_family_input": false,
+    "no_final_role_access": true
+  },
+  "coefficient_selection_protocol": {
+    "version": 1,
+    "prediction_pool": "existing eligible prefix scores <=1.05*best+1e-12",
+    "support_priority": "minimum nonzero term count within prediction pool",
+    "common_validation_variant": "resolved",
+    "common_validation_score": "sqrt(mean(development trajectory weak residual MSE)) / common training target RMS",
+    "common_validation_fields": "development observations only, same resolved block builder for every candidate",
+    "weak_pool": "within minimum support-count pool, weak score <=1.05*best+1e-12",
+    "final_order": "minimum worst-term leave-one-trajectory-out relative RMS displacement, weak score, prediction RMSE, stable ID",
+    "prediction_near_factor": 1.05,
+    "weak_near_factor": 1.05,
+    "absolute_tolerance": 1e-12,
+    "coefficient_refit": "fixed support normalized OLS, equal trajectory weighting, rcond1e-10; never refit selected coefficients",
+    "stability_resampling": "omit one complete training trajectory, never independent weak rows",
+    "minimum_training_trajectories": 3,
+    "stability_denominator": "max(abs(full coefficient),1e-6*common training target RMS/common training feature RMS)",
+    "normalized_coefficient_floor": 1e-06,
+    "median_refit": "refit participating variants on each fold, exact equal-vector aliases counted once, then coordinatewise median",
+    "median_variants_are_independent": false,
+    "stability_is_confidence_interval": false,
+    "failure_policy": "any required diagnostic failure retains original prediction-selected baseline with explicit fallback record",
+    "reference_or_final_or_true_noise_input": false,
+    "prediction_recomputed": false,
+    "limits": "stable coefficients can remain biased; common weak residuals have measurement error and correlated windows"
+  },
+  "noise_protocol": {
+    "version": 1,
+    "base_weak_protocol": {
+      "version": 1,
+      "variants": {
+        "compact": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.125
+        },
+        "low": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.03125
+        },
+        "resolved": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.25
+        }
+      },
+      "terms": [
+        "1",
+        "u",
+        "u^2",
+        "u^3",
+        "u_x",
+        "u_xx",
+        "u_xxx",
+        "u_xxxx",
+        "u*u_x"
+      ],
+      "spatial_tests": "nonnegative Fourier modes; real/imaginary rows, nonzero modes sqrt(2) weighted",
+      "temporal_test": "(1-z*z)^4 on [-1,1], zero outside; analytic first derivative",
+      "products": "2N zero-padded real trigonometric interpolation; retain selected observed-grid Fourier modes",
+      "noise_correction": "none",
+      "no_observed_derivatives": true,
+      "spatial_mode_rule": "min(Nx//4, max(8, floor(Nx*variant_fraction)))",
+      "quadrature": "composite degree-nine Newton-Cotes on original samples, eight subintervals per panel",
+      "window_stride": "max(1, window_intervals//4)",
+      "selection": "unchanged L1 path, normalized OLS debias and development forecast selection",
+      "reference_used_for_selection": false
+    },
+    "input": "one observed periodic x,t,u trajectory; no family, reference, or true noise scale",
+    "noise_model": "additive zero-mean spatially iid Gaussian noise, constant variance within a trajectory",
+    "noise_estimation": {
+      "spectrum": "real FFT divided by N",
+      "scale_band": "integer modes floor(N/4) <= k < floor(N/2); DC and real Nyquist excluded",
+      "pooling": "pool magnitudes across all supplied observed frames and upper-band modes",
+      "radial_rms": "median(pooled abs(rFFT(u)/N))/sqrt(log(2))",
+      "spatial_variance": "N * radial_rms**2",
+      "maximum_observed_points": 512,
+      "additional_filtering": false,
+      "reference_or_true_noise_used": false
+    },
+    "interpolation": "unchanged 2N real trigonometric interpolation, split even-grid real Nyquist equally",
+    "interpolated_variance": "odd N: sigma2 everywhere; even N: sigma2 at original points, sigma2*(1-1/N) at midpoints",
+    "second_moment": "interpolated_u**2 - interpolated_noise_variance",
+    "third_moment": "interpolated_u**3 - 3*interpolated_noise_variance*interpolated_u",
+    "advection_product": "one half spatial derivative of the corrected second moment",
+    "linear_features_and_target": "unchanged raw observed Fourier coefficients and original weak integration",
+    "quadrature_and_windows": "unchanged original weak_block rule for each variant",
+    "known_zero_variance": "exact original spectra; correction=False returns the original weak block",
+    "general_errors_in_variables_bias_removed": false,
+    "plug_in_estimated_variance_is_exactly_unbiased": false,
+    "overlapping_windows_are_independent": false,
+    "limits": "upper-band physical signal may bias the scale; colored, heteroskedastic or non-Gaussian noise is not covered"
+  },
+  "initial_protocol": {
+    "version": 1,
+    "input": "one observed initial frame and its uniform periodic spatial grid only",
+    "spectrum": "real FFT divided by N",
+    "scale_band": "integer modes floor(N/4) <= k < floor(N/2); DC and real Nyquist excluded",
+    "coefficient_noise_rms": "median(abs(normalized FFT in scale band))/sqrt(log(2))",
+    "estimated_spatial_sigma": "coefficient_noise_rms*sqrt(N)",
+    "threshold": "coefficient_noise_rms*sqrt(2*log(N))",
+    "rule": "retain coefficients with magnitude >= threshold, always preserve DC; hard threshold only",
+    "retained_modes": "data dependent, no fixed physical modes and no family-specific rule",
+    "phase": "retained complex coefficients unchanged; irfft handles real Nyquist",
+    "maximum_observed_points": 512,
+    "maximum_absolute_state": 1000000.0,
+    "scale_assumption": "additive spatial white Gaussian noise; upper-band majority is noise rather than signal",
+    "limitations": "single-frame sparse-spectrum prior; broadband signal can bias scale upward and weak physical modes can be removed",
+    "future_input": false,
+    "reference_or_true_noise_input": false,
+    "additional_measurements": false
+  },
+  "target_protocol": {
+    "candidate": "noise_stable",
+    "metric": "maximum across condition means of final-trajectory relative L2; exclude initial frame",
+    "relative_l2_limit": 0.05,
+    "condition_count": 30,
+    "trajectories_per_condition": 3,
+    "individual_trajectory_limit": null,
+    "all_conditions_required": true,
+    "failure_action": "target not achieved; retain failed condition",
+    "conditioning": "observed prefix before forecast start; 11 full or 6 coarse frames",
+    "forecast_duration": {
+      "allen_cahn": 0.5,
+      "low_viscosity_burgers": 1.5,
+      "ks_unstable": 20.0
+    },
+    "history_fraction_of_forecast_horizon": 0.1
+  },
+  "coefficient_protocol": {
+    "candidate": "noise_stable",
+    "comparator": "prefix_baseline",
+    "primary_metrics": "exact support, extra/missing terms, each true coefficient error",
+    "ac_minimum_relative_reduction": 0.2,
+    "ac_metric": "maximum true-term relative coefficient error across all ten AC conditions",
+    "zero_baseline_error": "relative improvement not demonstrable; gain check fails",
+    "all_families_maximum_not_increased": true,
+    "per_condition_vector_nonregression": "candidate <= max(1.25*baseline, .01)",
+    "family_true_term_tail_nonregression": "candidate <= max(1.25*baseline, .01)",
+    "true_term_limits": {
+      "clean": 0.1,
+      "noise0p1": 0.1,
+      "noise1": 0.25
+    },
+    "check_count": 126,
+    "ablation_selection_from_final": false
+  },
+  "data_protocol": {
+    "kind": "synthetic observations; no measured data",
+    "role_counts": {
+      "training": 3,
+      "development": 2,
+      "final": 3
+    },
+    "family_ids": {
+      "allen_cahn": 0,
+      "low_viscosity_burgers": 1,
+      "ks_unstable": 2
+    },
+    "role_ids": {
+      "training": 0,
+      "development": 1,
+      "final": 2
+    },
+    "noise_levels": [
+      0.0,
+      0.001,
+      0.01
+    ],
+    "nonzero_noise_seeds": [
+      79,
+      109
+    ],
+    "clean_noise_seed": 0,
+    "seed_sequence": "[179000, family_id, role_id, trajectory_index, noise_seed]",
+    "scale": "noise_level * full-grid clean training FORECAST-segment equal-trajectory RMS",
+    "sampling_order": "full-role noise first, then stride 1 or 2 in space and time",
+    "coarse_is_nested_observation": true,
+    "observation_interface": "x,t,u,boundary,prefix_t,prefix_u; prefix ends at forecast t[0]; no noise oracle",
+    "prefix_intervals_full": 10,
+    "forecast_intervals_full": 100,
+    "forecast_horizon_unchanged": true,
+    "prefix_endpoint_shared_observation": true
+  },
+  "generator_protocol": {
+    "version": 1,
+    "kind": "new initial conditions in the same known numerical families; not measured data",
+    "method": "contour ETDRK4; 64 fixed upper-half unit-circle roots",
+    "spatial_discretization": "Fourier Galerkin, |mode| <= floor(N/3); quadratic 2/3 truncation; cubic product on 2N grid then project",
+    "observation_rule": "direct reference-grid subsampling; no interpolated observations",
+    "time_rule": "ceil(each observation interval/max_dt) equal substeps, exact output times",
+    "observed_nt": 111,
+    "prefix_intervals": 10,
+    "forecast_intervals": 100,
+    "prefix_duration": "0.1 times the unchanged forecast horizon; observations precede forecast start",
+    "role_counts": {
+      "calibration": 1,
+      "training": 3,
+      "development": 2,
+      "final": 3
+    },
+    "role_seed_bases": {
+      "calibration": 168000,
+      "training": 168100,
+      "development": 168200,
+      "final": 168300
+    },
+    "family_ids": {
+      "allen_cahn": 1,
+      "low_viscosity_burgers": 2,
+      "ks_unstable": 3
+    },
+    "seed_rule": "SeedSequence([role_seed_base + zero_based_index, family_id]); refinement preserves seed",
+    "initial_mean": 0.1,
+    "initial_amplitude_factor": "independent uniform [0.8,1.2), followed by phases uniform [-pi,pi)",
+    "families": {
+      "allen_cahn": {
+        "period": 2.0,
+        "x_left": -1.0,
+        "reference_n": 1024,
+        "observed_nx": 256,
+        "max_dt": 0.001,
+        "end_time": 0.5,
+        "modes": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          24
+        ],
+        "base_amplitudes": [
+          0.25,
+          0.15,
+          0.1,
+          0.05,
+          0.03,
+          0.02
+        ]
+      },
+      "low_viscosity_burgers": {
+        "period": 6.283185307179586,
+        "x_left": 0.0,
+        "reference_n": 512,
+        "observed_nx": 128,
+        "max_dt": 0.002,
+        "end_time": 1.5,
+        "modes": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "base_amplitudes": [
+          0.9,
+          0.3,
+          0.15,
+          0.08
+        ]
+      },
+      "ks_unstable": {
+        "period": 100.53096491487338,
+        "x_left": 0.0,
+        "reference_n": 256,
+        "observed_nx": 128,
+        "max_dt": 0.01,
+        "end_time": 20.0,
+        "modes": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16
+        ],
+        "base_amplitudes": [
+          0.5,
+          0.3,
+          0.2,
+          0.15,
+          0.12,
+          0.08
+        ]
+      }
+    },
+    "refinement": "double reference_N and halve max_dt, same initial Fourier coefficients",
+    "calibration_role_only": true,
+    "calibration_relative_l2_limit": 1e-05,
+    "calibration_max_absolute_limit": 0.0001,
+    "failure_policy": "retain source_quality_failure; never replace failed trajectories or relax thresholds",
+    "formal_final_generation": "caller must verify global model freeze before requesting final roles",
+    "certified_chaos": false,
+    "units": "declared dimensionless benchmark coordinates"
+  },
+  "baseline": "prefix_median from previous study, with unchanged candidates, history estimator, predictor and prediction-only selection",
+  "four_arm_design": {
+    "prefix_baseline": "raw weak features, unchanged prefix prediction selection",
+    "stable_selection": "raw weak features, prediction near-pool then common weak residual near-pool then training whole-trajectory omission stability",
+    "noise_corrected": "observation-estimated nonlinear moment correction, unchanged prefix prediction selection",
+    "noise_stable": "nonlinear moment correction plus reliability selector; predeclared promotion candidate"
+  },
+  "source_scope": "fresh seeds in three known synthetic PDE families; no new measurement or arbitrary-PDE claim",
+  "fair_comparison": "all four arms use identical training/dev/final observations and 11full/6coarse history frames, full futureAC.5/Burgers1.5/KS20",
+  "training": "three trajectories, post-cutoff segment only; noise estimate and candidate median from supplied training observations only",
+  "development": "two independent trajectories; observed development weak residual and existing prefix forecast scores may select; no true coefficient/noise/oracle family input",
+  "stability": "three leave-one-training-trajectory-out folds; sensitivity diagnostic, not confidence intervals or independent weak-window resamples",
+  "noise_limit": "Gaussian white constant trajectory variance; pooled upper spectrum can contain physical signal; moment correction does not remove all shared X/y noise bias",
+  "freeze": "all scientific method/protocol bytes fixed before new training/development generation; all120 models and hashes frozen before generating9 final trajectories",
+  "evaluation": "truth only for scoring; all120 configurations/360 forecast slots retained; initial frame excluded from full future metrics",
+  "promotion": "all126 checks plus regression tests; at least20% relative reduction in AC worst true coefficient error vs paired prefix baseline, global worst true coefficient error not increased; never switch candidate after final results",
+  "failure": "retain experiment and prior baseline, no merge; explicit reliability fallback retained and reported",
+  "retrospective": "development probe on two previously viewed AC coarse1percent conditions, reference coefficients inspected only after all requested decisions saved; no final fields loaded",
+  "primary_metrics": [
+    "exact_support",
+    "extra_terms",
+    "missing_terms",
+    "per_true_term_error",
+    "coefficient_vector_error"
+  ],
+  "secondary_metric": "maximum of30 three-trajectory mean relativeL2<=.05; individual maxima reported separately",
+  "independence": "9 final trajectories reused across conditions/methods; not360 independent experiments"
+}
