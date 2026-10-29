@@ -2,6 +2,8 @@
 
 本分支 `experiment/coefficient-reliability` 从 `experiment/prefix-five-percent` 的 `7bacc8ce5a1628b76c6f95581cd37ba1c3ca050e` 分离。原版本及默认应用保留。目标是在完整恢复方程项、维持最坏条件平均预测误差≤5%的同时，改善小系数精度。验证范围是三个一维周期合成 PDE 方程族的新初值，不能当成新的实测或任意 PDE 泛化验证。
 
+本轮结果：四组均30/30完整恢复、无多余/缺失项。融合候选最坏逐项系数误差24.6133%→6.1022%，相对改善75.2079%；仅改选模为6.0971%，单独噪声修正为24.6206%。四组最坏条件平均预测误差均5.4104%，29/30条件≤5%。因此效果门槛125/126，不合入；487项自动测试、独立审计及36次最差条件预测复算通过。新数据上的基线也是5.4104%；此前4.0708%属于旧初值组。完整结果见 [REPORT.md](coefficient_study/REPORT.md)。
+
 ## 方法与冻结规则
 
 四组均使用完全相同的短历史条件预测和完整未来时长：
@@ -46,4 +48,4 @@ python -m pde_discovery serve --host 127.0.0.1 --port 8765
 
 打开 http://127.0.0.1:8765/discovery 。本实验独立接口为 `coefficient_study.engine.fit_observations(training, development)`；数据适配格式见 `coefficient_study/data.py`。预测使用 `prefix_study.forecast.forecast_with_diagnostics(terms, x, future_t, prefix_t, prefix_u)`，该接口不接收未来观测值。界面尚未自动切换到本实验方法。
 
-最终报告和判定将保存到 `coefficient_study/REPORT.md`、`coefficient_study/DECISION.json`，逐模型收据和评分位于 `coefficient_study/results/first_run/`。`coefficient_study/DESIGN_REVIEW.md` 是性能评估前的独立设计审阅，不代表验证已通过。原基线可通过 Git 分支 `experiment/prefix-five-percent` 回退，切换前保存自己的修改。
+最终报告和判定已保存到 `coefficient_study/REPORT.md`、`coefficient_study/DECISION.json`，逐模型收据和评分位于 `coefficient_study/results/first_run/`。`coefficient_study/DESIGN_REVIEW.md` 是性能评估前的独立设计审阅，不代表验证已通过。原基线可通过 Git 分支 `experiment/prefix-five-percent` 回退，切换前保存自己的修改。

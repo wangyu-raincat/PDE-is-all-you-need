@@ -1,6 +1,6 @@
 # 系数可靠性实验：独立设计审阅
 
-审阅时间：2026-10-29 03:42 UTC。审阅对象为独立实验工作树
+审阅时间：2026-10-29 03:42 UTC；冻结前硬化复核于同日完成。审阅对象为独立实验工作树
 `experiment/coefficient-reliability`，基线提交
 `7bacc8ce5a1628b76c6f95581cd37ba1c3ca050e`。本审阅只读实现、测试与协议；
 没有修改算法，没有生成或训练正式数据，也没有查看本轮最终轨迹。
@@ -20,6 +20,8 @@
   若查看新最终结果后继续调参，该数据上的后续结果也必须改称回顾性，不能继续声称未查看验证。
 - 本记录中的实现哈希是审阅快照。冻结前如修改科学规则，应更新本记录；正式追溯以
   `prepared.json`、`freeze_index.json` 和模型/最终数据哈希为准。
+- 后续复核：流水线补齐下述四个协议字段绑定后，协议在提交 `1aae09a` 冻结，
+  共绑定 25 个科学源文件。没有改变选模规则、数据分布或门槛；本记录已更新 `run.py` 哈希。
 
 ## 四组方法与观察接口
 
@@ -87,16 +89,16 @@ support 不同的候选相互比较，不能概括为“永远不改变原选中
 **已修复：可靠性收据未透传。** `selection.py` 返回 `reliability_selection`，旧版
 `run._score_record` 却读取 `reliability`，导致最终 comparison 中回退状态/原因及选择池信息丢失。
 流水线作者统一为实际字段，增加真实键的 fallback 透传测试。本审阅已复核修复代码。
-作者提交的 `/workspace/coefficient-pipeline-tests.log` 显示 22 项流水线专项通过；
+作者提交的 `/workspace/coefficient-pipeline-tests.log` 显示硬化后 23 项流水线专项通过；
 本审阅不把该日志替代完整回归，也不声称自己重新运行了所有测试。
 
 其余已检查测试覆盖：Fourier 插值方差的独立算子对照、制造高斯噪声矩修正、原始线性目标不变、
 噪声估计限制；稳定性层级、共同开发弱块、折内去重、秩失败回退、输入不变与拒绝 oracle 参数；
 120 模型/9 最终生成顺序、未冻结阻断、完整前缀和未来时长、失败槽位不消失及 126 门槛边界。
 
-低风险加固建议：`validate_design_and_calibration` 可进一步显式比较协议中的
-`sampling`、`noise_conditions`、`generator_protocol` 和 `declared_configurations`。
-当前这些字段与实际实现一致，核心算法/源代码哈希也已绑定，所以这不是当前实验的阻断问题。
+低风险加固已完成：`validate_design_and_calibration` 现显式比较协议中的
+`sampling`、`noise_conditions`、`generator_protocol` 和 `declared_configurations`，
+配置总数还要求整数类型。新增字段变异测试通过；该修改没有改变任何科学规则。
 
 ## 结果解释范围
 
@@ -111,7 +113,7 @@ support 不同的候选相互比较，不能概括为“永远不改变原选中
 6238186265d29b339936f6d642935affe85f64d9e42f3adba4a430c761bf4ecf  coefficient_study/engine.py
 dd84fd7c60fb082a86d70dc32c6986d5ca4fb0369b9eaa6af8e0e1ad92ad4232  coefficient_study/noise.py
 85ea4ae9dfa2c0d62f840d7f93c1fac1baec956a36c37c147fee5a9396b5e08c  coefficient_study/selection.py
-093f642661940ee7655de4084dab76daf455b595ac72ed00616ecf83fe762927  coefficient_study/run.py
+ab7911dd50b789469750419860461f9157e9b3daa91b0d7f60ff093951ace70b  coefficient_study/run.py
 4889761afa58fa08df4731777b13692fec98cd699cd2f302b091e5f7d2887a47  coefficient_study/data.py
 4091a1d79f85145d3d2430f7eafe190280bd621a7c18a15bde6049a53023df11  coefficient_study/generators.py
 ```

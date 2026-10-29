@@ -1,3 +1,5 @@
+> 本实验分支已完成系数可靠性对照：最坏逐项系数误差24.61%→6.10%，但新数据上四组最坏平均预测误差均5.41%，门槛125/126，未合入。请先读 [实验报告](coefficient_study/REPORT.md) 和 [运行说明](COEFFICIENT_README.md)。回退分支为 `experiment/prefix-five-percent`；下文保留既有应用说明。
+
 # 方程发现实验室 · PDE Discovery Lab
 
 从时空观测数据 `u(x,t)` 中识别 PDE 微分项和系数的可运行科研原型。当前主线使用共同九项候选库与 L1 稀疏回归，在 Burgers、KdV、Kuramoto–Sivashinsky（KS）三个外部公开数值基准上验证发现能力：优先评价方程结构和系数，另行评价未来预测。
