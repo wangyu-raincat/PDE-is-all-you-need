@@ -49,3 +49,16 @@ python -m pde_discovery serve --host 127.0.0.1 --port 8765
 打开 http://127.0.0.1:8765/discovery 。本实验独立接口为 `coefficient_study.engine.fit_observations(training, development)`；数据适配格式见 `coefficient_study/data.py`。预测使用 `prefix_study.forecast.forecast_with_diagnostics(terms, x, future_t, prefix_t, prefix_u)`，该接口不接收未来观测值。界面尚未自动切换到本实验方法。
 
 最终报告和判定已保存到 `coefficient_study/REPORT.md`、`coefficient_study/DECISION.json`，逐模型收据和评分位于 `coefficient_study/results/first_run/`。`coefficient_study/DESIGN_REVIEW.md` 是性能评估前的独立设计审阅，不代表验证已通过。原基线可通过 Git 分支 `experiment/prefix-five-percent` 回退，切换前保存自己的修改。
+
+## 完整 Git 历史恢复
+
+历史分为 `pde-coefficient-history-part1.zip` 和 `pde-coefficient-history-part2.zip`，两个包必须一起下载并解压到同一目录，再合成为完整 bundle；代码包和结果包不需要这一步即可运行。
+
+```bash
+cat git-history.bundle.part1 git-history.bundle.part2 > git-history.bundle
+git clone --branch experiment/coefficient-reliability git-history.bundle restored-pde
+cd restored-pde
+git switch experiment/prefix-five-percent
+```
+
+完整历史包含基线及八个实验分支。最后一行演示回退到旧前缀基线；留在本实验分支可省略它。两个历史分包来自同一个 bundle，交付核验会逐字节检查拼接结果，并核对全部九个分支。
