@@ -1,0 +1,226 @@
+{
+  "records": [
+    {
+      "family": "decay",
+      "action_id": "fixed-rich",
+      "role": "calibration",
+      "relative_l2": 1.909280376149813e-16,
+      "max_absolute_error": 3.3306690738754696e-16,
+      "status": "passed"
+    },
+    {
+      "family": "decay",
+      "action_id": "single-6-0",
+      "role": "calibration",
+      "relative_l2": 2.5531117354486746e-16,
+      "max_absolute_error": 2.7755575615628914e-16,
+      "status": "passed"
+    },
+    {
+      "family": "diffusion",
+      "action_id": "fixed-rich",
+      "role": "calibration",
+      "relative_l2": 1.7731513569452318e-16,
+      "max_absolute_error": 2.220446049250313e-16,
+      "status": "passed"
+    },
+    {
+      "family": "diffusion",
+      "action_id": "single-6-0",
+      "role": "calibration",
+      "relative_l2": 2.1272375128296632e-16,
+      "max_absolute_error": 2.220446049250313e-16,
+      "status": "passed"
+    },
+    {
+      "family": "hyperdiffusion",
+      "action_id": "fixed-rich",
+      "role": "calibration",
+      "relative_l2": 1.7579935292768716e-16,
+      "max_absolute_error": 2.220446049250313e-16,
+      "status": "passed"
+    },
+    {
+      "family": "hyperdiffusion",
+      "action_id": "single-6-0",
+      "role": "calibration",
+      "relative_l2": 2.1667929601283553e-16,
+      "max_absolute_error": 1.6653345369377348e-16,
+      "status": "passed"
+    },
+    {
+      "family": "advection_diffusion",
+      "action_id": "fixed-rich",
+      "role": "calibration",
+      "relative_l2": 1.8005357232732277e-16,
+      "max_absolute_error": 2.220446049250313e-16,
+      "status": "passed"
+    },
+    {
+      "family": "advection_diffusion",
+      "action_id": "single-6-0",
+      "role": "calibration",
+      "relative_l2": 2.0157246215291586e-16,
+      "max_absolute_error": 3.3306690738754696e-16,
+      "status": "passed"
+    },
+    {
+      "family": "reaction_diffusion",
+      "action_id": "fixed-rich",
+      "role": "calibration",
+      "relative_l2": 1.7784550085282702e-16,
+      "max_absolute_error": 2.220446049250313e-16,
+      "status": "passed"
+    },
+    {
+      "family": "reaction_diffusion",
+      "action_id": "single-6-0",
+      "role": "calibration",
+      "relative_l2": 1.9052576989189044e-16,
+      "max_absolute_error": 3.3306690738754696e-16,
+      "status": "passed"
+    },
+    {
+      "family": "burgers",
+      "action_id": "fixed-rich",
+      "role": "calibration",
+      "relative_l2": 1.0997296124606707e-12,
+      "max_absolute_error": 5.341727060681478e-12,
+      "status": "passed"
+    },
+    {
+      "family": "burgers",
+      "action_id": "single-6-0",
+      "role": "calibration",
+      "relative_l2": 1.657236120407634e-12,
+      "max_absolute_error": 2.193301096298228e-12,
+      "status": "passed"
+    }
+  ],
+  "all_passed": true,
+  "formal_data_generated": false,
+  "calibration_only": true,
+  "relative_limit": 1e-05,
+  "maximum_absolute_limit": 0.0001,
+  "protocol": {
+    "version": 1,
+    "kind": "controlled synthetic initial-condition queries, not measured data",
+    "families": [
+      "decay",
+      "diffusion",
+      "hyperdiffusion",
+      "advection_diffusion",
+      "reaction_diffusion",
+      "burgers"
+    ],
+    "coefficient_ranges": {
+      "decay": {
+        "u": [
+          -0.4,
+          -0.15
+        ]
+      },
+      "diffusion": {
+        "u_xx": [
+          0.05,
+          0.15
+        ]
+      },
+      "hyperdiffusion": {
+        "u_xxxx": [
+          -0.005,
+          -0.001
+        ]
+      },
+      "advection_diffusion": {
+        "u_x": [
+          -0.7,
+          -0.3
+        ],
+        "u_xx": [
+          0.05,
+          0.15
+        ]
+      },
+      "reaction_diffusion": {
+        "u": [
+          -0.4,
+          -0.15
+        ],
+        "u_xx": [
+          0.05,
+          0.15
+        ]
+      },
+      "burgers": {
+        "u_xx": [
+          0.04,
+          0.08
+        ],
+        "u*u_x": [
+          -1.2,
+          -0.6
+        ]
+      }
+    },
+    "role_seed_bases": {
+      "calibration": 851000,
+      "development": 852000,
+      "formal": 853000
+    },
+    "task_index_rule": "family=index%6, coefficient replicate=index//6; same family/action spaces for all policies",
+    "parameter_seed": "SeedSequence([role_seed_base, task_index])",
+    "noise_seed_base": 854000,
+    "noise_rule": "0.4*noise_level*standard_normal(111,64), caller supplies query seed; no trajectory-RMS oracle",
+    "noise_limits": [
+      0.0,
+      0.03
+    ],
+    "observed_nx": 64,
+    "full_frames": 111,
+    "prefix_intervals": 10,
+    "prefix_frames": 11,
+    "future_frames": 101,
+    "full_time_end": 1.1,
+    "future_duration": 1.0,
+    "measurement_values_per_experiment": 7104,
+    "measurement_count": "111*64 distinct observations; shared history endpoint counted once",
+    "linear_reference": "exact Fourier evolution under hidden linear symbol; independent of discovery forecast",
+    "nonlinear_reference": "independent contour ETDRK4 Fourier Galerkin Burgers reference",
+    "reference_n": 512,
+    "reference_max_dt": 0.001,
+    "refinement": "double spatial reference grid and halve timestep; same prescribed initial field",
+    "observation_rule": "direct reference-grid samples, never sparse-sensor interpolation",
+    "calibration_relative_l2_limit": 1e-05,
+    "calibration_max_absolute_limit": 0.0001,
+    "calibration_roles_only": true,
+    "formal_generation_guard": "controller freezes protocol before formal tasks; provider does not enforce global lifecycle",
+    "final_generation_guard": "controller freezes all policy snapshots before final queries",
+    "scope": "six fixed one-dimensional periodic scalar equation families, varying coefficients; not arbitrary PDE discovery"
+  },
+  "action_protocol": {
+    "version": 1,
+    "parameterization": "sum(a[k-1]*sin(k*x)+b[k-1]*cos(k*x)), k=1..6; zero constant",
+    "period": 6.283185307179586,
+    "modes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "initial_rms": 0.4,
+    "maximum_absolute_initial": 1.2,
+    "amplitude_certificate": "maximum on 4096-point periodic grid plus sum(k*hypot(a,b))*pi/4096",
+    "candidate_pool_size": 32,
+    "candidate_pool": "four fixed all-six-mode rich phase variants, twelve single-mode actions, sixteen random 2..6-mode mixtures",
+    "initial_training_actions": 3,
+    "initial_development_actions": 2,
+    "initial_excitation": "mode one only, five separately drawn phases; same physical excitation spectrum",
+    "fixed_baseline": "four predefined all-six-mode rich phase variants; no truth-dependent selection",
+    "pool_seed_input": "nonnegative integer seed; no family, coefficient or observation input",
+    "candidate_predictions_are_measurements": false,
+    "units": "dimensionless benchmark coordinates"
+  }
+}

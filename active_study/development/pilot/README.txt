@@ -1,0 +1,1 @@
+Development only: 6 parameter tasks, 1% noise, four policies, budgets5..7. No final references generated. Scientific source bytes at this pilot are preserved under source_snapshot; later pipeline release-identity hardening is not an algorithm tuning change. All 24 episodes and 72 budgets are retained.
