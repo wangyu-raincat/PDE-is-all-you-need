@@ -11,6 +11,7 @@ import csv
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -169,7 +170,9 @@ def summarize(comparison, *, expected_conditions=None):
                 'missing_terms_total': sum(r['missing_count'] for r in group),
                 'forecast_failure_slots': sum(r['forecast_failures'] for r in group),
                 'complete_forecast_conditions': len(forecasts),
-                'worst_mean_clean_relative_l2': max(forecasts) if forecasts else None,
+                'worst_mean_clean_relative_l2': max(forecasts) if len(forecasts) == expected else None,
+                'worst_available_mean_clean_relative_l2': max(forecasts) if forecasts else None,
+                'all_condition_forecast_bound_available': len(forecasts) == expected,
                 'coefficient_available_conditions': len(coefficients),
                 'mean_worst_true_coefficient_relative_error': sum(coefficients)/len(coefficients) if coefficients else None,
                 'worst_true_coefficient_relative_error': max(coefficients) if coefficients else None,
@@ -216,9 +219,21 @@ def load_results(directory):
     summary, rows = summarize(comparison)
     summary['comparison_sha256'] = digest(directory/'comparison.json')
     audit_file = directory/'audit.json'
+    summary['audit_source'] = 'comparison.json'
+    summary['audit_binding_status'] = 'embedded'
     if audit_file.is_file():
         summary['audit'] = read_json(audit_file)
         summary['audit_sha256'] = digest(audit_file)
+        summary['audit_source'] = 'audit.json'
+        bound = summary['audit'].get('comparison_sha256')
+        summary['audit_binding_status'] = ('unbound' if bound is None else
+                                          'verified' if bound == summary['comparison_sha256'] else 'stale')
+    audit = summary['audit']
+    status = audit.get('status', 'not_reported')
+    passed = audit.get('passed', audit.get('all_passed'))
+    declared = 'passed' if passed is True else 'failed' if passed is False else status
+    summary['audit_effective_status'] = (summary['audit_binding_status']
+        if summary['audit_binding_status'] in ('unbound', 'stale') else declared)
     return comparison, summary, rows
 
 
@@ -254,7 +269,7 @@ def load_episode(directory, task_id, policy, comparison=None):
     return episode
 
 
-def render(directory=DEFAULT_OUTPUT):
+def render(directory=DEFAULT_OUTPUT, landing_report=None):
     directory = Path(directory)
     comparison, summary, rows = load_results(directory)
     sources = {}
@@ -291,17 +306,20 @@ def render(directory=DEFAULT_OUTPUT):
     lines = ['# 主动 PDE 识别：已完成实验的只读报告', '',
         f"结果状态：**{summary['result_state']}**；保存 {summary['present_records']}/{summary['expected_records']} 条预算记录。",
         f"条件 {summary['present_conditions']}/{summary['expected_conditions']}；参数任务 {summary['independent_parameter_tasks_present']}。四策略共享识别器、初始训练/开发数据、预算和候选初值池。", '',
+        '验证标签：'+str(summary['evaluation_scope']),
+        f"审计状态：**{summary['audit_effective_status']}**；来源 `{summary['audit_source']}`，与当前结果的绑定状态 `{summary['audit_binding_status']}`。未完成、未绑定或过期的审计不表示通过。", '',
         '主成功指标：结构完全恢复、每个真项系数相对误差 ≤10%、3 条最终轨迹平均相对 L2 ≤5%，三者同时满足。预测使用 11 帧历史前缀，保留完整 1.0 时长预测。',
         '预算包括 3 次初始训练＋2 次开发＋追加实验；追加失败仍收费。每次实验 111×64＝7104 个标量，最终验证成本单列。',
         summary['noise_definition'], '',
-        '|策略|预算|完全恢复|联合成功|候选集覆盖|平均集合大小|最差真项误差（条件均值 / 最坏）|遗漏 / 多余项总数|完整预测条件|',
-        '|---|---:|---:|---:|---:|---:|---:|---:|---:|']
+        '|策略|预算|完全恢复|联合成功|候选集覆盖|平均集合大小|最差真项误差（条件均值 / 最坏）|遗漏 / 多余项总数|最坏预测均值|完整预测条件 / 失败轨迹|',
+        '|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|']
     for group in summary['groups']:
         size = '—' if group['mean_set_size'] is None else f"{group['mean_set_size']:.2f}"
         n = group['planned_conditions']
         coefficient = '—' if group['mean_worst_true_coefficient_relative_error'] is None else f"{group['mean_worst_true_coefficient_relative_error']:.2%} / {group['worst_true_coefficient_relative_error']:.2%}"
-        lines.append(f"|{LABELS[group['policy']]}|{group['budget']}|{group['exact_count']}/{n}|{group['success_count']}/{n}|{group['coverage_count']}/{n}|{size}|{coefficient}|{group['missing_terms_total']} / {group['extra_terms_total']}|{group['complete_forecast_conditions']}/{n}|")
-    lines += ['', '未完成、失败和缺失结果保留在计划条件分母中；平均集合大小仅针对已有记录。错误单集合指候选集中仅有一个结构且该结构错误，不表示系统声称物理唯一性。', '',
+        prediction = '不可界定' if group['worst_mean_clean_relative_l2'] is None else f"{group['worst_mean_clean_relative_l2']:.2%}"
+        lines.append(f"|{LABELS[group['policy']]}|{group['budget']}|{group['exact_count']}/{n}|{group['success_count']}/{n}|{group['coverage_count']}/{n}|{size}|{coefficient}|{group['missing_terms_total']} / {group['extra_terms_total']}|{prediction}|{group['complete_forecast_conditions']}/{n} / {group['forecast_failure_slots']}|")
+    lines += ['', '未完成、失败和缺失结果保留在计划条件分母中；平均集合大小仅针对已有记录。只要有最终轨迹预测失败或条件缺失，全体最坏预测均值就标为“不可界定”；成功条件中的最坏有限均值另存 summary.json，不能当作全体上界。缺失预算点不表示已实际花费该计划预算。错误单集合指候选集中仅有一个结构且该结构错误，不表示系统声称物理唯一性。', '',
               '同质量成本：以 ≥80% 条件达到联合成功为目标，在完整结果中读取首次达到目标的预算；这不是使用真值的在线停止规则。']
     for policy in POLICIES:
         target = summary['first_observed_budget_at_target'][policy]
@@ -316,21 +334,44 @@ def render(directory=DEFAULT_OUTPUT):
             continue
         values = [('—' if group[key] is None else f"{group[key]:.4f}") for key in ('positive_term_brier_mean', 'negative_term_brier_mean', 'balanced_term_brier_mean')]
         lines.append(f"|{LABELS[group['policy']]}|{group['wrong_singleton_count']}/{group['planned_conditions']}|{group['singleton_count']}|"+'|'.join(values)+f"|{group['balanced_term_brier_available_conditions']}/{group['planned_conditions']}|")
-    lines += ['', '自助法项包含频率仅表示稳定性，不是真项概率。正/负项平衡 Brier 为描述性误差；不宣称概率已校准。结构集覆盖必须同时结合集合大小阅读。',
+    audit = summary['audit']
+    checks = audit.get('checks', [])
+    audit_overview = {'effective_status': summary['audit_effective_status'],
+        'source': summary['audit_source'], 'binding_status': summary['audit_binding_status'],
+        'reported_status': audit.get('status'), 'checks': len(checks),
+        'failed_checks': [check for check in checks if check.get('status') == 'failed' or check.get('passed') is False],
+        'runtime_chronology_independently_authenticated': audit.get('runtime_chronology_independently_authenticated'),
+        'comparison_sha256': audit.get('comparison_sha256')}
+    final_groups = {g['policy']: g for g in summary['groups'] if g['budget'] == max(BUDGETS)}
+    lines += ['', f"最大预算 {max(BUDGETS)} 次的联合成功对照："+'；'.join(
+        f"{LABELS[policy]} {final_groups[policy]['success_count']}/{summary['expected_conditions']}" for policy in POLICIES)+'。',
+        '固定丰富激励是强对照；上述数据无论哪种策略更好都完整保留。此处仅作配对条件的描述性比较，没有宣称统计显著优势。', '',
+        '自助法项包含频率仅表示稳定性，不是真项概率。正/负项平衡 Brier 为描述性误差；不宣称概率已校准。结构集覆盖必须同时结合集合大小阅读。',
               '同一参数任务的两档噪声是配对条件，不能视为独立的 24 个物理系统；这里没有给出独立同分布意义的置信区间。', '',
-              '审计状态（原始回执）：', '```json', json.dumps(summary['audit'], ensure_ascii=False, indent=2), '```', '',
+              '审计回执摘要（完整回执保存在 audit.json，或尚待生成）：', '```json', json.dumps(audit_overview, ensure_ascii=False, indent=2), '```', '',
               '范围：受控合成周期 PDE、固定传感器和边界、等成本初值选择；没有新增真实测量验证，也没有解决旧 KS 实验的 5% 失败。已有数据再分析必须标为回顾性。',
               '本页不运行识别、选模或预测，只汇总 comparison.json。闭环动作的逐步回放见 `python -m active_study.app --port 8767`。', '',
               f"comparison.json SHA-256：`{summary['comparison_sha256']}`", '',
               '产物：`comparison.csv`（逐条件原始指标）、`summary.json`（所有分母与缺失计数）、`budget_curves.png`（预算曲线）。', '']
-    paths['REPORT.md'].write_text('\n'.join(lines), encoding='utf-8')
+    content = '\n'.join(lines)
+    paths['REPORT.md'].write_text(content, encoding='utf-8')
+    if landing_report is None and directory.resolve() == DEFAULT_OUTPUT.resolve():
+        landing_report = ROOT/'active_study/REPORT.md'
+    if landing_report is not None:
+        landing = Path(landing_report)
+        landing.parent.mkdir(parents=True, exist_ok=True)
+        relative = Path(os.path.relpath(directory, landing.parent)).as_posix()
+        links = (f'\n[逐条件 CSV]({relative}/comparison.csv) · [汇总 JSON]({relative}/summary.json) · '
+                 f'[审计回执]({relative}/audit.json)\n\n![预算对照曲线]({relative}/budget_curves.png)\n')
+        landing.write_text(content+links, encoding='utf-8')
     return summary
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT, help='Existing scored run directory.')
+    parser.add_argument('--landing-report', type=Path, help='Optional additional GitHub-facing Markdown report.')
     args = parser.parse_args()
-    result = render(args.output)
+    result = render(args.output, args.landing_report)
     print(json.dumps({'result_state': result['result_state'], 'records': result['present_records'],
                       'output': str(args.output)}, ensure_ascii=False))

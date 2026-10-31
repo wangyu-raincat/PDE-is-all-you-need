@@ -21,7 +21,7 @@
 <section class="card wide"><h2>这一步为何选择下一次实验</h2><p id="proposal"></p><div class="scroll"><table><thead><tr><th>候选初值</th><th>选择分数 / 成本</th><th>状态</th></tr></thead><tbody id="actions"></tbody></table></div><p class="muted">结构分歧分数是预测可区分性的代理，不是信息增益。所有动作成本相同；本实验只改变初值，测点和边界固定。</p></section>
 <section class="card"><h2>已实际查询的实验</h2><div id="queries"></div></section>
 <section class="card"><h2>隔离与完整性回执</h2><p id="audit-title"></p><pre id="audit"></pre></section>
-<section class="card wide"><h2>四种策略：同预算对照</h2><p>联合成功＝结构完全恢复＋最差真项系数误差 ≤10%＋完整预测平均误差 ≤5%。失败和缺失结果保留在计划条件分母。</p><div class="scroll"><table><thead><tr><th>策略</th><th>精确恢复</th><th>联合成功</th><th>候选集覆盖</th><th>平均集合大小</th><th>错误单集合</th></tr></thead><tbody id="comparison"></tbody></table></div><p id="cost-target" class="muted"></p><p id="scope" class="muted"></p></section>
+<section class="card wide"><h2>四种策略：同预算对照</h2><p>联合成功＝结构完全恢复＋最差真项系数误差 ≤10%＋完整预测平均误差 ≤5%。失败和缺失结果保留在计划条件分母。</p><div class="scroll"><table><thead><tr><th>策略</th><th>精确恢复</th><th>联合成功</th><th>候选集覆盖</th><th>平均集合大小</th><th>错误单集合</th><th>最坏预测均值 / 失败轨迹</th></tr></thead><tbody id="comparison"></tbody></table></div><p id="cost-target" class="muted"></p><p id="scope" class="muted"></p></section>
 </div>
 <p class="foot">下载保存的报告：<a href="/download/REPORT.md">Markdown</a> · <a href="/download/summary.json">汇总 JSON</a> · <a href="/download/comparison.csv">逐条件 CSV</a> · <a href="/download/budget_curves.png">预算曲线</a></p>
 </div>
@@ -49,9 +49,9 @@ function render(record,row,episode){
   const model=checkpoint.model,uncertainty=model.uncertainty||{},proposal=checkpoint.next_proposal;
   text('cost',record.budget+' 次 / '+record.charged_measurement_scalars.toLocaleString());
   text('support',(row.exact_support?'完整':'未完整')+' / '+record.set_size);
-  text('coefficient',percent(row.worst_true_coefficient_relative_error));text('forecast',percent(row.mean_clean_relative_l2));
+  text('coefficient',percent(row.worst_true_coefficient_relative_error));text('forecast',percent(row.mean_clean_relative_l2)+(row.forecast_failures?'（'+row.forecast_failures+'/3 失败）':''));
   text('model-status',model.status||model.diagnostics?.status||'未报告');text('equation',model.selected?.equation||'没有成功选出的方程');
-  const list=document.createElement('ul');for(const support of model.candidate_supports||[]){const li=document.createElement('li');li.textContent=support.join(' + ')||'空结构';list.append(li);}$('hypotheses').append(list);
+  const list=document.createElement('ul');for(const support of model.candidate_supports||[]){const li=document.createElement('li');const same=(model.committee||[]).filter(candidate=>JSON.stringify((candidate.support||[]).slice().sort())===JSON.stringify(support.slice().sort()));li.textContent=(same[0]?.equation||support.join(' + ')||'空结构')+(same.length?'（同结构 '+same.length+' 个系数组合）':'');list.append(li);}$('hypotheses').append(list);
   const frequencies=uncertainty.term_inclusion_frequencies||record.frequencies||{};
   for(const [term,value]of Object.entries(frequencies)){const line=document.createElement('div');line.className='row';const label=document.createElement('span');label.textContent=term;const track=document.createElement('div');track.className='track';const fill=document.createElement('div');fill.className='fill';fill.style.width=(typeof value==='number'?Math.min(100,Math.max(0,value*100)):0)+'%';track.append(fill);const number=document.createElement('span');number.textContent=typeof value==='number'?Math.round(value*100)+'%':'缺失';line.append(label,track,number);$('frequencies').append(line);}
   text('bootstrap',`完成 ${uncertainty.completed_replicates??'—'} / ${uncertainty.requested_replicates??'—'} 次；失败 ${uncertainty.failed_replicates??'—'} 次。未校准频率。`);
@@ -61,11 +61,11 @@ function render(record,row,episode){
   const history=(episode.queries||[]).slice(0,Math.max(0,record.budget-5));
   if(!history.length)text('queries','尚未追加实验：当前仅含 3 条初始训练轨迹和 2 条开发轨迹。');
   else for(const query of history){const p=document.createElement('p');p.textContent=`${query.action.id} · ${query.status} · 已计费 ${query.charged_measurement_scalars} 个标量${query.failure_reason?' · '+query.failure_reason:''}`;$('queries').append(p);}
-  const audit=data.summary.audit;const passed=audit.passed??audit.all_passed;
-  text('audit-title',passed===true?'审计回执报告通过。':passed===false?'审计回执报告未通过。':'审计是否通过未明确报告；不推定通过。');
-  text('audit',JSON.stringify({run_audit:audit,final_used_for_selection:checkpoint.final_used_for_selection,episode_final_used:episode.final_used,reference_coefficients_used:episode.reference_coefficients_used,comparison_sha256:data.summary.comparison_sha256},null,2));
-  for(const group of data.summary.groups.filter(g=>g.budget===record.budget))$('comparison').append(cellRow([labels[group.policy],`${group.exact_count}/${group.planned_conditions}`,`${group.success_count}/${group.planned_conditions}`,`${group.coverage_count}/${group.planned_conditions}`,group.mean_set_size?.toFixed(2),`${group.wrong_singleton_count}/${group.planned_conditions}`]));
-  text('cost-target','≥80% 联合成功的首次观测预算：'+Object.entries(data.summary.first_observed_budget_at_target).map(([policy,value])=>labels[policy]+' '+(value===null?'未达到或不可比较':value+' 次')).join('；')+'。未达到时不估计数据节省。');
+  const audit=data.summary.audit,status=data.summary.audit_effective_status;
+  text('audit-title',status==='passed'?'审计回执报告通过。':status==='failed'?'审计回执报告未通过。':status==='stale'?'审计对应其他结果，已过期；不视为当前结果通过。':status==='unbound'?'审计未绑定当前结果哈希；不视为当前结果通过。':'审计尚未完成或未明确报告；不推定通过。');
+  text('audit',JSON.stringify({effective_status:status,binding_status:data.summary.audit_binding_status,run_audit:audit,final_used_for_selection:checkpoint.final_used_for_selection,episode_final_used:episode.final_used,reference_coefficients_used:episode.reference_coefficients_used,comparison_sha256:data.summary.comparison_sha256},null,2));
+  for(const group of data.summary.groups.filter(g=>g.budget===record.budget))$('comparison').append(cellRow([labels[group.policy],`${group.exact_count}/${group.planned_conditions}`,`${group.success_count}/${group.planned_conditions}`,`${group.coverage_count}/${group.planned_conditions}`,group.mean_set_size?.toFixed(2),`${group.wrong_singleton_count}/${group.planned_conditions}`,(group.worst_mean_clean_relative_l2===null?'不可界定':percent(group.worst_mean_clean_relative_l2))+' / '+group.forecast_failure_slots]));
+  text('cost-target','≥80% 联合成功的首次观测预算：'+Object.entries(data.summary.first_observed_budget_at_target).map(([policy,value])=>labels[policy]+' '+(value===null?'未达到或不可比较':value+' 次')).join('；')+'。结构分歧相对对照的总预算节省：'+Object.entries(data.summary.total_budget_savings_vs_comparator).map(([policy,value])=>labels[policy]+' '+(value===null?'不可估计':percent(value))).join('；')+'。未达到时不估计数据节省。');
   text('scope',`${data.summary.result_state}；${data.summary.present_records}/${data.summary.expected_records} 条记录。${data.summary.evaluation_scope}`);
   $('detail').hidden=false;
 }

@@ -80,6 +80,8 @@ class ActiveReportTests(unittest.TestCase):
         self.assertEqual(group['success_count'], 0)
         self.assertEqual(group['forecast_failure_slots'], 1)
         self.assertEqual(group['missing_conditions'], 1)
+        self.assertIsNone(group['worst_mean_clean_relative_l2'])
+        self.assertFalse(group['all_condition_forecast_bound_available'])
         self.assertIsNone(rows[0]['mean_clean_relative_l2'])
         self.assertTrue(all(v is None for v in summary['total_budget_savings_vs_comparator'].values()))
         record['mean_clean_relative_l2'] = .02
@@ -125,7 +127,7 @@ class ActiveReportTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary); complete_fixture(directory)
             before = report.digest(directory/'comparison.json')
-            summary = report.render(directory)
+            summary = report.render(directory, landing_report=directory/'landing.md')
             self.assertEqual(summary['result_state'], 'complete')
             self.assertEqual(summary['first_observed_budget_at_target']['structural_disagreement'], 5)
             self.assertEqual(summary['total_budget_savings_vs_comparator']['fixed_rich'], 0)
@@ -134,6 +136,8 @@ class ActiveReportTests(unittest.TestCase):
                 self.assertGreater((directory/filename).stat().st_size, 20)
             self.assertIn('null', (directory/'summary.json').read_text())
             self.assertFalse(summary['audit']['passed'])
+            self.assertEqual(summary['audit_effective_status'], 'failed')
+            self.assertIn('![预算对照曲线](./budget_curves.png)', (directory/'landing.md').read_text())
 
     def test_unattained_target_has_null_savings(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -144,6 +148,30 @@ class ActiveReportTests(unittest.TestCase):
             self.assertEqual(summary['result_state'], 'complete')
             self.assertTrue(all(value is None for value in summary['first_observed_budget_at_target'].values()))
             self.assertTrue(all(value is None for value in summary['total_budget_savings_vs_comparator'].values()))
+
+    def test_active_policy_can_cost_more_than_fixed_rich(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            comparison = complete_fixture(Path(temporary))
+            for record in comparison['records']:
+                if record['policy'] == 'structural_disagreement' and record['budget'] < 8:
+                    record['recovery']['coefficient_comparison'][0]['relative_error'] = .2
+            summary, _ = report.summarize(comparison)
+            self.assertEqual(summary['first_observed_budget_at_target']['fixed_rich'], 5)
+            self.assertEqual(summary['first_observed_budget_at_target']['structural_disagreement'], 8)
+            self.assertAlmostEqual(summary['total_budget_savings_vs_comparator']['fixed_rich'], -.6)
+
+    def test_external_audit_must_be_bound_to_current_comparison(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary); complete_fixture(directory)
+            audit = {'status': 'passed', 'checks': []}
+            (directory/'audit.json').write_text(json.dumps(audit))
+            self.assertEqual(report.load_results(directory)[1]['audit_effective_status'], 'unbound')
+            audit['comparison_sha256'] = 'old-comparison'
+            (directory/'audit.json').write_text(json.dumps(audit))
+            self.assertEqual(report.load_results(directory)[1]['audit_effective_status'], 'stale')
+            audit['comparison_sha256'] = report.digest(directory/'comparison.json')
+            (directory/'audit.json').write_text(json.dumps(audit))
+            self.assertEqual(report.load_results(directory)[1]['audit_effective_status'], 'passed')
 
     def test_missing_and_path_escape_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:

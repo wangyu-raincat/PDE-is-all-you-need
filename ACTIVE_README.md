@@ -24,6 +24,11 @@ python -m active_study.app --port 8767
 自助频率、选择依据和实验账本。页面只读，不会训练、追加实验或重新评分。
 旧应用仍用 `python -m pde_discovery serve --port 8765` 启动。
 
+如果使用私有交付页的分包，先下载全部 `pde-active-code-*`、`pde-active-results-*`、
+`pde-active-history-*` ZIP，解压到同一个父目录，合并 `pde-discovery-active/`。
+在该目录运行 `python RESTORE_ACTIVE_DELIVERY.py`，核验文件并重组历史；随后按上述命令启动。
+单个分包最多10MiB，不能把一个分包当作完整工程。GitHub分支可直接clone，无需此重组步骤。
+
 从不带私有字段缓存的全新源码目录复现实验：
 
 ```bash

@@ -1,4 +1,6 @@
-> 本实验分支已完成系数可靠性对照：最坏逐项系数误差24.61%→6.10%，但新数据上四组最坏平均预测误差均5.41%，门槛125/126，未合入。请先读 [实验报告](coefficient_study/REPORT.md) 和 [运行说明](COEFFICIENT_README.md)。回退分支为 `experiment/prefix-five-percent`；下文保留既有应用说明。
+> 本独立分支已完成主动发现与结构不确定性对照。六类合成PDE的24个条件中，四种策略均在总预算6达到预定80%达标率，主动策略实验节省为0%，未合并。预算9的结构分歧策略完整恢复24/24，最坏逐项系数误差3.4840%、最坏条件平均预测误差0.8306%。请先读 [最新实验结论](active_study/RESULT_REVIEW.md)、[完整报告](active_study/REPORT.md) 和 [运行说明](ACTIVE_README.md)。回退基线为 `experiment/coefficient-reliability` 的 `da846c1`。新任务不替代旧KS的5.4104%结果；下文保留历史应用说明。
+
+> 上一轮系数可靠性对照：最坏逐项系数误差24.61%→6.10%，但四组最坏平均预测误差均5.41%，门槛125/126，未合入。见 [旧实验报告](coefficient_study/REPORT.md) 和 [旧运行说明](COEFFICIENT_README.md)。
 
 # 方程发现实验室 · PDE Discovery Lab
 
