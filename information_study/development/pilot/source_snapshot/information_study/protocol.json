@@ -1,0 +1,530 @@
+{
+  "status": "development_draft",
+  "baseline_commit": "40f0241d5a3f5ea9fd4347fa26432a9a597c210e",
+  "study": {
+    "version": 1,
+    "indices": [
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137
+    ],
+    "noise_conditions": [
+      [
+        "noise1",
+        0.01
+      ],
+      [
+        "noise3",
+        0.03
+      ]
+    ],
+    "policies": [
+      "fixed_rich",
+      "random",
+      "ensemble_variance",
+      "structural_disagreement",
+      "rich_then_variance",
+      "rich_then_information"
+    ],
+    "budgets": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "formal_conditions": 36,
+    "independent_parameter_tasks": 18,
+    "final_trajectories_per_parameter_task": 3,
+    "same_clean_final_shared_between_noise_conditions": true,
+    "initial_observations": "3 mode-one training plus2 mode-one development, all5 charged",
+    "pool_seed": "956000+spec_index",
+    "initial_action_seed": "957000+spec_index",
+    "learner_seed": "958000+spec_index, identical for paired policies and noise conditions",
+    "query_noise_seed": "SHA256(spec_index,role,action_identity) modulo2^31; paired across policies",
+    "final_action_seed": "959000+spec_index, predetermined random mixtures16:19",
+    "final_noise_seed": "960000+100*spec_index+final_index",
+    "global_freeze": "all 216 policy episodes and 1080 declared budget slots frozen before generating 54 clean final references; unavailable checkpoints remain failed slots",
+    "final_release_tracking": "data/final_release.json created exclusively before first final generation; scientific-source and deterministic-task identity survive new preparation timestamps; later outputs are reproductions",
+    "candidate_policy": "rich_then_information",
+    "primary_metrics": "budget9 noise1 mean across18 parameter tasks of the maximum true-term relative coefficient error; structure and forecast guardrails retained",
+    "primary_budget": 9,
+    "primary_noise_label": "noise1",
+    "stress_noise_label": "noise3",
+    "predeclared_promotion": "primary mean at least10% lower than fixed_rich and rich_then_variance, no worse than other retained controls, with predeclared structure and forecast guardrails; offline reporting only",
+    "development_indices": [
+      120,
+      121,
+      122,
+      123,
+      124,
+      125
+    ],
+    "expected_policy_episodes": 216,
+    "expected_budget_slots": 1080,
+    "expected_clean_final_fields": 54,
+    "expected_forecasts": 3240,
+    "offline_success": "exact support AND worst true coefficient error<=10% AND three-trajectory mean forecast relativeL2<=5%",
+    "success_target_fraction_for_cost_comparison": 0.8,
+    "cost_savings": "only at same predeclared80% offline-success target; unavailable if either policy never reaches it",
+    "truth_based_first_success_budget_is_online_stopping": false,
+    "uncertainty_metrics": "support-set coverage and size, singleton-wrong diagnostic, positive/negative term Brier separately; frequencies are not calibrated probabilities",
+    "reference_coefficients_used_for_policy_or_fit": false,
+    "automatic_merge": false,
+    "scope": "fresh controlled synthetic coefficient-information study; old active results and KS5.4104% result unchanged"
+  },
+  "actions": {
+    "version": 1,
+    "parameterization": "sum(a[k-1]*sin(k*x)+b[k-1]*cos(k*x)), k=1..6; zero constant",
+    "period": 6.283185307179586,
+    "modes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "initial_rms": 0.4,
+    "maximum_absolute_initial": 1.2,
+    "amplitude_certificate": "maximum on 4096-point periodic grid plus sum(k*hypot(a,b))*pi/4096",
+    "candidate_pool_size": 32,
+    "candidate_pool": "four fixed all-six-mode rich phase variants, twelve single-mode actions, sixteen random 2..6-mode mixtures",
+    "initial_training_actions": 3,
+    "initial_development_actions": 2,
+    "initial_excitation": "mode one only, five separately drawn phases; same physical excitation spectrum",
+    "fixed_baseline": "four predefined all-six-mode rich phase variants; no truth-dependent selection",
+    "pool_seed_input": "nonnegative integer seed; no family, coefficient or observation input",
+    "candidate_predictions_are_measurements": false,
+    "units": "dimensionless benchmark coordinates"
+  },
+  "provider": {
+    "version": 1,
+    "kind": "controlled synthetic initial-condition queries, not measured data",
+    "families": [
+      "decay",
+      "diffusion",
+      "hyperdiffusion",
+      "advection_diffusion",
+      "reaction_diffusion",
+      "burgers"
+    ],
+    "coefficient_ranges": {
+      "decay": {
+        "u": [
+          -0.4,
+          -0.15
+        ]
+      },
+      "diffusion": {
+        "u_xx": [
+          0.05,
+          0.15
+        ]
+      },
+      "hyperdiffusion": {
+        "u_xxxx": [
+          -0.005,
+          -0.001
+        ]
+      },
+      "advection_diffusion": {
+        "u_x": [
+          -0.7,
+          -0.3
+        ],
+        "u_xx": [
+          0.05,
+          0.15
+        ]
+      },
+      "reaction_diffusion": {
+        "u": [
+          -0.4,
+          -0.15
+        ],
+        "u_xx": [
+          0.05,
+          0.15
+        ]
+      },
+      "burgers": {
+        "u_xx": [
+          0.04,
+          0.08
+        ],
+        "u*u_x": [
+          -1.2,
+          -0.6
+        ]
+      }
+    },
+    "role_seed_bases": {
+      "calibration": 851000,
+      "development": 852000,
+      "formal": 853000
+    },
+    "task_index_rule": "family=index%6, coefficient replicate=index//6; same family/action spaces for all policies",
+    "parameter_seed": "SeedSequence([role_seed_base, task_index])",
+    "noise_seed_base": 854000,
+    "noise_rule": "0.4*noise_level*standard_normal(111,64), caller supplies query seed; no trajectory-RMS oracle",
+    "noise_limits": [
+      0.0,
+      0.03
+    ],
+    "observed_nx": 64,
+    "full_frames": 111,
+    "prefix_intervals": 10,
+    "prefix_frames": 11,
+    "future_frames": 101,
+    "full_time_end": 1.1,
+    "future_duration": 1.0,
+    "measurement_values_per_experiment": 7104,
+    "measurement_count": "111*64 distinct observations; shared history endpoint counted once",
+    "linear_reference": "exact Fourier evolution under hidden linear symbol; independent of discovery forecast",
+    "nonlinear_reference": "independent contour ETDRK4 Fourier Galerkin Burgers reference",
+    "reference_n": 512,
+    "reference_max_dt": 0.001,
+    "refinement": "double spatial reference grid and halve timestep; same prescribed initial field",
+    "observation_rule": "direct reference-grid samples, never sparse-sensor interpolation",
+    "calibration_relative_l2_limit": 1e-05,
+    "calibration_max_absolute_limit": 0.0001,
+    "calibration_roles_only": true,
+    "formal_generation_guard": "controller freezes protocol before formal tasks; provider does not enforce global lifecycle",
+    "final_generation_guard": "controller freezes all policy snapshots before final queries",
+    "scope": "six fixed one-dimensional periodic scalar equation families, varying coefficients; not arbitrary PDE discovery"
+  },
+  "engine": {
+    "version": 1,
+    "candidate_library": [
+      "1",
+      "u",
+      "u^2",
+      "u^3",
+      "u_x",
+      "u_xx",
+      "u_xxx",
+      "u_xxxx",
+      "u*u_x"
+    ],
+    "mandatory_terms": [],
+    "weak_variant": "resolved",
+    "weak_protocol": {
+      "version": 1,
+      "variants": {
+        "compact": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.125
+        },
+        "low": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.03125
+        },
+        "resolved": {
+          "time_fraction": 0.25,
+          "mode_fraction": 0.25
+        }
+      },
+      "terms": [
+        "1",
+        "u",
+        "u^2",
+        "u^3",
+        "u_x",
+        "u_xx",
+        "u_xxx",
+        "u_xxxx",
+        "u*u_x"
+      ],
+      "spatial_tests": "nonnegative Fourier modes; real/imaginary rows, nonzero modes sqrt(2) weighted",
+      "temporal_test": "(1-z*z)^4 on [-1,1], zero outside; analytic first derivative",
+      "products": "2N zero-padded real trigonometric interpolation; retain selected observed-grid Fourier modes",
+      "noise_correction": "none",
+      "no_observed_derivatives": true,
+      "spatial_mode_rule": "min(Nx//4, max(8, floor(Nx*variant_fraction)))",
+      "quadrature": "composite degree-nine Newton-Cotes on original samples, eight subintervals per panel",
+      "window_stride": "max(1, window_intervals//4)",
+      "selection": "unchanged L1 path, normalized OLS debias and development forecast selection",
+      "reference_used_for_selection": false
+    },
+    "sparse_protocol": {
+      "version": 1,
+      "methods": [
+        "plain",
+        "adaptive",
+        "irl1"
+      ],
+      "terms": [
+        "1",
+        "u",
+        "u^2",
+        "u^3",
+        "u_x",
+        "u_xx",
+        "u_xxx",
+        "u_xxxx",
+        "u*u_x"
+      ],
+      "mandatory_terms": [],
+      "alpha_path": [
+        3e-06,
+        1e-05,
+        3e-05,
+        0.0001,
+        0.0003,
+        0.001,
+        0.003,
+        0.01,
+        0.03,
+        0.1
+      ],
+      "trajectory_weighting": "rows multiplied by sqrt(total_rows/(trajectory_count*own_rows)) before global RMS",
+      "normalization": "one pooled training feature RMS per column and one pooled training target RMS",
+      "ridge_pilot": "solve(X.T@X/n + alpha*I, X.T@y/n) in normalized coordinates",
+      "ridge_alpha": 1e-06,
+      "adaptive_weights": "clip(1/(abs(ridge_pilot)+epsilon), lower, upper)",
+      "weight_epsilon": 0.001,
+      "weight_bounds": [
+        0.01,
+        1000.0
+      ],
+      "adaptive_solves_per_alpha": 1,
+      "irl1_solves_per_alpha": 5,
+      "irl1_initialization": "independent same ridge pilot for each alpha; no warm starts across alpha",
+      "irl1_update": "same inverse-absolute-coefficient weights after each solve",
+      "weighted_objective": "||y-X*beta||^2/(2*n) + alpha*sum(weight*abs(beta))",
+      "lasso": {
+        "max_iter": 100000,
+        "tol": 1e-10,
+        "fit_intercept": false
+      },
+      "normalized_support_threshold": 1e-06,
+      "normalized_debiased_zero_threshold": 1e-08,
+      "debias": "OLS on original normalized candidate columns; rcond=1e-10",
+      "cross_alpha_objective_selection": false,
+      "path_frequency_selection": false,
+      "exact_derivatives": "analytic features and analytic u_t supplied independently, never reconstructed from a fitted PDE",
+      "pointwise_numerical": "baseline projected spatial library; np.gradient of projected u with edge_order=2; remove two frames at each end",
+      "pointwise_exact": "supplied exact feature and u_t arrays; remove same two frames at each end",
+      "integrated": "unchanged baseline Fourier features and Simpson window construction",
+      "development_selection": "sqrt(mean(trajectory_MSE)); within 1.05*best+1e-12 choose fewest terms, error, stable ID",
+      "forecast": "unchanged baseline forecast; each development trajectory initialized only from its own first frame",
+      "reference_used_for_selection": false
+    },
+    "sparse_method": "adaptive",
+    "observed_preprocessing": {
+      "noise_estimator": "pooled observed upper-band Rayleigh scale, per trajectory",
+      "spectrum": "rFFT(u)/Nx",
+      "mode_amplitude": "sqrt(mean over observed frames of abs(spectrum)**2)",
+      "threshold": "max(estimated coefficient-noise RMS, numerical floor) * sqrt(2*log(Nx))",
+      "numerical_floor": "32*machine_epsilon*max(observed field RMS,1)",
+      "mask": "one time-shared mask per provided trajectory, DC always retained",
+      "noise_model": "constant-variance white Gaussian measurement noise with mostly noise in upper spatial band",
+      "limitation": "may remove weak physical modes or mistake broadband signal for noise",
+      "true_noise_or_family_used": false,
+      "prefix_or_final_fields_used": false
+    },
+    "alias_expansion": "closure of one-for-one correlated-column replacements from successful L1 supports",
+    "alias_absolute_correlation": 0.995,
+    "alias_support_limit": "all nonempty subsets of the fixed nine-column library; no arbitrary first-k truncation",
+    "alias_refit": "equal-trajectory normalized OLS with the same numerical zero and rank rules as the L1 engine",
+    "candidate_selection_score": "sqrt(mean development-trajectory weak residual MSE) / own pooled training target RMS",
+    "near_pool": "score <= best + max(.05*best,.001)",
+    "near_relative_allowance": 0.05,
+    "near_absolute_allowance": 0.001,
+    "maximum_accepted_weak_error": 0.15,
+    "selected_order": "minimum support size, development weak score, canonical candidate ID",
+    "committee": "all full-data near-pool vectors plus bootstrap near-pool vectors passing the full-data development threshold",
+    "committee_alias_weighting": "exact coefficient-vector duplicates merged; no lambda-path count is a vote",
+    "bootstrap": "sample entire training trajectories with replacement; keep development observations fixed",
+    "development_reuse": "development observations are reused for selection across rounds; not final validation",
+    "bootstrap_default_replicates": 8,
+    "bootstrap_maximum_replicates": 64,
+    "bootstrap_caching": "exact multiplicity vectors share one complete refit; deterministic per-trajectory weak transforms may be reused",
+    "inclusion_frequency": "fraction of requested bootstrap draws selecting the term; null if any draw failed",
+    "frequency_interpretation": "algorithmic resampling frequency, not posterior probability or calibrated confidence",
+    "minimum_training_trajectories_with_bootstrap": 3,
+    "minimum_training_trajectories_without_bootstrap": 1,
+    "maximum_training_or_development_trajectories": 16,
+    "forward_guard": "highest nonzero even derivative must be dissipative; no truth-specific coefficient bounds",
+    "final_or_reference_access": false,
+    "unique_physical_equation_claimed": false,
+    "cross_lambda_objective_comparison": false,
+    "path_frequency_weighting": false
+  },
+  "forecast": {
+    "version": 1,
+    "name": "equivalent_linear_prefix_acceleration",
+    "baseline": {
+      "version": 1,
+      "name": "prefix_aligned_resolved_factor4",
+      "history": "observed frames at or before forecast start only; endpoint shared once",
+      "estimator": "independently filter each prefix frame, propagate each to cutoff with candidate PDE, equal mean of terminal states",
+      "weights": "fixed equal per observed prefix frame, no development or final fitting",
+      "filter": {
+        "version": 1,
+        "input": "one observed initial frame and its uniform periodic spatial grid only",
+        "spectrum": "real FFT divided by N",
+        "scale_band": "integer modes floor(N/4) <= k < floor(N/2); DC and real Nyquist excluded",
+        "coefficient_noise_rms": "median(abs(normalized FFT in scale band))/sqrt(log(2))",
+        "estimated_spatial_sigma": "coefficient_noise_rms*sqrt(N)",
+        "threshold": "coefficient_noise_rms*sqrt(2*log(N))",
+        "rule": "retain coefficients with magnitude >= threshold, always preserve DC; hard threshold only",
+        "retained_modes": "data dependent, no fixed physical modes and no family-specific rule",
+        "phase": "retained complex coefficients unchanged; irfft handles real Nyquist",
+        "maximum_observed_points": 512,
+        "maximum_absolute_state": 1000000.0,
+        "scale_assumption": "additive spatial white Gaussian noise; upper-band majority is noise rather than signal",
+        "limitations": "single-frame sparse-spectrum prior; broadband signal can bias scale upward and weak physical modes can be removed",
+        "future_input": false,
+        "reference_or_true_noise_input": false,
+        "additional_measurements": false
+      },
+      "solver": {
+        "version": 1,
+        "default_spatial_factor": 4,
+        "diagnostic_spatial_factors": [
+          1,
+          2,
+          4
+        ],
+        "factor_selection": "fixed before new training/development generation; not family dependent",
+        "initial_interpolation": "real periodic Fourier interpolation of the observed initial frame; scipy.signal.resample handles even-grid Nyquist splitting",
+        "internal_grid": "Nx*factor equally spaced points on the same period, starting at the observed x[0]",
+        "solver": "unchanged pde_discovery.generic_engine.forecast on the internal grid",
+        "output": "direct restriction to every factor-th internal point at the original output times",
+        "time_substeps": 32,
+        "maximum_internal_points": 2048,
+        "budget_failure": "reject; never silently reduce factor",
+        "extra_points_are_measurements": false,
+        "truth_or_future_input": false,
+        "scope": "uniform periodic scalar autonomous constant-coefficient nine-term PDE"
+      },
+      "max_prefix_frames": 32,
+      "minimum_prefix_frames": 2,
+      "forecast_horizon": "unchanged after cutoff; prefix not counted as predicted future",
+      "conditional_forecast": true,
+      "future_observations_input": false,
+      "limitations": "candidate-model bias and sparse-spectrum initial-filter prior; not independent propagated estimates"
+    },
+    "change": "mathematically equivalent computation optimization, not new physics or model selection",
+    "eligibility": "accumulated coefficients of u^2, u^3 and u*u_x are exactly zero",
+    "linear_solver": "exact Fourier exponential and stable constant-DC forcing integral",
+    "spatial_factor": 4,
+    "interpolation_projection": "unchanged scipy.signal.resample then original internal-grid Fourier projection",
+    "prefix": "same per-frame filter, propagation to cutoff, and equal mean of restricted terminal states",
+    "nonlinear_solver": "unchanged prefix_study.forecast and resolved factor-4 ETDRK4",
+    "guards": "same coordinates, term accumulation, dissipativity, integration budget, linear-step and finite-state growth limits",
+    "linear_stage_guard": "each non-DC modal magnitude and absolute real DC state attain their maximum at a time endpoint",
+    "agreement": "mathematical equivalence; ordinary floating-point differences from repeated ETDRK4 products remain",
+    "future_observations_input": false,
+    "additional_measurements": false
+  },
+  "acquisition": {
+    "version": 1,
+    "policies": [
+      "fixed_rich",
+      "random",
+      "ensemble_variance",
+      "structural_disagreement",
+      "rich_then_variance",
+      "rich_then_information"
+    ],
+    "legacy_policies": "delegate original select_action unchanged, including all diagnostics and failure handling",
+    "rich_then_variance": "empty used_action_ids: original fixed_rich; otherwise original ensemble_variance",
+    "rich_then_information": "empty used_action_ids: original fixed_rich; otherwise conditional relative-coefficient inverse-Gram trace reduction",
+    "first_action": "both new policies use precisely the original fixed_rich result on the same action pool",
+    "information_anchor": "one full-data selected candidate supplied by the caller; never a bootstrap mean or reference equation",
+    "support_interpretation": "conditional on the selected support; neither singleton nor well-conditioned Gram proves the support correct",
+    "observed_transform": "unchanged active_study.engine.preprocess_observation then weak_study.engine.weak_block(resolved), all supplied training frames",
+    "trajectory_weight": "each acquired independent trajectory contributes X.T@X divided by its own weak row count; contributions accumulate",
+    "column_scale": "s_j = sqrt(mean_trajectory mean_rows X_ij^2), computed once from currently acquired observations",
+    "target_scale": "q = sqrt(mean_trajectory mean_rows y_i^2), computed once from currently acquired observations",
+    "relative_coefficient_scale": "theta_j = abs(selected_coefficient_j) * s_j / q; no coefficient clipping or term deletion",
+    "relative_features": "Z_i = (X_i[:,S]/s_S)*theta_S = X_i[:,S]*abs(selected_coefficients_S)/q",
+    "observed_gram": "G = sum_trajectories Z_i.T@Z_i / row_count_i",
+    "prospective_gram": "G_a = Z_a.T@Z_a / row_count_a; same observed s, q and anchor coefficients for every action",
+    "ridge": "lambda = ridge_relative * max(trace(G)/support_size, 1), shared unchanged by all actions in the round",
+    "ridge_relative": 1e-08,
+    "score": "(trace(inv(G+lambda*I))-trace(inv(G+G_a+lambda*I))) / declared_experiment_cost",
+    "trace_reduction_computation": "PSD square-root identity using C=A^-1/2 G_a A^-1/2; sum(mu/(1+mu)*column_norm(A^-1/2 eigenvectors(C))^2)",
+    "psd_relative_tolerance": 1e-12,
+    "predicted_postprefix_frames": 33,
+    "predicted_postprefix_start": 0.1,
+    "predicted_postprefix_stop": 1.1,
+    "predicted_postprefix_duration": 1.0,
+    "predictor": "unchanged original.candidate_forecast; [0,.1] burn-in then uniform linspace(.1,1.1,33), because the original solver requires uniform time grids",
+    "weak_prediction_input": "only the 33 post-prefix candidate-predicted frames; no prospective measured field",
+    "predicted_preprocessing": "same unchanged observed spectral filtering on the candidate-predicted field; an approximation, no artificial measurement noise is added",
+    "predicted_temporal_resolution": "33 frames are a declared design approximation; actual discovery and final validation retain their original 101 frames and full duration",
+    "per_action_model_count": 1,
+    "per_action_forecast_calls": 2,
+    "per_action_forecast_intervals": 33,
+    "measurement_cost_is_compute_cost": false,
+    "score_tie": "within score_tie_atol + score_tie_rtol*abs(max_score), original fixed_rich richness/entropy/id ordering",
+    "score_tie_rtol": 1e-10,
+    "score_tie_atol": 1e-12,
+    "observed_support_rank": "same 1e-10 singular-value rank rule as the existing normalized support solver; deficient support falls back explicitly",
+    "failure": "retain invalid anchor, observed geometry and per-action prediction failures; choose original fixed_rich if geometry fails or all actions are invalid/uninformative",
+    "action_repeats": false,
+    "committee_used_for_information_score": false,
+    "reference_or_provider_or_future_measurement_access": false,
+    "probability_or_calibrated_covariance_or_information_gain_claimed": false
+  },
+  "controller": {
+    "version": 1,
+    "policies": [
+      "fixed_rich",
+      "random",
+      "ensemble_variance",
+      "structural_disagreement",
+      "rich_then_variance",
+      "rich_then_information"
+    ],
+    "initial_training": 3,
+    "initial_development": 2,
+    "maximum_additional_experiments": 4,
+    "total_experiment_budgets": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "measurement_cost": "future field plus history except shared endpoint; all training and development charged",
+    "query_failure_cost": "a legal started query consumes one attempt and its full reserved measurement budget",
+    "invalid_action": "reject before provider invocation; no free retries or replacement queries",
+    "candidate_rollouts": "model computation only, never observed experiments",
+    "repeated_actions": false,
+    "benchmark_stopping": "run every budget checkpoint, no truth-based or final-based stopping",
+    "one_candidate": "candidate only, never proof of uniqueness; permit coverage exploration",
+    "initial_fit_cache": "same common initial observations and ensemble seed shared by all six policies",
+    "bootstrap_seed": "same seed+round counter for every policy within the paired task",
+    "final_role_access": false,
+    "private_reference_spec_access": false
+  },
+  "calibration_sources": {
+    "active_study/actions.py": "0ce7c6c91bdfd43869dadc71b0c973b5a7c4a8588a4150ef8d01ff300b295e16",
+    "active_study/provider.py": "e57aca981abdbbafd77a831ca0479076b3b1e3f4058407666242aa44e21853a0",
+    "coefficient_study/generators.py": "4091a1d79f85145d3d2430f7eafe190280bd621a7c18a15bde6049a53023df11"
+  },
+  "decision_protocol_file": "information_study/decision_protocol.json",
+  "decision_protocol_sha256": "3d1c430e01f137a4638961aa0d1e150cdb6af1d22430ba6ab97c7b7a5da5658e",
+  "formal_role_note": "oldformal0..11 were viewed; newformal120..137 and newinitial/finalaction seeds are reserved until freeze",
+  "interpretation": "Local conditional A-optimal proxy; not calibrated information or covariance; only acquisition changed."
+}

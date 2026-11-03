@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "candidate": "rich_then_information",
+  "policies": [
+    "fixed_rich",
+    "random",
+    "ensemble_variance",
+    "structural_disagreement",
+    "rich_then_variance",
+    "rich_then_information"
+  ],
+  "indices": [
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137
+  ],
+  "noise_labels": [
+    "noise1",
+    "noise3"
+  ],
+  "budgets": [
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "primary_noise": "noise1",
+  "stress_noise": "noise3",
+  "primary_budget": 9,
+  "primary_metric": "Mean over all18 parameter tasks of each task's maximum true-term relative coefficient error. Missing selected terms retain100% error; failed conditions are never removed.",
+  "minimum_primary_relative_improvement": 0.1,
+  "required_improvement_comparators": [
+    "fixed_rich",
+    "rich_then_variance"
+  ],
+  "no_worse_primary_comparators": [
+    "random",
+    "ensemble_variance",
+    "structural_disagreement"
+  ],
+  "absolute_roundoff_tolerance": 1e-12,
+  "structure_guard_budgets": [
+    6,
+    9
+  ],
+  "structure_guard": "For each noise and each guard budget, candidate exact count must be at least that of fixed-rich and rich-then-variance, and extra/missing totals must not exceed either control.",
+  "terminal_tail_multiplier": 1.05,
+  "terminal_tail_guard": "For each noise, candidate maximum true-term error no greater than1.05 times the smaller of fixed-rich and rich-then-variance maxima, plus absolute roundoff tolerance.",
+  "stress_mean_multiplier": 1.05,
+  "stress_mean_guard": "Budget9 noise3 mean no greater than1.05 times the smaller fixed-rich/ablation mean, plus roundoff tolerance.",
+  "forecast_limit": 0.05,
+  "forecast_guard": "At budget9 in both noises, all18 three-trajectory means must be available and no greater than5%; zero failed prediction slots.",
+  "cost_target_fraction": 0.8,
+  "cost_metric": "Unchanged joint success at80% of all36 paired conditions; minimum saved budget5..9. Offline readout only; never online stopping.",
+  "paired_resampling": {
+    "replicates": 2000,
+    "seed": 970000,
+    "quantiles": [
+      0.025,
+      0.975
+    ],
+    "unit": "parameter task; sample three tasks with replacement separately within each of six families",
+    "interpretation": "Descriptive percentile interval with only three tasks per family; not used to select the acquisition or claim calibrated probability."
+  },
+  "automatic_merge": false,
+  "all_gates_passed_decision": "eligible_for_review_only",
+  "any_gate_failed_decision": "retain_baseline_do_not_merge",
+  "old_80_percent_target_changed": false,
+  "old_KS_failure_fixed": false,
+  "zero_control_mean_rule": "A required-improvement control mean <= absolute_roundoff_tolerance cannot establish any positive relative improvement; the improvement gate fails even when the candidate is also zero, and relative_improvement is null."
+}
