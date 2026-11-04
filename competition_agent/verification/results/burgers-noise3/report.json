@@ -1,0 +1,138 @@
+{
+  "created_at_utc": "2026-11-04T16:33:39.255370+00:00",
+  "execution": "actual MCP stdio with deterministic routing; no LLM",
+  "inputs": {
+    "fixture": "burgers",
+    "noise": 0.03,
+    "budget": 7,
+    "seed": 240,
+    "policy": "fixed_rich"
+  },
+  "protocol_version": "2025-11-25",
+  "tools": [
+    "asset_ingest",
+    "asset_search",
+    "case_status",
+    "evidence_get",
+    "experiment_acquire",
+    "experiment_propose",
+    "graph_apply",
+    "graph_propose",
+    "pde_case_create",
+    "pde_identify",
+    "validation_evaluate",
+    "validation_freeze"
+  ],
+  "tool_calls": 15,
+  "report": {
+    "case_id": "6fcb050986a64a598df882ff036b4036",
+    "origin": "controlled_synthetic_demo",
+    "nexent_live_llm_verified": false,
+    "equation": null,
+    "terms": [],
+    "structure": {
+      "status": "evaluated",
+      "exact_support": false,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "true_positive_terms": [],
+      "missing_terms": [
+        "u*u_x",
+        "u_xx"
+      ],
+      "spurious_terms": [],
+      "coefficient_relative_l2": 1.0,
+      "coefficient_comparison": [
+        {
+          "name": "u_xx",
+          "reference": 0.07728252076215097,
+          "discovered": 0.0,
+          "absolute_error": 0.07728252076215097,
+          "relative_error": 1.0
+        },
+        {
+          "name": "u*u_x",
+          "reference": -0.7594290179477836,
+          "discovered": 0.0,
+          "absolute_error": 0.7594290179477836,
+          "relative_error": 1.0
+        }
+      ],
+      "reference_terms": [
+        {
+          "name": "u_xx",
+          "coefficient": 0.07728252076215097
+        },
+        {
+          "name": "u*u_x",
+          "coefficient": -0.7594290179477836
+        }
+      ],
+      "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+    },
+    "max_true_coefficient_relative_error": 1.0,
+    "numerical_joint_success": false,
+    "joint_success_rule": "exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%",
+    "predictions": [
+      {
+        "index": 0,
+        "status": "failed",
+        "reason": "No selected model; failure is retained"
+      },
+      {
+        "index": 1,
+        "status": "failed",
+        "reason": "No selected model; failure is retained"
+      },
+      {
+        "index": 2,
+        "status": "failed",
+        "reason": "No selected model; failure is retained"
+      }
+    ],
+    "evaluation_slots": 3,
+    "evaluation_reference_trajectories_generated": 0,
+    "evaluation_measurement_scalars": 0,
+    "discovery_budget_excludes_final_evaluation": true,
+    "prediction_failure_slots": 3,
+    "mean_prediction_error": null,
+    "prediction_5pct_passed": false,
+    "evidence_ready": true,
+    "evidence_conflicts": [],
+    "pending_ontology_review": false,
+    "evidence_sources": [
+      "101e42c02499be77cb80f5551f5034ca25c88d8bc374a5e273de8af6ade51324",
+      "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+    ],
+    "graph": [
+      {
+        "id": "c70ebbf5fbce7497a8bfbc07109e9e1f2e50155828458e65c86bd08e8bdfd403",
+        "object": "dimensionless",
+        "predicate": "uses_unit",
+        "quote": "demo_field uses_unit dimensionless.",
+        "source_id": "101e42c02499be77cb80f5551f5034ca25c88d8bc374a5e273de8af6ade51324",
+        "status": "source_span_verified",
+        "subject": "demo_field"
+      },
+      {
+        "id": "292d740a49ef5581a0d22249d677bfe7d452bdc1fa3bb03c2723e3b44ca19202",
+        "object": "periodic",
+        "predicate": "has_boundary",
+        "quote": "demo_grid has_boundary periodic.",
+        "source_id": "101e42c02499be77cb80f5551f5034ca25c88d8bc374a5e273de8af6ade51324",
+        "status": "source_span_verified",
+        "subject": "demo_grid"
+      }
+    ],
+    "freeze_sha256": "afc3810f3b535372871aa456cd63a3289456551a545470b5aa97d7a157043499",
+    "measurement_scalars_charged": 49728,
+    "charged_experiments": 7,
+    "frequency_is_probability": false,
+    "real_industry_validation": false,
+    "final_used_for_discovery": false,
+    "note": "This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value."
+  },
+  "chain_consistent": true,
+  "live_nexent_verified": false
+}

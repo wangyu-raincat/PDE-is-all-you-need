@@ -1,0 +1,161 @@
+{
+  "created_at_utc": "2026-11-04T16:32:50.022697+00:00",
+  "execution": "actual MCP stdio with deterministic routing; no LLM",
+  "inputs": {
+    "fixture": "diffusion",
+    "noise": 0.01,
+    "budget": 7,
+    "seed": 240,
+    "policy": "fixed_rich"
+  },
+  "protocol_version": "2025-11-25",
+  "tools": [
+    "asset_ingest",
+    "asset_search",
+    "case_status",
+    "evidence_get",
+    "experiment_acquire",
+    "experiment_propose",
+    "graph_apply",
+    "graph_propose",
+    "pde_case_create",
+    "pde_identify",
+    "validation_evaluate",
+    "validation_freeze"
+  ],
+  "tool_calls": 15,
+  "report": {
+    "case_id": "1777416952ef42f7a7005047699c5dca",
+    "origin": "controlled_synthetic_demo",
+    "nexent_live_llm_verified": false,
+    "equation": "u_t = 0.113452369 u_xx",
+    "terms": [
+      {
+        "coefficient": 0.1134523689853022,
+        "name": "u_xx"
+      }
+    ],
+    "structure": {
+      "status": "evaluated",
+      "exact_support": true,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "true_positive_terms": [
+        "u_xx"
+      ],
+      "missing_terms": [],
+      "spurious_terms": [],
+      "coefficient_relative_l2": 0.00029062749865073974,
+      "coefficient_comparison": [
+        {
+          "name": "u_xx",
+          "reference": 0.113485350948982,
+          "discovered": 0.1134523689853022,
+          "absolute_error": 3.2981963679803994e-05,
+          "relative_error": 0.00029062749865073974
+        }
+      ],
+      "reference_terms": [
+        {
+          "name": "u_xx",
+          "coefficient": 0.113485350948982
+        }
+      ],
+      "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+    },
+    "max_true_coefficient_relative_error": 0.00029062749865073974,
+    "numerical_joint_success": true,
+    "joint_success_rule": "exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%",
+    "predictions": [
+      {
+        "index": 0,
+        "status": "evaluated",
+        "metrics": {
+          "rmse": 0.00023938786207153374,
+          "mae": 0.00020891997056951328,
+          "max_absolute_error": 0.000625010786566238,
+          "relative_l2": 0.0014696830095589774,
+          "excluded_initial_frame": true,
+          "scored_frames": 100,
+          "space_points": 64
+        },
+        "prefix_frames": 11,
+        "duration": 1.0
+      },
+      {
+        "index": 1,
+        "status": "evaluated",
+        "metrics": {
+          "rmse": 0.0001307116171035373,
+          "mae": 9.720377458891459e-05,
+          "max_absolute_error": 0.0005751463518076094,
+          "relative_l2": 0.0010427560680710847,
+          "excluded_initial_frame": true,
+          "scored_frames": 100,
+          "space_points": 64
+        },
+        "prefix_frames": 11,
+        "duration": 1.0
+      },
+      {
+        "index": 2,
+        "status": "evaluated",
+        "metrics": {
+          "rmse": 0.00022698371853985836,
+          "mae": 0.00018350623000734,
+          "max_absolute_error": 0.000724459367410904,
+          "relative_l2": 0.0011937722150619611,
+          "excluded_initial_frame": true,
+          "scored_frames": 100,
+          "space_points": 64
+        },
+        "prefix_frames": 11,
+        "duration": 1.0
+      }
+    ],
+    "evaluation_slots": 3,
+    "evaluation_reference_trajectories_generated": 3,
+    "evaluation_measurement_scalars": 21312,
+    "discovery_budget_excludes_final_evaluation": true,
+    "prediction_failure_slots": 0,
+    "mean_prediction_error": 0.0012354037642306746,
+    "prediction_5pct_passed": true,
+    "evidence_ready": true,
+    "evidence_conflicts": [],
+    "pending_ontology_review": false,
+    "evidence_sources": [
+      "101e42c02499be77cb80f5551f5034ca25c88d8bc374a5e273de8af6ade51324",
+      "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+    ],
+    "graph": [
+      {
+        "id": "c70ebbf5fbce7497a8bfbc07109e9e1f2e50155828458e65c86bd08e8bdfd403",
+        "object": "dimensionless",
+        "predicate": "uses_unit",
+        "quote": "demo_field uses_unit dimensionless.",
+        "source_id": "101e42c02499be77cb80f5551f5034ca25c88d8bc374a5e273de8af6ade51324",
+        "status": "source_span_verified",
+        "subject": "demo_field"
+      },
+      {
+        "id": "292d740a49ef5581a0d22249d677bfe7d452bdc1fa3bb03c2723e3b44ca19202",
+        "object": "periodic",
+        "predicate": "has_boundary",
+        "quote": "demo_grid has_boundary periodic.",
+        "source_id": "101e42c02499be77cb80f5551f5034ca25c88d8bc374a5e273de8af6ade51324",
+        "status": "source_span_verified",
+        "subject": "demo_grid"
+      }
+    ],
+    "freeze_sha256": "9e21e087848455d388a34819e299873aedd9f7b30f6587eabdb3a21f581c5759",
+    "measurement_scalars_charged": 49728,
+    "charged_experiments": 7,
+    "frequency_is_probability": false,
+    "real_industry_validation": false,
+    "final_used_for_discovery": false,
+    "note": "This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value."
+  },
+  "chain_consistent": true,
+  "live_nexent_verified": false
+}
