@@ -1,0 +1,6253 @@
+[
+  {
+    "step": 1,
+    "planned_role": "asset_agent",
+    "tool": "pde_case_create",
+    "arguments": {
+      "fixture": "decay",
+      "noise": 0.01,
+      "budget": 7,
+      "seed": 240,
+      "policy": "fixed_rich",
+      "request_id": "21de2f7b3aa840efbcf3fadb90f35914"
+    },
+    "result": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "ready",
+      "origin": "controlled_synthetic_demo",
+      "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+      "budget_limit": 7,
+      "charged_experiments": 5,
+      "measurement_scalars_charged": 35520,
+      "training_trajectories": 3,
+      "development_trajectories": 2,
+      "policy": "fixed_rich",
+      "selected_equation": null,
+      "selected_terms": [],
+      "candidate_supports": [],
+      "identification_status": null,
+      "identification_failure": null,
+      "uncertainty": {},
+      "minimal_near_supports": [],
+      "recovery_required": false,
+      "failure": null,
+      "frequency_calibrated": false,
+      "final_opened": false,
+      "ontology_version": 1,
+      "graph_facts": 0,
+      "evidence_quality": {
+        "metadata_ready": false,
+        "blockers": [
+          {
+            "code": "missing_required_metadata",
+            "details": [
+              {
+                "subject": "demo_grid",
+                "predicate": "records_field",
+                "object": "demo_field"
+              },
+              {
+                "subject": "demo_field",
+                "predicate": "uses_unit",
+                "object": "dimensionless"
+              },
+              {
+                "subject": "demo_grid",
+                "predicate": "has_boundary",
+                "object": "periodic"
+              }
+            ]
+          }
+        ],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 0,
+        "total_facts": 0,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "graph_conflicts": [],
+      "pending_ontology_changes": 0,
+      "event_count": 2,
+      "event_head": "71c0b4369696b460d70ae51557879b6ddb846a67474e6a42d490319fc4eb7a04"
+    },
+    "is_error": false,
+    "duration_seconds": 0.06649100100003125
+  },
+  {
+    "step": 2,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "ready",
+      "state_head": "71c0b4369696b460d70ae51557879b6ddb846a67474e6a42d490319fc4eb7a04",
+      "remaining_experiments": 2,
+      "next_role": "asset_agent",
+      "next_tool": "asset_ingest",
+      "next_arguments": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf"
+      },
+      "required_inputs": [
+        "documents"
+      ],
+      "arguments_complete": false,
+      "stop": false,
+      "terminal": false,
+      "reason": "evidence_review_required; numerical diagnostics remain possible but cannot imply metadata readiness",
+      "evidence_quality": {
+        "metadata_ready": false,
+        "blockers": [
+          {
+            "code": "missing_required_metadata",
+            "details": [
+              {
+                "subject": "demo_grid",
+                "predicate": "records_field",
+                "object": "demo_field"
+              },
+              {
+                "subject": "demo_field",
+                "predicate": "uses_unit",
+                "object": "dimensionless"
+              },
+              {
+                "subject": "demo_grid",
+                "predicate": "has_boundary",
+                "object": "periodic"
+              }
+            ]
+          }
+        ],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 0,
+        "total_facts": 0,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.0035027930007345276
+  },
+  {
+    "step": 3,
+    "planned_role": "asset_agent",
+    "tool": "asset_ingest",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "documents": [
+        {
+          "title": "asset-card.txt",
+          "kind": "text",
+          "text": "This is a controlled synthetic research fixture, not an industrial measurement.\ndemo_grid records_field demo_field.\ndemo_grid has_boundary periodic.\nThe observation grid has 64 positions and 111 frames per experiment.\nFive initial experiments consist of three training and two development trajectories.\nNumerical observations come from the simulator; this document is metadata only.\n"
+        },
+        {
+          "title": "experiment-register.csv",
+          "kind": "csv",
+          "text": "asset_id,group,trajectories,source_kind\ndemo_grid,training,3,controlled_synthetic\ndemo_grid,development,2,controlled_synthetic\n"
+        },
+        {
+          "title": "field-card.txt",
+          "kind": "text",
+          "text": "Synthetic field metadata, not a measured calibration certificate.\ndemo_field uses_unit dimensionless.\n"
+        }
+      ]
+    },
+    "result": {
+      "sources": [
+        {
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "title": "asset-card.txt",
+          "kind": "text"
+        },
+        {
+          "source_id": "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d",
+          "title": "experiment-register.csv",
+          "kind": "csv"
+        },
+        {
+          "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "title": "field-card.txt",
+          "kind": "text"
+        }
+      ]
+    },
+    "is_error": false,
+    "duration_seconds": 0.006820637000600982
+  },
+  {
+    "step": 4,
+    "planned_role": "graph_agent",
+    "tool": "asset_search",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "query": "网格 字段 单位 边界",
+      "limit": 10
+    },
+    "result": {
+      "method": "lexical BM25 with Chinese bigrams and explicit bilingual aliases; no embeddings or LLM",
+      "hits": [
+        {
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "source_sha256": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "source_hash_scope": "canonical title/kind/text record",
+          "title": "asset-card.txt",
+          "line": 2,
+          "quote": "demo_grid records_field demo_field.",
+          "start_char": 80,
+          "end_char": 115,
+          "offset_unit": "Unicode code points, half-open",
+          "matched_terms": [
+            "records_field"
+          ],
+          "score": 1.4741337991699834
+        },
+        {
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "source_sha256": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "source_hash_scope": "canonical title/kind/text record",
+          "title": "asset-card.txt",
+          "line": 3,
+          "quote": "demo_grid has_boundary periodic.",
+          "start_char": 116,
+          "end_char": 148,
+          "offset_unit": "Unicode code points, half-open",
+          "matched_terms": [
+            "has_boundary"
+          ],
+          "score": 1.4741337991699834
+        },
+        {
+          "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "source_sha256": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "source_hash_scope": "canonical title/kind/text record",
+          "title": "field-card.txt",
+          "line": 2,
+          "quote": "demo_field uses_unit dimensionless.",
+          "start_char": 66,
+          "end_char": 101,
+          "offset_unit": "Unicode code points, half-open",
+          "matched_terms": [
+            "uses_unit"
+          ],
+          "score": 1.4741337991699834
+        },
+        {
+          "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "source_sha256": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "source_hash_scope": "canonical title/kind/text record",
+          "title": "field-card.txt",
+          "line": 1,
+          "quote": "Synthetic field metadata, not a measured calibration certificate.",
+          "start_char": 0,
+          "end_char": 65,
+          "offset_unit": "Unicode code points, half-open",
+          "matched_terms": [
+            "field"
+          ],
+          "score": 1.0550090257126934
+        }
+      ]
+    },
+    "is_error": false,
+    "duration_seconds": 0.004308588000640157
+  },
+  {
+    "step": 5,
+    "planned_role": "graph_agent",
+    "tool": "graph_propose",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "facts": [
+        {
+          "subject": "demo_grid",
+          "predicate": "records_field",
+          "object": "demo_field",
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "quote": "demo_grid records_field demo_field."
+        },
+        {
+          "subject": "demo_field",
+          "predicate": "uses_unit",
+          "object": "dimensionless",
+          "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "quote": "demo_field uses_unit dimensionless."
+        },
+        {
+          "subject": "demo_grid",
+          "predicate": "has_boundary",
+          "object": "periodic",
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "quote": "demo_grid has_boundary periodic."
+        }
+      ]
+    },
+    "result": {
+      "proposal_id": "3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde",
+      "unknown_predicates": [],
+      "pending_ontology_changes": [],
+      "semantic_truth_verified": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.005485513000166975
+  },
+  {
+    "step": 6,
+    "planned_role": "graph_agent",
+    "tool": "graph_apply",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "proposal_id": "3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde"
+    },
+    "result": {
+      "facts": [
+        {
+          "citation": {
+            "end_char": 115,
+            "end_line": 2,
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 80
+          },
+          "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+          "object": "demo_field",
+          "predicate": "records_field",
+          "quote": "demo_grid records_field demo_field.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid"
+        },
+        {
+          "citation": {
+            "end_char": 101,
+            "end_line": 2,
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 66
+          },
+          "id": "39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974",
+          "object": "dimensionless",
+          "predicate": "uses_unit",
+          "quote": "demo_field uses_unit dimensionless.",
+          "relation_assertion_verified": true,
+          "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "status": "source_span_verified",
+          "subject": "demo_field"
+        },
+        {
+          "citation": {
+            "end_char": 148,
+            "end_line": 3,
+            "line": 3,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 116
+          },
+          "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+          "object": "periodic",
+          "predicate": "has_boundary",
+          "quote": "demo_grid has_boundary periodic.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid"
+        }
+      ],
+      "conflicts": [],
+      "ontology_version": 1
+    },
+    "is_error": false,
+    "duration_seconds": 0.005601623000075051
+  },
+  {
+    "step": 7,
+    "planned_role": "graph_agent",
+    "tool": "evidence_path",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "source": "demo_grid",
+      "target": "dimensionless"
+    },
+    "result": {
+      "paths": [
+        {
+          "edges": [
+            {
+              "citation": {
+                "end_char": 115,
+                "end_line": 2,
+                "line": 2,
+                "offset_unit": "Unicode code points, half-open",
+                "start_char": 80
+              },
+              "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+              "object": "demo_field",
+              "predicate": "records_field",
+              "quote": "demo_grid records_field demo_field.",
+              "relation_assertion_verified": true,
+              "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+              "status": "source_span_verified",
+              "subject": "demo_grid"
+            },
+            {
+              "citation": {
+                "end_char": 101,
+                "end_line": 2,
+                "line": 2,
+                "offset_unit": "Unicode code points, half-open",
+                "start_char": 66
+              },
+              "id": "39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974",
+              "object": "dimensionless",
+              "predicate": "uses_unit",
+              "quote": "demo_field uses_unit dimensionless.",
+              "relation_assertion_verified": true,
+              "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+              "status": "source_span_verified",
+              "subject": "demo_field"
+            }
+          ],
+          "source_ids": [
+            "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9"
+          ],
+          "all_relations_asserted": true
+        }
+      ],
+      "found": true,
+      "search_truncated": false,
+      "max_hops": 4,
+      "expanded_nodes": 3,
+      "new_facts_created": false,
+      "semantic_truth_verified": false,
+      "scope": "paths over cited assertions; not inferred physical causation",
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "conflicts": [],
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      }
+    },
+    "is_error": false,
+    "duration_seconds": 0.00215254599970649
+  },
+  {
+    "step": 8,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "ready",
+      "state_head": "59529e73c476e5e89d3b99df51caefd80b4b76442d1bbd4b8c5598a5e9082ff9",
+      "remaining_experiments": 2,
+      "next_role": "pde_agent",
+      "next_tool": "pde_identify",
+      "next_arguments": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.0018948279994219774
+  },
+  {
+    "step": 9,
+    "planned_role": "pde_agent",
+    "tool": "pde_identify",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "identified",
+      "origin": "controlled_synthetic_demo",
+      "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+      "budget_limit": 7,
+      "charged_experiments": 5,
+      "measurement_scalars_charged": 35520,
+      "training_trajectories": 3,
+      "development_trajectories": 2,
+      "policy": "fixed_rich",
+      "selected_equation": "u_t = 0.3264456808 u_xx",
+      "selected_terms": [
+        {
+          "name": "u_xx",
+          "coefficient": 0.32644568080094594
+        }
+      ],
+      "candidate_supports": [
+        [
+          "1",
+          "u"
+        ],
+        [
+          "1",
+          "u",
+          "u^2",
+          "u^3",
+          "u_x"
+        ],
+        [
+          "1",
+          "u",
+          "u^2",
+          "u^3",
+          "u_xxx"
+        ],
+        [
+          "1",
+          "u",
+          "u^3",
+          "u_x"
+        ],
+        [
+          "1",
+          "u",
+          "u^3",
+          "u_xxx"
+        ],
+        [
+          "1",
+          "u",
+          "u_x"
+        ],
+        [
+          "1",
+          "u",
+          "u_xxx"
+        ],
+        [
+          "1",
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xx"
+        ],
+        [
+          "1",
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u^2",
+          "u^3",
+          "u_xx",
+          "u_xxx"
+        ],
+        [
+          "1",
+          "u^2",
+          "u^3",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u^3",
+          "u_x",
+          "u_xx"
+        ],
+        [
+          "1",
+          "u^3",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u^3",
+          "u_xx",
+          "u_xxx"
+        ],
+        [
+          "1",
+          "u^3",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u_x",
+          "u_xx"
+        ],
+        [
+          "1",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u_xx"
+        ],
+        [
+          "1",
+          "u_xx",
+          "u_xxx"
+        ],
+        [
+          "1",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u_xxxx"
+        ],
+        [
+          "u"
+        ],
+        [
+          "u_xx"
+        ],
+        [
+          "u_xxxx"
+        ]
+      ],
+      "identification_status": "observational_ambiguity",
+      "identification_failure": null,
+      "uncertainty": {
+        "method": "complete_trajectory_bootstrap_full_structure_refit",
+        "term_inclusion_frequencies": {
+          "1": 0.0,
+          "u": 0.0,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.875,
+          "u_xxx": 0.0,
+          "u_xxxx": 0.125,
+          "u*u_x": 0.0
+        },
+        "conditional_on_success_frequency": {
+          "1": 0.0,
+          "u": 0.0,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.875,
+          "u_xxx": 0.0,
+          "u_xxxx": 0.125,
+          "u*u_x": 0.0
+        },
+        "frequency_bounds_including_failures": {
+          "1": [
+            0.0,
+            0.0
+          ],
+          "u": [
+            0.0,
+            0.0
+          ],
+          "u^2": [
+            0.0,
+            0.0
+          ],
+          "u^3": [
+            0.0,
+            0.0
+          ],
+          "u_x": [
+            0.0,
+            0.0
+          ],
+          "u_xx": [
+            0.875,
+            0.875
+          ],
+          "u_xxx": [
+            0.0,
+            0.0
+          ],
+          "u_xxxx": [
+            0.125,
+            0.125
+          ],
+          "u*u_x": [
+            0.0,
+            0.0
+          ]
+        },
+        "raw_counts": {
+          "1": 0,
+          "u": 0,
+          "u^2": 0,
+          "u^3": 0,
+          "u_x": 0,
+          "u_xx": 7,
+          "u_xxx": 0,
+          "u_xxxx": 1,
+          "u*u_x": 0
+        },
+        "requested_replicates": 8,
+        "completed_replicates": 8,
+        "failed_replicates": 0,
+        "number_of_available_multiplicity_vectors": 10,
+        "calibrated": false,
+        "probability_claimed": false,
+        "confidence_interval_claimed": false,
+        "independent_physical_experiments": 3,
+        "resampling_adds_physical_evidence": false,
+        "limited_data_warning": "Few complete trajectories; repeated bootstrap draws do not create independent evidence.",
+        "reference_used": false,
+        "final_used": false
+      },
+      "minimal_near_supports": [
+        [
+          "u"
+        ],
+        [
+          "u_xx"
+        ],
+        [
+          "u_xxxx"
+        ]
+      ],
+      "recovery_required": false,
+      "failure": null,
+      "frequency_calibrated": false,
+      "final_opened": false,
+      "ontology_version": 1,
+      "graph_facts": 3,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "graph_conflicts": [],
+      "pending_ontology_changes": 0,
+      "event_count": 6,
+      "event_head": "60551074b6fb4b92211f8573a641a33af4657a71e6d19298d3af070c9360f99f"
+    },
+    "is_error": false,
+    "duration_seconds": 4.55589362200044
+  },
+  {
+    "step": 10,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "identified",
+      "state_head": "60551074b6fb4b92211f8573a641a33af4657a71e6d19298d3af070c9360f99f",
+      "remaining_experiments": 2,
+      "next_role": "experiment_agent",
+      "next_tool": "experiment_propose",
+      "next_arguments": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.004166027999417565
+  },
+  {
+    "step": 11,
+    "planned_role": "experiment_agent",
+    "tool": "experiment_propose",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "id": "ddbdfc34cc69a21687004493705f2e97a4b56d2b0061641277c86a5c9d796826",
+      "action": {
+        "id": "fixed-rich",
+        "a": [
+          0.2309401076758503,
+          0.11547005383792518,
+          -0.2309401076758503,
+          0.2309401076758503,
+          -0.11547005383792511,
+          -0.2309401076758503
+        ],
+        "b": [
+          0.0,
+          0.19999999999999998,
+          2.828200636599752e-17,
+          -5.656401273199504e-17,
+          -0.2,
+          5.516420715918146e-16
+        ]
+      },
+      "reason": "Predetermined rich excitation.",
+      "policy": "fixed_rich",
+      "diagnostics": {
+        "policy": "fixed_rich",
+        "selected_action": {
+          "id": "fixed-rich",
+          "a": [
+            0.2309401076758503,
+            0.11547005383792518,
+            -0.2309401076758503,
+            0.2309401076758503,
+            -0.11547005383792511,
+            -0.2309401076758503
+          ],
+          "b": [
+            0.0,
+            0.19999999999999998,
+            2.828200636599752e-17,
+            -5.656401273199504e-17,
+            -0.2,
+            5.516420715918146e-16
+          ]
+        },
+        "selected_action_id": "fixed-rich",
+        "status": "selected",
+        "reason": "Predetermined rich excitation.",
+        "fallback_used": false,
+        "scores": [
+          {
+            "action_id": "fixed-rich",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-2",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-3",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-00",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-01",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-02",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-03",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-04",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-05",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-06",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-07",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-08",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-09",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-10",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-11",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-12",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-13",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-14",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-15",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-1-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-1-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-2-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-2-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-3-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-3-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-4-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-4-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-5-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-5-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-6-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-6-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          }
+        ],
+        "raw_committee_members": 54,
+        "distinct_coefficient_vectors": 54,
+        "structure_count": 24,
+        "committee": [
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.3298343350390184
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-32dd6a69a23f2740"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.3298343350390184,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32854411074425327
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-8e5ba7af1787f106"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32854411074425327,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32725473604018396
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-6f462a6dcfa1fe6a"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32725473604018396,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.3264435201840022
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-f95cbe15279c066d"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.3264435201840022,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.3256315875387961
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-fa2849cf57b94123"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.3256315875387961,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32515469251663814
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-fdd6f126f3462700"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32515469251663814,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.3235295059656747
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-62f58a4479a00618"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.3235295059656747,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.32983463369894356
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-bc18d4218ac7ee6d"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.32983463369894356,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.32854507365149144
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-f9d10640f4e0511b"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.32854507365149144,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.327256362565976
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-137e88cba1795a78"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.327256362565976,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.32644568080094605
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-ee47ef254e64323f"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.32644568080094605,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3256342826922603
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-7d5f7c6e61f40c82"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3256342826922603,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3251575161597626
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-b6e6a13b2e53c213"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3251575161597626,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3235333991983819
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-1b7ee5bd850f4500"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3235333991983819,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.3235333991983819
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-80d14f44b646dbb8"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3235333991983819,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.32515751615976257
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-d2f192cad52171dc"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.32515751615976257,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.32563428269226036
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-7fb433078bf071d8"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.32563428269226036,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.32644568080094594
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-4c1f163b742cd495"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.32644568080094594,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.327256362565976
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-688c2825ba6e5049"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.327256362565976,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.32854507365149144
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-1810cba33306a85b"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.32854507365149144,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.32983463369894356
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-2e9ce9ff3e994b83"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.32983463369894356,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009054514617902542
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0023292314284969542
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018940871160077553
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.0014164033902550653
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.32662104073900045
+              }
+            ],
+            "support": [
+              "1",
+              "u^2",
+              "u^3",
+              "u_x",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-065e23cad55ec812"
+            ],
+            "coefficient_vector": [
+              0.0009054514617902542,
+              0.0,
+              0.0023292314284969542,
+              -0.018940871160077553,
+              -0.0014164033902550653,
+              0.0,
+              0.0,
+              -0.32662104073900045,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009054514617902606
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0023292314284969534
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018940871160077553
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.0014164033902550766
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3266210407390005
+              }
+            ],
+            "support": [
+              "1",
+              "u^2",
+              "u^3",
+              "u_xxx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-778f9e3f1502b36b"
+            ],
+            "coefficient_vector": [
+              0.0009054514617902606,
+              0.0,
+              0.0023292314284969534,
+              -0.018940871160077553,
+              0.0,
+              0.0,
+              0.0014164033902550766,
+              -0.3266210407390005,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009054514617902831
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0023292314284967574
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018940871160071666
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.001416403390255044
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.3266210407390015
+              }
+            ],
+            "support": [
+              "1",
+              "u^2",
+              "u^3",
+              "u_x",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-f2909d15f9f74153"
+            ],
+            "coefficient_vector": [
+              0.0009054514617902831,
+              0.0,
+              0.0023292314284967574,
+              -0.018940871160071666,
+              -0.001416403390255044,
+              0.3266210407390015,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009054514617902968
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.002329231428496665
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018940871160070444
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.32662104073900183
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.0014164033902550864
+              }
+            ],
+            "support": [
+              "1",
+              "u^2",
+              "u^3",
+              "u_xx",
+              "u_xxx"
+            ],
+            "candidate_ids": [
+              "committee-c26eac5d931c64d2"
+            ],
+            "coefficient_vector": [
+              0.0009054514617902968,
+              0.0,
+              0.002329231428496665,
+              -0.018940871160070444,
+              0.0,
+              0.32662104073900183,
+              0.0014164033902550864,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009071027550160776
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3272563625659759
+              }
+            ],
+            "support": [
+              "1",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-87a78fc54b9a3300"
+            ],
+            "coefficient_vector": [
+              0.0009071027550160776,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3272563625659759,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009071027550160776
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.3272563625659759
+              }
+            ],
+            "support": [
+              "1",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-870fad0e93a35adb"
+            ],
+            "coefficient_vector": [
+              0.0009071027550160776,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3272563625659759,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009174229975081954
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32662228820722716
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.002285741370428181
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018933004036933338
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.0014164033981322395
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^2",
+              "u^3",
+              "u_x"
+            ],
+            "candidate_ids": [
+              "committee-317c98649836ddc5"
+            ],
+            "coefficient_vector": [
+              0.0009174229975081954,
+              -0.32662228820722716,
+              0.002285741370428181,
+              -0.018933004036933338,
+              -0.0014164033981322395,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009174229975082702
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32662228820722705
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0022857413704276464
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018933004036933848
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.0014164033981322404
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^2",
+              "u^3",
+              "u_xxx"
+            ],
+            "candidate_ids": [
+              "committee-28560a9ffc1481ce"
+            ],
+            "coefficient_vector": [
+              0.0009174229975082702,
+              -0.32662228820722705,
+              0.0022857413704276464,
+              -0.018933004036933848,
+              0.0,
+              0.0,
+              0.0014164033981322404,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009419331932529971
+              },
+              {
+                "name": "u",
+                "coefficient": -0.3272556410197505
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-8508ddb383bef3a3"
+            ],
+            "coefficient_vector": [
+              0.0009419331932529971,
+              -0.3272556410197505,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009577267076818593
+              },
+              {
+                "name": "u",
+                "coefficient": -0.3235293990040295
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-39c4f57503caede5"
+            ],
+            "coefficient_vector": [
+              0.0009577267076818593,
+              -0.3235293990040295,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009617254279091164
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3235333991983819
+              }
+            ],
+            "support": [
+              "1",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-077d9bb65e377e81"
+            ],
+            "coefficient_vector": [
+              0.0009617254279091164,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3235333991983819,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009617254279091164
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.3235333991983819
+              }
+            ],
+            "support": [
+              "1",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-50109536ddfda953"
+            ],
+            "coefficient_vector": [
+              0.0009617254279091164,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3235333991983819,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001028601167685697
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32563157883588684
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-fa0ac5944e077a2d"
+            ],
+            "coefficient_vector": [
+              0.001028601167685697,
+              -0.32563157883588684,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0010289061070603968
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3256342826922603
+              }
+            ],
+            "support": [
+              "1",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-66af320c1fb25807"
+            ],
+            "coefficient_vector": [
+              0.0010289061070603968,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3256342826922603,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0010289061070603968
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.3256342826922603
+              }
+            ],
+            "support": [
+              "1",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-714d18a0ad75a80a"
+            ],
+            "coefficient_vector": [
+              0.0010289061070603968,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3256342826922603,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001035185110189517
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.0007710436178575293
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.32854507365149144
+              }
+            ],
+            "support": [
+              "1",
+              "u_x",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-29695cea7703c51e"
+            ],
+            "coefficient_vector": [
+              0.001035185110189517,
+              0.0,
+              0.0,
+              0.0,
+              -0.0007710436178575293,
+              0.0,
+              0.0,
+              -0.32854507365149144,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001035185110189517
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.0007710436178575293
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.32854507365149144
+              }
+            ],
+            "support": [
+              "1",
+              "u_x",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-a3eb767aef6f42b7"
+            ],
+            "coefficient_vector": [
+              0.001035185110189517,
+              0.0,
+              0.0,
+              0.0,
+              -0.0007710436178575293,
+              0.32854507365149144,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001035185110189517
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.32854507365149177
+              }
+            ],
+            "support": [
+              "1",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-c9f18879a27197bb"
+            ],
+            "coefficient_vector": [
+              0.001035185110189517,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.32854507365149177,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001035185110189517
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.0007710436178575293
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.32854507365149144
+              }
+            ],
+            "support": [
+              "1",
+              "u_xxx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-f504e3b29bb38042"
+            ],
+            "coefficient_vector": [
+              0.001035185110189517,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0007710436178575293,
+              -0.32854507365149144,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001035185110189517
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.32854507365149177
+              }
+            ],
+            "support": [
+              "1",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-9116f869809b434b"
+            ],
+            "coefficient_vector": [
+              0.001035185110189517,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.32854507365149177,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001035185110189517
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.32854507365149177
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.000771043617857508
+              }
+            ],
+            "support": [
+              "1",
+              "u_xx",
+              "u_xxx"
+            ],
+            "candidate_ids": [
+              "committee-1683713adcaa841a"
+            ],
+            "coefficient_vector": [
+              0.001035185110189517,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.32854507365149177,
+              0.000771043617857508,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0010562681359430944
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32854472281624697
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.0007710436178575012
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_x"
+            ],
+            "candidate_ids": [
+              "committee-86b72c8c954f2143"
+            ],
+            "coefficient_vector": [
+              0.0010562681359430944,
+              -0.32854472281624697,
+              0.0,
+              0.0,
+              -0.0007710436178575012,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0010562681359430944
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32854472281624697
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-3b84eb61462d3aa4"
+            ],
+            "coefficient_vector": [
+              0.0010562681359430944,
+              -0.32854472281624697,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0010562681359430944
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32854472281624697
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.0007710436178575012
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxx"
+            ],
+            "candidate_ids": [
+              "committee-bcfb3978dd256afd"
+            ],
+            "coefficient_vector": [
+              0.0010562681359430944,
+              -0.32854472281624697,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0007710436178575012,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0011632674653629565
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3298346336989437
+              }
+            ],
+            "support": [
+              "1",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-215bf0d37a391293"
+            ],
+            "coefficient_vector": [
+              0.0011632674653629565,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3298346336989437,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0011632674653629565
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.3298346336989437
+              }
+            ],
+            "support": [
+              "1",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-f26cc68c94a536af"
+            ],
+            "coefficient_vector": [
+              0.0011632674653629565,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3298346336989437,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0011633469823171527
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018942513560501098
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.32662069987996084
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.001416403703481974
+              }
+            ],
+            "support": [
+              "1",
+              "u^3",
+              "u_xx",
+              "u_xxx"
+            ],
+            "candidate_ids": [
+              "committee-0f87c34328e7a565"
+            ],
+            "coefficient_vector": [
+              0.0011633469823171527,
+              0.0,
+              0.0,
+              -0.018942513560501098,
+              0.0,
+              0.32662069987996084,
+              0.001416403703481974,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001163346982317153
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018942513560507444
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.0014164037034819805
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3266206998799599
+              }
+            ],
+            "support": [
+              "1",
+              "u^3",
+              "u_x",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-a09bab63207e19be"
+            ],
+            "coefficient_vector": [
+              0.001163346982317153,
+              0.0,
+              0.0,
+              -0.018942513560507444,
+              -0.0014164037034819805,
+              0.0,
+              0.0,
+              -0.3266206998799599,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001163346982317153
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.018942513560507444
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.0014164037034819805
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3266206998799599
+              }
+            ],
+            "support": [
+              "1",
+              "u^3",
+              "u_xxx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-1abc023696a4c893"
+            ],
+            "coefficient_vector": [
+              0.001163346982317153,
+              0.0,
+              0.0,
+              -0.018942513560507444,
+              0.0,
+              0.0,
+              0.0014164037034819805,
+              -0.3266206998799599,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.001163346982317153
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.01894251356050177
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.0014164037034819438
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.32662069987996084
+              }
+            ],
+            "support": [
+              "1",
+              "u^3",
+              "u_x",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-3a6a27a65ce8e800"
+            ],
+            "coefficient_vector": [
+              0.001163346982317153,
+              0.0,
+              0.0,
+              -0.01894251356050177,
+              -0.0014164037034819438,
+              0.32662069987996084,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0011704941396892706
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32983456669552547
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-5289ef783426a13e"
+            ],
+            "coefficient_vector": [
+              0.0011704941396892706,
+              -0.32983456669552547,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0011705032351633422
+              },
+              {
+                "name": "u",
+                "coefficient": -0.326622105544317
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.01893382655878103
+              },
+              {
+                "name": "u_x",
+                "coefficient": -0.0014164037057134758
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^3",
+              "u_x"
+            ],
+            "candidate_ids": [
+              "committee-34628551915f7c78"
+            ],
+            "coefficient_vector": [
+              0.0011705032351633422,
+              -0.326622105544317,
+              0.0,
+              -0.01893382655878103,
+              -0.0014164037057134758,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0011705032351633422
+              },
+              {
+                "name": "u",
+                "coefficient": -0.326622105544317
+              },
+              {
+                "name": "u^3",
+                "coefficient": -0.01893382655878103
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 0.001416403705713476
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^3",
+              "u_xxx"
+            ],
+            "candidate_ids": [
+              "committee-1e8d9d33e4d44b16"
+            ],
+            "coefficient_vector": [
+              0.0011705032351633422,
+              -0.326622105544317,
+              0.0,
+              -0.01893382655878103,
+              0.0,
+              0.0,
+              0.001416403705713476,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "available_actions": 32,
+        "excluded_action_ids": [],
+        "cost_units": "caller_declared_cost",
+        "noise_estimate": {
+          "estimated_spatial_variance": 1.6008632036750874e-05,
+          "per_trajectory": [
+            {
+              "training_trajectory": 0,
+              "estimated_spatial_variance": 1.552351433929984e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 1,
+              "estimated_spatial_variance": 1.645361608068562e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 2,
+              "estimated_spatial_variance": 1.6048765690267165e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            }
+          ],
+          "aggregation": "equal trajectory mean variance",
+          "true_noise_used": false,
+          "physical_upper_band_signal_can_bias_estimate": true
+        },
+        "acquisition_times": [
+          0.0,
+          0.1,
+          0.2
+        ],
+        "acquisition_forecast_duration": 0.2,
+        "initial_frame_scored": false,
+        "model_forecast_attempts": 0,
+        "model_forecast_failures": 0,
+        "actual_experiment_queries": 0,
+        "reference_used": false,
+        "prospective_observations_used": false,
+        "calibrated_probability_or_information_gain_claimed": false,
+        "identification_certainty_claimed": false,
+        "fixed_action_order": [
+          "fixed-rich",
+          "fixed-rich-1",
+          "fixed-rich-2",
+          "fixed-rich-3",
+          "mixture-07",
+          "mixture-04",
+          "mixture-02",
+          "mixture-10",
+          "mixture-06",
+          "mixture-01",
+          "mixture-11",
+          "mixture-15",
+          "mixture-00",
+          "mixture-05",
+          "mixture-13",
+          "mixture-03",
+          "mixture-08",
+          "mixture-09",
+          "mixture-12",
+          "mixture-14",
+          "single-1-0",
+          "single-1-1",
+          "single-2-0",
+          "single-2-1",
+          "single-3-0",
+          "single-3-1",
+          "single-4-0",
+          "single-4-1",
+          "single-5-0",
+          "single-5-1",
+          "single-6-0",
+          "single-6-1"
+        ],
+        "compute_seconds": 0.032734082999922975
+      },
+      "measurement_cost": 7104,
+      "is_physical_instruction": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.08163452700046037
+  },
+  {
+    "step": 12,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "proposed",
+      "state_head": "d305f926e951fbff0612d6937230c8a1b4afa5dd3750861b7698f5f7e4707821",
+      "remaining_experiments": 2,
+      "next_role": "experiment_agent",
+      "next_tool": "experiment_acquire",
+      "next_arguments": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf",
+        "proposal_id": "ddbdfc34cc69a21687004493705f2e97a4b56d2b0061641277c86a5c9d796826"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.00500737200036383
+  },
+  {
+    "step": 13,
+    "planned_role": "experiment_agent",
+    "tool": "experiment_acquire",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "proposal_id": "ddbdfc34cc69a21687004493705f2e97a4b56d2b0061641277c86a5c9d796826"
+    },
+    "result": {
+      "query": {
+        "action": {
+          "a": [
+            0.2309401076758503,
+            0.11547005383792518,
+            -0.2309401076758503,
+            0.2309401076758503,
+            -0.11547005383792511,
+            -0.2309401076758503
+          ],
+          "b": [
+            0.0,
+            0.19999999999999998,
+            2.828200636599752e-17,
+            -5.656401273199504e-17,
+            -0.2,
+            5.516420715918146e-16
+          ],
+          "id": "fixed-rich"
+        },
+        "charged_experiments": 1,
+        "proposal_id": "ddbdfc34cc69a21687004493705f2e97a4b56d2b0061641277c86a5c9d796826",
+        "status": "observed",
+        "observation": {
+          "file": "0e420da66ce2451991c10786ce7b46cf/query-1.npz",
+          "sha256": "d85f6bce91e6eab0279120f4d465b1493c0df8035b0ef737755c386ec93da083"
+        },
+        "receipt": {
+          "experiments": 1,
+          "measurement_values": 7104,
+          "measured_frames": 111,
+          "measured_spatial_points": 64,
+          "prefix_frames": 11,
+          "future_frames": 101,
+          "history_endpoint_counted_once": true,
+          "future_duration": 1.0,
+          "action_sha256": "dd71c01bbfebe0bb72ec136a080227b0ea654dcc221b0b61315fd12c68f7c0b8",
+          "observed_field_sha256": "4f310733e2b02c78820129a7c041c755827cdc1a960dfb70608e838a97a1c5e4",
+          "is_measured_physical_data": false
+        }
+      },
+      "idempotent_replay": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.022308033000626892
+  },
+  {
+    "step": 14,
+    "planned_role": "pde_agent",
+    "tool": "pde_identify",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "identified",
+      "origin": "controlled_synthetic_demo",
+      "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+      "budget_limit": 7,
+      "charged_experiments": 6,
+      "measurement_scalars_charged": 42624,
+      "training_trajectories": 4,
+      "development_trajectories": 2,
+      "policy": "fixed_rich",
+      "selected_equation": "u_t = - 0.3264503932 u",
+      "selected_terms": [
+        {
+          "name": "u",
+          "coefficient": -0.32645039323895214
+        }
+      ],
+      "candidate_supports": [
+        [
+          "1",
+          "u"
+        ],
+        [
+          "1",
+          "u",
+          "u^3",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u_x",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u_xx"
+        ],
+        [
+          "1",
+          "u_xxxx"
+        ],
+        [
+          "u"
+        ],
+        [
+          "u",
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u",
+          "u_x"
+        ],
+        [
+          "u",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u_xx"
+        ],
+        [
+          "u_xxxx"
+        ]
+      ],
+      "identification_status": "observational_ambiguity",
+      "identification_failure": null,
+      "uncertainty": {
+        "method": "complete_trajectory_bootstrap_full_structure_refit",
+        "term_inclusion_frequencies": {
+          "1": 0.0,
+          "u": 0.75,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.25,
+          "u_xxx": 0.0,
+          "u_xxxx": 0.0,
+          "u*u_x": 0.0
+        },
+        "conditional_on_success_frequency": {
+          "1": 0.0,
+          "u": 0.75,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.25,
+          "u_xxx": 0.0,
+          "u_xxxx": 0.0,
+          "u*u_x": 0.0
+        },
+        "frequency_bounds_including_failures": {
+          "1": [
+            0.0,
+            0.0
+          ],
+          "u": [
+            0.75,
+            0.75
+          ],
+          "u^2": [
+            0.0,
+            0.0
+          ],
+          "u^3": [
+            0.0,
+            0.0
+          ],
+          "u_x": [
+            0.0,
+            0.0
+          ],
+          "u_xx": [
+            0.25,
+            0.25
+          ],
+          "u_xxx": [
+            0.0,
+            0.0
+          ],
+          "u_xxxx": [
+            0.0,
+            0.0
+          ],
+          "u*u_x": [
+            0.0,
+            0.0
+          ]
+        },
+        "raw_counts": {
+          "1": 0,
+          "u": 6,
+          "u^2": 0,
+          "u^3": 0,
+          "u_x": 0,
+          "u_xx": 2,
+          "u_xxx": 0,
+          "u_xxxx": 0,
+          "u*u_x": 0
+        },
+        "requested_replicates": 8,
+        "completed_replicates": 8,
+        "failed_replicates": 0,
+        "number_of_available_multiplicity_vectors": 35,
+        "calibrated": false,
+        "probability_claimed": false,
+        "confidence_interval_claimed": false,
+        "independent_physical_experiments": 4,
+        "resampling_adds_physical_evidence": false,
+        "limited_data_warning": "Few complete trajectories; repeated bootstrap draws do not create independent evidence.",
+        "reference_used": false,
+        "final_used": false
+      },
+      "minimal_near_supports": [
+        [
+          "u"
+        ]
+      ],
+      "recovery_required": false,
+      "failure": null,
+      "frequency_calibrated": false,
+      "final_opened": false,
+      "ontology_version": 1,
+      "graph_facts": 3,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "graph_conflicts": [],
+      "pending_ontology_changes": 0,
+      "event_count": 10,
+      "event_head": "cc0f6879c5065cd45b6dd62c0d39830bc88c9dce2d55c8b8919f9785ff79f0a0"
+    },
+    "is_error": false,
+    "duration_seconds": 2.0442544409997936
+  },
+  {
+    "step": 15,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "identified",
+      "state_head": "cc0f6879c5065cd45b6dd62c0d39830bc88c9dce2d55c8b8919f9785ff79f0a0",
+      "remaining_experiments": 1,
+      "next_role": "experiment_agent",
+      "next_tool": "experiment_propose",
+      "next_arguments": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.0080547839997962
+  },
+  {
+    "step": 16,
+    "planned_role": "experiment_agent",
+    "tool": "experiment_propose",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "id": "0007651732c0205388c725f96002ce2abd4877f37babd7eac11bfb9a999fd2d4",
+      "action": {
+        "id": "fixed-rich-1",
+        "a": [
+          0.17663273708651264,
+          -0.04052716890428186,
+          -0.17663273708651261,
+          0.17663273708651264,
+          0.04052716890428178,
+          -0.1766327370865128
+        ],
+        "b": [
+          0.14877570205735963,
+          0.22735628848557748,
+          -0.14877570205735963,
+          0.14877570205735963,
+          -0.2273562884855775,
+          -0.14877570205735938
+        ]
+      },
+      "reason": "Predetermined rich excitation.",
+      "policy": "fixed_rich",
+      "diagnostics": {
+        "policy": "fixed_rich",
+        "selected_action": {
+          "id": "fixed-rich-1",
+          "a": [
+            0.17663273708651264,
+            -0.04052716890428186,
+            -0.17663273708651261,
+            0.17663273708651264,
+            0.04052716890428178,
+            -0.1766327370865128
+          ],
+          "b": [
+            0.14877570205735963,
+            0.22735628848557748,
+            -0.14877570205735963,
+            0.14877570205735963,
+            -0.2273562884855775,
+            -0.14877570205735938
+          ]
+        },
+        "selected_action_id": "fixed-rich-1",
+        "status": "selected",
+        "reason": "Predetermined rich excitation.",
+        "fallback_used": false,
+        "scores": [
+          {
+            "action_id": "fixed-rich-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-2",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-3",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-00",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-01",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-02",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-03",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-04",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-05",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-06",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-07",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-08",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-09",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-10",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-11",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-12",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-13",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-14",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-15",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-1-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-1-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-2-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-2-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-3-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-3-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-4-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-4-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-5-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-5-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-6-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-6-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          }
+        ],
+        "raw_committee_members": 29,
+        "distinct_coefficient_vectors": 29,
+        "structure_count": 13,
+        "committee": [
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32899325135720997
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-b1bdd64ea79a7d43"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32899325135720997,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32802580789546587
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-f48f48f82fe6c312"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32802580789546587,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32767034288498514
+              },
+              {
+                "name": "u^2",
+                "coefficient": -0.0021104369972055736
+              },
+              {
+                "name": "u^3",
+                "coefficient": 0.008238759708849859
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.0004160923283666323
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -4.470944097266724e-06
+              }
+            ],
+            "support": [
+              "u",
+              "u^2",
+              "u^3",
+              "u_x",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-59f40a895dbb4140"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32767034288498514,
+              -0.0021104369972055736,
+              0.008238759708849859,
+              0.0004160923283666323,
+              0.0,
+              0.0,
+              -4.470944097266724e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.3273115882086291
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-f30b4997eab7a71c"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.3273115882086291,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.3273115882086291
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.0004160922402380506
+              }
+            ],
+            "support": [
+              "u",
+              "u_x"
+            ],
+            "candidate_ids": [
+              "committee-387b815d692d37ef"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.3273115882086291,
+              0.0,
+              0.0,
+              0.0004160922402380506,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32705884224842297
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-522f429e1c0279f7"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32705884224842297,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32645039323895214
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-f19c489414d56b2e"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32645039323895214,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.3260233673039704
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.0004160922402380506
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -4.527559291505764e-06
+              }
+            ],
+            "support": [
+              "u",
+              "u_x",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-f2645bae4a455991"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.3260233673039704,
+              0.0,
+              0.0,
+              0.0004160922402380506,
+              0.0,
+              0.0,
+              -4.527559291505764e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.3257153192669226
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-ad559667505de394"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.3257153192669226,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u",
+                "coefficient": -0.32474866498306487
+              }
+            ],
+            "support": [
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-09aa438d0511ddec"
+            ],
+            "coefficient_vector": [
+              0.0,
+              -0.32474866498306487,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.32571791291628194
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-452476f7c88ec2aa"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.32571791291628194,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3247517558564654
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-d09e7cd3fa19f137"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3247517558564654,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.3247517558564654
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-c3c397ec037d2721"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3247517558564654,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xx",
+                "coefficient": 0.32571791291628194
+              }
+            ],
+            "support": [
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-271171a8ddb8ae92"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.32571791291628194,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.000522818586817379
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32846978831920204
+              },
+              {
+                "name": "u^3",
+                "coefficient": 0.0101488075455135
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.00036013658909827596
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -4.274482696464116e-06
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^3",
+              "u_x",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-ae6cd4260a866ba5"
+            ],
+            "coefficient_vector": [
+              0.000522818586817379,
+              -0.32846978831920204,
+              0.0,
+              0.0101488075455135,
+              0.00036013658909827596,
+              0.0,
+              0.0,
+              -4.274482696464116e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0005229100564735466
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32669494991894793
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -3.815352011352468e-06
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-3ced3ecf18dcdc12"
+            ],
+            "coefficient_vector": [
+              0.0005229100564735466,
+              -0.32669494991894793,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -3.815352011352468e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0005229412586010074
+              },
+              {
+                "name": "u",
+                "coefficient": -0.3270592465979093
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-e5b16ca8a57d3316"
+            ],
+            "coefficient_vector": [
+              0.0005229412586010074,
+              -0.3270592465979093,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0005554018084342992
+              },
+              {
+                "name": "u",
+                "coefficient": -0.3260175934131017
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.00021067244356911898
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": -4.174463130965308e-06
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -4.533697874541451e-06
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_x",
+              "u_xxx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-c9767ff4fb9b2293"
+            ],
+            "coefficient_vector": [
+              0.0005554018084342992,
+              -0.3260175934131017,
+              0.0,
+              0.0,
+              0.00021067244356911898,
+              0.0,
+              -4.174463130965308e-06,
+              -4.533697874541451e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0005554018084342993
+              },
+              {
+                "name": "u",
+                "coefficient": -0.3260175934131017
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -4.533697874541365e-06
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-4a3e43882500767d"
+            ],
+            "coefficient_vector": [
+              0.0005554018084342993,
+              -0.3260175934131017,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -4.533697874541365e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0005554214623345206
+              },
+              {
+                "name": "u",
+                "coefficient": -0.326450620892671
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-a7f21e1d30deb976"
+            ],
+            "coefficient_vector": [
+              0.0005554214623345206,
+              -0.326450620892671,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0006086750339695098
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32777067217720895
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": -1.129293155795304e-05
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -2.6745397051205276e-06
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-6a6fe0c1ee4d74b9"
+            ],
+            "coefficient_vector": [
+              0.0006086750339695098,
+              -0.32777067217720895,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -1.129293155795304e-05,
+              -2.6745397051205276e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0006086750339695098
+              },
+              {
+                "name": "u",
+                "coefficient": -0.3277706721772088
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -2.6745397051201935e-06
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-9b318663a18d7124"
+            ],
+            "coefficient_vector": [
+              0.0006086750339695098,
+              -0.3277706721772088,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -2.6745397051201935e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0006086888157179392
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32802610445106256
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-85916eec89192d14"
+            ],
+            "coefficient_vector": [
+              0.0006086888157179392,
+              -0.32802610445106256,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0006943718318333825
+              },
+              {
+                "name": "u",
+                "coefficient": -0.3288469305706421
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": -1.1120065451841352e-05
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -1.5331593750272483e-06
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-48b12a782cba61a7"
+            ],
+            "coefficient_vector": [
+              0.0006943718318333825,
+              -0.3288469305706421,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -1.1120065451841352e-05,
+              -1.5331593750272483e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0006943718318333825
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32884693057064207
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -1.5331593750272286e-06
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-48c215e04e607481"
+            ],
+            "coefficient_vector": [
+              0.0006943718318333825,
+              -0.32884693057064207,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -1.5331593750272286e-06,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0006943750918800416
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32899339095781877
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-629d42e85297970c"
+            ],
+            "coefficient_vector": [
+              0.0006943750918800416,
+              -0.32899339095781877,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.000966434680255957
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.3257179129162819
+              }
+            ],
+            "support": [
+              "1",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-26d55c642fe9ee43"
+            ],
+            "coefficient_vector": [
+              0.000966434680255957,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.3257179129162819,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.000966434680255957
+              },
+              {
+                "name": "u_xx",
+                "coefficient": 0.3257179129162819
+              }
+            ],
+            "support": [
+              "1",
+              "u_xx"
+            ],
+            "candidate_ids": [
+              "committee-8a0d6970494a557a"
+            ],
+            "coefficient_vector": [
+              0.000966434680255957,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3257179129162819,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0009783138130379128
+              },
+              {
+                "name": "u",
+                "coefficient": -0.32571564153928345
+              }
+            ],
+            "support": [
+              "1",
+              "u"
+            ],
+            "candidate_ids": [
+              "committee-8b0cd8416b131620"
+            ],
+            "coefficient_vector": [
+              0.0009783138130379128,
+              -0.32571564153928345,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "available_actions": 31,
+        "excluded_action_ids": [
+          "fixed-rich"
+        ],
+        "cost_units": "caller_declared_cost",
+        "noise_estimate": {
+          "estimated_spatial_variance": 1.5855022354427527e-05,
+          "per_trajectory": [
+            {
+              "training_trajectory": 0,
+              "estimated_spatial_variance": 1.552351433929984e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 1,
+              "estimated_spatial_variance": 1.645361608068562e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 2,
+              "estimated_spatial_variance": 1.6048765690267165e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 3,
+              "estimated_spatial_variance": 1.539419330745748e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            }
+          ],
+          "aggregation": "equal trajectory mean variance",
+          "true_noise_used": false,
+          "physical_upper_band_signal_can_bias_estimate": true
+        },
+        "acquisition_times": [
+          0.0,
+          0.1,
+          0.2
+        ],
+        "acquisition_forecast_duration": 0.2,
+        "initial_frame_scored": false,
+        "model_forecast_attempts": 0,
+        "model_forecast_failures": 0,
+        "actual_experiment_queries": 0,
+        "reference_used": false,
+        "prospective_observations_used": false,
+        "calibrated_probability_or_information_gain_claimed": false,
+        "identification_certainty_claimed": false,
+        "fixed_action_order": [
+          "fixed-rich-1",
+          "fixed-rich-2",
+          "fixed-rich-3",
+          "mixture-07",
+          "mixture-04",
+          "mixture-02",
+          "mixture-10",
+          "mixture-06",
+          "mixture-01",
+          "mixture-11",
+          "mixture-15",
+          "mixture-00",
+          "mixture-05",
+          "mixture-13",
+          "mixture-03",
+          "mixture-08",
+          "mixture-09",
+          "mixture-12",
+          "mixture-14",
+          "single-1-0",
+          "single-1-1",
+          "single-2-0",
+          "single-2-1",
+          "single-3-0",
+          "single-3-1",
+          "single-4-0",
+          "single-4-1",
+          "single-5-0",
+          "single-5-1",
+          "single-6-0",
+          "single-6-1"
+        ],
+        "compute_seconds": 0.03073175400004402
+      },
+      "measurement_cost": 7104,
+      "is_physical_instruction": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.07653326799936622
+  },
+  {
+    "step": 17,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "proposed",
+      "state_head": "ad452708bcb366f61bf51fa042b2f3aedd6c3352cde379c6b8c8967b7929e946",
+      "remaining_experiments": 1,
+      "next_role": "experiment_agent",
+      "next_tool": "experiment_acquire",
+      "next_arguments": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf",
+        "proposal_id": "0007651732c0205388c725f96002ce2abd4877f37babd7eac11bfb9a999fd2d4"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.003968646000430454
+  },
+  {
+    "step": 18,
+    "planned_role": "experiment_agent",
+    "tool": "experiment_acquire",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "proposal_id": "0007651732c0205388c725f96002ce2abd4877f37babd7eac11bfb9a999fd2d4"
+    },
+    "result": {
+      "query": {
+        "action": {
+          "a": [
+            0.17663273708651264,
+            -0.04052716890428186,
+            -0.17663273708651261,
+            0.17663273708651264,
+            0.04052716890428178,
+            -0.1766327370865128
+          ],
+          "b": [
+            0.14877570205735963,
+            0.22735628848557748,
+            -0.14877570205735963,
+            0.14877570205735963,
+            -0.2273562884855775,
+            -0.14877570205735938
+          ],
+          "id": "fixed-rich-1"
+        },
+        "charged_experiments": 1,
+        "proposal_id": "0007651732c0205388c725f96002ce2abd4877f37babd7eac11bfb9a999fd2d4",
+        "status": "observed",
+        "observation": {
+          "file": "0e420da66ce2451991c10786ce7b46cf/query-2.npz",
+          "sha256": "b7a21dbfabac88478546230a7ed118a16d06d224c75c17a818d1b32705f60d73"
+        },
+        "receipt": {
+          "experiments": 1,
+          "measurement_values": 7104,
+          "measured_frames": 111,
+          "measured_spatial_points": 64,
+          "prefix_frames": 11,
+          "future_frames": 101,
+          "history_endpoint_counted_once": true,
+          "future_duration": 1.0,
+          "action_sha256": "f4b434e36f7979c95d7f55925e8a395ed0ac16fa1dc27efa3d042fa5dfa4ce2e",
+          "observed_field_sha256": "8ab466b550265e001f649fc594c776344f4dd5f6985a74a580344c255e0606c6",
+          "is_measured_physical_data": false
+        }
+      },
+      "idempotent_replay": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.01946937100001378
+  },
+  {
+    "step": 19,
+    "planned_role": "pde_agent",
+    "tool": "pde_identify",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "identified",
+      "origin": "controlled_synthetic_demo",
+      "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+      "budget_limit": 7,
+      "charged_experiments": 7,
+      "measurement_scalars_charged": 49728,
+      "training_trajectories": 5,
+      "development_trajectories": 2,
+      "policy": "fixed_rich",
+      "selected_equation": "u_t = - 0.3269027039 u",
+      "selected_terms": [
+        {
+          "name": "u",
+          "coefficient": -0.3269027039106217
+        }
+      ],
+      "candidate_supports": [
+        [
+          "1",
+          "u"
+        ],
+        [
+          "1",
+          "u",
+          "u^2",
+          "u_x",
+          "u_xx",
+          "u_xxx",
+          "u*u_x"
+        ],
+        [
+          "1",
+          "u",
+          "u^3",
+          "u_x",
+          "u_xx"
+        ],
+        [
+          "1",
+          "u",
+          "u_x",
+          "u_xx"
+        ],
+        [
+          "1",
+          "u",
+          "u_x",
+          "u_xx",
+          "u_xxx",
+          "u*u_x"
+        ],
+        [
+          "1",
+          "u",
+          "u_x",
+          "u_xxx"
+        ],
+        [
+          "1",
+          "u",
+          "u_x",
+          "u_xxx",
+          "u*u_x"
+        ],
+        [
+          "1",
+          "u",
+          "u_xxx"
+        ],
+        [
+          "u"
+        ],
+        [
+          "u",
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u",
+          "u^2",
+          "u_x",
+          "u_xx"
+        ],
+        [
+          "u",
+          "u^3",
+          "u_x",
+          "u_xxx",
+          "u*u_x"
+        ],
+        [
+          "u",
+          "u^3",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u",
+          "u_x",
+          "u_xx"
+        ],
+        [
+          "u",
+          "u_x",
+          "u_xxx"
+        ],
+        [
+          "u",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u",
+          "u_xx"
+        ],
+        [
+          "u",
+          "u_xxx"
+        ],
+        [
+          "u",
+          "u_xxxx"
+        ]
+      ],
+      "identification_status": "observational_ambiguity",
+      "identification_failure": null,
+      "uncertainty": {
+        "method": "complete_trajectory_bootstrap_full_structure_refit",
+        "term_inclusion_frequencies": {
+          "1": 0.0,
+          "u": 1.0,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.0,
+          "u_xxx": 0.0,
+          "u_xxxx": 0.0,
+          "u*u_x": 0.0
+        },
+        "conditional_on_success_frequency": {
+          "1": 0.0,
+          "u": 1.0,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.0,
+          "u_xxx": 0.0,
+          "u_xxxx": 0.0,
+          "u*u_x": 0.0
+        },
+        "frequency_bounds_including_failures": {
+          "1": [
+            0.0,
+            0.0
+          ],
+          "u": [
+            1.0,
+            1.0
+          ],
+          "u^2": [
+            0.0,
+            0.0
+          ],
+          "u^3": [
+            0.0,
+            0.0
+          ],
+          "u_x": [
+            0.0,
+            0.0
+          ],
+          "u_xx": [
+            0.0,
+            0.0
+          ],
+          "u_xxx": [
+            0.0,
+            0.0
+          ],
+          "u_xxxx": [
+            0.0,
+            0.0
+          ],
+          "u*u_x": [
+            0.0,
+            0.0
+          ]
+        },
+        "raw_counts": {
+          "1": 0,
+          "u": 8,
+          "u^2": 0,
+          "u^3": 0,
+          "u_x": 0,
+          "u_xx": 0,
+          "u_xxx": 0,
+          "u_xxxx": 0,
+          "u*u_x": 0
+        },
+        "requested_replicates": 8,
+        "completed_replicates": 8,
+        "failed_replicates": 0,
+        "number_of_available_multiplicity_vectors": 126,
+        "calibrated": false,
+        "probability_claimed": false,
+        "confidence_interval_claimed": false,
+        "independent_physical_experiments": 5,
+        "resampling_adds_physical_evidence": false,
+        "limited_data_warning": null,
+        "reference_used": false,
+        "final_used": false
+      },
+      "minimal_near_supports": [
+        [
+          "u"
+        ]
+      ],
+      "recovery_required": false,
+      "failure": null,
+      "frequency_calibrated": false,
+      "final_opened": false,
+      "ontology_version": 1,
+      "graph_facts": 3,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "graph_conflicts": [],
+      "pending_ontology_changes": 0,
+      "event_count": 14,
+      "event_head": "a7228707314c43a4b0d9575d0ef3da75bb464af09286b9b85edc661c5646d58a"
+    },
+    "is_error": false,
+    "duration_seconds": 0.1508801060008409
+  },
+  {
+    "step": 20,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "identified",
+      "state_head": "a7228707314c43a4b0d9575d0ef3da75bb464af09286b9b85edc661c5646d58a",
+      "remaining_experiments": 0,
+      "next_role": "validation_agent",
+      "next_tool": "validation_freeze",
+      "next_arguments": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.005747049000092375
+  },
+  {
+    "step": 21,
+    "planned_role": "validation_agent",
+    "tool": "validation_freeze",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "model_sha256": "5c20123193b8c7d089c04dcf6b2ec41a3e48a0a0d4f438af3884ea96cef31d84",
+      "training": [
+        {
+          "file": "0e420da66ce2451991c10786ce7b46cf/train-0.npz",
+          "sha256": "6452d291658901815517ba8442411a7e809eecc5d5a81af5d67b266f9fe4d908"
+        },
+        {
+          "file": "0e420da66ce2451991c10786ce7b46cf/train-1.npz",
+          "sha256": "84f58dca6cdbc9e845a77d000e00199b7a92d95693464cddad349cdaf9a92219"
+        },
+        {
+          "file": "0e420da66ce2451991c10786ce7b46cf/train-2.npz",
+          "sha256": "655561bd2c8c1185a3ea0e8cfc40ff42c1676aa9b3daefb0d3f1e1bf0cbfda24"
+        },
+        {
+          "file": "0e420da66ce2451991c10786ce7b46cf/query-1.npz",
+          "sha256": "d85f6bce91e6eab0279120f4d465b1493c0df8035b0ef737755c386ec93da083"
+        },
+        {
+          "file": "0e420da66ce2451991c10786ce7b46cf/query-2.npz",
+          "sha256": "b7a21dbfabac88478546230a7ed118a16d06d224c75c17a818d1b32705f60d73"
+        }
+      ],
+      "development": [
+        {
+          "file": "0e420da66ce2451991c10786ce7b46cf/dev-0.npz",
+          "sha256": "31c30e16bc6e23ca18d1a7b62427d97e469db050098642b39048a9220c573f7e"
+        },
+        {
+          "file": "0e420da66ce2451991c10786ce7b46cf/dev-1.npz",
+          "sha256": "2a1052e0ca6b9d805b6971fdd610e6302ec0dc64fa5985ba04fbc876c15b88ad"
+        }
+      ],
+      "charged": 7,
+      "facts_sha256": "3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde",
+      "ontology_sha256": "f5e8a203b6bcb2356f80bb15bc9aba4fe048a50aa3980d7eb062c334d48508a2",
+      "setup_sha256": "ef87b35e83ed85b746219f3b5fb038a1eff79b26271c519dcbb1a211160d1666",
+      "sources": {
+        "active_study/__init__.py": "23a3b2c71fb042a40f3bf6b356d1e0f91811c7aa7e14a62dc8319f1f8ccdbba7",
+        "active_study/acquisition.py": "7c6b45b135bab7541aac4d34643f06fd1db23fa9cbc60e94285e5f1e2493d640",
+        "active_study/actions.py": "0ce7c6c91bdfd43869dadc71b0c973b5a7c4a8588a4150ef8d01ff300b295e16",
+        "active_study/app.py": "424509cafbf6ea8437baacde7aa99a713f2c52f654abc9d1a99a340e02d7140a",
+        "active_study/controller.py": "d80fe2aebbffd18120f2799f7d09858b55fdd3a433bdfda398279331b182d2af",
+        "active_study/engine.py": "79a7cbbdad3e79c9f9ebad6179aa52bf205db0a235c42c0da96e37261274634c",
+        "active_study/forecast.py": "b2cc6860b1bac2b9e585122140c8811c3f63c74f29f8932ec7a4606a849669c9",
+        "active_study/provider.py": "e57aca981abdbbafd77a831ca0479076b3b1e3f4058407666242aa44e21853a0",
+        "active_study/run.py": "2587e905447ca85252dfa70c631307afcc292b8a0514a481e498a5f258cef3c2",
+        "pde_discovery/__init__.py": "6430a32151716782cafc523a1ed2e6c6a5ee7741bdc89a39dde1baa48a669a7c",
+        "pde_discovery/__main__.py": "621b742c86f8ff05d12e46a153f1ccf09eb2603772d23c31642c7ea88e7fd8ff",
+        "pde_discovery/additive_experiment.py": "2657260ecb0eb502efbb702a2ae9ab7529d6a517291730672bf0eb8fe0001654",
+        "pde_discovery/app.py": "ca033ddfc6e25430bb5fb85a70ef139d08086e42ae795f3027c47850fc6a2d60",
+        "pde_discovery/controller.py": "d170b9d9147974c0f0785f10540fa4815fffc4b218bddfa25e19de40b8a645ce",
+        "pde_discovery/engine.py": "c7ccef837529d37d126cf6cbac0446b6316b427f7f4b88ef2ab053ed3d391bce",
+        "pde_discovery/external_experiment.py": "4f2838e7298cd2904f81bcc13027ae0b4281abe3ec73d10a01220ec9d0ce436a",
+        "pde_discovery/generic_engine.py": "09f966462d823ea23d68a211a34c1a5c499075a8599394d0f8d32417d36e670a",
+        "pde_discovery/generic_experiment.py": "e5ec3d9d25517ac1099c4b74d47c251915728fe0f48c8f89ee4001e9a4c2f9cf",
+        "pde_discovery/heat_identifiability.py": "c8be9a31c840c801f836a4c8df74fe1336a38ac261d10f42273c0b71c00b1a26",
+        "pde_discovery/real_benchmark.py": "8da244a69725dd65c5a8832092f92e7a4acbdcf9c9c78720aa315985e58b04d0",
+        "pde_discovery/real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04",
+        "pde_discovery/real_heat.py": "8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc",
+        "pde_discovery/real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1",
+        "pde_discovery/refined_experiment.py": "26ece449cb4307baf0690384312e6dd7795cd9bd55c569ab2465fbbb79a3a277",
+        "pde_discovery/simulator.py": "d35a953db0daf1f3f4f68c806172ae32984dd43cd3b83f37ca3bbe09bebfb1b9",
+        "coefficient_study/__init__.py": "1f0e05e3d66912a08002a8c2ceacae8a8c308632b63d1c7a0eee2f3cc9fd0f3a",
+        "coefficient_study/data.py": "4889761afa58fa08df4731777b13692fec98cd699cd2f302b091e5f7d2887a47",
+        "coefficient_study/engine.py": "6238186265d29b339936f6d642935affe85f64d9e42f3adba4a430c761bf4ecf",
+        "coefficient_study/generators.py": "4091a1d79f85145d3d2430f7eafe190280bd621a7c18a15bde6049a53023df11",
+        "coefficient_study/noise.py": "dd84fd7c60fb082a86d70dc32c6986d5ca4fb0369b9eaa6af8e0e1ad92ad4232",
+        "coefficient_study/run.py": "ab7911dd50b789469750419860461f9157e9b3daa91b0d7f60ff093951ace70b",
+        "coefficient_study/selection.py": "85ea4ae9dfa2c0d62f840d7f93c1fac1baec956a36c37c147fee5a9396b5e08c",
+        "prefix_study/__init__.py": "0407dbf22cbb7e931232daaf79727c6ad0b6c627f0c47dbf33aa0cf028ed660a",
+        "prefix_study/data.py": "5fd4acf36938cb15c0d3879fe3a8e66cd21d158f91656aef68f2444ef68edfb5",
+        "prefix_study/engine.py": "d9d144771bf43e067fafd7423d58577f6d8dab141eef99d431def36b015f1acf",
+        "prefix_study/forecast.py": "42b533728df0dab390b7d3fc8a8060e306348751a5c1b352a8e6335450417d1e",
+        "prefix_study/generators.py": "8f9059c1d609226ed4166cb465e8f81a2d728a1486b577cb7d8df7c0d30cc2be",
+        "prefix_study/run.py": "102e3dbb1c8c7c86cad1b69ce44a943cc2924bea0655844690962a809bc40a4d",
+        "five_study/__init__.py": "338c7608f5fab6a79789e96d94b49e72c9f6d51f555ba5def675c376e36a1e1e",
+        "five_study/data.py": "7cc8b9fc7099e62549deb10f6a48a51b70d30f691b01353ce6f1c985487a3fff",
+        "five_study/engine.py": "a516b35dcefcec5fd6b4191aee9bc174af744dbdd87cf9524e07766bb842b2a6",
+        "five_study/forecast.py": "0fe822ab050f0ab4572828f75490054819404b7bfded68d6b7e5e0ed6290aa4e",
+        "five_study/generators.py": "e167c9026cdb1ebcb9c4e8b71408159e2b71c526b5c78b2f2cdebac571374f03",
+        "five_study/initial.py": "abff6b772783472ea6a6a518231a279e92b2085fdbd86597971193c460f3badb",
+        "five_study/run.py": "a9742fc83bc88ef186aef02291277dfce350de8f255e0eb97c29591745d2484f",
+        "resolved_study/__init__.py": "21b20f27081fe2c9ffda4d95a4806d66dabe2b99faed7d57f6dc659cc31ab53d",
+        "resolved_study/data.py": "21be8902ab62f3482fb466738a6c2f96af7ad0df6839f0a783f04e83a5abcf75",
+        "resolved_study/forecast.py": "c0412cf5e5a27eac4b5558110fe6939bd1e666568b4743c99665b771bcc5cef4",
+        "resolved_study/generators.py": "95e3862c5c56712bd58e9e7adf5a427040c7424e9c0cd11f9b1d9e086529368f",
+        "resolved_study/run.py": "b72bd024765e2bdb4ca4d08b889e30bd9d7a1c22e37b2ad580ca8290ade0b2a6",
+        "resolved_study/selection.py": "7f93085fb10f7ef57c1c256b696a1fb1e9606290dea71e3a72c02d069335850d",
+        "weak_study/__init__.py": "ff8c034d2af458169e0058529c3c7b6b4903cd292fc1968ea8e00a6d804f07b8",
+        "weak_study/data.py": "59760dff581d23435b8d985d9142103b916583c04f4f5842d1c04b116a9398e9",
+        "weak_study/engine.py": "4a5344dbd203af8955d0962d480805ea7ba1c17729d26082365989e44d2409af",
+        "weak_study/generators.py": "ecefc5b5218681cffddc6aeb32b1305962317c6d104d72196c688b9e1022c56b",
+        "weak_study/run.py": "01f24a5f1a5de9bdeea1fcbc91600d21504704487fce2c453b2f54ed285bb380",
+        "l1_study/__init__.py": "f60f17fc53ea9b395ceb87b36dd1ea6a558138c806ce1f481d80880068215461",
+        "l1_study/engine.py": "e91f3dfb634c09eef1083097ad8247cfc23c6a9d7058e701675fb229669b512f",
+        "l1_study/fixtures.py": "0869c9838647bebea5cd8a589724422e062f93d1ac89c58f261442ef4d64e956",
+        "l1_study/gaussian_check.py": "9892a4330f72d756f58c315179e1e30bfe52bf60eb835c7697de7025a7004f51",
+        "l1_study/run.py": "0a23d9c7636b5d11ab1611c36438b09820b3d347c6fd3efea2226e3bc14accea",
+        "fusion_study/__init__.py": "25930ef372c6a0de2862ac3447407d42c947fb07d4345efa8bf9146ef8f1e5ed",
+        "fusion_study/data.py": "d96e790ce7c7a084331a5832b4111e1341999bb935000adba9cd88fb0da2c71e",
+        "fusion_study/engine.py": "25bed3f5f1b33f620a1be99d7810f8fbd3f5148817f9d69020ce42baf903fc1c",
+        "fusion_study/generators.py": "7f232406b83325ef7b5344887984575fea392ccb8bbd5b72d9187cf709cd02d9",
+        "fusion_study/run.py": "2d8f616c1f5eb3f5ce4fc846cdbc07e5286809de6a69f37f837899e72b40bffe",
+        "challenge_study/__init__.py": "cdc5673688815ae0d0780d284fd852c1fe42c1a43811f5898a265cd77325956a",
+        "challenge_study/data.py": "8455303f18bed732c568891d1c5fe0e467ae2aa5675f06a7ff82c55f31afa960",
+        "challenge_study/generators.py": "1f7d3329b0fe3e564113b6155018a5a6e3964d4223c5a58866e867404293cd4c",
+        "challenge_study/run.py": "61e8e4ff7ba5366e2a0cfc049c7d0cc9f01127a5765cbd96be4be9a65811ee9c",
+        "competition_agent/__init__.py": "2b924dd67033b8a60affc6dabc377a74cf7fca8559c1b0f298c1c7fe5ce11062",
+        "competition_agent/bundle.py": "094edfe51060baeffb742a477ec436e951a358892272d2df7c8f078bf601b7e0",
+        "competition_agent/demo.py": "bff96b94ca50a983cfc1d9da44e5a5f0ead4fa3c589823167297084164b56ef7",
+        "competition_agent/evaluate_demo.py": "5bbe8d5c175e9371bbdbefb91dd451205d99b384340d159a3ef05ada60663259",
+        "competition_agent/evidence_quality.py": "48948f9a0118f839a8f3f53df1f7d42312df89cf686d6ab18269f562a05ba8fd",
+        "competition_agent/make_document.py": "fbf56bc50c1cac9143ef872b10438fa8dbbe9798ce7d2360584e9d5742d70e32",
+        "competition_agent/mcp_server.py": "4f291b644466b1fd55252f88b575633aef2e2b85e39688437047f4ea2c7c8180",
+        "competition_agent/quality_probe.py": "364f05d825b29a1e7edae9d38669de0fb3ce70cfd372649105e023cd69c4c8b0",
+        "competition_agent/reporting.py": "777b0581138b20a321b13bf4d152e4c998a36a5e4396234012d6034e6dc6273c",
+        "competition_agent/service.py": "8f68e4ab0f87b3f0e0ca337bc27eb73bcfbc5b391718aff88eed4e8bcf93dea6"
+      },
+      "final_opened": false,
+      "sha256": "9d257f4e94f005f89d7e24d666079f3bf2825176766b843a483572157ad6f8e9"
+    },
+    "is_error": false,
+    "duration_seconds": 0.04952123400016717
+  },
+  {
+    "step": 22,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "frozen",
+      "state_head": "6445006c6319b0c02e712532992e5b6e925170b321f7fa1541b04a8bcf66c874",
+      "remaining_experiments": 0,
+      "next_role": "validation_agent",
+      "next_tool": "validation_evaluate",
+      "next_arguments": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": "9d257f4e94f005f89d7e24d666079f3bf2825176766b843a483572157ad6f8e9",
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.005386163999901328
+  },
+  {
+    "step": 23,
+    "planned_role": "validation_agent",
+    "tool": "validation_evaluate",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "origin": "controlled_synthetic_demo",
+      "nexent_live_llm_verified": false,
+      "equation": "u_t = - 0.3269027039 u",
+      "terms": [
+        {
+          "coefficient": -0.3269027039106217,
+          "name": "u"
+        }
+      ],
+      "structure": {
+        "status": "evaluated",
+        "exact_support": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "true_positive_terms": [
+          "u"
+        ],
+        "missing_terms": [],
+        "spurious_terms": [],
+        "coefficient_relative_l2": 0.0014198124340925055,
+        "coefficient_comparison": [
+          {
+            "name": "u",
+            "reference": -0.32643922144503856,
+            "discovered": -0.3269027039106217,
+            "absolute_error": 0.00046348246558314266,
+            "relative_error": 0.0014198124340925055
+          }
+        ],
+        "reference_terms": [
+          {
+            "name": "u",
+            "coefficient": -0.32643922144503856
+          }
+        ],
+        "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+      },
+      "max_true_coefficient_relative_error": 0.0014198124340925055,
+      "numerical_joint_success": true,
+      "joint_success_rule": "exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%",
+      "predictions": [
+        {
+          "index": 0,
+          "status": "evaluated",
+          "metrics": {
+            "rmse": 0.00023654490282267466,
+            "mae": 0.00019241710433507583,
+            "max_absolute_error": 0.000610100858940088,
+            "relative_l2": 0.0007141382139025154,
+            "excluded_initial_frame": true,
+            "scored_frames": 100,
+            "space_points": 64
+          },
+          "prefix_frames": 11,
+          "duration": 1.0
+        },
+        {
+          "index": 1,
+          "status": "evaluated",
+          "metrics": {
+            "rmse": 0.00035603204122219807,
+            "mae": 0.0002876820001907603,
+            "max_absolute_error": 0.000867197559549282,
+            "relative_l2": 0.0010748745078691874,
+            "excluded_initial_frame": true,
+            "scored_frames": 100,
+            "space_points": 64
+          },
+          "prefix_frames": 11,
+          "duration": 1.0
+        },
+        {
+          "index": 2,
+          "status": "evaluated",
+          "metrics": {
+            "rmse": 0.0003681246898351924,
+            "mae": 0.0003165933306373478,
+            "max_absolute_error": 0.0007883883858387231,
+            "relative_l2": 0.0011113826819147234,
+            "excluded_initial_frame": true,
+            "scored_frames": 100,
+            "space_points": 64
+          },
+          "prefix_frames": 11,
+          "duration": 1.0
+        }
+      ],
+      "evaluation_slots": 3,
+      "evaluation_reference_trajectories_generated": 3,
+      "evaluation_measurement_scalars": 21312,
+      "discovery_budget_excludes_final_evaluation": true,
+      "prediction_failure_slots": 0,
+      "mean_prediction_error": 0.0009667984678954755,
+      "prediction_5pct_passed": true,
+      "evidence_ready": true,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "evidence_conflicts": [],
+      "pending_ontology_review": false,
+      "evidence_sources": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "graph": [
+        {
+          "citation": {
+            "end_char": 115,
+            "end_line": 2,
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 80
+          },
+          "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+          "object": "demo_field",
+          "predicate": "records_field",
+          "quote": "demo_grid records_field demo_field.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid"
+        },
+        {
+          "citation": {
+            "end_char": 101,
+            "end_line": 2,
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 66
+          },
+          "id": "39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974",
+          "object": "dimensionless",
+          "predicate": "uses_unit",
+          "quote": "demo_field uses_unit dimensionless.",
+          "relation_assertion_verified": true,
+          "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "status": "source_span_verified",
+          "subject": "demo_field"
+        },
+        {
+          "citation": {
+            "end_char": 148,
+            "end_line": 3,
+            "line": 3,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 116
+          },
+          "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+          "object": "periodic",
+          "predicate": "has_boundary",
+          "quote": "demo_grid has_boundary periodic.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid"
+        }
+      ],
+      "freeze_sha256": "9d257f4e94f005f89d7e24d666079f3bf2825176766b843a483572157ad6f8e9",
+      "measurement_scalars_charged": 49728,
+      "charged_experiments": 7,
+      "frequency_is_probability": false,
+      "real_industry_validation": false,
+      "final_used_for_discovery": false,
+      "note": "This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value."
+    },
+    "is_error": false,
+    "duration_seconds": 0.16806268300024385
+  },
+  {
+    "step": 24,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "0e420da66ce2451991c10786ce7b46cf",
+      "phase": "validated",
+      "state_head": "3c998d0c3a159897f0159ca90153cd041c30e74886730aa74be4c946eb07b3c8",
+      "remaining_experiments": 0,
+      "next_role": null,
+      "next_tool": null,
+      "next_arguments": {},
+      "required_inputs": [],
+      "arguments_complete": false,
+      "stop": true,
+      "terminal": true,
+      "reason": "terminal",
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": true,
+      "source_ids": [
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": "9d257f4e94f005f89d7e24d666079f3bf2825176766b843a483572157ad6f8e9",
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": true
+    },
+    "is_error": false,
+    "duration_seconds": 0.006744833999619004
+  },
+  {
+    "step": 25,
+    "planned_role": "validation_agent",
+    "tool": "evidence_get",
+    "arguments": {
+      "case_id": "0e420da66ce2451991c10786ce7b46cf"
+    },
+    "result": {
+      "status": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf",
+        "phase": "validated",
+        "origin": "controlled_synthetic_demo",
+        "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+        "budget_limit": 7,
+        "charged_experiments": 7,
+        "measurement_scalars_charged": 49728,
+        "training_trajectories": 5,
+        "development_trajectories": 2,
+        "policy": "fixed_rich",
+        "selected_equation": "u_t = - 0.3269027039 u",
+        "selected_terms": [
+          {
+            "coefficient": -0.3269027039106217,
+            "name": "u"
+          }
+        ],
+        "candidate_supports": [
+          [
+            "1",
+            "u"
+          ],
+          [
+            "1",
+            "u",
+            "u^2",
+            "u_x",
+            "u_xx",
+            "u_xxx",
+            "u*u_x"
+          ],
+          [
+            "1",
+            "u",
+            "u^3",
+            "u_x",
+            "u_xx"
+          ],
+          [
+            "1",
+            "u",
+            "u_x",
+            "u_xx"
+          ],
+          [
+            "1",
+            "u",
+            "u_x",
+            "u_xx",
+            "u_xxx",
+            "u*u_x"
+          ],
+          [
+            "1",
+            "u",
+            "u_x",
+            "u_xxx"
+          ],
+          [
+            "1",
+            "u",
+            "u_x",
+            "u_xxx",
+            "u*u_x"
+          ],
+          [
+            "1",
+            "u",
+            "u_xxx"
+          ],
+          [
+            "u"
+          ],
+          [
+            "u",
+            "u^2",
+            "u^3",
+            "u_x",
+            "u_xxxx"
+          ],
+          [
+            "u",
+            "u^2",
+            "u_x",
+            "u_xx"
+          ],
+          [
+            "u",
+            "u^3",
+            "u_x",
+            "u_xxx",
+            "u*u_x"
+          ],
+          [
+            "u",
+            "u^3",
+            "u_x",
+            "u_xxxx"
+          ],
+          [
+            "u",
+            "u_x",
+            "u_xx"
+          ],
+          [
+            "u",
+            "u_x",
+            "u_xxx"
+          ],
+          [
+            "u",
+            "u_x",
+            "u_xxxx"
+          ],
+          [
+            "u",
+            "u_xx"
+          ],
+          [
+            "u",
+            "u_xxx"
+          ],
+          [
+            "u",
+            "u_xxxx"
+          ]
+        ],
+        "identification_status": "observational_ambiguity",
+        "identification_failure": null,
+        "uncertainty": {
+          "calibrated": false,
+          "completed_replicates": 8,
+          "conditional_on_success_frequency": {
+            "1": 0.0,
+            "u": 1.0,
+            "u*u_x": 0.0,
+            "u^2": 0.0,
+            "u^3": 0.0,
+            "u_x": 0.0,
+            "u_xx": 0.0,
+            "u_xxx": 0.0,
+            "u_xxxx": 0.0
+          },
+          "confidence_interval_claimed": false,
+          "failed_replicates": 0,
+          "final_used": false,
+          "frequency_bounds_including_failures": {
+            "1": [
+              0.0,
+              0.0
+            ],
+            "u": [
+              1.0,
+              1.0
+            ],
+            "u*u_x": [
+              0.0,
+              0.0
+            ],
+            "u^2": [
+              0.0,
+              0.0
+            ],
+            "u^3": [
+              0.0,
+              0.0
+            ],
+            "u_x": [
+              0.0,
+              0.0
+            ],
+            "u_xx": [
+              0.0,
+              0.0
+            ],
+            "u_xxx": [
+              0.0,
+              0.0
+            ],
+            "u_xxxx": [
+              0.0,
+              0.0
+            ]
+          },
+          "independent_physical_experiments": 5,
+          "limited_data_warning": null,
+          "method": "complete_trajectory_bootstrap_full_structure_refit",
+          "number_of_available_multiplicity_vectors": 126,
+          "probability_claimed": false,
+          "raw_counts": {
+            "1": 0,
+            "u": 8,
+            "u*u_x": 0,
+            "u^2": 0,
+            "u^3": 0,
+            "u_x": 0,
+            "u_xx": 0,
+            "u_xxx": 0,
+            "u_xxxx": 0
+          },
+          "reference_used": false,
+          "requested_replicates": 8,
+          "resampling_adds_physical_evidence": false,
+          "term_inclusion_frequencies": {
+            "1": 0.0,
+            "u": 1.0,
+            "u*u_x": 0.0,
+            "u^2": 0.0,
+            "u^3": 0.0,
+            "u_x": 0.0,
+            "u_xx": 0.0,
+            "u_xxx": 0.0,
+            "u_xxxx": 0.0
+          }
+        },
+        "minimal_near_supports": [
+          [
+            "u"
+          ]
+        ],
+        "recovery_required": false,
+        "failure": null,
+        "frequency_calibrated": false,
+        "final_opened": true,
+        "ontology_version": 1,
+        "graph_facts": 3,
+        "evidence_quality": {
+          "metadata_ready": true,
+          "blockers": [],
+          "required_metadata": [
+            {
+              "subject": "demo_grid",
+              "predicate": "records_field",
+              "object": "demo_field"
+            },
+            {
+              "subject": "demo_field",
+              "predicate": "uses_unit",
+              "object": "dimensionless"
+            },
+            {
+              "subject": "demo_grid",
+              "predicate": "has_boundary",
+              "object": "periodic"
+            }
+          ],
+          "asserted_facts": 3,
+          "total_facts": 3,
+          "scope": "fixed synthetic observation metadata consistency only",
+          "semantic_truth_verified": false,
+          "industrial_readiness": false
+        },
+        "graph_conflicts": [],
+        "pending_ontology_changes": 0,
+        "event_count": 17,
+        "event_head": "3c998d0c3a159897f0159ca90153cd041c30e74886730aa74be4c946eb07b3c8"
+      },
+      "events": [
+        {
+          "actor": "asset_agent",
+          "at_utc": "2026-11-04T16:59:56.681940+00:00",
+          "details": {
+            "experiments": 5,
+            "is_physical_data": false
+          },
+          "operation": "initial_budget_charged",
+          "previous": null,
+          "sequence": 1,
+          "sha256": "68e0378ac720b531d30e3e2a25855e5d2937c5fe36118ba0a781b0428220c6f6"
+        },
+        {
+          "actor": "asset_agent",
+          "at_utc": "2026-11-04T16:59:56.740429+00:00",
+          "details": {
+            "observations": 5
+          },
+          "operation": "initial_observations_registered",
+          "previous": "68e0378ac720b531d30e3e2a25855e5d2937c5fe36118ba0a781b0428220c6f6",
+          "sequence": 2,
+          "sha256": "71c0b4369696b460d70ae51557879b6ddb846a67474e6a42d490319fc4eb7a04"
+        },
+        {
+          "actor": "asset_agent",
+          "at_utc": "2026-11-04T16:59:56.751878+00:00",
+          "details": {
+            "source_ids": [
+              "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+              "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d",
+              "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9"
+            ]
+          },
+          "operation": "documents_ingested",
+          "previous": "71c0b4369696b460d70ae51557879b6ddb846a67474e6a42d490319fc4eb7a04",
+          "sequence": 3,
+          "sha256": "1bac3c6fe18b834e8388e1635f492c2fa0ff74901cb742935aa7205d9cf28012"
+        },
+        {
+          "actor": "graph_agent",
+          "at_utc": "2026-11-04T16:59:56.764195+00:00",
+          "details": {
+            "proposal_id": "3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde",
+            "unknown_predicates": []
+          },
+          "operation": "graph_proposed",
+          "previous": "1bac3c6fe18b834e8388e1635f492c2fa0ff74901cb742935aa7205d9cf28012",
+          "sequence": 4,
+          "sha256": "b35e944488d2a3541dabbca55ba50ff25eabb3864d7f0d3f5cb25cd56d4511ef"
+        },
+        {
+          "actor": "graph_agent",
+          "at_utc": "2026-11-04T16:59:56.769983+00:00",
+          "details": {
+            "human_semantic_review": false,
+            "proposal_id": "3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde"
+          },
+          "operation": "source_grounded_graph_applied",
+          "previous": "b35e944488d2a3541dabbca55ba50ff25eabb3864d7f0d3f5cb25cd56d4511ef",
+          "sequence": 5,
+          "sha256": "59529e73c476e5e89d3b99df51caefd80b4b76442d1bbd4b8c5598a5e9082ff9"
+        },
+        {
+          "actor": "pde_agent",
+          "at_utc": "2026-11-04T17:00:01.329438+00:00",
+          "details": {
+            "final_used": false,
+            "model_sha256": "a583b0e54fc306bf40b9131f1301e9a85b920ed71f72dc33f5ec7d92d2005d5c",
+            "training_hashes": [
+              "6452d291658901815517ba8442411a7e809eecc5d5a81af5d67b266f9fe4d908",
+              "84f58dca6cdbc9e845a77d000e00199b7a92d95693464cddad349cdaf9a92219",
+              "655561bd2c8c1185a3ea0e8cfc40ff42c1676aa9b3daefb0d3f1e1bf0cbfda24"
+            ]
+          },
+          "operation": "identify",
+          "previous": "59529e73c476e5e89d3b99df51caefd80b4b76442d1bbd4b8c5598a5e9082ff9",
+          "sequence": 6,
+          "sha256": "60551074b6fb4b92211f8573a641a33af4657a71e6d19298d3af070c9360f99f"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-04T17:00:01.414612+00:00",
+          "details": {
+            "proposal_id": "ddbdfc34cc69a21687004493705f2e97a4b56d2b0061641277c86a5c9d796826"
+          },
+          "operation": "propose",
+          "previous": "60551074b6fb4b92211f8573a641a33af4657a71e6d19298d3af070c9360f99f",
+          "sequence": 7,
+          "sha256": "d305f926e951fbff0612d6937230c8a1b4afa5dd3750861b7698f5f7e4707821"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-04T17:00:01.438645+00:00",
+          "details": {
+            "charged_experiments": 6,
+            "proposal_id": "ddbdfc34cc69a21687004493705f2e97a4b56d2b0061641277c86a5c9d796826"
+          },
+          "operation": "query_charged_before_execution",
+          "previous": "d305f926e951fbff0612d6937230c8a1b4afa5dd3750861b7698f5f7e4707821",
+          "sequence": 8,
+          "sha256": "27ed23dbd9a7a087683197ae327a153a0953029eff6e472826c6fed78b62b983"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-04T17:00:01.453041+00:00",
+          "details": {
+            "proposal_id": "ddbdfc34cc69a21687004493705f2e97a4b56d2b0061641277c86a5c9d796826",
+            "status": "observed"
+          },
+          "operation": "query_completed",
+          "previous": "27ed23dbd9a7a087683197ae327a153a0953029eff6e472826c6fed78b62b983",
+          "sequence": 9,
+          "sha256": "69b87738f6a113fb0fc4222ffb66b50b0869289a2a1092b6f51cfeadb1fc1d07"
+        },
+        {
+          "actor": "pde_agent",
+          "at_utc": "2026-11-04T17:00:03.495666+00:00",
+          "details": {
+            "final_used": false,
+            "model_sha256": "39f25c7cd9a8e7571c0b7518006001825f1225642e827fcf21067dfc9a468f74",
+            "training_hashes": [
+              "6452d291658901815517ba8442411a7e809eecc5d5a81af5d67b266f9fe4d908",
+              "84f58dca6cdbc9e845a77d000e00199b7a92d95693464cddad349cdaf9a92219",
+              "655561bd2c8c1185a3ea0e8cfc40ff42c1676aa9b3daefb0d3f1e1bf0cbfda24",
+              "d85f6bce91e6eab0279120f4d465b1493c0df8035b0ef737755c386ec93da083"
+            ]
+          },
+          "operation": "identify",
+          "previous": "69b87738f6a113fb0fc4222ffb66b50b0869289a2a1092b6f51cfeadb1fc1d07",
+          "sequence": 10,
+          "sha256": "cc0f6879c5065cd45b6dd62c0d39830bc88c9dce2d55c8b8919f9785ff79f0a0"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-04T17:00:03.586069+00:00",
+          "details": {
+            "proposal_id": "0007651732c0205388c725f96002ce2abd4877f37babd7eac11bfb9a999fd2d4"
+          },
+          "operation": "propose",
+          "previous": "cc0f6879c5065cd45b6dd62c0d39830bc88c9dce2d55c8b8919f9785ff79f0a0",
+          "sequence": 11,
+          "sha256": "ad452708bcb366f61bf51fa042b2f3aedd6c3352cde379c6b8c8967b7929e946"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-04T17:00:03.609108+00:00",
+          "details": {
+            "charged_experiments": 7,
+            "proposal_id": "0007651732c0205388c725f96002ce2abd4877f37babd7eac11bfb9a999fd2d4"
+          },
+          "operation": "query_charged_before_execution",
+          "previous": "ad452708bcb366f61bf51fa042b2f3aedd6c3352cde379c6b8c8967b7929e946",
+          "sequence": 12,
+          "sha256": "ef275824bb58503170c7253d7f924268b9e50c11e6a71a93c4d91656a78b0d73"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-04T17:00:03.620998+00:00",
+          "details": {
+            "proposal_id": "0007651732c0205388c725f96002ce2abd4877f37babd7eac11bfb9a999fd2d4",
+            "status": "observed"
+          },
+          "operation": "query_completed",
+          "previous": "ef275824bb58503170c7253d7f924268b9e50c11e6a71a93c4d91656a78b0d73",
+          "sequence": 13,
+          "sha256": "0fc84585ae48738fc2c3ca450dfdf8b02fcf57745b60278384789007631d295d"
+        },
+        {
+          "actor": "pde_agent",
+          "at_utc": "2026-11-04T17:00:03.772998+00:00",
+          "details": {
+            "final_used": false,
+            "model_sha256": "5c20123193b8c7d089c04dcf6b2ec41a3e48a0a0d4f438af3884ea96cef31d84",
+            "training_hashes": [
+              "6452d291658901815517ba8442411a7e809eecc5d5a81af5d67b266f9fe4d908",
+              "84f58dca6cdbc9e845a77d000e00199b7a92d95693464cddad349cdaf9a92219",
+              "655561bd2c8c1185a3ea0e8cfc40ff42c1676aa9b3daefb0d3f1e1bf0cbfda24",
+              "d85f6bce91e6eab0279120f4d465b1493c0df8035b0ef737755c386ec93da083",
+              "b7a21dbfabac88478546230a7ed118a16d06d224c75c17a818d1b32705f60d73"
+            ]
+          },
+          "operation": "identify",
+          "previous": "0fc84585ae48738fc2c3ca450dfdf8b02fcf57745b60278384789007631d295d",
+          "sequence": 14,
+          "sha256": "a7228707314c43a4b0d9575d0ef3da75bb464af09286b9b85edc661c5646d58a"
+        },
+        {
+          "actor": "validation_agent",
+          "at_utc": "2026-11-04T17:00:03.838128+00:00",
+          "details": {
+            "sha256": "9d257f4e94f005f89d7e24d666079f3bf2825176766b843a483572157ad6f8e9"
+          },
+          "operation": "freeze",
+          "previous": "a7228707314c43a4b0d9575d0ef3da75bb464af09286b9b85edc661c5646d58a",
+          "sequence": 15,
+          "sha256": "6445006c6319b0c02e712532992e5b6e925170b321f7fa1541b04a8bcf66c874"
+        },
+        {
+          "actor": "validation_agent",
+          "at_utc": "2026-11-04T17:00:03.884312+00:00",
+          "details": {
+            "freeze_sha256": "9d257f4e94f005f89d7e24d666079f3bf2825176766b843a483572157ad6f8e9"
+          },
+          "operation": "final_opened",
+          "previous": "6445006c6319b0c02e712532992e5b6e925170b321f7fa1541b04a8bcf66c874",
+          "sequence": 16,
+          "sha256": "4ba10ffc7a45bb617ca18bd2514bc6e32151db02afd8c22709f1d59297c3ae5b"
+        },
+        {
+          "actor": "validation_agent",
+          "at_utc": "2026-11-04T17:00:04.018773+00:00",
+          "details": {
+            "report_sha256": "ba7fafb70e4b71f724dde8483772d35b81c828e1fbb575b71b5e7ad9047884a1"
+          },
+          "operation": "validation_completed",
+          "previous": "4ba10ffc7a45bb617ca18bd2514bc6e32151db02afd8c22709f1d59297c3ae5b",
+          "sequence": 17,
+          "sha256": "3c998d0c3a159897f0159ca90153cd041c30e74886730aa74be4c946eb07b3c8"
+        }
+      ],
+      "facts": [
+        {
+          "citation": {
+            "end_char": 115,
+            "end_line": 2,
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 80
+          },
+          "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+          "object": "demo_field",
+          "predicate": "records_field",
+          "quote": "demo_grid records_field demo_field.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid"
+        },
+        {
+          "citation": {
+            "end_char": 101,
+            "end_line": 2,
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 66
+          },
+          "id": "39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974",
+          "object": "dimensionless",
+          "predicate": "uses_unit",
+          "quote": "demo_field uses_unit dimensionless.",
+          "relation_assertion_verified": true,
+          "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "status": "source_span_verified",
+          "subject": "demo_field"
+        },
+        {
+          "citation": {
+            "end_char": 148,
+            "end_line": 3,
+            "line": 3,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 116
+          },
+          "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+          "object": "periodic",
+          "predicate": "has_boundary",
+          "quote": "demo_grid has_boundary periodic.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid"
+        }
+      ],
+      "ontology": {
+        "predicates": [
+          "uses_unit",
+          "has_boundary",
+          "records_field",
+          "measures",
+          "derived_from",
+          "supported_by"
+        ],
+        "version": 1
+      },
+      "report": {
+        "case_id": "0e420da66ce2451991c10786ce7b46cf",
+        "charged_experiments": 7,
+        "discovery_budget_excludes_final_evaluation": true,
+        "equation": "u_t = - 0.3269027039 u",
+        "evaluation_measurement_scalars": 21312,
+        "evaluation_reference_trajectories_generated": 3,
+        "evaluation_slots": 3,
+        "evidence_conflicts": [],
+        "evidence_quality": {
+          "asserted_facts": 3,
+          "blockers": [],
+          "industrial_readiness": false,
+          "metadata_ready": true,
+          "required_metadata": [
+            {
+              "object": "demo_field",
+              "predicate": "records_field",
+              "subject": "demo_grid"
+            },
+            {
+              "object": "dimensionless",
+              "predicate": "uses_unit",
+              "subject": "demo_field"
+            },
+            {
+              "object": "periodic",
+              "predicate": "has_boundary",
+              "subject": "demo_grid"
+            }
+          ],
+          "scope": "fixed synthetic observation metadata consistency only",
+          "semantic_truth_verified": false,
+          "total_facts": 3
+        },
+        "evidence_ready": true,
+        "evidence_sources": [
+          "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+          "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+        ],
+        "final_used_for_discovery": false,
+        "freeze_sha256": "9d257f4e94f005f89d7e24d666079f3bf2825176766b843a483572157ad6f8e9",
+        "frequency_is_probability": false,
+        "graph": [
+          {
+            "citation": {
+              "end_char": 115,
+              "end_line": 2,
+              "line": 2,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 80
+            },
+            "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+            "object": "demo_field",
+            "predicate": "records_field",
+            "quote": "demo_grid records_field demo_field.",
+            "relation_assertion_verified": true,
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "status": "source_span_verified",
+            "subject": "demo_grid"
+          },
+          {
+            "citation": {
+              "end_char": 101,
+              "end_line": 2,
+              "line": 2,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 66
+            },
+            "id": "39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974",
+            "object": "dimensionless",
+            "predicate": "uses_unit",
+            "quote": "demo_field uses_unit dimensionless.",
+            "relation_assertion_verified": true,
+            "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+            "status": "source_span_verified",
+            "subject": "demo_field"
+          },
+          {
+            "citation": {
+              "end_char": 148,
+              "end_line": 3,
+              "line": 3,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 116
+            },
+            "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+            "object": "periodic",
+            "predicate": "has_boundary",
+            "quote": "demo_grid has_boundary periodic.",
+            "relation_assertion_verified": true,
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "status": "source_span_verified",
+            "subject": "demo_grid"
+          }
+        ],
+        "joint_success_rule": "exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%",
+        "max_true_coefficient_relative_error": 0.0014198124340925055,
+        "mean_prediction_error": 0.0009667984678954755,
+        "measurement_scalars_charged": 49728,
+        "nexent_live_llm_verified": false,
+        "note": "This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value.",
+        "numerical_joint_success": true,
+        "origin": "controlled_synthetic_demo",
+        "pending_ontology_review": false,
+        "prediction_5pct_passed": true,
+        "prediction_failure_slots": 0,
+        "predictions": [
+          {
+            "duration": 1.0,
+            "index": 0,
+            "metrics": {
+              "excluded_initial_frame": true,
+              "mae": 0.00019241710433507583,
+              "max_absolute_error": 0.000610100858940088,
+              "relative_l2": 0.0007141382139025154,
+              "rmse": 0.00023654490282267466,
+              "scored_frames": 100,
+              "space_points": 64
+            },
+            "prefix_frames": 11,
+            "status": "evaluated"
+          },
+          {
+            "duration": 1.0,
+            "index": 1,
+            "metrics": {
+              "excluded_initial_frame": true,
+              "mae": 0.0002876820001907603,
+              "max_absolute_error": 0.000867197559549282,
+              "relative_l2": 0.0010748745078691874,
+              "rmse": 0.00035603204122219807,
+              "scored_frames": 100,
+              "space_points": 64
+            },
+            "prefix_frames": 11,
+            "status": "evaluated"
+          },
+          {
+            "duration": 1.0,
+            "index": 2,
+            "metrics": {
+              "excluded_initial_frame": true,
+              "mae": 0.0003165933306373478,
+              "max_absolute_error": 0.0007883883858387231,
+              "relative_l2": 0.0011113826819147234,
+              "rmse": 0.0003681246898351924,
+              "scored_frames": 100,
+              "space_points": 64
+            },
+            "prefix_frames": 11,
+            "status": "evaluated"
+          }
+        ],
+        "real_industry_validation": false,
+        "structure": {
+          "coefficient_comparison": [
+            {
+              "absolute_error": 0.00046348246558314266,
+              "discovered": -0.3269027039106217,
+              "name": "u",
+              "reference": -0.32643922144503856,
+              "relative_error": 0.0014198124340925055
+            }
+          ],
+          "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant",
+          "coefficient_relative_l2": 0.0014198124340925055,
+          "exact_support": true,
+          "f1": 1.0,
+          "missing_terms": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "reference_terms": [
+            {
+              "coefficient": -0.32643922144503856,
+              "name": "u"
+            }
+          ],
+          "spurious_terms": [],
+          "status": "evaluated",
+          "true_positive_terms": [
+            "u"
+          ]
+        },
+        "terms": [
+          {
+            "coefficient": -0.3269027039106217,
+            "name": "u"
+          }
+        ]
+      },
+      "chain_consistent": true,
+      "historical_runtime_independently_authenticated": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.00861899000028643
+  }
+]

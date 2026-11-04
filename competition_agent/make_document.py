@@ -7,7 +7,7 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
 ROOT=Path(__file__).resolve().parents[1]
-def build(output=None):
+def build(output=None,results=None):
     doc=Document();style=doc.styles['Normal'];style.font.name='Arial';style.font.size=Pt(10)
     style.element.rPr.rFonts.set(qn('w:eastAsia'),'Microsoft YaHei')
     doc.add_heading('PDE 资产决策多智能体',0)
@@ -28,7 +28,8 @@ def build(output=None):
             row=table.add_row().cells
             for c,v in zip(row,cells):c.text=v
         else:doc.add_paragraph(line.replace('**','').replace('`',''))
-    result=ROOT/'competition_agent/verification/results/summary.json'
+    result=Path(results) if results else ROOT/'competition_agent/verification/quality_v2/matrix/summary.json'
+    if not result.exists():result=ROOT/'competition_agent/verification/results/summary.json'
     if result.exists():
         doc.add_heading('附录：实际本地 MCP 演示结果',1)
         data=json.loads(result.read_text());doc.add_paragraph('全部为确定性路由的合成工程演示，不是 Nexent LLM 效果实验。错误率按百分比显示。')
@@ -39,4 +40,8 @@ def build(output=None):
             vals=[r['case'],str(r['exact_support']),str(len(r['spurious_terms'])),f"{100*r['max_coefficient_error']:.4f}%",'失败' if r['mean_prediction_error'] is None else f"{100*r['mean_prediction_error']:.4f}%",str(r['prediction_failures'])]
             for c,v in zip(table.add_row().cells,vals):c.text=v
     target=Path(output or ROOT/'competition_agent/build/PDE多智能体开发设计文档.docx');target.parent.mkdir(parents=True,exist_ok=True);doc.save(target);return target
-if __name__=='__main__':print(build())
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output');parser.add_argument('--results')
+    args=parser.parse_args();print(build(args.output,args.results))

@@ -1,53 +1,73 @@
 """Actual MCP client exercise with deterministic role routing, WITHOUT an LLM."""
-import argparse,asyncio,json,os,sys,time
+import argparse,asyncio,json,sys,time,uuid
 from pathlib import Path
 from datetime import timedelta,datetime,timezone
 from mcp import ClientSession,StdioServerParameters
 from mcp.client.stdio import stdio_client
 from competition_agent.bundle import ROLES
-from competition_agent.service import digest,Lab
+from competition_agent.service import Lab
+from competition_agent.reporting import save as save_html
 
 HERE=Path(__file__).resolve().parent
-ROLE={tool:name for _,name,_,_,tools,_ in ROLES for tool in tools}
+ROLE_TOOLS={name:set(tools) for _,name,_,_,tools,_ in ROLES}
 async def run(output,fixture='diffusion',noise=.01,budget=7,seed=240,policy='fixed_rich'):
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=True)
+    if any(output.iterdir()):raise FileExistsError('Output directory is not empty; choose a new directory to preserve earlier runs')
+    request_id=uuid.uuid4().hex
+    with (output/'run-request.json').open('x',encoding='utf-8') as f:json.dump({'request_id':request_id,'fixture':fixture,'noise':noise,'budget':budget,'seed':seed,'policy':policy},f)
     trace=[]
     params=StdioServerParameters(command=sys.executable,args=['-m','competition_agent.mcp_server','--directory',str(output/'runtime')],cwd=str(HERE.parent))
     async with stdio_client(params) as (read,write):
         async with ClientSession(read,write,read_timeout_seconds=timedelta(seconds=180)) as session:
             init=await session.initialize();catalog=await session.list_tools()
-            async def call(name,**arguments):
+            async def call(role,name,**arguments):
+                if name not in ROLE_TOOLS[role]:raise ValueError(f"Tool {name} is outside planned role {role}")
                 started=time.monotonic();r=await session.call_tool(name,arguments)
                 data=r.structuredContent
                 if data is None:data=json.loads(r.content[0].text) if not r.isError else {'error':r.content[0].text}
-                trace.append({'step':len(trace)+1,'planned_role':ROLE[name],'tool':name,'arguments':arguments,'result':data,'is_error':bool(r.isError),'duration_seconds':time.monotonic()-started})
+                trace.append({'step':len(trace)+1,'planned_role':role,'tool':name,'arguments':arguments,'result':data,'is_error':bool(r.isError),'duration_seconds':time.monotonic()-started})
                 (output/'tool-trace.json').write_text(json.dumps(trace,ensure_ascii=False,indent=2)+'\n')
                 print(f'{name}: '+('ERROR' if r.isError else 'ok'),flush=True)
                 if r.isError:raise RuntimeError(data)
                 return data
-            status=await call('pde_case_create',fixture=fixture,noise=noise,budget=budget,seed=seed,policy=policy);case=status['case_id']
+            status=await call('asset_agent','pde_case_create',fixture=fixture,noise=noise,budget=budget,seed=seed,policy=policy,request_id=request_id);case=status['case_id']
             if status['phase']!='ready':raise RuntimeError(status)
+            await call('pde_coordinator','case_handoff',case_id=case)
             documents=[{'title':p.name,'kind':'csv' if p.suffix=='.csv' else 'text','text':p.read_text()} for p in sorted((HERE/'knowledge').glob('*')) if p.suffix in ('.csv','.txt')]
-            registered=await call('asset_ingest',case_id=case,documents=documents)
-            hits=await call('asset_search',case_id=case,query='demo_field demo_grid',limit=6)
+            registered=await call('asset_agent','asset_ingest',case_id=case,documents=documents)
+            hits=await call('graph_agent','asset_search',case_id=case,query='网格 字段 单位 边界',limit=10)
             facts=[]
-            for subject,predicate,obj in [('demo_field','uses_unit','dimensionless'),('demo_grid','has_boundary','periodic')]:
+            for subject,predicate,obj in [('demo_grid','records_field','demo_field'),('demo_field','uses_unit','dimensionless'),('demo_grid','has_boundary','periodic')]:
                 hit=next(h for h in hits['hits'] if f'{subject} {predicate} {obj}.'==h['quote'])
                 facts.append({'subject':subject,'predicate':predicate,'object':obj,'source_id':hit['source_id'],'quote':hit['quote']})
-            proposal=await call('graph_propose',case_id=case,facts=facts)
-            await call('graph_apply',case_id=case,proposal_id=proposal['proposal_id'])
-            status=await call('pde_identify',case_id=case)
+            proposal=await call('graph_agent','graph_propose',case_id=case,facts=facts)
+            await call('graph_agent','graph_apply',case_id=case,proposal_id=proposal['proposal_id'])
+            evidence_paths=await call('graph_agent','evidence_path',case_id=case,source='demo_grid',target='dimensionless')
+            handoff=await call('pde_coordinator','case_handoff',case_id=case)
+            if handoff['stop'] or handoff['next_tool']!='pde_identify':raise RuntimeError(handoff)
+            status=await call('pde_agent','pde_identify',case_id=case)
             while status['charged_experiments']<budget:
-                query=await call('experiment_propose',case_id=case)
-                acquired=await call('experiment_acquire',case_id=case,proposal_id=query['id'])
+                handoff=await call('pde_coordinator','case_handoff',case_id=case)
+                if handoff['stop'] or handoff['next_tool']!='experiment_propose':raise RuntimeError(handoff)
+                query=await call('experiment_agent','experiment_propose',case_id=case)
+                handoff=await call('pde_coordinator','case_handoff',case_id=case)
+                if handoff['next_arguments'].get('proposal_id')!=query['id']:raise RuntimeError(handoff)
+                acquired=await call('experiment_agent','experiment_acquire',case_id=case,proposal_id=query['id'])
                 if acquired['query']['status']=='started':raise RuntimeError('Uncertain acquisition; do not retry')
-                status=await call('pde_identify',case_id=case)
-            await call('validation_freeze',case_id=case)
-            report=await call('validation_evaluate',case_id=case)
-            evidence=await call('evidence_get',case_id=case)
-            result={'created_at_utc':datetime.now(timezone.utc).isoformat(),'execution':'actual MCP stdio with deterministic routing; no LLM','inputs':{'fixture':fixture,'noise':noise,'budget':budget,'seed':seed,'policy':policy},'protocol_version':init.protocolVersion,'tools':sorted(t.name for t in catalog.tools),'tool_calls':len(trace),'report':report,'chain_consistent':evidence['chain_consistent'],'live_nexent_verified':False}
+                status=await call('pde_agent','pde_identify',case_id=case)
+            handoff=await call('pde_coordinator','case_handoff',case_id=case)
+            if handoff['next_tool']!='validation_freeze':raise RuntimeError(handoff)
+            await call('validation_agent','validation_freeze',case_id=case)
+            handoff=await call('pde_coordinator','case_handoff',case_id=case)
+            if handoff['next_tool']!='validation_evaluate':raise RuntimeError(handoff)
+            report=await call('validation_agent','validation_evaluate',case_id=case)
+            handoff=await call('pde_coordinator','case_handoff',case_id=case)
+            if not handoff['stop'] or handoff['next_tool'] is not None:raise RuntimeError(handoff)
+            evidence=await call('validation_agent','evidence_get',case_id=case)
+            result={'created_at_utc':datetime.now(timezone.utc).isoformat(),'execution':'actual MCP stdio with deterministic routing; no LLM','inputs':{'fixture':fixture,'noise':noise,'budget':budget,'seed':seed,'policy':policy},'protocol_version':init.protocolVersion,'tools':sorted(t.name for t in catalog.tools),'tool_calls':len(trace),'report':report,'chain_consistent':evidence['chain_consistent'],'live_nexent_verified':False,'evidence_paths':evidence_paths,'final_handoff':handoff}
             (output/'report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
             (output/'evidence.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n')
+            save_html(output/'report.html',result,evidence,trace)
             return result
 
 

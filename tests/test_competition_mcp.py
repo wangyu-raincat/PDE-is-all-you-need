@@ -28,8 +28,13 @@ class CompetitionMCPTests(unittest.IsolatedAsyncioTestCase):
             async with stdio_client(params) as (r,w):
                 async with ClientSession(r,w,read_timeout_seconds=timedelta(seconds=120)) as s:
                     await self.check_catalog_and_errors(s)
-                    create=await s.call_tool('pde_case_create',{'budget':5,'seed':241});self.assertFalse(create.isError)
+                    create=await s.call_tool('pde_case_create',{'budget':5,'seed':241,'request_id':'wire-retry'});self.assertFalse(create.isError)
                     case=value(create)['case_id']
+                    replay=await s.call_tool('pde_case_create',{'budget':5,'seed':241,'request_id':'wire-retry'})
+                    self.assertEqual(value(replay)['case_id'],case);self.assertTrue(value(replay)['idempotent_replay'])
+                    conflict=await s.call_tool('pde_case_create',{'budget':6,'seed':241,'request_id':'wire-retry'});self.assertTrue(conflict.isError)
+                    handoff=await s.call_tool('case_handoff',{'case_id':case});self.assertEqual(value(handoff)['next_role'],'asset_agent')
+                    missing=await s.call_tool('evidence_path',{'case_id':case,'source':'unknown','target':'other'});self.assertFalse(value(missing)['found'])
                     bad=await s.call_tool('asset_ingest',{'case_id':case,'documents':[{'title':'x','kind':'binary','text':'no'}]});self.assertTrue(bad.isError)
                     fit=await s.call_tool('pde_identify',{'case_id':case});self.assertFalse(fit.isError)
                     self.assertFalse(value(fit)['final_opened'])

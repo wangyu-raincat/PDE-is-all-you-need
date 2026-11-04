@@ -1,0 +1,371 @@
+{
+  "created_at_utc": "2026-11-04T17:00:56.785727+00:00",
+  "execution": "actual MCP stdio with deterministic routing; no LLM",
+  "inputs": {
+    "fixture": "burgers",
+    "noise": 0.01,
+    "budget": 7,
+    "seed": 240,
+    "policy": "fixed_rich"
+  },
+  "protocol_version": "2025-11-25",
+  "tools": [
+    "asset_ingest",
+    "asset_search",
+    "case_handoff",
+    "case_status",
+    "evidence_get",
+    "evidence_path",
+    "experiment_acquire",
+    "experiment_propose",
+    "graph_apply",
+    "graph_propose",
+    "pde_case_create",
+    "pde_identify",
+    "validation_evaluate",
+    "validation_freeze"
+  ],
+  "tool_calls": 25,
+  "report": {
+    "case_id": "64ef7b56f0fa45a49bf0d4639f0a71ac",
+    "origin": "controlled_synthetic_demo",
+    "nexent_live_llm_verified": false,
+    "equation": "u_t = 0.07720031853 u_xx - 0.7368978198 u*u_x",
+    "terms": [
+      {
+        "coefficient": 0.07720031853156753,
+        "name": "u_xx"
+      },
+      {
+        "coefficient": -0.7368978198224891,
+        "name": "u*u_x"
+      }
+    ],
+    "structure": {
+      "status": "evaluated",
+      "exact_support": true,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "true_positive_terms": [
+        "u*u_x",
+        "u_xx"
+      ],
+      "missing_terms": [],
+      "spurious_terms": [],
+      "coefficient_relative_l2": 0.029516359860801897,
+      "coefficient_comparison": [
+        {
+          "name": "u_xx",
+          "reference": 0.07728252076215097,
+          "discovered": 0.07720031853156753,
+          "absolute_error": 8.220223058344467e-05,
+          "relative_error": 0.0010636587649157417
+        },
+        {
+          "name": "u*u_x",
+          "reference": -0.7594290179477836,
+          "discovered": -0.7368978198224891,
+          "absolute_error": 0.02253119812529447,
+          "relative_error": 0.029668603112086585
+        }
+      ],
+      "reference_terms": [
+        {
+          "name": "u_xx",
+          "coefficient": 0.07728252076215097
+        },
+        {
+          "name": "u*u_x",
+          "coefficient": -0.7594290179477836
+        }
+      ],
+      "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+    },
+    "max_true_coefficient_relative_error": 0.029668603112086585,
+    "numerical_joint_success": true,
+    "joint_success_rule": "exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%",
+    "predictions": [
+      {
+        "index": 0,
+        "status": "evaluated",
+        "metrics": {
+          "rmse": 0.0009806760951237366,
+          "mae": 0.0007805303503386902,
+          "max_absolute_error": 0.0026564663555253,
+          "relative_l2": 0.005342561714757897,
+          "excluded_initial_frame": true,
+          "scored_frames": 100,
+          "space_points": 64
+        },
+        "prefix_frames": 11,
+        "duration": 1.0
+      },
+      {
+        "index": 1,
+        "status": "evaluated",
+        "metrics": {
+          "rmse": 0.0006815066783972779,
+          "mae": 0.0005558989123219078,
+          "max_absolute_error": 0.0024167083559063496,
+          "relative_l2": 0.0042428850676657715,
+          "excluded_initial_frame": true,
+          "scored_frames": 100,
+          "space_points": 64
+        },
+        "prefix_frames": 11,
+        "duration": 1.0
+      },
+      {
+        "index": 2,
+        "status": "evaluated",
+        "metrics": {
+          "rmse": 0.001480084357908948,
+          "mae": 0.0011943541006180836,
+          "max_absolute_error": 0.004178403958191024,
+          "relative_l2": 0.006753198344956595,
+          "excluded_initial_frame": true,
+          "scored_frames": 100,
+          "space_points": 64
+        },
+        "prefix_frames": 11,
+        "duration": 1.0
+      }
+    ],
+    "evaluation_slots": 3,
+    "evaluation_reference_trajectories_generated": 3,
+    "evaluation_measurement_scalars": 21312,
+    "discovery_budget_excludes_final_evaluation": true,
+    "prediction_failure_slots": 0,
+    "mean_prediction_error": 0.005446215042460088,
+    "prediction_5pct_passed": true,
+    "evidence_ready": true,
+    "evidence_quality": {
+      "metadata_ready": true,
+      "blockers": [],
+      "required_metadata": [
+        {
+          "subject": "demo_grid",
+          "predicate": "records_field",
+          "object": "demo_field"
+        },
+        {
+          "subject": "demo_field",
+          "predicate": "uses_unit",
+          "object": "dimensionless"
+        },
+        {
+          "subject": "demo_grid",
+          "predicate": "has_boundary",
+          "object": "periodic"
+        }
+      ],
+      "asserted_facts": 3,
+      "total_facts": 3,
+      "scope": "fixed synthetic observation metadata consistency only",
+      "semantic_truth_verified": false,
+      "industrial_readiness": false
+    },
+    "evidence_conflicts": [],
+    "pending_ontology_review": false,
+    "evidence_sources": [
+      "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+      "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+      "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+    ],
+    "graph": [
+      {
+        "citation": {
+          "end_char": 115,
+          "end_line": 2,
+          "line": 2,
+          "offset_unit": "Unicode code points, half-open",
+          "start_char": 80
+        },
+        "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+        "object": "demo_field",
+        "predicate": "records_field",
+        "quote": "demo_grid records_field demo_field.",
+        "relation_assertion_verified": true,
+        "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "status": "source_span_verified",
+        "subject": "demo_grid"
+      },
+      {
+        "citation": {
+          "end_char": 101,
+          "end_line": 2,
+          "line": 2,
+          "offset_unit": "Unicode code points, half-open",
+          "start_char": 66
+        },
+        "id": "39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974",
+        "object": "dimensionless",
+        "predicate": "uses_unit",
+        "quote": "demo_field uses_unit dimensionless.",
+        "relation_assertion_verified": true,
+        "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+        "status": "source_span_verified",
+        "subject": "demo_field"
+      },
+      {
+        "citation": {
+          "end_char": 148,
+          "end_line": 3,
+          "line": 3,
+          "offset_unit": "Unicode code points, half-open",
+          "start_char": 116
+        },
+        "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+        "object": "periodic",
+        "predicate": "has_boundary",
+        "quote": "demo_grid has_boundary periodic.",
+        "relation_assertion_verified": true,
+        "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "status": "source_span_verified",
+        "subject": "demo_grid"
+      }
+    ],
+    "freeze_sha256": "7bd10d11698b050285063a812f42224cb84c6a3d038b26c18a587d5e9e5732b3",
+    "measurement_scalars_charged": 49728,
+    "charged_experiments": 7,
+    "frequency_is_probability": false,
+    "real_industry_validation": false,
+    "final_used_for_discovery": false,
+    "note": "This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value."
+  },
+  "chain_consistent": true,
+  "live_nexent_verified": false,
+  "evidence_paths": {
+    "paths": [
+      {
+        "edges": [
+          {
+            "citation": {
+              "end_char": 115,
+              "end_line": 2,
+              "line": 2,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 80
+            },
+            "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+            "object": "demo_field",
+            "predicate": "records_field",
+            "quote": "demo_grid records_field demo_field.",
+            "relation_assertion_verified": true,
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "status": "source_span_verified",
+            "subject": "demo_grid"
+          },
+          {
+            "citation": {
+              "end_char": 101,
+              "end_line": 2,
+              "line": 2,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 66
+            },
+            "id": "39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974",
+            "object": "dimensionless",
+            "predicate": "uses_unit",
+            "quote": "demo_field uses_unit dimensionless.",
+            "relation_assertion_verified": true,
+            "source_id": "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+            "status": "source_span_verified",
+            "subject": "demo_field"
+          }
+        ],
+        "source_ids": [
+          "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9"
+        ],
+        "all_relations_asserted": true
+      }
+    ],
+    "found": true,
+    "search_truncated": false,
+    "max_hops": 4,
+    "expanded_nodes": 3,
+    "new_facts_created": false,
+    "semantic_truth_verified": false,
+    "scope": "paths over cited assertions; not inferred physical causation",
+    "case_id": "64ef7b56f0fa45a49bf0d4639f0a71ac",
+    "conflicts": [],
+    "evidence_quality": {
+      "metadata_ready": true,
+      "blockers": [],
+      "required_metadata": [
+        {
+          "subject": "demo_grid",
+          "predicate": "records_field",
+          "object": "demo_field"
+        },
+        {
+          "subject": "demo_field",
+          "predicate": "uses_unit",
+          "object": "dimensionless"
+        },
+        {
+          "subject": "demo_grid",
+          "predicate": "has_boundary",
+          "object": "periodic"
+        }
+      ],
+      "asserted_facts": 3,
+      "total_facts": 3,
+      "scope": "fixed synthetic observation metadata consistency only",
+      "semantic_truth_verified": false,
+      "industrial_readiness": false
+    }
+  },
+  "final_handoff": {
+    "contract_version": 1,
+    "case_id": "64ef7b56f0fa45a49bf0d4639f0a71ac",
+    "phase": "validated",
+    "state_head": "239a32df9f67b1aa0464472e7cc0255e9b2eabd859e561e026542ef3df9cb67e",
+    "remaining_experiments": 0,
+    "next_role": null,
+    "next_tool": null,
+    "next_arguments": {},
+    "required_inputs": [],
+    "arguments_complete": false,
+    "stop": true,
+    "terminal": true,
+    "reason": "terminal",
+    "evidence_quality": {
+      "metadata_ready": true,
+      "blockers": [],
+      "required_metadata": [
+        {
+          "subject": "demo_grid",
+          "predicate": "records_field",
+          "object": "demo_field"
+        },
+        {
+          "subject": "demo_field",
+          "predicate": "uses_unit",
+          "object": "dimensionless"
+        },
+        {
+          "subject": "demo_grid",
+          "predicate": "has_boundary",
+          "object": "periodic"
+        }
+      ],
+      "asserted_facts": 3,
+      "total_facts": 3,
+      "scope": "fixed synthetic observation metadata consistency only",
+      "semantic_truth_verified": false,
+      "industrial_readiness": false
+    },
+    "final_opened": true,
+    "source_ids": [
+      "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+      "e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9",
+      "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+    ],
+    "freeze_sha256": "7bd10d11698b050285063a812f42224cb84c6a3d038b26c18a587d5e9e5732b3",
+    "authentication_claimed": false,
+    "final_metrics_must_not_guide_new_selection": true
+  }
+}

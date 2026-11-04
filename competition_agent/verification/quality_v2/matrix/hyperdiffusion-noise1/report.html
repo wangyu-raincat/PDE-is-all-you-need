@@ -1,0 +1,3776 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PDE 可追溯实验报告</title>
+<style>body{margin:0;background:#f3f5f9;color:#172b44;font:16px/1.6 system-ui,sans-serif}main{max-width:1100px;margin:auto;padding:36px 22px}h1{font-size:32px;line-height:1.3}h2{margin-top:30px}.badge{color:#3c5277;font-weight:600}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}article,section{background:white;border:1px solid #dbe2ed;border-radius:10px;padding:18px}article span{display:block;color:#526580}strong{display:block;font-size:23px}section{margin-top:18px}details{padding:10px 0;border-bottom:1px solid #e4e9f0}summary{cursor:pointer;font-weight:600}pre{overflow-wrap:anywhere;white-space:pre-wrap;font-size:12px}p,li,blockquote{overflow-wrap:anywhere}blockquote{border-left:3px solid #4e77bb;padding-left:12px;margin-left:0}a{color:#1c59a7}.muted{color:#526580}code{overflow-wrap:anywhere}</style>
+<main><div class="badge">本地 MCP 工具实测 · 合成数据 · 未使用 LLM</div><h1>PDE 可追溯实验报告</h1>
+<p class="muted">案例 a2d3a254f6b44d1d8a2a5a6c3f66d2a0。这是工程重演，不能作为新的盲测、平台内多智能体效果或真实行业验证。</p>
+<div class="cards"><article><span>方程结构</span><strong>完整恢复</strong></article><article><span>最大真项系数误差</span><strong>0.2122%</strong></article><article><span>平均预测误差</span><strong>0.1336%</strong></article><article><span>预测失败槽位</span><strong>0 / 3</strong></article></div><section><h2>识别结论</h2><p>u_t = - 0.001898284711 u_xxxx</p><p>缺失项：[]；多余项：[]。</p>
+<p>发现预算 7 次；最终评估另生成 3 条轨迹。预测使用 11 帧前缀，保持 1.0 时长。</p></section>
+<section><h2>证据质量与跨文档路径</h2><ul><li>规定的合成元数据一致性检查通过；不等于工业可用。</li></ul><p><a href="#fact-6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629">demo_grid / records_field / demo_field</a> → <a href="#fact-39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974">demo_field / uses_unit / dimensionless</a></p><p>涉及 2 份资料；仅为带引文的关系路径。</p><details id="fact-6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629"><summary>demo_grid → records_field → demo_field</summary><blockquote>demo_grid records_field demo_field.</blockquote><p>来源 c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186 · 位置 {&#x27;end_char&#x27;: 115, &#x27;end_line&#x27;: 2, &#x27;line&#x27;: 2, &#x27;offset_unit&#x27;: &#x27;Unicode code points, half-open&#x27;, &#x27;start_char&#x27;: 80}</p></details><details id="fact-39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974"><summary>demo_field → uses_unit → dimensionless</summary><blockquote>demo_field uses_unit dimensionless.</blockquote><p>来源 e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9 · 位置 {&#x27;end_char&#x27;: 101, &#x27;end_line&#x27;: 2, &#x27;line&#x27;: 2, &#x27;offset_unit&#x27;: &#x27;Unicode code points, half-open&#x27;, &#x27;start_char&#x27;: 66}</p></details><details id="fact-3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a"><summary>demo_grid → has_boundary → periodic</summary><blockquote>demo_grid has_boundary periodic.</blockquote><p>来源 c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186 · 位置 {&#x27;end_char&#x27;: 148, &#x27;end_line&#x27;: 3, &#x27;line&#x27;: 3, &#x27;offset_unit&#x27;: &#x27;Unicode code points, half-open&#x27;, &#x27;start_char&#x27;: 116}</p></details></section>
+<section><h2>冻结与追溯</h2><p>冻结标识 <code>5b4a6b212996a113c87b7cf4656488658411bf52f1c9ce163b5cf3711576c182</code></p><p>事件链一致：True。事件链不是第三方认证；来源断言也不是物理真实性证明。</p></section>
+<section><h2>实际工具调用</h2><p>25 次调用。角色为明确的脚本路由标签，不是已运行的大模型身份。</p><details><summary>1. asset_agent · pde_case_create · 0.058s</summary><pre>{
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;ready&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+  &quot;budget_limit&quot;: 7,
+  &quot;charged_experiments&quot;: 5,
+  &quot;measurement_scalars_charged&quot;: 35520,
+  &quot;training_trajectories&quot;: 3,
+  &quot;development_trajectories&quot;: 2,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;selected_equation&quot;: null,
+  &quot;selected_terms&quot;: [],
+  &quot;candidate_supports&quot;: [],
+  &quot;identification_status&quot;: null,
+  &quot;identification_failure&quot;: null,
+  &quot;uncertainty&quot;: {},
+  &quot;minimal_near_supports&quot;: [],
+  &quot;recovery_required&quot;: false,
+  &quot;failure&quot;: null,
+  &quot;frequency_calibrated&quot;: false,
+  &quot;final_opened&quot;: false,
+  &quot;ontology_version&quot;: 1,
+  &quot;graph_facts&quot;: 0,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: false,
+    &quot;blockers&quot;: [
+      {
+        &quot;code&quot;: &quot;missing_required_metadata&quot;,
+        &quot;details&quot;: [
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;records_field&quot;,
+            &quot;object&quot;: &quot;demo_field&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_field&quot;,
+            &quot;predicate&quot;: &quot;uses_unit&quot;,
+            &quot;object&quot;: &quot;dimensionless&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;has_boundary&quot;,
+            &quot;object&quot;: &quot;periodic&quot;
+          }
+        ]
+      }
+    ],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 0,
+    &quot;total_facts&quot;: 0,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;graph_conflicts&quot;: [],
+  &quot;pending_ontology_changes&quot;: 0,
+  &quot;event_count&quot;: 2,
+  &quot;event_head&quot;: &quot;7ab86ce7bf4491d1bcefa53e6e8ba869da737d92f25d122b1cd7c88ec89f10c3&quot;
+}</pre></details><details><summary>2. pde_coordinator · case_handoff · 0.003s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;ready&quot;,
+  &quot;state_head&quot;: &quot;7ab86ce7bf4491d1bcefa53e6e8ba869da737d92f25d122b1cd7c88ec89f10c3&quot;,
+  &quot;remaining_experiments&quot;: 2,
+  &quot;next_role&quot;: &quot;asset_agent&quot;,
+  &quot;next_tool&quot;: &quot;asset_ingest&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;
+  },
+  &quot;required_inputs&quot;: [
+    &quot;documents&quot;
+  ],
+  &quot;arguments_complete&quot;: false,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: &quot;evidence_review_required; numerical diagnostics remain possible but cannot imply metadata readiness&quot;,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: false,
+    &quot;blockers&quot;: [
+      {
+        &quot;code&quot;: &quot;missing_required_metadata&quot;,
+        &quot;details&quot;: [
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;records_field&quot;,
+            &quot;object&quot;: &quot;demo_field&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_field&quot;,
+            &quot;predicate&quot;: &quot;uses_unit&quot;,
+            &quot;object&quot;: &quot;dimensionless&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;has_boundary&quot;,
+            &quot;object&quot;: &quot;periodic&quot;
+          }
+        ]
+      }
+    ],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 0,
+    &quot;total_facts&quot;: 0,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>3. asset_agent · asset_ingest · 0.004s</summary><pre>{
+  &quot;sources&quot;: [
+    {
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;title&quot;: &quot;asset-card.txt&quot;,
+      &quot;kind&quot;: &quot;text&quot;
+    },
+    {
+      &quot;source_id&quot;: &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;,
+      &quot;title&quot;: &quot;experiment-register.csv&quot;,
+      &quot;kind&quot;: &quot;csv&quot;
+    },
+    {
+      &quot;source_id&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;title&quot;: &quot;field-card.txt&quot;,
+      &quot;kind&quot;: &quot;text&quot;
+    }
+  ]
+}</pre></details><details><summary>4. graph_agent · asset_search · 0.004s</summary><pre>{
+  &quot;method&quot;: &quot;lexical BM25 with Chinese bigrams and explicit bilingual aliases; no embeddings or LLM&quot;,
+  &quot;hits&quot;: [
+    {
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;source_sha256&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;source_hash_scope&quot;: &quot;canonical title/kind/text record&quot;,
+      &quot;title&quot;: &quot;asset-card.txt&quot;,
+      &quot;line&quot;: 2,
+      &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+      &quot;start_char&quot;: 80,
+      &quot;end_char&quot;: 115,
+      &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+      &quot;matched_terms&quot;: [
+        &quot;records_field&quot;
+      ],
+      &quot;score&quot;: 1.4741337991699834
+    },
+    {
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;source_sha256&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;source_hash_scope&quot;: &quot;canonical title/kind/text record&quot;,
+      &quot;title&quot;: &quot;asset-card.txt&quot;,
+      &quot;line&quot;: 3,
+      &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+      &quot;start_char&quot;: 116,
+      &quot;end_char&quot;: 148,
+      &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+      &quot;matched_terms&quot;: [
+        &quot;has_boundary&quot;
+      ],
+      &quot;score&quot;: 1.4741337991699834
+    },
+    {
+      &quot;source_id&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;source_sha256&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;source_hash_scope&quot;: &quot;canonical title/kind/text record&quot;,
+      &quot;title&quot;: &quot;field-card.txt&quot;,
+      &quot;line&quot;: 2,
+      &quot;quote&quot;: &quot;demo_field uses_unit dimensionless.&quot;,
+      &quot;start_char&quot;: 66,
+      &quot;end_char&quot;: 101,
+      &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+      &quot;matched_terms&quot;: [
+        &quot;uses_unit&quot;
+      ],
+      &quot;score&quot;: 1.4741337991699834
+    },
+    {
+      &quot;source_id&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;source_sha256&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;source_hash_scope&quot;: &quot;canonical title/kind/text record&quot;,
+      &quot;title&quot;: &quot;field-card.txt&quot;,
+      &quot;line&quot;: 1,
+      &quot;quote&quot;: &quot;Synthetic field metadata, not a measured calibration certificate.&quot;,
+      &quot;start_char&quot;: 0,
+      &quot;end_char&quot;: 65,
+      &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+      &quot;matched_terms&quot;: [
+        &quot;field&quot;
+      ],
+      &quot;score&quot;: 1.0550090257126934
+    }
+  ]
+}</pre></details><details><summary>5. graph_agent · graph_propose · 0.007s</summary><pre>{
+  &quot;proposal_id&quot;: &quot;3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde&quot;,
+  &quot;unknown_predicates&quot;: [],
+  &quot;pending_ontology_changes&quot;: [],
+  &quot;semantic_truth_verified&quot;: false
+}</pre></details><details><summary>6. graph_agent · graph_apply · 0.004s</summary><pre>{
+  &quot;facts&quot;: [
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 115,
+        &quot;end_line&quot;: 2,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 80
+      },
+      &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+      &quot;object&quot;: &quot;demo_field&quot;,
+      &quot;predicate&quot;: &quot;records_field&quot;,
+      &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 101,
+        &quot;end_line&quot;: 2,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 66
+      },
+      &quot;id&quot;: &quot;39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974&quot;,
+      &quot;object&quot;: &quot;dimensionless&quot;,
+      &quot;predicate&quot;: &quot;uses_unit&quot;,
+      &quot;quote&quot;: &quot;demo_field uses_unit dimensionless.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_field&quot;
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 148,
+        &quot;end_line&quot;: 3,
+        &quot;line&quot;: 3,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 116
+      },
+      &quot;id&quot;: &quot;3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a&quot;,
+      &quot;object&quot;: &quot;periodic&quot;,
+      &quot;predicate&quot;: &quot;has_boundary&quot;,
+      &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;
+    }
+  ],
+  &quot;conflicts&quot;: [],
+  &quot;ontology_version&quot;: 1
+}</pre></details><details><summary>7. graph_agent · evidence_path · 0.002s</summary><pre>{
+  &quot;paths&quot;: [
+    {
+      &quot;edges&quot;: [
+        {
+          &quot;citation&quot;: {
+            &quot;end_char&quot;: 115,
+            &quot;end_line&quot;: 2,
+            &quot;line&quot;: 2,
+            &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+            &quot;start_char&quot;: 80
+          },
+          &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+          &quot;object&quot;: &quot;demo_field&quot;,
+          &quot;predicate&quot;: &quot;records_field&quot;,
+          &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+          &quot;relation_assertion_verified&quot;: true,
+          &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+          &quot;status&quot;: &quot;source_span_verified&quot;,
+          &quot;subject&quot;: &quot;demo_grid&quot;
+        },
+        {
+          &quot;citation&quot;: {
+            &quot;end_char&quot;: 101,
+            &quot;end_line&quot;: 2,
+            &quot;line&quot;: 2,
+            &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+            &quot;start_char&quot;: 66
+          },
+          &quot;id&quot;: &quot;39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974&quot;,
+          &quot;object&quot;: &quot;dimensionless&quot;,
+          &quot;predicate&quot;: &quot;uses_unit&quot;,
+          &quot;quote&quot;: &quot;demo_field uses_unit dimensionless.&quot;,
+          &quot;relation_assertion_verified&quot;: true,
+          &quot;source_id&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+          &quot;status&quot;: &quot;source_span_verified&quot;,
+          &quot;subject&quot;: &quot;demo_field&quot;
+        }
+      ],
+      &quot;source_ids&quot;: [
+        &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+        &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;
+      ],
+      &quot;all_relations_asserted&quot;: true
+    }
+  ],
+  &quot;found&quot;: true,
+  &quot;search_truncated&quot;: false,
+  &quot;max_hops&quot;: 4,
+  &quot;expanded_nodes&quot;: 3,
+  &quot;new_facts_created&quot;: false,
+  &quot;semantic_truth_verified&quot;: false,
+  &quot;scope&quot;: &quot;paths over cited assertions; not inferred physical causation&quot;,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;conflicts&quot;: [],
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  }
+}</pre></details><details><summary>8. pde_coordinator · case_handoff · 0.002s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;ready&quot;,
+  &quot;state_head&quot;: &quot;4496a4c168246f1c0aba95e5b0d697e9117efadc32d0f6426c24939615f5d58e&quot;,
+  &quot;remaining_experiments&quot;: 2,
+  &quot;next_role&quot;: &quot;pde_agent&quot;,
+  &quot;next_tool&quot;: &quot;pde_identify&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>9. pde_agent · pde_identify · 7.647s</summary><pre>{
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+  &quot;budget_limit&quot;: 7,
+  &quot;charged_experiments&quot;: 5,
+  &quot;measurement_scalars_charged&quot;: 35520,
+  &quot;training_trajectories&quot;: 3,
+  &quot;development_trajectories&quot;: 2,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;selected_equation&quot;: null,
+  &quot;selected_terms&quot;: [],
+  &quot;candidate_supports&quot;: [],
+  &quot;identification_status&quot;: &quot;insufficient&quot;,
+  &quot;identification_failure&quot;: &quot;Best development weak residual exceeds the fixed adequacy limit.&quot;,
+  &quot;uncertainty&quot;: {
+    &quot;method&quot;: &quot;complete_trajectory_bootstrap_full_structure_refit&quot;,
+    &quot;term_inclusion_frequencies&quot;: {
+      &quot;1&quot;: null,
+      &quot;u&quot;: null,
+      &quot;u^2&quot;: null,
+      &quot;u^3&quot;: null,
+      &quot;u_x&quot;: null,
+      &quot;u_xx&quot;: null,
+      &quot;u_xxx&quot;: null,
+      &quot;u_xxxx&quot;: null,
+      &quot;u*u_x&quot;: null
+    },
+    &quot;conditional_on_success_frequency&quot;: {
+      &quot;1&quot;: null,
+      &quot;u&quot;: null,
+      &quot;u^2&quot;: null,
+      &quot;u^3&quot;: null,
+      &quot;u_x&quot;: null,
+      &quot;u_xx&quot;: null,
+      &quot;u_xxx&quot;: null,
+      &quot;u_xxxx&quot;: null,
+      &quot;u*u_x&quot;: null
+    },
+    &quot;frequency_bounds_including_failures&quot;: {
+      &quot;1&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u^2&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u^3&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u_x&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u_xx&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u_xxx&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u_xxxx&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u*u_x&quot;: [
+        0.0,
+        1.0
+      ]
+    },
+    &quot;raw_counts&quot;: {
+      &quot;1&quot;: 0,
+      &quot;u&quot;: 0,
+      &quot;u^2&quot;: 0,
+      &quot;u^3&quot;: 0,
+      &quot;u_x&quot;: 0,
+      &quot;u_xx&quot;: 0,
+      &quot;u_xxx&quot;: 0,
+      &quot;u_xxxx&quot;: 0,
+      &quot;u*u_x&quot;: 0
+    },
+    &quot;requested_replicates&quot;: 8,
+    &quot;completed_replicates&quot;: 0,
+    &quot;failed_replicates&quot;: 8,
+    &quot;number_of_available_multiplicity_vectors&quot;: 10,
+    &quot;calibrated&quot;: false,
+    &quot;probability_claimed&quot;: false,
+    &quot;confidence_interval_claimed&quot;: false,
+    &quot;independent_physical_experiments&quot;: 3,
+    &quot;resampling_adds_physical_evidence&quot;: false,
+    &quot;limited_data_warning&quot;: &quot;Few complete trajectories; repeated bootstrap draws do not create independent evidence.&quot;,
+    &quot;reference_used&quot;: false,
+    &quot;final_used&quot;: false
+  },
+  &quot;minimal_near_supports&quot;: [],
+  &quot;recovery_required&quot;: false,
+  &quot;failure&quot;: null,
+  &quot;frequency_calibrated&quot;: false,
+  &quot;final_opened&quot;: false,
+  &quot;ontology_version&quot;: 1,
+  &quot;graph_facts&quot;: 3,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;graph_conflicts&quot;: [],
+  &quot;pending_ontology_changes&quot;: 0,
+  &quot;event_count&quot;: 6,
+  &quot;event_head&quot;: &quot;bb608ee61fa74f566fe7e953acd82c2662ccee40f0998bbc47181667c63698bc&quot;
+}</pre></details><details><summary>10. pde_coordinator · case_handoff · 0.004s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;state_head&quot;: &quot;bb608ee61fa74f566fe7e953acd82c2662ccee40f0998bbc47181667c63698bc&quot;,
+  &quot;remaining_experiments&quot;: 2,
+  &quot;next_role&quot;: &quot;experiment_agent&quot;,
+  &quot;next_tool&quot;: &quot;experiment_propose&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>11. experiment_agent · experiment_propose · 0.066s</summary><pre>{
+  &quot;id&quot;: &quot;9cc6d9ed8b41a5d7ee561c899ecb9c75ef1f63d00decec3a8230b894267b25a4&quot;,
+  &quot;action&quot;: {
+    &quot;id&quot;: &quot;fixed-rich&quot;,
+    &quot;a&quot;: [
+      0.2309401076758503,
+      0.11547005383792518,
+      -0.2309401076758503,
+      0.2309401076758503,
+      -0.11547005383792511,
+      -0.2309401076758503
+    ],
+    &quot;b&quot;: [
+      0.0,
+      0.19999999999999998,
+      2.828200636599752e-17,
+      -5.656401273199504e-17,
+      -0.2,
+      5.516420715918146e-16
+    ]
+  },
+  &quot;reason&quot;: &quot;Predetermined rich excitation.&quot;,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;diagnostics&quot;: {
+    &quot;policy&quot;: &quot;fixed_rich&quot;,
+    &quot;selected_action&quot;: {
+      &quot;id&quot;: &quot;fixed-rich&quot;,
+      &quot;a&quot;: [
+        0.2309401076758503,
+        0.11547005383792518,
+        -0.2309401076758503,
+        0.2309401076758503,
+        -0.11547005383792511,
+        -0.2309401076758503
+      ],
+      &quot;b&quot;: [
+        0.0,
+        0.19999999999999998,
+        2.828200636599752e-17,
+        -5.656401273199504e-17,
+        -0.2,
+        5.516420715918146e-16
+      ]
+    },
+    &quot;selected_action_id&quot;: &quot;fixed-rich&quot;,
+    &quot;status&quot;: &quot;selected&quot;,
+    &quot;reason&quot;: &quot;Predetermined rich excitation.&quot;,
+    &quot;fallback_used&quot;: false,
+    &quot;scores&quot;: [
+      {
+        &quot;action_id&quot;: &quot;fixed-rich&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-2&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-3&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-00&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-01&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-02&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-03&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-04&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-05&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-06&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-07&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-08&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-09&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-10&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-11&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-12&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-13&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-14&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-15&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-1-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-1-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-2-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-2-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-3-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-3-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-4-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-4-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-5-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-5-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-6-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-6-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      }
+    ],
+    &quot;raw_committee_members&quot;: 0,
+    &quot;distinct_coefficient_vectors&quot;: 0,
+    &quot;structure_count&quot;: 0,
+    &quot;committee&quot;: [],
+    &quot;available_actions&quot;: 32,
+    &quot;excluded_action_ids&quot;: [],
+    &quot;cost_units&quot;: &quot;caller_declared_cost&quot;,
+    &quot;noise_estimate&quot;: {
+      &quot;estimated_spatial_variance&quot;: 1.6008632036751003e-05,
+      &quot;per_trajectory&quot;: [
+        {
+          &quot;training_trajectory&quot;: 0,
+          &quot;estimated_spatial_variance&quot;: 1.5523514339299924e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 1,
+          &quot;estimated_spatial_variance&quot;: 1.645361608068575e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 2,
+          &quot;estimated_spatial_variance&quot;: 1.6048765690267324e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        }
+      ],
+      &quot;aggregation&quot;: &quot;equal trajectory mean variance&quot;,
+      &quot;true_noise_used&quot;: false,
+      &quot;physical_upper_band_signal_can_bias_estimate&quot;: true
+    },
+    &quot;acquisition_times&quot;: [
+      0.0,
+      0.1,
+      0.2
+    ],
+    &quot;acquisition_forecast_duration&quot;: 0.2,
+    &quot;initial_frame_scored&quot;: false,
+    &quot;model_forecast_attempts&quot;: 0,
+    &quot;model_forecast_failures&quot;: 0,
+    &quot;actual_experiment_queries&quot;: 0,
+    &quot;reference_used&quot;: false,
+    &quot;prospective_observations_used&quot;: false,
+    &quot;calibrated_probability_or_information_gain_claimed&quot;: false,
+    &quot;identification_certainty_claimed&quot;: false,
+    &quot;fixed_action_order&quot;: [
+      &quot;fixed-rich&quot;,
+      &quot;fixed-rich-1&quot;,
+      &quot;fixed-rich-2&quot;,
+      &quot;fixed-rich-3&quot;,
+      &quot;mixture-07&quot;,
+      &quot;mixture-04&quot;,
+      &quot;mixture-02&quot;,
+      &quot;mixture-10&quot;,
+      &quot;mixture-06&quot;,
+      &quot;mixture-01&quot;,
+      &quot;mixture-11&quot;,
+      &quot;mixture-15&quot;,
+      &quot;mixture-00&quot;,
+      &quot;mixture-05&quot;,
+      &quot;mixture-13&quot;,
+      &quot;mixture-03&quot;,
+      &quot;mixture-08&quot;,
+      &quot;mixture-09&quot;,
+      &quot;mixture-12&quot;,
+      &quot;mixture-14&quot;,
+      &quot;single-1-0&quot;,
+      &quot;single-1-1&quot;,
+      &quot;single-2-0&quot;,
+      &quot;single-2-1&quot;,
+      &quot;single-3-0&quot;,
+      &quot;single-3-1&quot;,
+      &quot;single-4-0&quot;,
+      &quot;single-4-1&quot;,
+      &quot;single-5-0&quot;,
+      &quot;single-5-1&quot;,
+      &quot;single-6-0&quot;,
+      &quot;single-6-1&quot;
+    ],
+    &quot;compute_seconds&quot;: 0.025882765999995172
+  },
+  &quot;measurement_cost&quot;: 7104,
+  &quot;is_physical_instruction&quot;: false
+}</pre></details><details><summary>12. pde_coordinator · case_handoff · 0.003s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;proposed&quot;,
+  &quot;state_head&quot;: &quot;0283f26086699f6299836f2e3a1fbe4907287cfef5d350db979788ddfbf18d5d&quot;,
+  &quot;remaining_experiments&quot;: 2,
+  &quot;next_role&quot;: &quot;experiment_agent&quot;,
+  &quot;next_tool&quot;: &quot;experiment_acquire&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+    &quot;proposal_id&quot;: &quot;9cc6d9ed8b41a5d7ee561c899ecb9c75ef1f63d00decec3a8230b894267b25a4&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>13. experiment_agent · experiment_acquire · 0.019s</summary><pre>{
+  &quot;query&quot;: {
+    &quot;action&quot;: {
+      &quot;a&quot;: [
+        0.2309401076758503,
+        0.11547005383792518,
+        -0.2309401076758503,
+        0.2309401076758503,
+        -0.11547005383792511,
+        -0.2309401076758503
+      ],
+      &quot;b&quot;: [
+        0.0,
+        0.19999999999999998,
+        2.828200636599752e-17,
+        -5.656401273199504e-17,
+        -0.2,
+        5.516420715918146e-16
+      ],
+      &quot;id&quot;: &quot;fixed-rich&quot;
+    },
+    &quot;charged_experiments&quot;: 1,
+    &quot;proposal_id&quot;: &quot;9cc6d9ed8b41a5d7ee561c899ecb9c75ef1f63d00decec3a8230b894267b25a4&quot;,
+    &quot;status&quot;: &quot;observed&quot;,
+    &quot;observation&quot;: {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/query-1.npz&quot;,
+      &quot;sha256&quot;: &quot;3d3a4e9ce6630bc445fdfa8096fdc41c4d79bc746de99adfac356f9f011051ac&quot;
+    },
+    &quot;receipt&quot;: {
+      &quot;experiments&quot;: 1,
+      &quot;measurement_values&quot;: 7104,
+      &quot;measured_frames&quot;: 111,
+      &quot;measured_spatial_points&quot;: 64,
+      &quot;prefix_frames&quot;: 11,
+      &quot;future_frames&quot;: 101,
+      &quot;history_endpoint_counted_once&quot;: true,
+      &quot;future_duration&quot;: 1.0,
+      &quot;action_sha256&quot;: &quot;dd71c01bbfebe0bb72ec136a080227b0ea654dcc221b0b61315fd12c68f7c0b8&quot;,
+      &quot;observed_field_sha256&quot;: &quot;cb4263b3dcabeae00d958c5d22f4c229ee047b8fa1d6aace746a209df7bce8a5&quot;,
+      &quot;is_measured_physical_data&quot;: false
+    }
+  },
+  &quot;idempotent_replay&quot;: false
+}</pre></details><details><summary>14. pde_agent · pde_identify · 3.718s</summary><pre>{
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+  &quot;budget_limit&quot;: 7,
+  &quot;charged_experiments&quot;: 6,
+  &quot;measurement_scalars_charged&quot;: 42624,
+  &quot;training_trajectories&quot;: 4,
+  &quot;development_trajectories&quot;: 2,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;selected_equation&quot;: &quot;u_t = - 0.001904134713 u_xxxx&quot;,
+  &quot;selected_terms&quot;: [
+    {
+      &quot;name&quot;: &quot;u_xxxx&quot;,
+      &quot;coefficient&quot;: -0.0019041347127182284
+    }
+  ],
+  &quot;candidate_supports&quot;: [
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u_xxxx&quot;
+    ]
+  ],
+  &quot;identification_status&quot;: &quot;observational_ambiguity&quot;,
+  &quot;identification_failure&quot;: null,
+  &quot;uncertainty&quot;: {
+    &quot;method&quot;: &quot;complete_trajectory_bootstrap_full_structure_refit&quot;,
+    &quot;term_inclusion_frequencies&quot;: {
+      &quot;1&quot;: null,
+      &quot;u&quot;: null,
+      &quot;u^2&quot;: null,
+      &quot;u^3&quot;: null,
+      &quot;u_x&quot;: null,
+      &quot;u_xx&quot;: null,
+      &quot;u_xxx&quot;: null,
+      &quot;u_xxxx&quot;: null,
+      &quot;u*u_x&quot;: null
+    },
+    &quot;conditional_on_success_frequency&quot;: {
+      &quot;1&quot;: 0.0,
+      &quot;u&quot;: 0.0,
+      &quot;u^2&quot;: 0.0,
+      &quot;u^3&quot;: 0.0,
+      &quot;u_x&quot;: 0.0,
+      &quot;u_xx&quot;: 0.0,
+      &quot;u_xxx&quot;: 0.0,
+      &quot;u_xxxx&quot;: 1.0,
+      &quot;u*u_x&quot;: 0.0
+    },
+    &quot;frequency_bounds_including_failures&quot;: {
+      &quot;1&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u^2&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u^3&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u_x&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u_xx&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u_xxx&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u_xxxx&quot;: [
+        0.75,
+        1.0
+      ],
+      &quot;u*u_x&quot;: [
+        0.0,
+        0.25
+      ]
+    },
+    &quot;raw_counts&quot;: {
+      &quot;1&quot;: 0,
+      &quot;u&quot;: 0,
+      &quot;u^2&quot;: 0,
+      &quot;u^3&quot;: 0,
+      &quot;u_x&quot;: 0,
+      &quot;u_xx&quot;: 0,
+      &quot;u_xxx&quot;: 0,
+      &quot;u_xxxx&quot;: 6,
+      &quot;u*u_x&quot;: 0
+    },
+    &quot;requested_replicates&quot;: 8,
+    &quot;completed_replicates&quot;: 6,
+    &quot;failed_replicates&quot;: 2,
+    &quot;number_of_available_multiplicity_vectors&quot;: 35,
+    &quot;calibrated&quot;: false,
+    &quot;probability_claimed&quot;: false,
+    &quot;confidence_interval_claimed&quot;: false,
+    &quot;independent_physical_experiments&quot;: 4,
+    &quot;resampling_adds_physical_evidence&quot;: false,
+    &quot;limited_data_warning&quot;: &quot;Few complete trajectories; repeated bootstrap draws do not create independent evidence.&quot;,
+    &quot;reference_used&quot;: false,
+    &quot;final_used&quot;: false
+  },
+  &quot;minimal_near_supports&quot;: [
+    [
+      &quot;u_xxxx&quot;
+    ]
+  ],
+  &quot;recovery_required&quot;: false,
+  &quot;failure&quot;: null,
+  &quot;frequency_calibrated&quot;: false,
+  &quot;final_opened&quot;: false,
+  &quot;ontology_version&quot;: 1,
+  &quot;graph_facts&quot;: 3,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;graph_conflicts&quot;: [],
+  &quot;pending_ontology_changes&quot;: 0,
+  &quot;event_count&quot;: 10,
+  &quot;event_head&quot;: &quot;42ea59f7c94f76a4cf49be53ad11487cb0e6096b2965a4448ca826abf56edcbb&quot;
+}</pre></details><details><summary>15. pde_coordinator · case_handoff · 0.006s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;state_head&quot;: &quot;42ea59f7c94f76a4cf49be53ad11487cb0e6096b2965a4448ca826abf56edcbb&quot;,
+  &quot;remaining_experiments&quot;: 1,
+  &quot;next_role&quot;: &quot;experiment_agent&quot;,
+  &quot;next_tool&quot;: &quot;experiment_propose&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>16. experiment_agent · experiment_propose · 0.068s</summary><pre>{
+  &quot;id&quot;: &quot;2db9a50d7f86b9b999900d5e63a1d30f79be168d86ed50b719d217d2aefdf28f&quot;,
+  &quot;action&quot;: {
+    &quot;id&quot;: &quot;fixed-rich-1&quot;,
+    &quot;a&quot;: [
+      0.17663273708651264,
+      -0.04052716890428186,
+      -0.17663273708651261,
+      0.17663273708651264,
+      0.04052716890428178,
+      -0.1766327370865128
+    ],
+    &quot;b&quot;: [
+      0.14877570205735963,
+      0.22735628848557748,
+      -0.14877570205735963,
+      0.14877570205735963,
+      -0.2273562884855775,
+      -0.14877570205735938
+    ]
+  },
+  &quot;reason&quot;: &quot;Predetermined rich excitation.&quot;,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;diagnostics&quot;: {
+    &quot;policy&quot;: &quot;fixed_rich&quot;,
+    &quot;selected_action&quot;: {
+      &quot;id&quot;: &quot;fixed-rich-1&quot;,
+      &quot;a&quot;: [
+        0.17663273708651264,
+        -0.04052716890428186,
+        -0.17663273708651261,
+        0.17663273708651264,
+        0.04052716890428178,
+        -0.1766327370865128
+      ],
+      &quot;b&quot;: [
+        0.14877570205735963,
+        0.22735628848557748,
+        -0.14877570205735963,
+        0.14877570205735963,
+        -0.2273562884855775,
+        -0.14877570205735938
+      ]
+    },
+    &quot;selected_action_id&quot;: &quot;fixed-rich-1&quot;,
+    &quot;status&quot;: &quot;selected&quot;,
+    &quot;reason&quot;: &quot;Predetermined rich excitation.&quot;,
+    &quot;fallback_used&quot;: false,
+    &quot;scores&quot;: [
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-2&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-3&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-00&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-01&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-02&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-03&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-04&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-05&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-06&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-07&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-08&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-09&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-10&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-11&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-12&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-13&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-14&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-15&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-1-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-1-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-2-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-2-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-3-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-3-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-4-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-4-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-5-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-5-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-6-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-6-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      }
+    ],
+    &quot;raw_committee_members&quot;: 16,
+    &quot;distinct_coefficient_vectors&quot;: 16,
+    &quot;structure_count&quot;: 11,
+    &quot;committee&quot;: [
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: -0.0007135688373405564
+          },
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: 0.0005327552900262902
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.0038804533928452067
+          },
+          {
+            &quot;name&quot;: &quot;u_x&quot;,
+            &quot;coefficient&quot;: 0.001076908420266274
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: -0.0002454879081059825
+          },
+          {
+            &quot;name&quot;: &quot;u_xxx&quot;,
+            &quot;coefficient&quot;: 3.8741927771954816e-05
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019151007585571393
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u&quot;,
+          &quot;u^2&quot;,
+          &quot;u_x&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-b712cad7bc55d880&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          -0.0007135688373405564,
+          0.0005327552900262902,
+          0.0038804533928452067,
+          0.0,
+          0.001076908420266274,
+          -0.0002454879081059825,
+          3.8741927771954816e-05,
+          -0.0019151007585571393,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: -0.00026537874497667104
+          },
+          {
+            &quot;name&quot;: &quot;u_x&quot;,
+            &quot;coefficient&quot;: 0.00046365982789910653
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019041547262868964
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u_x&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-89e27941e316b8cb&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          -0.00026537874497667104,
+          0.0,
+          0.0,
+          0.0,
+          0.00046365982789910653,
+          0.0,
+          0.0,
+          -0.0019041547262868964,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019042799208783972
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-7642444357f5001f&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.0019042799208783972,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.00190423050736172
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-60b784c647a0e1d6&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.00190423050736172,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019041810938464107
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-1712be67c38e684f&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.0019041810938464107,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019041547262868956
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-6293bd3366ab5209&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.0019041547262868956,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019041347127182284
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-6cd0249e99940e02&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.0019041347127182284,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.0002624990629828088
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.001603506976793699
+          },
+          {
+            &quot;name&quot;: &quot;u_x&quot;,
+            &quot;coefficient&quot;: 0.00037296027962279967
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.001904514067468169
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u^2&quot;,
+          &quot;u_x&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-c9eef541c2b5a50a&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0002624990629828088,
+          0.0,
+          0.001603506976793699,
+          0.0,
+          0.00037296027962279967,
+          0.0,
+          0.0,
+          -0.001904514067468169,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.00026426458144877715
+          },
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.0007466874583633398
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.001591768058726578
+          },
+          {
+            &quot;name&quot;: &quot;u_x&quot;,
+            &quot;coefficient&quot;: 0.00037296025935811727
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: -0.0004003482922387532
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019183222866453779
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u&quot;,
+          &quot;u^2&quot;,
+          &quot;u_x&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-2da4cd739e917cca&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.00026426458144877715,
+          -0.0007466874583633398,
+          0.001591768058726578,
+          0.0,
+          0.00037296025935811727,
+          -0.0004003482922387532,
+          0.0,
+          -0.0019183222866453779,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.000277959785153124
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.0018124713126265854
+          },
+          {
+            &quot;name&quot;: &quot;u_x&quot;,
+            &quot;coefficient&quot;: 0.00029818577818529487
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: -0.00032880947704898544
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019169120073161275
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u^2&quot;,
+          &quot;u_x&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-0f631ce863f9a981&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.000277959785153124,
+          0.0,
+          0.0018124713126265854,
+          0.0,
+          0.00029818577818529487,
+          -0.00032880947704898544,
+          0.0,
+          -0.0019169120073161275,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.00030050554725147673
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.0016568865999310948
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019044787610414493
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u^2&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-51ab764e8d570259&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.00030050554725147673,
+          0.0,
+          0.0016568865999310948,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.0019044787610414493,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.00037302249378777156
+          },
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.0017037262120514587
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.0015046854683740858
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: -0.000525725854139927
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.001921430904250557
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u&quot;,
+          &quot;u^2&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-5a9533b5e0aa8430&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.00037302249378777156,
+          -0.0017037262120514587,
+          0.0015046854683740858,
+          0.0,
+          0.0,
+          -0.000525725854139927,
+          0.0,
+          -0.001921430904250557,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.0004882340797547994
+          },
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.0026620828169967876
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.0013726062080508632
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: -0.0006510056146294534
+          },
+          {
+            &quot;name&quot;: &quot;u_xxx&quot;,
+            &quot;coefficient&quot;: -9.482762422861202e-06
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019245242401197602
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u&quot;,
+          &quot;u^2&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-180f4e563333af7c&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0004882340797547994,
+          -0.0026620828169967876,
+          0.0013726062080508632,
+          0.0,
+          0.0,
+          -0.0006510056146294534,
+          -9.482762422861202e-06,
+          -0.0019245242401197602,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.0005910441670321121
+          },
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.0009984595729565688
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.001902507755131555
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-85292f4d0ea4cf67&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0005910441670321121,
+          -0.0009984595729565688,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.001902507755131555,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.0006870916069863301
+          },
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.001776596124302112
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019012145885328154
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-aba0cf2a49985415&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0006870916069863301,
+          -0.001776596124302112,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -0.0019012145885328154,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.0006871119484802593
+          },
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.0026904551551061844
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: -0.00064684101759796
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -0.0019240332066953485
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-75b58c84095df961&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0006871119484802593,
+          -0.0026904551551061844,
+          0.0,
+          0.0,
+          0.0,
+          -0.00064684101759796,
+          0.0,
+          -0.0019240332066953485,
+          0.0
+        ]
+      }
+    ],
+    &quot;available_actions&quot;: 31,
+    &quot;excluded_action_ids&quot;: [
+      &quot;fixed-rich&quot;
+    ],
+    &quot;cost_units&quot;: &quot;caller_declared_cost&quot;,
+    &quot;noise_estimate&quot;: {
+      &quot;estimated_spatial_variance&quot;: 1.5855022354427083e-05,
+      &quot;per_trajectory&quot;: [
+        {
+          &quot;training_trajectory&quot;: 0,
+          &quot;estimated_spatial_variance&quot;: 1.5523514339299924e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 1,
+          &quot;estimated_spatial_variance&quot;: 1.645361608068575e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 2,
+          &quot;estimated_spatial_variance&quot;: 1.6048765690267324e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 3,
+          &quot;estimated_spatial_variance&quot;: 1.5394193307455328e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        }
+      ],
+      &quot;aggregation&quot;: &quot;equal trajectory mean variance&quot;,
+      &quot;true_noise_used&quot;: false,
+      &quot;physical_upper_band_signal_can_bias_estimate&quot;: true
+    },
+    &quot;acquisition_times&quot;: [
+      0.0,
+      0.1,
+      0.2
+    ],
+    &quot;acquisition_forecast_duration&quot;: 0.2,
+    &quot;initial_frame_scored&quot;: false,
+    &quot;model_forecast_attempts&quot;: 0,
+    &quot;model_forecast_failures&quot;: 0,
+    &quot;actual_experiment_queries&quot;: 0,
+    &quot;reference_used&quot;: false,
+    &quot;prospective_observations_used&quot;: false,
+    &quot;calibrated_probability_or_information_gain_claimed&quot;: false,
+    &quot;identification_certainty_claimed&quot;: false,
+    &quot;fixed_action_order&quot;: [
+      &quot;fixed-rich-1&quot;,
+      &quot;fixed-rich-2&quot;,
+      &quot;fixed-rich-3&quot;,
+      &quot;mixture-07&quot;,
+      &quot;mixture-04&quot;,
+      &quot;mixture-02&quot;,
+      &quot;mixture-10&quot;,
+      &quot;mixture-06&quot;,
+      &quot;mixture-01&quot;,
+      &quot;mixture-11&quot;,
+      &quot;mixture-15&quot;,
+      &quot;mixture-00&quot;,
+      &quot;mixture-05&quot;,
+      &quot;mixture-13&quot;,
+      &quot;mixture-03&quot;,
+      &quot;mixture-08&quot;,
+      &quot;mixture-09&quot;,
+      &quot;mixture-12&quot;,
+      &quot;mixture-14&quot;,
+      &quot;single-1-0&quot;,
+      &quot;single-1-1&quot;,
+      &quot;single-2-0&quot;,
+      &quot;single-2-1&quot;,
+      &quot;single-3-0&quot;,
+      &quot;single-3-1&quot;,
+      &quot;single-4-0&quot;,
+      &quot;single-4-1&quot;,
+      &quot;single-5-0&quot;,
+      &quot;single-5-1&quot;,
+      &quot;single-6-0&quot;,
+      &quot;single-6-1&quot;
+    ],
+    &quot;compute_seconds&quot;: 0.02626257900010387
+  },
+  &quot;measurement_cost&quot;: 7104,
+  &quot;is_physical_instruction&quot;: false
+}</pre></details><details><summary>17. pde_coordinator · case_handoff · 0.005s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;proposed&quot;,
+  &quot;state_head&quot;: &quot;6ddca6f7e447dfccbc698a2ffc74dcd3d45fa1337c71bf80885835df02700166&quot;,
+  &quot;remaining_experiments&quot;: 1,
+  &quot;next_role&quot;: &quot;experiment_agent&quot;,
+  &quot;next_tool&quot;: &quot;experiment_acquire&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+    &quot;proposal_id&quot;: &quot;2db9a50d7f86b9b999900d5e63a1d30f79be168d86ed50b719d217d2aefdf28f&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>18. experiment_agent · experiment_acquire · 0.018s</summary><pre>{
+  &quot;query&quot;: {
+    &quot;action&quot;: {
+      &quot;a&quot;: [
+        0.17663273708651264,
+        -0.04052716890428186,
+        -0.17663273708651261,
+        0.17663273708651264,
+        0.04052716890428178,
+        -0.1766327370865128
+      ],
+      &quot;b&quot;: [
+        0.14877570205735963,
+        0.22735628848557748,
+        -0.14877570205735963,
+        0.14877570205735963,
+        -0.2273562884855775,
+        -0.14877570205735938
+      ],
+      &quot;id&quot;: &quot;fixed-rich-1&quot;
+    },
+    &quot;charged_experiments&quot;: 1,
+    &quot;proposal_id&quot;: &quot;2db9a50d7f86b9b999900d5e63a1d30f79be168d86ed50b719d217d2aefdf28f&quot;,
+    &quot;status&quot;: &quot;observed&quot;,
+    &quot;observation&quot;: {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/query-2.npz&quot;,
+      &quot;sha256&quot;: &quot;ff82a501bda31e8188f2bcfa48c95bc7397f0e7156399f386fa33b42d59a7996&quot;
+    },
+    &quot;receipt&quot;: {
+      &quot;experiments&quot;: 1,
+      &quot;measurement_values&quot;: 7104,
+      &quot;measured_frames&quot;: 111,
+      &quot;measured_spatial_points&quot;: 64,
+      &quot;prefix_frames&quot;: 11,
+      &quot;future_frames&quot;: 101,
+      &quot;history_endpoint_counted_once&quot;: true,
+      &quot;future_duration&quot;: 1.0,
+      &quot;action_sha256&quot;: &quot;f4b434e36f7979c95d7f55925e8a395ed0ac16fa1dc27efa3d042fa5dfa4ce2e&quot;,
+      &quot;observed_field_sha256&quot;: &quot;35c58bcba00fceecb88ada6241ff09801ad49204059736bc55ed371a0af67214&quot;,
+      &quot;is_measured_physical_data&quot;: false
+    }
+  },
+  &quot;idempotent_replay&quot;: false
+}</pre></details><details><summary>19. pde_agent · pde_identify · 0.152s</summary><pre>{
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+  &quot;budget_limit&quot;: 7,
+  &quot;charged_experiments&quot;: 7,
+  &quot;measurement_scalars_charged&quot;: 49728,
+  &quot;training_trajectories&quot;: 5,
+  &quot;development_trajectories&quot;: 2,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;selected_equation&quot;: &quot;u_t = - 0.001898284711 u_xxxx&quot;,
+  &quot;selected_terms&quot;: [
+    {
+      &quot;name&quot;: &quot;u_xxxx&quot;,
+      &quot;coefficient&quot;: -0.0018982847111038777
+    }
+  ],
+  &quot;candidate_supports&quot;: [
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxx&quot;,
+      &quot;u_xxxx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxx&quot;,
+      &quot;u_xxxx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxx&quot;,
+      &quot;u_xxxx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxx&quot;,
+      &quot;u_xxxx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xxxx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u_x&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u_xxxx&quot;
+    ]
+  ],
+  &quot;identification_status&quot;: &quot;observational_ambiguity&quot;,
+  &quot;identification_failure&quot;: null,
+  &quot;uncertainty&quot;: {
+    &quot;method&quot;: &quot;complete_trajectory_bootstrap_full_structure_refit&quot;,
+    &quot;term_inclusion_frequencies&quot;: {
+      &quot;1&quot;: 0.0,
+      &quot;u&quot;: 0.0,
+      &quot;u^2&quot;: 0.0,
+      &quot;u^3&quot;: 0.0,
+      &quot;u_x&quot;: 0.0,
+      &quot;u_xx&quot;: 0.0,
+      &quot;u_xxx&quot;: 0.0,
+      &quot;u_xxxx&quot;: 1.0,
+      &quot;u*u_x&quot;: 0.0
+    },
+    &quot;conditional_on_success_frequency&quot;: {
+      &quot;1&quot;: 0.0,
+      &quot;u&quot;: 0.0,
+      &quot;u^2&quot;: 0.0,
+      &quot;u^3&quot;: 0.0,
+      &quot;u_x&quot;: 0.0,
+      &quot;u_xx&quot;: 0.0,
+      &quot;u_xxx&quot;: 0.0,
+      &quot;u_xxxx&quot;: 1.0,
+      &quot;u*u_x&quot;: 0.0
+    },
+    &quot;frequency_bounds_including_failures&quot;: {
+      &quot;1&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u^2&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u^3&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u_x&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u_xx&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u_xxx&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u_xxxx&quot;: [
+        1.0,
+        1.0
+      ],
+      &quot;u*u_x&quot;: [
+        0.0,
+        0.0
+      ]
+    },
+    &quot;raw_counts&quot;: {
+      &quot;1&quot;: 0,
+      &quot;u&quot;: 0,
+      &quot;u^2&quot;: 0,
+      &quot;u^3&quot;: 0,
+      &quot;u_x&quot;: 0,
+      &quot;u_xx&quot;: 0,
+      &quot;u_xxx&quot;: 0,
+      &quot;u_xxxx&quot;: 8,
+      &quot;u*u_x&quot;: 0
+    },
+    &quot;requested_replicates&quot;: 8,
+    &quot;completed_replicates&quot;: 8,
+    &quot;failed_replicates&quot;: 0,
+    &quot;number_of_available_multiplicity_vectors&quot;: 126,
+    &quot;calibrated&quot;: false,
+    &quot;probability_claimed&quot;: false,
+    &quot;confidence_interval_claimed&quot;: false,
+    &quot;independent_physical_experiments&quot;: 5,
+    &quot;resampling_adds_physical_evidence&quot;: false,
+    &quot;limited_data_warning&quot;: null,
+    &quot;reference_used&quot;: false,
+    &quot;final_used&quot;: false
+  },
+  &quot;minimal_near_supports&quot;: [
+    [
+      &quot;u_xxxx&quot;
+    ]
+  ],
+  &quot;recovery_required&quot;: false,
+  &quot;failure&quot;: null,
+  &quot;frequency_calibrated&quot;: false,
+  &quot;final_opened&quot;: false,
+  &quot;ontology_version&quot;: 1,
+  &quot;graph_facts&quot;: 3,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;graph_conflicts&quot;: [],
+  &quot;pending_ontology_changes&quot;: 0,
+  &quot;event_count&quot;: 14,
+  &quot;event_head&quot;: &quot;46d4347e31f7773c64c3911f98d4def9056d21d93575b5d2b256d3a1d29bc4e9&quot;
+}</pre></details><details><summary>20. pde_coordinator · case_handoff · 0.004s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;state_head&quot;: &quot;46d4347e31f7773c64c3911f98d4def9056d21d93575b5d2b256d3a1d29bc4e9&quot;,
+  &quot;remaining_experiments&quot;: 0,
+  &quot;next_role&quot;: &quot;validation_agent&quot;,
+  &quot;next_tool&quot;: &quot;validation_freeze&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>21. validation_agent · validation_freeze · 0.026s</summary><pre>{
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;model_sha256&quot;: &quot;8b7265ca876a678f6d8639b70591d27ec00de0505ae9ed2e82a3928dac58d6b2&quot;,
+  &quot;training&quot;: [
+    {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/train-0.npz&quot;,
+      &quot;sha256&quot;: &quot;8b3c76f3525674148c461f1b216bba3153bea9f93a6de840f4922cc9e3acc7ef&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/train-1.npz&quot;,
+      &quot;sha256&quot;: &quot;16344b5d090d5abe84e94450437f5292aa3a179ffb65f238767a7a76986523df&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/train-2.npz&quot;,
+      &quot;sha256&quot;: &quot;364ce2abdb348256f3cd864cb0e4ec6f90e999b831854e3131b36ca1a519f18c&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/query-1.npz&quot;,
+      &quot;sha256&quot;: &quot;3d3a4e9ce6630bc445fdfa8096fdc41c4d79bc746de99adfac356f9f011051ac&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/query-2.npz&quot;,
+      &quot;sha256&quot;: &quot;ff82a501bda31e8188f2bcfa48c95bc7397f0e7156399f386fa33b42d59a7996&quot;
+    }
+  ],
+  &quot;development&quot;: [
+    {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/dev-0.npz&quot;,
+      &quot;sha256&quot;: &quot;bbc35ea15b4ed98d008dd6fa0e1722bcfdfa3183c3938b802a41d83b705da4c4&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0/dev-1.npz&quot;,
+      &quot;sha256&quot;: &quot;fdb8053fdc2cd4d8791fc378b5d318517ab992302b257e5773331d6ac74b766e&quot;
+    }
+  ],
+  &quot;charged&quot;: 7,
+  &quot;facts_sha256&quot;: &quot;3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde&quot;,
+  &quot;ontology_sha256&quot;: &quot;f5e8a203b6bcb2356f80bb15bc9aba4fe048a50aa3980d7eb062c334d48508a2&quot;,
+  &quot;setup_sha256&quot;: &quot;3512d6f56a20892922374546136fbb57bb8f21aa9437096f15c584ab9eaeadc1&quot;,
+  &quot;sources&quot;: {
+    &quot;active_study/__init__.py&quot;: &quot;23a3b2c71fb042a40f3bf6b356d1e0f91811c7aa7e14a62dc8319f1f8ccdbba7&quot;,
+    &quot;active_study/acquisition.py&quot;: &quot;7c6b45b135bab7541aac4d34643f06fd1db23fa9cbc60e94285e5f1e2493d640&quot;,
+    &quot;active_study/actions.py&quot;: &quot;0ce7c6c91bdfd43869dadc71b0c973b5a7c4a8588a4150ef8d01ff300b295e16&quot;,
+    &quot;active_study/app.py&quot;: &quot;424509cafbf6ea8437baacde7aa99a713f2c52f654abc9d1a99a340e02d7140a&quot;,
+    &quot;active_study/controller.py&quot;: &quot;d80fe2aebbffd18120f2799f7d09858b55fdd3a433bdfda398279331b182d2af&quot;,
+    &quot;active_study/engine.py&quot;: &quot;79a7cbbdad3e79c9f9ebad6179aa52bf205db0a235c42c0da96e37261274634c&quot;,
+    &quot;active_study/forecast.py&quot;: &quot;b2cc6860b1bac2b9e585122140c8811c3f63c74f29f8932ec7a4606a849669c9&quot;,
+    &quot;active_study/provider.py&quot;: &quot;e57aca981abdbbafd77a831ca0479076b3b1e3f4058407666242aa44e21853a0&quot;,
+    &quot;active_study/run.py&quot;: &quot;2587e905447ca85252dfa70c631307afcc292b8a0514a481e498a5f258cef3c2&quot;,
+    &quot;pde_discovery/__init__.py&quot;: &quot;6430a32151716782cafc523a1ed2e6c6a5ee7741bdc89a39dde1baa48a669a7c&quot;,
+    &quot;pde_discovery/__main__.py&quot;: &quot;621b742c86f8ff05d12e46a153f1ccf09eb2603772d23c31642c7ea88e7fd8ff&quot;,
+    &quot;pde_discovery/additive_experiment.py&quot;: &quot;2657260ecb0eb502efbb702a2ae9ab7529d6a517291730672bf0eb8fe0001654&quot;,
+    &quot;pde_discovery/app.py&quot;: &quot;ca033ddfc6e25430bb5fb85a70ef139d08086e42ae795f3027c47850fc6a2d60&quot;,
+    &quot;pde_discovery/controller.py&quot;: &quot;d170b9d9147974c0f0785f10540fa4815fffc4b218bddfa25e19de40b8a645ce&quot;,
+    &quot;pde_discovery/engine.py&quot;: &quot;c7ccef837529d37d126cf6cbac0446b6316b427f7f4b88ef2ab053ed3d391bce&quot;,
+    &quot;pde_discovery/external_experiment.py&quot;: &quot;4f2838e7298cd2904f81bcc13027ae0b4281abe3ec73d10a01220ec9d0ce436a&quot;,
+    &quot;pde_discovery/generic_engine.py&quot;: &quot;09f966462d823ea23d68a211a34c1a5c499075a8599394d0f8d32417d36e670a&quot;,
+    &quot;pde_discovery/generic_experiment.py&quot;: &quot;e5ec3d9d25517ac1099c4b74d47c251915728fe0f48c8f89ee4001e9a4c2f9cf&quot;,
+    &quot;pde_discovery/heat_identifiability.py&quot;: &quot;c8be9a31c840c801f836a4c8df74fe1336a38ac261d10f42273c0b71c00b1a26&quot;,
+    &quot;pde_discovery/real_benchmark.py&quot;: &quot;8da244a69725dd65c5a8832092f92e7a4acbdcf9c9c78720aa315985e58b04d0&quot;,
+    &quot;pde_discovery/real_experiment.py&quot;: &quot;f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04&quot;,
+    &quot;pde_discovery/real_heat.py&quot;: &quot;8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc&quot;,
+    &quot;pde_discovery/real_heat_refined.py&quot;: &quot;88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1&quot;,
+    &quot;pde_discovery/refined_experiment.py&quot;: &quot;26ece449cb4307baf0690384312e6dd7795cd9bd55c569ab2465fbbb79a3a277&quot;,
+    &quot;pde_discovery/simulator.py&quot;: &quot;d35a953db0daf1f3f4f68c806172ae32984dd43cd3b83f37ca3bbe09bebfb1b9&quot;,
+    &quot;coefficient_study/__init__.py&quot;: &quot;1f0e05e3d66912a08002a8c2ceacae8a8c308632b63d1c7a0eee2f3cc9fd0f3a&quot;,
+    &quot;coefficient_study/data.py&quot;: &quot;4889761afa58fa08df4731777b13692fec98cd699cd2f302b091e5f7d2887a47&quot;,
+    &quot;coefficient_study/engine.py&quot;: &quot;6238186265d29b339936f6d642935affe85f64d9e42f3adba4a430c761bf4ecf&quot;,
+    &quot;coefficient_study/generators.py&quot;: &quot;4091a1d79f85145d3d2430f7eafe190280bd621a7c18a15bde6049a53023df11&quot;,
+    &quot;coefficient_study/noise.py&quot;: &quot;dd84fd7c60fb082a86d70dc32c6986d5ca4fb0369b9eaa6af8e0e1ad92ad4232&quot;,
+    &quot;coefficient_study/run.py&quot;: &quot;ab7911dd50b789469750419860461f9157e9b3daa91b0d7f60ff093951ace70b&quot;,
+    &quot;coefficient_study/selection.py&quot;: &quot;85ea4ae9dfa2c0d62f840d7f93c1fac1baec956a36c37c147fee5a9396b5e08c&quot;,
+    &quot;prefix_study/__init__.py&quot;: &quot;0407dbf22cbb7e931232daaf79727c6ad0b6c627f0c47dbf33aa0cf028ed660a&quot;,
+    &quot;prefix_study/data.py&quot;: &quot;5fd4acf36938cb15c0d3879fe3a8e66cd21d158f91656aef68f2444ef68edfb5&quot;,
+    &quot;prefix_study/engine.py&quot;: &quot;d9d144771bf43e067fafd7423d58577f6d8dab141eef99d431def36b015f1acf&quot;,
+    &quot;prefix_study/forecast.py&quot;: &quot;42b533728df0dab390b7d3fc8a8060e306348751a5c1b352a8e6335450417d1e&quot;,
+    &quot;prefix_study/generators.py&quot;: &quot;8f9059c1d609226ed4166cb465e8f81a2d728a1486b577cb7d8df7c0d30cc2be&quot;,
+    &quot;prefix_study/run.py&quot;: &quot;102e3dbb1c8c7c86cad1b69ce44a943cc2924bea0655844690962a809bc40a4d&quot;,
+    &quot;five_study/__init__.py&quot;: &quot;338c7608f5fab6a79789e96d94b49e72c9f6d51f555ba5def675c376e36a1e1e&quot;,
+    &quot;five_study/data.py&quot;: &quot;7cc8b9fc7099e62549deb10f6a48a51b70d30f691b01353ce6f1c985487a3fff&quot;,
+    &quot;five_study/engine.py&quot;: &quot;a516b35dcefcec5fd6b4191aee9bc174af744dbdd87cf9524e07766bb842b2a6&quot;,
+    &quot;five_study/forecast.py&quot;: &quot;0fe822ab050f0ab4572828f75490054819404b7bfded68d6b7e5e0ed6290aa4e&quot;,
+    &quot;five_study/generators.py&quot;: &quot;e167c9026cdb1ebcb9c4e8b71408159e2b71c526b5c78b2f2cdebac571374f03&quot;,
+    &quot;five_study/initial.py&quot;: &quot;abff6b772783472ea6a6a518231a279e92b2085fdbd86597971193c460f3badb&quot;,
+    &quot;five_study/run.py&quot;: &quot;a9742fc83bc88ef186aef02291277dfce350de8f255e0eb97c29591745d2484f&quot;,
+    &quot;resolved_study/__init__.py&quot;: &quot;21b20f27081fe2c9ffda4d95a4806d66dabe2b99faed7d57f6dc659cc31ab53d&quot;,
+    &quot;resolved_study/data.py&quot;: &quot;21be8902ab62f3482fb466738a6c2f96af7ad0df6839f0a783f04e83a5abcf75&quot;,
+    &quot;resolved_study/forecast.py&quot;: &quot;c0412cf5e5a27eac4b5558110fe6939bd1e666568b4743c99665b771bcc5cef4&quot;,
+    &quot;resolved_study/generators.py&quot;: &quot;95e3862c5c56712bd58e9e7adf5a427040c7424e9c0cd11f9b1d9e086529368f&quot;,
+    &quot;resolved_study/run.py&quot;: &quot;b72bd024765e2bdb4ca4d08b889e30bd9d7a1c22e37b2ad580ca8290ade0b2a6&quot;,
+    &quot;resolved_study/selection.py&quot;: &quot;7f93085fb10f7ef57c1c256b696a1fb1e9606290dea71e3a72c02d069335850d&quot;,
+    &quot;weak_study/__init__.py&quot;: &quot;ff8c034d2af458169e0058529c3c7b6b4903cd292fc1968ea8e00a6d804f07b8&quot;,
+    &quot;weak_study/data.py&quot;: &quot;59760dff581d23435b8d985d9142103b916583c04f4f5842d1c04b116a9398e9&quot;,
+    &quot;weak_study/engine.py&quot;: &quot;4a5344dbd203af8955d0962d480805ea7ba1c17729d26082365989e44d2409af&quot;,
+    &quot;weak_study/generators.py&quot;: &quot;ecefc5b5218681cffddc6aeb32b1305962317c6d104d72196c688b9e1022c56b&quot;,
+    &quot;weak_study/run.py&quot;: &quot;01f24a5f1a5de9bdeea1fcbc91600d21504704487fce2c453b2f54ed285bb380&quot;,
+    &quot;l1_study/__init__.py&quot;: &quot;f60f17fc53ea9b395ceb87b36dd1ea6a558138c806ce1f481d80880068215461&quot;,
+    &quot;l1_study/engine.py&quot;: &quot;e91f3dfb634c09eef1083097ad8247cfc23c6a9d7058e701675fb229669b512f&quot;,
+    &quot;l1_study/fixtures.py&quot;: &quot;0869c9838647bebea5cd8a589724422e062f93d1ac89c58f261442ef4d64e956&quot;,
+    &quot;l1_study/gaussian_check.py&quot;: &quot;9892a4330f72d756f58c315179e1e30bfe52bf60eb835c7697de7025a7004f51&quot;,
+    &quot;l1_study/run.py&quot;: &quot;0a23d9c7636b5d11ab1611c36438b09820b3d347c6fd3efea2226e3bc14accea&quot;,
+    &quot;fusion_study/__init__.py&quot;: &quot;25930ef372c6a0de2862ac3447407d42c947fb07d4345efa8bf9146ef8f1e5ed&quot;,
+    &quot;fusion_study/data.py&quot;: &quot;d96e790ce7c7a084331a5832b4111e1341999bb935000adba9cd88fb0da2c71e&quot;,
+    &quot;fusion_study/engine.py&quot;: &quot;25bed3f5f1b33f620a1be99d7810f8fbd3f5148817f9d69020ce42baf903fc1c&quot;,
+    &quot;fusion_study/generators.py&quot;: &quot;7f232406b83325ef7b5344887984575fea392ccb8bbd5b72d9187cf709cd02d9&quot;,
+    &quot;fusion_study/run.py&quot;: &quot;2d8f616c1f5eb3f5ce4fc846cdbc07e5286809de6a69f37f837899e72b40bffe&quot;,
+    &quot;challenge_study/__init__.py&quot;: &quot;cdc5673688815ae0d0780d284fd852c1fe42c1a43811f5898a265cd77325956a&quot;,
+    &quot;challenge_study/data.py&quot;: &quot;8455303f18bed732c568891d1c5fe0e467ae2aa5675f06a7ff82c55f31afa960&quot;,
+    &quot;challenge_study/generators.py&quot;: &quot;1f7d3329b0fe3e564113b6155018a5a6e3964d4223c5a58866e867404293cd4c&quot;,
+    &quot;challenge_study/run.py&quot;: &quot;61e8e4ff7ba5366e2a0cfc049c7d0cc9f01127a5765cbd96be4be9a65811ee9c&quot;,
+    &quot;competition_agent/__init__.py&quot;: &quot;2b924dd67033b8a60affc6dabc377a74cf7fca8559c1b0f298c1c7fe5ce11062&quot;,
+    &quot;competition_agent/bundle.py&quot;: &quot;094edfe51060baeffb742a477ec436e951a358892272d2df7c8f078bf601b7e0&quot;,
+    &quot;competition_agent/demo.py&quot;: &quot;bff96b94ca50a983cfc1d9da44e5a5f0ead4fa3c589823167297084164b56ef7&quot;,
+    &quot;competition_agent/evaluate_demo.py&quot;: &quot;5bbe8d5c175e9371bbdbefb91dd451205d99b384340d159a3ef05ada60663259&quot;,
+    &quot;competition_agent/evidence_quality.py&quot;: &quot;48948f9a0118f839a8f3f53df1f7d42312df89cf686d6ab18269f562a05ba8fd&quot;,
+    &quot;competition_agent/make_document.py&quot;: &quot;fbf56bc50c1cac9143ef872b10438fa8dbbe9798ce7d2360584e9d5742d70e32&quot;,
+    &quot;competition_agent/mcp_server.py&quot;: &quot;4f291b644466b1fd55252f88b575633aef2e2b85e39688437047f4ea2c7c8180&quot;,
+    &quot;competition_agent/quality_probe.py&quot;: &quot;364f05d825b29a1e7edae9d38669de0fb3ce70cfd372649105e023cd69c4c8b0&quot;,
+    &quot;competition_agent/reporting.py&quot;: &quot;777b0581138b20a321b13bf4d152e4c998a36a5e4396234012d6034e6dc6273c&quot;,
+    &quot;competition_agent/service.py&quot;: &quot;8f68e4ab0f87b3f0e0ca337bc27eb73bcfbc5b391718aff88eed4e8bcf93dea6&quot;
+  },
+  &quot;final_opened&quot;: false,
+  &quot;sha256&quot;: &quot;5b4a6b212996a113c87b7cf4656488658411bf52f1c9ce163b5cf3711576c182&quot;
+}</pre></details><details><summary>22. pde_coordinator · case_handoff · 0.005s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;frozen&quot;,
+  &quot;state_head&quot;: &quot;1ae93f03981e569e6ddabf7375561b8db4e467346a60812c433a842145c91b10&quot;,
+  &quot;remaining_experiments&quot;: 0,
+  &quot;next_role&quot;: &quot;validation_agent&quot;,
+  &quot;next_tool&quot;: &quot;validation_evaluate&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: &quot;5b4a6b212996a113c87b7cf4656488658411bf52f1c9ce163b5cf3711576c182&quot;,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>23. validation_agent · validation_evaluate · 0.135s</summary><pre>{
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;nexent_live_llm_verified&quot;: false,
+  &quot;equation&quot;: &quot;u_t = - 0.001898284711 u_xxxx&quot;,
+  &quot;terms&quot;: [
+    {
+      &quot;coefficient&quot;: -0.0018982847111038777,
+      &quot;name&quot;: &quot;u_xxxx&quot;
+    }
+  ],
+  &quot;structure&quot;: {
+    &quot;status&quot;: &quot;evaluated&quot;,
+    &quot;exact_support&quot;: true,
+    &quot;precision&quot;: 1.0,
+    &quot;recall&quot;: 1.0,
+    &quot;f1&quot;: 1.0,
+    &quot;true_positive_terms&quot;: [
+      &quot;u_xxxx&quot;
+    ],
+    &quot;missing_terms&quot;: [],
+    &quot;spurious_terms&quot;: [],
+    &quot;coefficient_relative_l2&quot;: 0.0021223489082651445,
+    &quot;coefficient_comparison&quot;: [
+      {
+        &quot;name&quot;: &quot;u_xxxx&quot;,
+        &quot;reference&quot;: -0.0018942644210778376,
+        &quot;discovered&quot;: -0.0018982847111038777,
+        &quot;absolute_error&quot;: 4.020290026040055e-06,
+        &quot;relative_error&quot;: 0.0021223489082651445
+      }
+    ],
+    &quot;reference_terms&quot;: [
+      {
+        &quot;name&quot;: &quot;u_xxxx&quot;,
+        &quot;coefficient&quot;: -0.0018942644210778376
+      }
+    ],
+    &quot;coefficient_metric_scope&quot;: &quot;author coordinate/field scaling; not unit-invariant&quot;
+  },
+  &quot;max_true_coefficient_relative_error&quot;: 0.0021223489082651445,
+  &quot;numerical_joint_success&quot;: true,
+  &quot;joint_success_rule&quot;: &quot;exact support AND max true coefficient error &lt;=10% AND all 3 predictions valid AND mean prediction error &lt;=5%&quot;,
+  &quot;predictions&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;status&quot;: &quot;evaluated&quot;,
+      &quot;metrics&quot;: {
+        &quot;rmse&quot;: 0.0002854203202248065,
+        &quot;mae&quot;: 0.00023795156598231898,
+        &quot;max_absolute_error&quot;: 0.0006128344538660624,
+        &quot;relative_l2&quot;: 0.0014494814225220335,
+        &quot;excluded_initial_frame&quot;: true,
+        &quot;scored_frames&quot;: 100,
+        &quot;space_points&quot;: 64
+      },
+      &quot;prefix_frames&quot;: 11,
+      &quot;duration&quot;: 1.0
+    },
+    {
+      &quot;index&quot;: 1,
+      &quot;status&quot;: &quot;evaluated&quot;,
+      &quot;metrics&quot;: {
+        &quot;rmse&quot;: 0.0002748349030207367,
+        &quot;mae&quot;: 0.00022373251377268594,
+        &quot;max_absolute_error&quot;: 0.0005820155602175303,
+        &quot;relative_l2&quot;: 0.001293211300512435,
+        &quot;excluded_initial_frame&quot;: true,
+        &quot;scored_frames&quot;: 100,
+        &quot;space_points&quot;: 64
+      },
+      &quot;prefix_frames&quot;: 11,
+      &quot;duration&quot;: 1.0
+    },
+    {
+      &quot;index&quot;: 2,
+      &quot;status&quot;: &quot;evaluated&quot;,
+      &quot;metrics&quot;: {
+        &quot;rmse&quot;: 0.0003434070438629676,
+        &quot;mae&quot;: 0.0002906965764320051,
+        &quot;max_absolute_error&quot;: 0.0008115128156349904,
+        &quot;relative_l2&quot;: 0.001266176282615755,
+        &quot;excluded_initial_frame&quot;: true,
+        &quot;scored_frames&quot;: 100,
+        &quot;space_points&quot;: 64
+      },
+      &quot;prefix_frames&quot;: 11,
+      &quot;duration&quot;: 1.0
+    }
+  ],
+  &quot;evaluation_slots&quot;: 3,
+  &quot;evaluation_reference_trajectories_generated&quot;: 3,
+  &quot;evaluation_measurement_scalars&quot;: 21312,
+  &quot;discovery_budget_excludes_final_evaluation&quot;: true,
+  &quot;prediction_failure_slots&quot;: 0,
+  &quot;mean_prediction_error&quot;: 0.0013362896685500745,
+  &quot;prediction_5pct_passed&quot;: true,
+  &quot;evidence_ready&quot;: true,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;evidence_conflicts&quot;: [],
+  &quot;pending_ontology_review&quot;: false,
+  &quot;evidence_sources&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;graph&quot;: [
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 115,
+        &quot;end_line&quot;: 2,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 80
+      },
+      &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+      &quot;object&quot;: &quot;demo_field&quot;,
+      &quot;predicate&quot;: &quot;records_field&quot;,
+      &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 101,
+        &quot;end_line&quot;: 2,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 66
+      },
+      &quot;id&quot;: &quot;39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974&quot;,
+      &quot;object&quot;: &quot;dimensionless&quot;,
+      &quot;predicate&quot;: &quot;uses_unit&quot;,
+      &quot;quote&quot;: &quot;demo_field uses_unit dimensionless.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_field&quot;
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 148,
+        &quot;end_line&quot;: 3,
+        &quot;line&quot;: 3,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 116
+      },
+      &quot;id&quot;: &quot;3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a&quot;,
+      &quot;object&quot;: &quot;periodic&quot;,
+      &quot;predicate&quot;: &quot;has_boundary&quot;,
+      &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;
+    }
+  ],
+  &quot;freeze_sha256&quot;: &quot;5b4a6b212996a113c87b7cf4656488658411bf52f1c9ce163b5cf3711576c182&quot;,
+  &quot;measurement_scalars_charged&quot;: 49728,
+  &quot;charged_experiments&quot;: 7,
+  &quot;frequency_is_probability&quot;: false,
+  &quot;real_industry_validation&quot;: false,
+  &quot;final_used_for_discovery&quot;: false,
+  &quot;note&quot;: &quot;This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value.&quot;
+}</pre></details><details><summary>24. pde_coordinator · case_handoff · 0.006s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+  &quot;phase&quot;: &quot;validated&quot;,
+  &quot;state_head&quot;: &quot;9d9571c232b1634a1a2035bc37fa97ed881ad5b8b1d8538d777f60ac27ca6822&quot;,
+  &quot;remaining_experiments&quot;: 0,
+  &quot;next_role&quot;: null,
+  &quot;next_tool&quot;: null,
+  &quot;next_arguments&quot;: {},
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: false,
+  &quot;stop&quot;: true,
+  &quot;terminal&quot;: true,
+  &quot;reason&quot;: &quot;terminal&quot;,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: true,
+  &quot;source_ids&quot;: [
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: &quot;5b4a6b212996a113c87b7cf4656488658411bf52f1c9ce163b5cf3711576c182&quot;,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: true
+}</pre></details><details><summary>25. validation_agent · evidence_get · 0.006s</summary><pre>{
+  &quot;status&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+    &quot;phase&quot;: &quot;validated&quot;,
+    &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+    &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+    &quot;budget_limit&quot;: 7,
+    &quot;charged_experiments&quot;: 7,
+    &quot;measurement_scalars_charged&quot;: 49728,
+    &quot;training_trajectories&quot;: 5,
+    &quot;development_trajectories&quot;: 2,
+    &quot;policy&quot;: &quot;fixed_rich&quot;,
+    &quot;selected_equation&quot;: &quot;u_t = - 0.001898284711 u_xxxx&quot;,
+    &quot;selected_terms&quot;: [
+      {
+        &quot;coefficient&quot;: -0.0018982847111038777,
+        &quot;name&quot;: &quot;u_xxxx&quot;
+      }
+    ],
+    &quot;candidate_supports&quot;: [
+      [
+        &quot;1&quot;,
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;1&quot;,
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxx&quot;,
+        &quot;u_xxxx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;1&quot;,
+        &quot;u^2&quot;,
+        &quot;u^3&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxx&quot;,
+        &quot;u_xxxx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;1&quot;,
+        &quot;u^2&quot;,
+        &quot;u^3&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;1&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u^3&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxx&quot;,
+        &quot;u_xxxx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u^3&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u^3&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxx&quot;,
+        &quot;u_xxxx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xxxx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u_x&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u_xxxx&quot;
+      ]
+    ],
+    &quot;identification_status&quot;: &quot;observational_ambiguity&quot;,
+    &quot;identification_failure&quot;: null,
+    &quot;uncertainty&quot;: {
+      &quot;calibrated&quot;: false,
+      &quot;completed_replicates&quot;: 8,
+      &quot;conditional_on_success_frequency&quot;: {
+        &quot;1&quot;: 0.0,
+        &quot;u&quot;: 0.0,
+        &quot;u*u_x&quot;: 0.0,
+        &quot;u^2&quot;: 0.0,
+        &quot;u^3&quot;: 0.0,
+        &quot;u_x&quot;: 0.0,
+        &quot;u_xx&quot;: 0.0,
+        &quot;u_xxx&quot;: 0.0,
+        &quot;u_xxxx&quot;: 1.0
+      },
+      &quot;confidence_interval_claimed&quot;: false,
+      &quot;failed_replicates&quot;: 0,
+      &quot;final_used&quot;: false,
+      &quot;frequency_bounds_including_failures&quot;: {
+        &quot;1&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u*u_x&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u^2&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u^3&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u_x&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u_xx&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u_xxx&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u_xxxx&quot;: [
+          1.0,
+          1.0
+        ]
+      },
+      &quot;independent_physical_experiments&quot;: 5,
+      &quot;limited_data_warning&quot;: null,
+      &quot;method&quot;: &quot;complete_trajectory_bootstrap_full_structure_refit&quot;,
+      &quot;number_of_available_multiplicity_vectors&quot;: 126,
+      &quot;probability_claimed&quot;: false,
+      &quot;raw_counts&quot;: {
+        &quot;1&quot;: 0,
+        &quot;u&quot;: 0,
+        &quot;u*u_x&quot;: 0,
+        &quot;u^2&quot;: 0,
+        &quot;u^3&quot;: 0,
+        &quot;u_x&quot;: 0,
+        &quot;u_xx&quot;: 0,
+        &quot;u_xxx&quot;: 0,
+        &quot;u_xxxx&quot;: 8
+      },
+      &quot;reference_used&quot;: false,
+      &quot;requested_replicates&quot;: 8,
+      &quot;resampling_adds_physical_evidence&quot;: false,
+      &quot;term_inclusion_frequencies&quot;: {
+        &quot;1&quot;: 0.0,
+        &quot;u&quot;: 0.0,
+        &quot;u*u_x&quot;: 0.0,
+        &quot;u^2&quot;: 0.0,
+        &quot;u^3&quot;: 0.0,
+        &quot;u_x&quot;: 0.0,
+        &quot;u_xx&quot;: 0.0,
+        &quot;u_xxx&quot;: 0.0,
+        &quot;u_xxxx&quot;: 1.0
+      }
+    },
+    &quot;minimal_near_supports&quot;: [
+      [
+        &quot;u_xxxx&quot;
+      ]
+    ],
+    &quot;recovery_required&quot;: false,
+    &quot;failure&quot;: null,
+    &quot;frequency_calibrated&quot;: false,
+    &quot;final_opened&quot;: true,
+    &quot;ontology_version&quot;: 1,
+    &quot;graph_facts&quot;: 3,
+    &quot;evidence_quality&quot;: {
+      &quot;metadata_ready&quot;: true,
+      &quot;blockers&quot;: [],
+      &quot;required_metadata&quot;: [
+        {
+          &quot;subject&quot;: &quot;demo_grid&quot;,
+          &quot;predicate&quot;: &quot;records_field&quot;,
+          &quot;object&quot;: &quot;demo_field&quot;
+        },
+        {
+          &quot;subject&quot;: &quot;demo_field&quot;,
+          &quot;predicate&quot;: &quot;uses_unit&quot;,
+          &quot;object&quot;: &quot;dimensionless&quot;
+        },
+        {
+          &quot;subject&quot;: &quot;demo_grid&quot;,
+          &quot;predicate&quot;: &quot;has_boundary&quot;,
+          &quot;object&quot;: &quot;periodic&quot;
+        }
+      ],
+      &quot;asserted_facts&quot;: 3,
+      &quot;total_facts&quot;: 3,
+      &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+      &quot;semantic_truth_verified&quot;: false,
+      &quot;industrial_readiness&quot;: false
+    },
+    &quot;graph_conflicts&quot;: [],
+    &quot;pending_ontology_changes&quot;: 0,
+    &quot;event_count&quot;: 17,
+    &quot;event_head&quot;: &quot;9d9571c232b1634a1a2035bc37fa97ed881ad5b8b1d8538d777f60ac27ca6822&quot;
+  },
+  &quot;events&quot;: [
+    {
+      &quot;actor&quot;: &quot;asset_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:18.024269+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;experiments&quot;: 5,
+        &quot;is_physical_data&quot;: false
+      },
+      &quot;operation&quot;: &quot;initial_budget_charged&quot;,
+      &quot;previous&quot;: null,
+      &quot;sequence&quot;: 1,
+      &quot;sha256&quot;: &quot;d38d7139d31a5f67c022e151a4d4f329419295129814f971f26a58d28dc9190d&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;asset_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:18.075697+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;observations&quot;: 5
+      },
+      &quot;operation&quot;: &quot;initial_observations_registered&quot;,
+      &quot;previous&quot;: &quot;d38d7139d31a5f67c022e151a4d4f329419295129814f971f26a58d28dc9190d&quot;,
+      &quot;sequence&quot;: 2,
+      &quot;sha256&quot;: &quot;7ab86ce7bf4491d1bcefa53e6e8ba869da737d92f25d122b1cd7c88ec89f10c3&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;asset_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:18.085891+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;source_ids&quot;: [
+          &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+          &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;,
+          &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;
+        ]
+      },
+      &quot;operation&quot;: &quot;documents_ingested&quot;,
+      &quot;previous&quot;: &quot;7ab86ce7bf4491d1bcefa53e6e8ba869da737d92f25d122b1cd7c88ec89f10c3&quot;,
+      &quot;sequence&quot;: 3,
+      &quot;sha256&quot;: &quot;98cbdc027e32545437225224a4944b71612a04600660c168cd1a6f387306ad68&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;graph_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:18.095580+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde&quot;,
+        &quot;unknown_predicates&quot;: []
+      },
+      &quot;operation&quot;: &quot;graph_proposed&quot;,
+      &quot;previous&quot;: &quot;98cbdc027e32545437225224a4944b71612a04600660c168cd1a6f387306ad68&quot;,
+      &quot;sequence&quot;: 4,
+      &quot;sha256&quot;: &quot;c209a34e1404633dd22ea37cb908fbf376f4bff28fc507e1063a54f54a089946&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;graph_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:18.102594+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;human_semantic_review&quot;: false,
+        &quot;proposal_id&quot;: &quot;3b23bcd70ca5dfa0efae86d50bb07ed78266536ce17742fe74a011a176f79fde&quot;
+      },
+      &quot;operation&quot;: &quot;source_grounded_graph_applied&quot;,
+      &quot;previous&quot;: &quot;c209a34e1404633dd22ea37cb908fbf376f4bff28fc507e1063a54f54a089946&quot;,
+      &quot;sequence&quot;: 5,
+      &quot;sha256&quot;: &quot;4496a4c168246f1c0aba95e5b0d697e9117efadc32d0f6426c24939615f5d58e&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;pde_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:25.747246+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;final_used&quot;: false,
+        &quot;model_sha256&quot;: &quot;e3a49f80e9ecdcdb6e02afbb8175f0a9abf7a0f15cd07d87b4a99afc1e4b1281&quot;,
+        &quot;training_hashes&quot;: [
+          &quot;8b3c76f3525674148c461f1b216bba3153bea9f93a6de840f4922cc9e3acc7ef&quot;,
+          &quot;16344b5d090d5abe84e94450437f5292aa3a179ffb65f238767a7a76986523df&quot;,
+          &quot;364ce2abdb348256f3cd864cb0e4ec6f90e999b831854e3131b36ca1a519f18c&quot;
+        ]
+      },
+      &quot;operation&quot;: &quot;identify&quot;,
+      &quot;previous&quot;: &quot;4496a4c168246f1c0aba95e5b0d697e9117efadc32d0f6426c24939615f5d58e&quot;,
+      &quot;sequence&quot;: 6,
+      &quot;sha256&quot;: &quot;bb608ee61fa74f566fe7e953acd82c2662ccee40f0998bbc47181667c63698bc&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:25.821708+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;9cc6d9ed8b41a5d7ee561c899ecb9c75ef1f63d00decec3a8230b894267b25a4&quot;
+      },
+      &quot;operation&quot;: &quot;propose&quot;,
+      &quot;previous&quot;: &quot;bb608ee61fa74f566fe7e953acd82c2662ccee40f0998bbc47181667c63698bc&quot;,
+      &quot;sequence&quot;: 7,
+      &quot;sha256&quot;: &quot;0283f26086699f6299836f2e3a1fbe4907287cfef5d350db979788ddfbf18d5d&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:25.838309+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;charged_experiments&quot;: 6,
+        &quot;proposal_id&quot;: &quot;9cc6d9ed8b41a5d7ee561c899ecb9c75ef1f63d00decec3a8230b894267b25a4&quot;
+      },
+      &quot;operation&quot;: &quot;query_charged_before_execution&quot;,
+      &quot;previous&quot;: &quot;0283f26086699f6299836f2e3a1fbe4907287cfef5d350db979788ddfbf18d5d&quot;,
+      &quot;sequence&quot;: 8,
+      &quot;sha256&quot;: &quot;ae80a8ad668dbac3af3a44972de95e850eacdd47cb9d37bceb0d7b2e61a7b51e&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:25.850801+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;9cc6d9ed8b41a5d7ee561c899ecb9c75ef1f63d00decec3a8230b894267b25a4&quot;,
+        &quot;status&quot;: &quot;observed&quot;
+      },
+      &quot;operation&quot;: &quot;query_completed&quot;,
+      &quot;previous&quot;: &quot;ae80a8ad668dbac3af3a44972de95e850eacdd47cb9d37bceb0d7b2e61a7b51e&quot;,
+      &quot;sequence&quot;: 9,
+      &quot;sha256&quot;: &quot;5d6a780f149d586cf5001a5bf1c266eea482f1221a0b44e7098e47d80b99ceda&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;pde_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:29.562378+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;final_used&quot;: false,
+        &quot;model_sha256&quot;: &quot;b071c233faa0e7b8806a6673c1352f7da09998ccc2835bf3df0e40fa9a9aca1b&quot;,
+        &quot;training_hashes&quot;: [
+          &quot;8b3c76f3525674148c461f1b216bba3153bea9f93a6de840f4922cc9e3acc7ef&quot;,
+          &quot;16344b5d090d5abe84e94450437f5292aa3a179ffb65f238767a7a76986523df&quot;,
+          &quot;364ce2abdb348256f3cd864cb0e4ec6f90e999b831854e3131b36ca1a519f18c&quot;,
+          &quot;3d3a4e9ce6630bc445fdfa8096fdc41c4d79bc746de99adfac356f9f011051ac&quot;
+        ]
+      },
+      &quot;operation&quot;: &quot;identify&quot;,
+      &quot;previous&quot;: &quot;5d6a780f149d586cf5001a5bf1c266eea482f1221a0b44e7098e47d80b99ceda&quot;,
+      &quot;sequence&quot;: 10,
+      &quot;sha256&quot;: &quot;42ea59f7c94f76a4cf49be53ad11487cb0e6096b2965a4448ca826abf56edcbb&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:29.645343+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;2db9a50d7f86b9b999900d5e63a1d30f79be168d86ed50b719d217d2aefdf28f&quot;
+      },
+      &quot;operation&quot;: &quot;propose&quot;,
+      &quot;previous&quot;: &quot;42ea59f7c94f76a4cf49be53ad11487cb0e6096b2965a4448ca826abf56edcbb&quot;,
+      &quot;sequence&quot;: 11,
+      &quot;sha256&quot;: &quot;6ddca6f7e447dfccbc698a2ffc74dcd3d45fa1337c71bf80885835df02700166&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:29.664807+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;charged_experiments&quot;: 7,
+        &quot;proposal_id&quot;: &quot;2db9a50d7f86b9b999900d5e63a1d30f79be168d86ed50b719d217d2aefdf28f&quot;
+      },
+      &quot;operation&quot;: &quot;query_charged_before_execution&quot;,
+      &quot;previous&quot;: &quot;6ddca6f7e447dfccbc698a2ffc74dcd3d45fa1337c71bf80885835df02700166&quot;,
+      &quot;sequence&quot;: 12,
+      &quot;sha256&quot;: &quot;c759ae3f7a777e80dba308f57bb3bfc59d9478051f5d7be415e0018d7947ca48&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:29.675770+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;2db9a50d7f86b9b999900d5e63a1d30f79be168d86ed50b719d217d2aefdf28f&quot;,
+        &quot;status&quot;: &quot;observed&quot;
+      },
+      &quot;operation&quot;: &quot;query_completed&quot;,
+      &quot;previous&quot;: &quot;c759ae3f7a777e80dba308f57bb3bfc59d9478051f5d7be415e0018d7947ca48&quot;,
+      &quot;sequence&quot;: 13,
+      &quot;sha256&quot;: &quot;a324c1331061deb1f6068320f725adfc42fe7b75b28028c1f8d19906b545eab1&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;pde_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:29.827414+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;final_used&quot;: false,
+        &quot;model_sha256&quot;: &quot;8b7265ca876a678f6d8639b70591d27ec00de0505ae9ed2e82a3928dac58d6b2&quot;,
+        &quot;training_hashes&quot;: [
+          &quot;8b3c76f3525674148c461f1b216bba3153bea9f93a6de840f4922cc9e3acc7ef&quot;,
+          &quot;16344b5d090d5abe84e94450437f5292aa3a179ffb65f238767a7a76986523df&quot;,
+          &quot;364ce2abdb348256f3cd864cb0e4ec6f90e999b831854e3131b36ca1a519f18c&quot;,
+          &quot;3d3a4e9ce6630bc445fdfa8096fdc41c4d79bc746de99adfac356f9f011051ac&quot;,
+          &quot;ff82a501bda31e8188f2bcfa48c95bc7397f0e7156399f386fa33b42d59a7996&quot;
+        ]
+      },
+      &quot;operation&quot;: &quot;identify&quot;,
+      &quot;previous&quot;: &quot;a324c1331061deb1f6068320f725adfc42fe7b75b28028c1f8d19906b545eab1&quot;,
+      &quot;sequence&quot;: 14,
+      &quot;sha256&quot;: &quot;46d4347e31f7773c64c3911f98d4def9056d21d93575b5d2b256d3a1d29bc4e9&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;validation_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:29.862509+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;sha256&quot;: &quot;5b4a6b212996a113c87b7cf4656488658411bf52f1c9ce163b5cf3711576c182&quot;
+      },
+      &quot;operation&quot;: &quot;freeze&quot;,
+      &quot;previous&quot;: &quot;46d4347e31f7773c64c3911f98d4def9056d21d93575b5d2b256d3a1d29bc4e9&quot;,
+      &quot;sequence&quot;: 15,
+      &quot;sha256&quot;: &quot;1ae93f03981e569e6ddabf7375561b8db4e467346a60812c433a842145c91b10&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;validation_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:29.899534+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;freeze_sha256&quot;: &quot;5b4a6b212996a113c87b7cf4656488658411bf52f1c9ce163b5cf3711576c182&quot;
+      },
+      &quot;operation&quot;: &quot;final_opened&quot;,
+      &quot;previous&quot;: &quot;1ae93f03981e569e6ddabf7375561b8db4e467346a60812c433a842145c91b10&quot;,
+      &quot;sequence&quot;: 16,
+      &quot;sha256&quot;: &quot;e074eb3dacf45cb2ab5b8a8f03746ca34598c83cf83649b1a217bc8be261395b&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;validation_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-04T17:00:30.008453+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;report_sha256&quot;: &quot;9aed5ad21cd9c003efc8d8f0b83fc807d3b1a37926abded7075a1dd1374fc745&quot;
+      },
+      &quot;operation&quot;: &quot;validation_completed&quot;,
+      &quot;previous&quot;: &quot;e074eb3dacf45cb2ab5b8a8f03746ca34598c83cf83649b1a217bc8be261395b&quot;,
+      &quot;sequence&quot;: 17,
+      &quot;sha256&quot;: &quot;9d9571c232b1634a1a2035bc37fa97ed881ad5b8b1d8538d777f60ac27ca6822&quot;
+    }
+  ],
+  &quot;facts&quot;: [
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 115,
+        &quot;end_line&quot;: 2,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 80
+      },
+      &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+      &quot;object&quot;: &quot;demo_field&quot;,
+      &quot;predicate&quot;: &quot;records_field&quot;,
+      &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 101,
+        &quot;end_line&quot;: 2,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 66
+      },
+      &quot;id&quot;: &quot;39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974&quot;,
+      &quot;object&quot;: &quot;dimensionless&quot;,
+      &quot;predicate&quot;: &quot;uses_unit&quot;,
+      &quot;quote&quot;: &quot;demo_field uses_unit dimensionless.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_field&quot;
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 148,
+        &quot;end_line&quot;: 3,
+        &quot;line&quot;: 3,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 116
+      },
+      &quot;id&quot;: &quot;3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a&quot;,
+      &quot;object&quot;: &quot;periodic&quot;,
+      &quot;predicate&quot;: &quot;has_boundary&quot;,
+      &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;
+    }
+  ],
+  &quot;ontology&quot;: {
+    &quot;predicates&quot;: [
+      &quot;uses_unit&quot;,
+      &quot;has_boundary&quot;,
+      &quot;records_field&quot;,
+      &quot;measures&quot;,
+      &quot;derived_from&quot;,
+      &quot;supported_by&quot;
+    ],
+    &quot;version&quot;: 1
+  },
+  &quot;report&quot;: {
+    &quot;case_id&quot;: &quot;a2d3a254f6b44d1d8a2a5a6c3f66d2a0&quot;,
+    &quot;charged_experiments&quot;: 7,
+    &quot;discovery_budget_excludes_final_evaluation&quot;: true,
+    &quot;equation&quot;: &quot;u_t = - 0.001898284711 u_xxxx&quot;,
+    &quot;evaluation_measurement_scalars&quot;: 21312,
+    &quot;evaluation_reference_trajectories_generated&quot;: 3,
+    &quot;evaluation_slots&quot;: 3,
+    &quot;evidence_conflicts&quot;: [],
+    &quot;evidence_quality&quot;: {
+      &quot;asserted_facts&quot;: 3,
+      &quot;blockers&quot;: [],
+      &quot;industrial_readiness&quot;: false,
+      &quot;metadata_ready&quot;: true,
+      &quot;required_metadata&quot;: [
+        {
+          &quot;object&quot;: &quot;demo_field&quot;,
+          &quot;predicate&quot;: &quot;records_field&quot;,
+          &quot;subject&quot;: &quot;demo_grid&quot;
+        },
+        {
+          &quot;object&quot;: &quot;dimensionless&quot;,
+          &quot;predicate&quot;: &quot;uses_unit&quot;,
+          &quot;subject&quot;: &quot;demo_field&quot;
+        },
+        {
+          &quot;object&quot;: &quot;periodic&quot;,
+          &quot;predicate&quot;: &quot;has_boundary&quot;,
+          &quot;subject&quot;: &quot;demo_grid&quot;
+        }
+      ],
+      &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+      &quot;semantic_truth_verified&quot;: false,
+      &quot;total_facts&quot;: 3
+    },
+    &quot;evidence_ready&quot;: true,
+    &quot;evidence_sources&quot;: [
+      &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+      &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+    ],
+    &quot;final_used_for_discovery&quot;: false,
+    &quot;freeze_sha256&quot;: &quot;5b4a6b212996a113c87b7cf4656488658411bf52f1c9ce163b5cf3711576c182&quot;,
+    &quot;frequency_is_probability&quot;: false,
+    &quot;graph&quot;: [
+      {
+        &quot;citation&quot;: {
+          &quot;end_char&quot;: 115,
+          &quot;end_line&quot;: 2,
+          &quot;line&quot;: 2,
+          &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+          &quot;start_char&quot;: 80
+        },
+        &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+        &quot;relation_assertion_verified&quot;: true,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+        &quot;status&quot;: &quot;source_span_verified&quot;,
+        &quot;subject&quot;: &quot;demo_grid&quot;
+      },
+      {
+        &quot;citation&quot;: {
+          &quot;end_char&quot;: 101,
+          &quot;end_line&quot;: 2,
+          &quot;line&quot;: 2,
+          &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+          &quot;start_char&quot;: 66
+        },
+        &quot;id&quot;: &quot;39cc164ba4a0fcfb5b88cc61cfa954791f9cc11e1b03b23c3cc19f69f4ddc974&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;quote&quot;: &quot;demo_field uses_unit dimensionless.&quot;,
+        &quot;relation_assertion_verified&quot;: true,
+        &quot;source_id&quot;: &quot;e12d9132e90cb63905d8753a3ca9764d0b531f793a4003c3e4eb9f5b499fc5c9&quot;,
+        &quot;status&quot;: &quot;source_span_verified&quot;,
+        &quot;subject&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;citation&quot;: {
+          &quot;end_char&quot;: 148,
+          &quot;end_line&quot;: 3,
+          &quot;line&quot;: 3,
+          &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+          &quot;start_char&quot;: 116
+        },
+        &quot;id&quot;: &quot;3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+        &quot;relation_assertion_verified&quot;: true,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+        &quot;status&quot;: &quot;source_span_verified&quot;,
+        &quot;subject&quot;: &quot;demo_grid&quot;
+      }
+    ],
+    &quot;joint_success_rule&quot;: &quot;exact support AND max true coefficient error &lt;=10% AND all 3 predictions valid AND mean prediction error &lt;=5%&quot;,
+    &quot;max_true_coefficient_relative_error&quot;: 0.0021223489082651445,
+    &quot;mean_prediction_error&quot;: 0.0013362896685500745,
+    &quot;measurement_scalars_charged&quot;: 49728,
+    &quot;nexent_live_llm_verified&quot;: false,
+    &quot;note&quot;: &quot;This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value.&quot;,
+    &quot;numerical_joint_success&quot;: true,
+    &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+    &quot;pending_ontology_review&quot;: false,
+    &quot;prediction_5pct_passed&quot;: true,
+    &quot;prediction_failure_slots&quot;: 0,
+    &quot;predictions&quot;: [
+      {
+        &quot;duration&quot;: 1.0,
+        &quot;index&quot;: 0,
+        &quot;metrics&quot;: {
+          &quot;excluded_initial_frame&quot;: true,
+          &quot;mae&quot;: 0.00023795156598231898,
+          &quot;max_absolute_error&quot;: 0.0006128344538660624,
+          &quot;relative_l2&quot;: 0.0014494814225220335,
+          &quot;rmse&quot;: 0.0002854203202248065,
+          &quot;scored_frames&quot;: 100,
+          &quot;space_points&quot;: 64
+        },
+        &quot;prefix_frames&quot;: 11,
+        &quot;status&quot;: &quot;evaluated&quot;
+      },
+      {
+        &quot;duration&quot;: 1.0,
+        &quot;index&quot;: 1,
+        &quot;metrics&quot;: {
+          &quot;excluded_initial_frame&quot;: true,
+          &quot;mae&quot;: 0.00022373251377268594,
+          &quot;max_absolute_error&quot;: 0.0005820155602175303,
+          &quot;relative_l2&quot;: 0.001293211300512435,
+          &quot;rmse&quot;: 0.0002748349030207367,
+          &quot;scored_frames&quot;: 100,
+          &quot;space_points&quot;: 64
+        },
+        &quot;prefix_frames&quot;: 11,
+        &quot;status&quot;: &quot;evaluated&quot;
+      },
+      {
+        &quot;duration&quot;: 1.0,
+        &quot;index&quot;: 2,
+        &quot;metrics&quot;: {
+          &quot;excluded_initial_frame&quot;: true,
+          &quot;mae&quot;: 0.0002906965764320051,
+          &quot;max_absolute_error&quot;: 0.0008115128156349904,
+          &quot;relative_l2&quot;: 0.001266176282615755,
+          &quot;rmse&quot;: 0.0003434070438629676,
+          &quot;scored_frames&quot;: 100,
+          &quot;space_points&quot;: 64
+        },
+        &quot;prefix_frames&quot;: 11,
+        &quot;status&quot;: &quot;evaluated&quot;
+      }
+    ],
+    &quot;real_industry_validation&quot;: false,
+    &quot;structure&quot;: {
+      &quot;coefficient_comparison&quot;: [
+        {
+          &quot;absolute_error&quot;: 4.020290026040055e-06,
+          &quot;discovered&quot;: -0.0018982847111038777,
+          &quot;name&quot;: &quot;u_xxxx&quot;,
+          &quot;reference&quot;: -0.0018942644210778376,
+          &quot;relative_error&quot;: 0.0021223489082651445
+        }
+      ],
+      &quot;coefficient_metric_scope&quot;: &quot;author coordinate/field scaling; not unit-invariant&quot;,
+      &quot;coefficient_relative_l2&quot;: 0.0021223489082651445,
+      &quot;exact_support&quot;: true,
+      &quot;f1&quot;: 1.0,
+      &quot;missing_terms&quot;: [],
+      &quot;precision&quot;: 1.0,
+      &quot;recall&quot;: 1.0,
+      &quot;reference_terms&quot;: [
+        {
+          &quot;coefficient&quot;: -0.0018942644210778376,
+          &quot;name&quot;: &quot;u_xxxx&quot;
+        }
+      ],
+      &quot;spurious_terms&quot;: [],
+      &quot;status&quot;: &quot;evaluated&quot;,
+      &quot;true_positive_terms&quot;: [
+        &quot;u_xxxx&quot;
+      ]
+    },
+    &quot;terms&quot;: [
+      {
+        &quot;coefficient&quot;: -0.0018982847111038777,
+        &quot;name&quot;: &quot;u_xxxx&quot;
+      }
+    ]
+  },
+  &quot;chain_consistent&quot;: true,
+  &quot;historical_runtime_independently_authenticated&quot;: false
+}</pre></details></section></main></html>
