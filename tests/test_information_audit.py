@@ -249,6 +249,62 @@ class InformationIndependentAuditTests(unittest.TestCase):
         rows[0]['mean_clean_relative_l2']=None
         self.assertEqual(audit.worst_final_budget_rows(rows)[0]['id'],rows[0]['id'])
 
+    def test_replay_plan_keeps_worst_failures_and_adds_worst_complete_rows(self):
+        rows=[]
+        for policy in audit.POLICIES:
+            for i in range(36):
+                value=.001*i
+                row={'id':f'{policy}-{i:02d}','policy':policy,'budget':9,'mean_clean_relative_l2':value,
+                     'forecast_failures':0,'forecasts':[{'index':j,'status':'evaluated','clean':{'relative_l2':value}} for j in range(3)]}
+                if i==0:
+                    row.update(mean_clean_relative_l2=None,forecast_failures=3,
+                               forecasts=[{'index':j,'status':'failed','reason':'manufactured missing model'} for j in range(3)])
+                rows.append(row)
+        before=deepcopy(rows);plan=audit.forecast_replay_plan(rows)
+        self.assertEqual(rows,before);self.assertFalse(plan['study_failure_denominators_changed'])
+        self.assertEqual(len(plan['samples']),12);self.assertEqual(plan['forecast_slots'],36)
+        self.assertEqual(plan['maximum_forecast_slots'],36)
+        for policy in audit.POLICIES:
+            selected=[s for s in plan['samples'] if s['row']['policy']==policy]
+            self.assertEqual([s['row']['id'] for s in selected],[policy+'-00',policy+'-35'])
+            self.assertEqual([s['sampling_reasons'] for s in selected],[['worst_overall'],['worst_complete']])
+            self.assertEqual(plan['policy_coverage'][policy]['complete_conditions_available'],35)
+            self.assertEqual(plan['policy_coverage'][policy]['status'],'complete_prediction_replay_planned')
+
+    def test_replay_plan_deduplicates_when_overall_worst_is_complete(self):
+        rows=[]
+        for policy in audit.POLICIES:
+            for i in range(36):
+                value=.001*i
+                rows.append({'id':f'{policy}-{i:02d}','policy':policy,'budget':9,'mean_clean_relative_l2':value,
+                             'forecast_failures':0,'forecasts':[{'index':j,'status':'evaluated',
+                             'clean':{'relative_l2':value}} for j in range(3)]})
+        plan=audit.forecast_replay_plan(rows)
+        self.assertEqual(len(plan['samples']),6);self.assertEqual(plan['forecast_slots'],18)
+        for sample in plan['samples']:
+            self.assertTrue(sample['row']['id'].endswith('-35'))
+            self.assertEqual(sample['sampling_reasons'],['worst_overall','worst_complete'])
+        # A finite reported mean cannot conceal a partial failure when choosing
+        # the additional complete-prediction sample.
+        for row in rows:
+            if row['id'].endswith('-35'):
+                row['forecast_failures']=1;row['forecasts'][0]={'index':0,'status':'failed','reason':'manufactured'}
+        plan=audit.forecast_replay_plan(rows)
+        self.assertEqual(len(plan['samples']),12)
+        self.assertTrue(all(c['worst_complete_id'].endswith('-34') for c in plan['policy_coverage'].values()))
+
+    def test_replay_plan_explicitly_reports_no_complete_prediction_coverage(self):
+        rows=[{'id':f'{policy}-{i:02d}','policy':policy,'budget':9,'mean_clean_relative_l2':None,
+               'forecast_failures':3,'forecasts':[{'index':j,'status':'failed','reason':'manufactured'} for j in range(3)]}
+              for policy in audit.POLICIES for i in range(36)]
+        plan=audit.forecast_replay_plan(rows)
+        self.assertEqual(len(plan['samples']),6);self.assertEqual(plan['forecast_slots'],18)
+        for coverage in plan['policy_coverage'].values():
+            self.assertEqual(coverage['status'],'successful_replay_unavailable')
+            self.assertEqual(coverage['complete_conditions_available'],0)
+            self.assertIsNone(coverage['worst_complete_id'])
+            self.assertIn('coverage is unavailable',coverage['reason'])
+
     def test_independent_forecast_metrics_exclude_only_shared_start(self):
         truth=np.ones((101,64));prediction=truth.copy();prediction[0]=100;prediction[1:]+=.02
         result=audit.independent_forecast_metrics(prediction,truth)
@@ -411,6 +467,12 @@ class InformationIndependentAuditTests(unittest.TestCase):
             self.assertEqual(result['summary']['all_forecast_slots'],3240)
             self.assertEqual(result['prediction_calls'],0)
             self.assertEqual(len(result['forecast_rechecks']),18)
+            coverage=result['summary']['forecast_replay_sampling']
+            self.assertFalse(coverage['all_policies_have_successful_numeric_coverage'])
+            self.assertTrue(all(r['status']=='successful_replay_unavailable' and
+                                r['successful_numeric_forecasts_verified']==0 and
+                                not r['complete_prediction_numerically_verified']
+                                for r in coverage['policy_coverage'].values()))
             self.assertEqual(result['summary']['final_sources']['failed'],54)
             self.assertEqual((output/'comparison.json').read_bytes(),before)
 

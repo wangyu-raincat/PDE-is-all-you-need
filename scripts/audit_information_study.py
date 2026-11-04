@@ -2,8 +2,9 @@
 """Read-only independent audit of an already completed coefficient-information PDE study.
 
 Never fit a model, generate a reference field, or alter comparison.json.  The
-only written file is a new audit JSON.  At most eighteen predictions are checked
-with the original prefix solver, after validating the saved global freeze.
+only written file is a new audit JSON. At most thirty-six forecast slots are
+checked with the original prefix solver after validating the global freeze:
+each policy's worst overall row and its worst complete row, deduplicated.
 """
 from __future__ import annotations
 
@@ -371,6 +372,45 @@ def worst_final_budget_rows(rows):
     return selected
 
 
+def forecast_replay_plan(rows):
+    """Retain worst failures and independently cover successful predictions.
+
+Selection only changes which saved results receive numerical audit. It never
+changes any study row, failure denominator, model, or promotion criterion.
+"""
+    overall = worst_final_budget_rows(rows)
+    samples = {}; coverage = {}
+    def add(row, reason):
+        if row['id'] not in samples:
+            samples[row['id']] = {'row':row,'sampling_reasons':[]}
+        samples[row['id']]['sampling_reasons'].append(reason)
+    for worst in overall:
+        policy = worst['policy']
+        add(worst,'worst_overall')
+        group = [r for r in rows if r['policy'] == policy and r['budget'] == 9]
+        complete = []
+        for row in group:
+            forecasts = row.get('forecasts',[])
+            if (row.get('forecast_failures') == 0 and finite(row.get('mean_clean_relative_l2'))
+                    and row['mean_clean_relative_l2'] >= 0 and len(forecasts) == 3
+                    and [f.get('index') for f in forecasts] == [0,1,2]
+                    and all(f.get('status') == 'evaluated' and finite(f.get('clean',{}).get('relative_l2'))
+                            and f['clean']['relative_l2'] >= 0 for f in forecasts)):
+                complete.append(row)
+        selected = max(complete,key=lambda r:(r['mean_clean_relative_l2'],r['id'])) if complete else None
+        if selected is not None:
+            add(selected,'worst_complete')
+        coverage[policy] = {
+            'last_budget_conditions':36,'complete_conditions_available':len(complete),
+            'worst_overall_id':worst['id'],'worst_complete_id':selected['id'] if selected else None,
+            'status':'complete_prediction_replay_planned' if selected else 'successful_replay_unavailable',
+            'reason':None if selected else 'No budget9 condition has three complete finite predictions; numerical success coverage is unavailable.'}
+    require(6 <= len(samples) <= 12,'Forecast audit sample allocation')
+    return {'samples':list(samples.values()),'policy_coverage':coverage,
+            'forecast_slots':3*len(samples),'maximum_forecast_slots':36,
+            'study_failure_denominators_changed':False}
+
+
 def verify_rich_openings(episodes):
     """Check paired first acquisitions before comparing later policy results.
 
@@ -734,8 +774,17 @@ def audit(root, output):
     integrity_ok = all(c['status'] == 'passed' for c in checks.records)
     if integrity_ok and sources_ok:
         legacy_forecast = None
-        sampled = checks.run('six_worst_last_budget_conditions',lambda:worst_final_budget_rows(report['records']),keep_details=False)
-        for row in sampled or []:
+        replay_plan = checks.run('worst_overall_and_complete_prediction_sampling',
+                                 lambda:forecast_replay_plan(report['records']),keep_details=False)
+        if replay_plan is not None:
+            summary['forecast_replay_sampling'] = {
+                'selected_rows':[{'id':sample['row']['id'],'policy':sample['row']['policy'],
+                                  'sampling_reasons':sample['sampling_reasons']} for sample in replay_plan['samples']],
+                'policy_coverage':replay_plan['policy_coverage'],
+                'forecast_slots':replay_plan['forecast_slots'],'maximum_forecast_slots':36,
+                'study_failure_denominators_changed':False}
+        for sample in (replay_plan or {}).get('samples',[]):
+            row = sample['row']
             episode_id = row['task_id']+'--'+row['policy']
             episode = episodes[episode_id]
             model = next((c['model'] for c in episode['checkpoints'] if c['budget'] == 9),{})
@@ -743,7 +792,8 @@ def audit(root, output):
             for j,entry in enumerate(final_refs[str(row['spec_index'])]):
                 name = row['id']+f'--final-{j}'
                 saved = row['forecasts'][j]
-                evidence = {'id':name,'status':'not_started'}
+                evidence = {'id':name,'row_id':row['id'],'policy':row['policy'],
+                            'sampling_reasons':sample['sampling_reasons'],'status':'not_started'}
                 if selected is None or entry['status'] != 'generated':
                     evidence.update(status='retained_failure',reason='No frozen model or no successful final source')
                     checks.run('forecast_recheck:'+name,lambda saved=saved:require(saved['status']=='failed','Missing model/source was scored'))
@@ -780,11 +830,24 @@ def audit(root, output):
                 if checks.records[-1]['status'] == 'failed':
                     evidence.update(status='failed',reason=checks.records[-1]['reason'])
                 forecast_rechecks.append(evidence)
+        if replay_plan is not None:
+            coverage = summary['forecast_replay_sampling']['policy_coverage']
+            for policy,record in coverage.items():
+                replays = [r for r in forecast_rechecks if r['policy'] == policy and
+                           r['row_id'] == record['worst_complete_id']]
+                verified = sum(r['status'] == 'recomputed' for r in replays)
+                record['successful_numeric_forecasts_verified'] = verified
+                record['complete_prediction_numerically_verified'] = len(replays) == verified == 3
+                if record['worst_complete_id'] is not None:
+                    record['status'] = 'complete_prediction_verified' if record['complete_prediction_numerically_verified'] else 'complete_prediction_replay_failed'
+            summary['forecast_replay_sampling']['all_policies_have_successful_numeric_coverage'] = all(
+                r['complete_prediction_numerically_verified'] for r in coverage.values())
     else:
         checks.records.append({'name':'bounded_independent_forecast_recheck','status':'failed',
                                'reason':'Skipped numerical replay because saved-artifact integrity checks failed.'})
     checks.run('comparison_bytes_unchanged',lambda:require(digest(output/'comparison.json') == original_comparison_sha,'Comparison was modified'))
-    checks.run('forecast_replay_budget',lambda:require(prediction_calls <= 18,'More than eighteen forecast calls'))
+    checks.run('forecast_replay_budget',lambda:require(prediction_calls <= 36 and len(forecast_rechecks) <= 36,
+                                                       'More than thirty-six forecast calls or slots'))
     summary['independently_rederived_rows'] = len(row_derived)
     summary['all_forecast_slots'] = sum(len(r.get('forecasts',[])) for r in report.get('records',[]))
     summary['arms'] = {policy:{str(budget):{
@@ -809,7 +872,7 @@ def audit(root, output):
             'forecast_rechecks':forecast_rechecks,'no_data_generation':True,'comparison_modified':False,
             'runtime_chronology_independently_authenticated':False,
             'limitations':['Hashes, persisted lifecycle receipts and source order establish artifact consistency; they cannot independently authenticate all past process execution.',
-                           'Only six worst final-budget condition rows, at most eighteen forecasts, are numerically replayed; remaining saved forecast metrics are checked for complete arithmetic and failure accounting.',
+                           'Each policy worst overall final-budget row and worst complete prediction row are audited, with duplicate rows removed and at most 36 forecast slots. Missing models or sources retain explicit failure checks; successful numerical coverage is reported separately and may be unavailable.',
                            'The 36 noise conditions share eighteen parameter tasks and 54 clean final trajectories; policy/condition forecasts are paired, not independent samples.',
                            'This is controlled synthetic validation with an observed prefix and full 1.0 future horizon, not physical measurements or calibrated posterior probabilities.']}
 

@@ -3,7 +3,9 @@
 独立分支为 `experiment/active-information-design`，回退基线为上一轮主动发现的
 `40f0241d5a3f5ea9fd4347fa26432a9a597c210e`。本轮只修改实验选择策略，
 识别器、候选项库、完整轨迹自助重选、数值预测器和旧结果均保留。
-对照结论见 [实验报告](information_study/REPORT.md)、
+对照结论：**保留基线，不合并**。1%噪声主指标为0.5831%，优于固定方案的0.7860%，
+但未超过随机方案的0.5015%；3%噪声仍有5/18个条件无法输出模型。
+见 [结论与失败解释](information_study/RESULTS_REVIEW.md)、[实验报告](information_study/REPORT.md)、
 [实际判定](information_study/results/first_run/assessment.json) 与
 [预定判定规则](information_study/decision_protocol.json)。不自动合入默认版本。
 
@@ -76,6 +78,7 @@ Windows激活命令为 `.venv\Scripts\activate`。旧回放仍可用 `python -m 
 分发目录刻意不包含这些可再生的初始缓存；已有缓存的工作目录应另作副本，不删除原记录：
 
 ```bash
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
 python -m information_study.run prepare
 python -m information_study.run freeze --output artifacts/information_reproduction --workers 3
 python -m information_study.run evaluate --output artifacts/information_reproduction --workers 3
@@ -85,8 +88,13 @@ python scripts/render_information_study.py --output artifacts/information_reprod
 python -m information_study.app --output artifacts/information_reproduction --port 8768
 ```
 
+记录的实验每个进程使用单个BLAS线程；PowerShell对应设置为
+`$env:OPENBLAS_NUM_THREADS="1"; $env:OMP_NUM_THREADS="1"`。
+
 已有初始缓存时跳过prepare；不覆盖首次或部分运行。固定最终数据发布后再次使用应称复现或回顾性分析，
 不能重新宣称未查看验证。修改科学规则应另开实验与新最终任务；不能改哈希回执绕过冻结。
+首次准备回执另存于 `information_study/results/first_run/prepared_snapshot.json`，
+其哈希与首次freeze_index一致；该历史副本不作为新prepare输入。
 
 开发联调与测试：
 
