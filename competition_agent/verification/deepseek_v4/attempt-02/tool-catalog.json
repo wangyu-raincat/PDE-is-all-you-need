@@ -1,0 +1,402 @@
+{
+  "pde_case_create": {
+    "type": "function",
+    "function": {
+      "name": "pde_case_create",
+      "description": "Create controlled synthetic demo, charge 5 initial experiments. No real industrial data. Fixtures: decay, diffusion, hyperdiffusion, advection_diffusion, reaction_diffusion, burgers. Budget5..9; noise0..0.03; seed0..800. Policies fixed_rich/random/ensemble_variance/structural_disagreement. Preserve returned case_id. Supply a stable request_id for retries: same configuration returns the same case without charging twice; a changed configuration is rejected.",
+      "parameters": {
+        "properties": {
+          "fixture": {
+            "default": "diffusion",
+            "title": "Fixture",
+            "type": "string"
+          },
+          "noise": {
+            "default": 0.01,
+            "title": "Noise",
+            "type": "number"
+          },
+          "budget": {
+            "default": 7,
+            "title": "Budget",
+            "type": "integer"
+          },
+          "seed": {
+            "default": 240,
+            "title": "Seed",
+            "type": "integer"
+          },
+          "policy": {
+            "default": "fixed_rich",
+            "title": "Policy",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "title": "pde_case_createArguments",
+        "type": "object"
+      }
+    }
+  },
+  "case_status": {
+    "type": "function",
+    "function": {
+      "name": "case_status",
+      "description": "Read case state, budget, candidate supports and evidence conflicts; never exposes hidden truth before validation.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "title": "case_statusArguments",
+        "type": "object"
+      }
+    }
+  },
+  "asset_ingest": {
+    "type": "function",
+    "function": {
+      "name": "asset_ingest",
+      "description": "Register 1..10 text or CSV evidence documents, each with title,kind,text. Parse text/CSV before agent dispatch, retain originals, quarantine malformed tables, deduplicate content and return prioritized issues. Uploaded CSV is never numerical training input. Returns source IDs. Frozen evidence cannot change.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          },
+          "documents": {
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "title": "Documents",
+            "type": "array"
+          }
+        },
+        "required": [
+          "case_id",
+          "documents"
+        ],
+        "title": "asset_ingestArguments",
+        "type": "object"
+      }
+    }
+  },
+  "asset_context": {
+    "type": "function",
+    "function": {
+      "name": "asset_context",
+      "description": "Get a bounded prepared context packet for a named role: priority issues, source catalog and paginated graph fact candidates with exact citation/alias lineage. No full document bodies; numerical roles never receive raw CSV as training data. Role labels are filters, not authentication. Resolve P0 issues before dispatch.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          },
+          "role": {
+            "default": "graph_agent",
+            "title": "Role",
+            "type": "string"
+          },
+          "offset": {
+            "default": 0,
+            "title": "Offset",
+            "type": "integer"
+          },
+          "limit": {
+            "default": 20,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "title": "asset_contextArguments",
+        "type": "object"
+      }
+    }
+  },
+  "asset_search": {
+    "type": "function",
+    "function": {
+      "name": "asset_search",
+      "description": "Lexical BM25 with Chinese bigrams and explicit bilingual aliases. Returns source ID, exact character offsets, line, quote and matched tokens. No embedding retrieval or semantic verification.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "limit": {
+            "default": 5,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "case_id",
+          "query"
+        ],
+        "title": "asset_searchArguments",
+        "type": "object"
+      }
+    }
+  },
+  "graph_propose": {
+    "type": "function",
+    "function": {
+      "name": "graph_propose",
+      "description": "Propose source-backed facts: subject,predicate,object,source_id,quote. Fact must match a parsed source record with explicit alias lineage, or literal subject/object evidence. Unknown relations await operator review; spans do not prove semantic truth.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          },
+          "facts": {
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "title": "Facts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "case_id",
+          "facts"
+        ],
+        "title": "graph_proposeArguments",
+        "type": "object"
+      }
+    }
+  },
+  "graph_apply": {
+    "type": "function",
+    "function": {
+      "name": "graph_apply",
+      "description": "Apply verified source spans using known predicates, retaining conflicting facts. Unknown ontology relations cannot be self-approved by an agent.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          },
+          "proposal_id": {
+            "title": "Proposal Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id",
+          "proposal_id"
+        ],
+        "title": "graph_applyArguments",
+        "type": "object"
+      }
+    }
+  },
+  "evidence_path": {
+    "type": "function",
+    "function": {
+      "name": "evidence_path",
+      "description": "Trace bounded directed paths through applied evidence facts across documents. Every edge retains its source and quote. Returns conflicts and assertion status, never invents causal facts; no path is not proof of absence.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "target": {
+            "title": "Target",
+            "type": "string"
+          },
+          "max_hops": {
+            "default": 4,
+            "title": "Max Hops",
+            "type": "integer"
+          },
+          "limit": {
+            "default": 3,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "case_id",
+          "source",
+          "target"
+        ],
+        "title": "evidence_pathArguments",
+        "type": "object"
+      }
+    }
+  },
+  "case_handoff": {
+    "type": "function",
+    "function": {
+      "name": "case_handoff",
+      "description": "Return structured handoff: current phase, state hash, remaining budget, next role/tool/arguments, required inputs, evidence blockers and stop flag. Never overrides actual tool guards or authenticates role identity. Stop on manual review, pending execution or terminal state.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "title": "case_handoffArguments",
+        "type": "object"
+      }
+    }
+  },
+  "pde_identify": {
+    "type": "function",
+    "function": {
+      "name": "pde_identify",
+      "description": "Run existing multi-trajectory sparse identification with development-only selection. Returns model or explicit rejection. Bootstrap frequency is not calibrated probability. Forbidden after freeze.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "title": "pde_identifyArguments",
+        "type": "object"
+      }
+    }
+  },
+  "experiment_propose": {
+    "type": "function",
+    "function": {
+      "name": "experiment_propose",
+      "description": "Choose next legal initial condition with configured policy and remaining budget. Returns proposal_id, cost and selection diagnostics. No physical equipment instruction.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "title": "experiment_proposeArguments",
+        "type": "object"
+      }
+    }
+  },
+  "experiment_acquire": {
+    "type": "function",
+    "function": {
+      "name": "experiment_acquire",
+      "description": "Execute proposed simulation once; charges before execution, including failures. Replay never acquires twice. On started/recovery_required stop and report uncertain operation; never silently retry.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          },
+          "proposal_id": {
+            "title": "Proposal Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id",
+          "proposal_id"
+        ],
+        "title": "experiment_acquireArguments",
+        "type": "object"
+      }
+    }
+  },
+  "validation_freeze": {
+    "type": "function",
+    "function": {
+      "name": "validation_freeze",
+      "description": "Freeze current model, source code, observations and evidence before final evaluation. Subsequent identification and evidence changes are forbidden.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "title": "validation_freezeArguments",
+        "type": "object"
+      }
+    }
+  },
+  "validation_evaluate": {
+    "type": "function",
+    "function": {
+      "name": "validation_evaluate",
+      "description": "Open final synthetic evaluation once, after freeze. Score exact structure, extras/missing terms, coefficient error and three prefix-conditioned forecasts. All failure slots retained; cached result on repeat.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "title": "validation_evaluateArguments",
+        "type": "object"
+      }
+    }
+  },
+  "evidence_get": {
+    "type": "function",
+    "function": {
+      "name": "evidence_get",
+      "description": "Export case evidence, graph, report and hash-chain consistency. Hash chain is not independent authentication of historical execution or LLM roles.",
+      "parameters": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "title": "evidence_getArguments",
+        "type": "object"
+      }
+    }
+  }
+}

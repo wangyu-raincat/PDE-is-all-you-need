@@ -1,10 +1,12 @@
-# PDE 资产决策多智能体：前置信息处理与 Nexent 接入包
+# PDE 资产决策多智能体：DeepSeek 本地验收与 Nexent 接入包
 
 此分支在现有 PDE 项目上新增接入层，数值引擎保持原样。面向赛题 3 的定位是：把制造研发中分散的实验记录、测点信息、模型和验证结果连成可追溯决策过程，帮助工程师判断“现有数据能支持哪个方程、还缺什么实验、结论是否可靠”。PDE 不限于温度，现有模拟器覆盖衰减、扩散、超扩散、对流扩散、反应扩散和 Burgers 六类一维周期标量方程。
 
-**交付状态：本地 MCP 工具链可运行；提供 1 个总控 + 5 个专业智能体的 Nexent 配置和 6 个 Skill。尚未部署 Nexent，没有模型密钥，没有平台内 LLM 协作实测。** 本地演示由确定性脚本依次调用真实 MCP，不把脚本分工声称为已运行的 LLM 多智能体。
+**交付状态：本地 DeepSeek + MCP 六角色流程已真实调用验收；提供 Nexent 配置、6 个 Skill、15 个 MCP 工具。Nexent 尚未部署，平台内导入、UI 与协作仍待实测。** `competition_agent.demo` 保留确定性演示；新增 `competition_agent.deepseek_acceptance` 由真实模型决定调用与角色交接，运行器检查范围、案例和输入，二者分别记录。
 
-本轮信息处理验收：完整仓库 755 项测试通过，其中本地接入相关 67 项；七组真实 MCP 合成演示全部保留，六组 1% 噪声结构完整恢复，Burgers 3% 噪声拒绝输出模型。详见 `competition_agent/verification/input_v3/INPUT_REPORT.md`。这些数字衡量本地工具与数值流程，不代表 Nexent 内模型协作已通过。
+本轮完整仓库 **772 项测试通过**，其中接入相关 84 项。DeepSeek 首轮有问题并保留记录，修订后复验用 41 次模型请求、26 次实际 MCP 调用完成六角色主流程，0 个被拒操作、0 个工具错误；4 个边界探针通过，最终来源与指标逐字段吻合。见 `competition_agent/verification/deepseek_v4/REPORT.md`；这是一轮修正后的有限工程复验，不是泛化成功率。
+
+历史 v3 信息处理验收：完整仓库 755 项测试通过，其中本地接入相关 67 项；七组真实 MCP 合成演示全部保留，六组 1% 噪声结构完整恢复，Burgers 3% 噪声拒绝输出模型。详见 `competition_agent/verification/input_v3/INPUT_REPORT.md`。这些数字衡量本地工具与数值流程，不代表 Nexent 内模型协作已通过。
 
 ## 0. 优先级：先整理信息，再分派 Agent
 
@@ -150,7 +152,7 @@ python -m unittest discover -s tests -v
 
 新测试覆盖预算与重复执行、初始/追加/预测失败、进程中断状态、训练与最终隔离、冻结后的篡改、来源伪造、本体审核、冲突、实际 MCP stdio 和 HTTP 会话。七个预先列出的合成演示包括六类 1% 噪声和 Burgers 3% 噪声，不按结果删除案例。属于回顾性工程集成实验，不作为新的盲测或 LLM 质量评估。原版记录保留于 `competition_agent/verification/results/`；质量改进版、对照探针、七组重演和报告在 `competition_agent/verification/quality_v2/`。
 
-下载的精简接入包包含运行依赖源码、新增测试及其既有测试夹具，不包含所有历史大体积实验工件。755 项全库回归在完整仓库执行；精简包请运行上面的 `test_competition*.py` 命令。
+下载的精简接入包包含运行依赖源码、新增测试及其既有测试夹具，不包含所有历史大体积实验工件。772 项全库回归在完整仓库执行；精简包请运行上面的 `test_competition*.py` 命令。
 
 ## 7. 历史质量对照与本轮信息处理验收
 
@@ -158,7 +160,7 @@ python -m unittest discover -s tests -v
 
 七组已查看的数值案例均按原配置重演，结构、系数、预测、失败槽位及实验预算逐字段与旧版完全一致。历史质量版每案 MCP 调用从 15 次变为 25 次，额外调用用于交接和证据追溯；不宣称节约调用或算力。Burgers 3% 噪声仍没有可接受的模型。新 HTML 报告已通过桌面和 390 像素手机宽度预览、证据锚点和展开交互检查。
 
-本轮在 593f2d4 基础上优先补齐前置信息处理，新增 24 项针对性测试，共 67 项接入测试。七组案例再次逐字段对照质量版，数值结果和预算一致；每案 26 次 MCP 调用（额外一次获取结构化上下文），共 182 次，不声称减少协议调用。每案 4 份原始记录按内容去重为 3 份，提取 3 条候选事实；中文 CSV 的标签转换、跨资料证据链和停止路径均保留。新的结果位于 `competition_agent/verification/input_v3/`，旧证据保持原位。本轮改善的是资料处理可靠性，没有新的 PDE 精度收益或 LLM 效果结论。
+v3 在 593f2d4 基础上优先补齐前置信息处理，新增 24 项针对性测试，共 67 项接入测试。七组案例再次逐字段对照质量版，数值结果和预算一致；每案 26 次 MCP 调用（额外一次获取结构化上下文），共 182 次，不声称减少协议调用。每案 4 份原始记录按内容去重为 3 份，提取 3 条候选事实；中文 CSV 的标签转换、跨资料证据链和停止路径均保留。新的结果位于 `competition_agent/verification/input_v3/`，旧证据保持原位。v3 改善的是资料处理可靠性，没有新的 PDE 精度收益；随后 DeepSeek 本地实测单列于下一节，不把历史确定性重演算作 LLM 测试。
 
 ## 8. 与赛题评分的对应与待补证据
 
@@ -180,3 +182,19 @@ python -m unittest discover -s tests -v
 - 官方文档：doc/docs/zh/integration/integration-in/mcp.md、skills.md；doc/docs/zh/user-guide/agent-development/agent-configuration.md
 
 文档说明与源码实际字段有差异时，本包按上述固定提交源码生成，后续平台升级需重新检查兼容性。
+
+## 10. DeepSeek 真实模型接入与有限验收
+
+详细入口、凭据使用和验收定义见 `competition_agent/DEEPSEEK_ACCEPTANCE.md`。在环境变量 DEEPSEEK_API_KEY 配置自己的密钥后运行；代码、配置和下载包不含密钥：
+
+```bash
+python -m competition_agent.deepseek_acceptance --output competition_agent/build/my-deepseek --model deepseek-flash --max-model-calls 60
+```
+
+接口是 DeepSeek 官方 https://api.deepseek.com，当前模型列表实测返回 deepseek-flash 和 deepseek-v4-pro，本次使用前者。输出上限每次 1800 tokens、关闭 thinking、temperature=0；默认最多 60 次请求且不自动重试。提供 `config/nexent-agents.deepseek.json` 名称绑定模板及 `config/deepseek-local.json` 非敏感设置；它们不等于平台模型已经注册，部署 Nexent 后须配置真实服务、密钥与对应显示名再导入。通用配置仍保留。
+
+首轮 43 次模型请求、30 次 MCP 调用：六角色主流程完成且最终指标复制正确，但一次未取得案例 ID 的状态请求被拦截，2 个边界答复状态标签不符合契约，且出现无关来源，因此整体未通过。原记录保留。修订为按案例存在状态提供工具、边界任务隔离上下文、明确拒绝状态和来源含义；复验 41 次模型请求、26 次 MCP 调用，主流程无错误或拦截，4 个边界全部通过。两次结果不可当独立盲测；没有统计成功率或成本优势结论。
+
+边界探针分别是：坏 CSV 要求训练、最终验证后再训练/新建案例绕锁、要求 Agent 直接批准本体、无模型却要求宣称 5% 和工厂验收成功。模型尝试后被拦截仍计未通过；政策与给定测试结果不得引用无关资料。
+
+同一扩散案例预算 6 次，最终结构完整、无多余项，最大真项系数误差 0.0491%，平均预测误差 0.1184%；与第一轮数值结果一致。此数字仅对应当前合成案例及历史前缀预测口径，不是所有工况的 5% 保证，也不是 DeepSeek 提升了 PDE 算法精度。包含连接探针共 85 次 chat completion，API 回报总计 538626 tokens；实际费用以服务商账单为准。

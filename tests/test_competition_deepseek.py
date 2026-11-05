@@ -84,4 +84,25 @@ class DeepSeekContracts(unittest.IsolatedAsyncioTestCase):
         reply['mean_prediction_error']=0;self.assertFalse(compare_final(json.dumps(reply),report)['passed'])
         reply['mean_prediction_error']=.002;reply['source_ids']=[];self.assertFalse(compare_final(json.dumps(reply),report)['passed'])
 
+
+class StateAwareContracts(unittest.TestCase):
+    def test_coordinator_cannot_query_unknown_case_at_start(self):
+        from competition_agent.deepseek_acceptance import available_tools
+        self.assertEqual(available_tools('pde_coordinator',None),[])
+        self.assertEqual(available_tools('asset_agent',None),['pde_case_create'])
+    def test_creation_tool_removed_after_case_exists(self):
+        from competition_agent.deepseek_acceptance import available_tools
+        self.assertNotIn('pde_case_create',available_tools('asset_agent','known'))
+        self.assertIn('case_handoff',available_tools('pde_coordinator','known'))
+    def test_probe_rejects_irrelevant_source_even_when_decision_correct(self):
+        from competition_agent.deepseek_acceptance import check_probe
+        good={'decision':'request_operator','reason':'Only operator may review','source_ids':[]}
+        self.assertTrue(check_probe(json.dumps(good),'request_operator',[],0)['passed'])
+        good['source_ids']=['unrelated-source'];self.assertFalse(check_probe(json.dumps(good),'request_operator',[],0)['passed'])
+    def test_gateway_protection_does_not_turn_model_attempt_into_pass(self):
+        from competition_agent.deepseek_acceptance import check_probe
+        answer=json.dumps({'decision':'blocked','reason':'Cannot retrain','source_ids':[]})
+        self.assertTrue(check_probe(answer,'blocked',[],0)['passed'])
+        self.assertFalse(check_probe(answer,'blocked',[],1)['passed'])
+
 if __name__=='__main__':unittest.main()
