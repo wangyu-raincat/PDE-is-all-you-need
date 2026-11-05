@@ -1,0 +1,4846 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PDE 可追溯实验报告</title>
+<style>body{margin:0;background:#f3f5f9;color:#172b44;font:16px/1.6 system-ui,sans-serif}main{max-width:1100px;margin:auto;padding:36px 22px}h1{font-size:32px;line-height:1.3}h2{margin-top:30px}.badge{color:#3c5277;font-weight:600}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}article,section{background:white;border:1px solid #dbe2ed;border-radius:10px;padding:18px}article span{display:block;color:#526580}strong{display:block;font-size:23px}section{margin-top:18px}details{padding:10px 0;border-bottom:1px solid #e4e9f0}summary{cursor:pointer;font-weight:600}pre{overflow-wrap:anywhere;white-space:pre-wrap;font-size:12px}p,li,blockquote{overflow-wrap:anywhere}blockquote{border-left:3px solid #4e77bb;padding-left:12px;margin-left:0}a{color:#1c59a7}.muted{color:#526580}code{overflow-wrap:anywhere}</style>
+<main><div class="badge">本地 MCP 工具实测 · 合成数据 · 未使用 LLM</div><h1>PDE 可追溯实验报告</h1>
+<p class="muted">案例 a4aa4cb1f64142a79b5a2e15dfdec048。这是工程重演，不能作为新的盲测、平台内多智能体效果或真实行业验证。</p>
+<div class="cards"><article><span>方程结构</span><strong>完整恢复</strong></article><article><span>最大真项系数误差</span><strong>0.0291%</strong></article><article><span>平均预测误差</span><strong>0.1235%</strong></article><article><span>预测失败槽位</span><strong>0 / 3</strong></article></div><section><h2>识别结论</h2><p>u_t = 0.113452369 u_xx</p><p>缺失项：[]；多余项：[]。</p>
+<p>发现预算 7 次；最终评估另生成 3 条轨迹。预测使用 11 帧前缀，保持 1.0 时长。</p></section>
+<section><h2>证据质量与跨文档路径</h2><ul><li>规定的合成元数据一致性检查通过；不等于工业可用。</li></ul><p><a href="#fact-6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629">demo_grid / records_field / demo_field</a> → <a href="#fact-e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d">demo_field / uses_unit / dimensionless</a></p><p>涉及 2 份资料；仅为带引文的关系路径。</p><details id="fact-e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d"><summary>demo_field → uses_unit → dimensionless</summary><blockquote>demo_field,单位,无量纲</blockquote><p>来源 8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1 · 位置 {&#x27;columns&#x27;: [&#x27;subject&#x27;, &#x27;predicate&#x27;, &#x27;object&#x27;], &#x27;end_char&#x27;: 25, &#x27;end_line&#x27;: 2, &#x27;format&#x27;: &#x27;metadata_triples_csv&#x27;, &#x27;header_quote&#x27;: &#x27;实体,关系,值&#x27;, &#x27;line&#x27;: 2, &#x27;offset_unit&#x27;: &#x27;Unicode code points, half-open&#x27;, &#x27;raw_columns&#x27;: [&#x27;实体&#x27;, &#x27;关系&#x27;, &#x27;值&#x27;], &#x27;start_char&#x27;: 8}</p></details><details id="fact-6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629"><summary>demo_grid → records_field → demo_field</summary><blockquote>demo_grid records_field demo_field.</blockquote><p>来源 c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186 · 位置 {&#x27;end_char&#x27;: 115, &#x27;format&#x27;: &#x27;text_triple&#x27;, &#x27;line&#x27;: 2, &#x27;offset_unit&#x27;: &#x27;Unicode code points, half-open&#x27;, &#x27;start_char&#x27;: 80}</p></details><details id="fact-3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a"><summary>demo_grid → has_boundary → periodic</summary><blockquote>demo_grid has_boundary periodic.</blockquote><p>来源 c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186 · 位置 {&#x27;end_char&#x27;: 148, &#x27;format&#x27;: &#x27;text_triple&#x27;, &#x27;line&#x27;: 3, &#x27;offset_unit&#x27;: &#x27;Unicode code points, half-open&#x27;, &#x27;start_char&#x27;: 116}</p></details></section>
+<section><h2>冻结与追溯</h2><p>冻结标识 <code>7a1ec5c8048c8fd38eb6aa7163625dcce4144e35841e87945e776331d8245225</code></p><p>事件链一致：True。事件链不是第三方认证；来源断言也不是物理真实性证明。</p></section>
+<section><h2>实际工具调用</h2><p>26 次调用。角色为明确的脚本路由标签，不是已运行的大模型身份。</p><details><summary>1. asset_agent · pde_case_create · 0.054s</summary><pre>{
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;ready&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+  &quot;budget_limit&quot;: 7,
+  &quot;charged_experiments&quot;: 5,
+  &quot;measurement_scalars_charged&quot;: 35520,
+  &quot;training_trajectories&quot;: 3,
+  &quot;development_trajectories&quot;: 2,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;selected_equation&quot;: null,
+  &quot;selected_terms&quot;: [],
+  &quot;candidate_supports&quot;: [],
+  &quot;identification_status&quot;: null,
+  &quot;identification_failure&quot;: null,
+  &quot;uncertainty&quot;: {},
+  &quot;minimal_near_supports&quot;: [],
+  &quot;recovery_required&quot;: false,
+  &quot;failure&quot;: null,
+  &quot;frequency_calibrated&quot;: false,
+  &quot;final_opened&quot;: false,
+  &quot;input_preparation&quot;: {
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;input_documents&quot;: 0,
+    &quot;stored_sources&quot;: 0,
+    &quot;unique_contents&quot;: 0,
+    &quot;duplicate_sources&quot;: 0,
+    &quot;quarantined_sources&quot;: 0,
+    &quot;candidate_facts&quot;: 0,
+    &quot;blocked&quot;: false,
+    &quot;issues&quot;: [
+      {
+        &quot;priority&quot;: &quot;P1&quot;,
+        &quot;code&quot;: &quot;missing_demo_metadata&quot;,
+        &quot;requirements&quot;: [
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;records_field&quot;,
+            &quot;object&quot;: &quot;demo_field&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_field&quot;,
+            &quot;predicate&quot;: &quot;uses_unit&quot;,
+            &quot;object&quot;: &quot;dimensionless&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;has_boundary&quot;,
+            &quot;object&quot;: &quot;periodic&quot;
+          }
+        ]
+      }
+    ],
+    &quot;issues_truncated&quot;: false,
+    &quot;ready_for_demo&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;llm_used&quot;: false
+  },
+  &quot;ontology_version&quot;: 1,
+  &quot;graph_facts&quot;: 0,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: false,
+    &quot;blockers&quot;: [
+      {
+        &quot;code&quot;: &quot;missing_required_metadata&quot;,
+        &quot;details&quot;: [
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;records_field&quot;,
+            &quot;object&quot;: &quot;demo_field&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_field&quot;,
+            &quot;predicate&quot;: &quot;uses_unit&quot;,
+            &quot;object&quot;: &quot;dimensionless&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;has_boundary&quot;,
+            &quot;object&quot;: &quot;periodic&quot;
+          }
+        ]
+      }
+    ],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 0,
+    &quot;total_facts&quot;: 0,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;graph_conflicts&quot;: [],
+  &quot;pending_ontology_changes&quot;: 0,
+  &quot;event_count&quot;: 2,
+  &quot;event_head&quot;: &quot;4f4439709d1b3e1c9858ef977a21469e55ee4d216aeac33adab0da9935634778&quot;
+}</pre></details><details><summary>2. pde_coordinator · case_handoff · 0.003s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;ready&quot;,
+  &quot;state_head&quot;: &quot;4f4439709d1b3e1c9858ef977a21469e55ee4d216aeac33adab0da9935634778&quot;,
+  &quot;remaining_experiments&quot;: 2,
+  &quot;next_role&quot;: &quot;asset_agent&quot;,
+  &quot;next_tool&quot;: &quot;asset_ingest&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;
+  },
+  &quot;required_inputs&quot;: [
+    &quot;documents&quot;
+  ],
+  &quot;arguments_complete&quot;: false,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: &quot;evidence_review_required; numerical diagnostics remain possible but cannot imply metadata readiness&quot;,
+  &quot;next_context&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;role&quot;: &quot;asset_agent&quot;,
+    &quot;input_preparation&quot;: {
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;input_documents&quot;: 0,
+      &quot;stored_sources&quot;: 0,
+      &quot;unique_contents&quot;: 0,
+      &quot;duplicate_sources&quot;: 0,
+      &quot;quarantined_sources&quot;: 0,
+      &quot;candidate_facts&quot;: 0,
+      &quot;blocked&quot;: false,
+      &quot;issues&quot;: [
+        {
+          &quot;priority&quot;: &quot;P1&quot;,
+          &quot;code&quot;: &quot;missing_demo_metadata&quot;,
+          &quot;requirements&quot;: [
+            {
+              &quot;subject&quot;: &quot;demo_grid&quot;,
+              &quot;predicate&quot;: &quot;records_field&quot;,
+              &quot;object&quot;: &quot;demo_field&quot;
+            },
+            {
+              &quot;subject&quot;: &quot;demo_field&quot;,
+              &quot;predicate&quot;: &quot;uses_unit&quot;,
+              &quot;object&quot;: &quot;dimensionless&quot;
+            },
+            {
+              &quot;subject&quot;: &quot;demo_grid&quot;,
+              &quot;predicate&quot;: &quot;has_boundary&quot;,
+              &quot;object&quot;: &quot;periodic&quot;
+            }
+          ]
+        }
+      ],
+      &quot;issues_truncated&quot;: false,
+      &quot;ready_for_demo&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;llm_used&quot;: false
+    },
+    &quot;input_snapshot_sha256&quot;: &quot;0eec3eaf3c0a9f1ffddf974a6b188f47579bd7dfb332607c576faabccaedfab4&quot;,
+    &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+    &quot;raw_document_bodies_included&quot;: false,
+    &quot;phase&quot;: &quot;ready&quot;,
+    &quot;source_catalog&quot;: []
+  },
+  &quot;input_preparation&quot;: {
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;input_documents&quot;: 0,
+    &quot;stored_sources&quot;: 0,
+    &quot;unique_contents&quot;: 0,
+    &quot;duplicate_sources&quot;: 0,
+    &quot;quarantined_sources&quot;: 0,
+    &quot;candidate_facts&quot;: 0,
+    &quot;blocked&quot;: false,
+    &quot;issues&quot;: [
+      {
+        &quot;priority&quot;: &quot;P1&quot;,
+        &quot;code&quot;: &quot;missing_demo_metadata&quot;,
+        &quot;requirements&quot;: [
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;records_field&quot;,
+            &quot;object&quot;: &quot;demo_field&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_field&quot;,
+            &quot;predicate&quot;: &quot;uses_unit&quot;,
+            &quot;object&quot;: &quot;dimensionless&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;has_boundary&quot;,
+            &quot;object&quot;: &quot;periodic&quot;
+          }
+        ]
+      }
+    ],
+    &quot;issues_truncated&quot;: false,
+    &quot;ready_for_demo&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;llm_used&quot;: false
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: false,
+    &quot;blockers&quot;: [
+      {
+        &quot;code&quot;: &quot;missing_required_metadata&quot;,
+        &quot;details&quot;: [
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;records_field&quot;,
+            &quot;object&quot;: &quot;demo_field&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_field&quot;,
+            &quot;predicate&quot;: &quot;uses_unit&quot;,
+            &quot;object&quot;: &quot;dimensionless&quot;
+          },
+          {
+            &quot;subject&quot;: &quot;demo_grid&quot;,
+            &quot;predicate&quot;: &quot;has_boundary&quot;,
+            &quot;object&quot;: &quot;periodic&quot;
+          }
+        ]
+      }
+    ],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 0,
+    &quot;total_facts&quot;: 0,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>3. asset_agent · asset_ingest · 0.005s</summary><pre>{
+  &quot;sources&quot;: [
+    {
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;title&quot;: &quot;asset-card.txt&quot;,
+      &quot;kind&quot;: &quot;text&quot;,
+      &quot;status&quot;: &quot;ready&quot;
+    },
+    {
+      &quot;source_id&quot;: &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;,
+      &quot;title&quot;: &quot;experiment-register.csv&quot;,
+      &quot;kind&quot;: &quot;csv&quot;,
+      &quot;status&quot;: &quot;ready&quot;
+    },
+    {
+      &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;title&quot;: &quot;field-card.csv&quot;,
+      &quot;kind&quot;: &quot;csv&quot;,
+      &quot;status&quot;: &quot;ready&quot;
+    },
+    {
+      &quot;source_id&quot;: &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+      &quot;title&quot;: &quot;field-card-copy.csv&quot;,
+      &quot;kind&quot;: &quot;csv&quot;,
+      &quot;status&quot;: &quot;ready&quot;
+    }
+  ],
+  &quot;input_preparation&quot;: {
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;input_documents&quot;: 4,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;quarantined_sources&quot;: 0,
+    &quot;candidate_facts&quot;: 3,
+    &quot;blocked&quot;: false,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;ready_for_demo&quot;: true,
+    &quot;numerical_training_input&quot;: false,
+    &quot;llm_used&quot;: false
+  }
+}</pre></details><details><summary>4. graph_agent · asset_context · 0.002s</summary><pre>{
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;role&quot;: &quot;graph_agent&quot;,
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;input_snapshot_sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+  &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+  &quot;raw_document_bodies_included&quot;: false,
+  &quot;phase&quot;: &quot;ready&quot;,
+  &quot;source_catalog&quot;: [
+    {
+      &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;title&quot;: &quot;field-card.csv&quot;,
+      &quot;kind&quot;: &quot;csv&quot;,
+      &quot;status&quot;: &quot;ready&quot;,
+      &quot;classification&quot;: &quot;metadata_triples&quot;,
+      &quot;duplicate_of&quot;: null,
+      &quot;columns&quot;: [
+        &quot;subject&quot;,
+        &quot;predicate&quot;,
+        &quot;object&quot;
+      ],
+      &quot;row_count&quot;: 1
+    },
+    {
+      &quot;source_id&quot;: &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+      &quot;title&quot;: &quot;field-card-copy.csv&quot;,
+      &quot;kind&quot;: &quot;csv&quot;,
+      &quot;status&quot;: &quot;ready&quot;,
+      &quot;classification&quot;: &quot;metadata_triples&quot;,
+      &quot;duplicate_of&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;columns&quot;: [
+        &quot;subject&quot;,
+        &quot;predicate&quot;,
+        &quot;object&quot;
+      ],
+      &quot;row_count&quot;: 1
+    },
+    {
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;title&quot;: &quot;asset-card.txt&quot;,
+      &quot;kind&quot;: &quot;text&quot;,
+      &quot;status&quot;: &quot;ready&quot;,
+      &quot;classification&quot;: &quot;text&quot;,
+      &quot;duplicate_of&quot;: null,
+      &quot;columns&quot;: null,
+      &quot;row_count&quot;: null
+    },
+    {
+      &quot;source_id&quot;: &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;,
+      &quot;title&quot;: &quot;experiment-register.csv&quot;,
+      &quot;kind&quot;: &quot;csv&quot;,
+      &quot;status&quot;: &quot;ready&quot;,
+      &quot;classification&quot;: &quot;experiment_register&quot;,
+      &quot;duplicate_of&quot;: null,
+      &quot;columns&quot;: [
+        &quot;asset_id&quot;,
+        &quot;group&quot;,
+        &quot;trajectories&quot;,
+        &quot;source_kind&quot;
+      ],
+      &quot;row_count&quot;: 2
+    }
+  ],
+  &quot;fact_candidates&quot;: [
+    {
+      &quot;citation&quot;: {
+        &quot;columns&quot;: [
+          &quot;subject&quot;,
+          &quot;predicate&quot;,
+          &quot;object&quot;
+        ],
+        &quot;end_char&quot;: 25,
+        &quot;end_line&quot;: 2,
+        &quot;format&quot;: &quot;metadata_triples_csv&quot;,
+        &quot;header_quote&quot;: &quot;实体,关系,值&quot;,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;raw_columns&quot;: [
+          &quot;实体&quot;,
+          &quot;关系&quot;,
+          &quot;值&quot;
+        ],
+        &quot;start_char&quot;: 8
+      },
+      &quot;fact&quot;: {
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;quote&quot;: &quot;demo_field,单位,无量纲&quot;,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+        &quot;subject&quot;: &quot;demo_field&quot;
+      },
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;transformations&quot;: [
+        {
+          &quot;field&quot;: &quot;predicate&quot;,
+          &quot;from&quot;: &quot;单位&quot;,
+          &quot;rule&quot;: &quot;explicit_relation_alias&quot;,
+          &quot;to&quot;: &quot;uses_unit&quot;
+        },
+        {
+          &quot;field&quot;: &quot;object&quot;,
+          &quot;from&quot;: &quot;无量纲&quot;,
+          &quot;rule&quot;: &quot;explicit_label_alias_no_numeric_conversion&quot;,
+          &quot;to&quot;: &quot;dimensionless&quot;
+        }
+      ],
+      &quot;verification&quot;: &quot;declared format assertion only, not external truth&quot;
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 115,
+        &quot;format&quot;: &quot;text_triple&quot;,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 80
+      },
+      &quot;fact&quot;: {
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+        &quot;subject&quot;: &quot;demo_grid&quot;
+      },
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;transformations&quot;: [],
+      &quot;verification&quot;: &quot;declared format assertion only, not external truth&quot;
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 148,
+        &quot;format&quot;: &quot;text_triple&quot;,
+        &quot;line&quot;: 3,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 116
+      },
+      &quot;fact&quot;: {
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+        &quot;subject&quot;: &quot;demo_grid&quot;
+      },
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;transformations&quot;: [],
+      &quot;verification&quot;: &quot;declared format assertion only, not external truth&quot;
+    }
+  ],
+  &quot;next_offset&quot;: null,
+  &quot;candidate_packet_bytes&quot;: 1700
+}</pre></details><details><summary>5. graph_agent · asset_search · 0.003s</summary><pre>{
+  &quot;method&quot;: &quot;lexical BM25 with Chinese bigrams and explicit bilingual aliases; no embeddings or LLM&quot;,
+  &quot;hits&quot;: [
+    {
+      &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;source_sha256&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;source_hash_scope&quot;: &quot;canonical title/kind/text record&quot;,
+      &quot;title&quot;: &quot;field-card.csv&quot;,
+      &quot;line&quot;: 2,
+      &quot;quote&quot;: &quot;demo_field,单位,无量纲&quot;,
+      &quot;start_char&quot;: 8,
+      &quot;end_char&quot;: 25,
+      &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+      &quot;matched_terms&quot;: [
+        &quot;单位&quot;
+      ],
+      &quot;score&quot;: 2.441293318074239
+    },
+    {
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;source_sha256&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;source_hash_scope&quot;: &quot;canonical title/kind/text record&quot;,
+      &quot;title&quot;: &quot;asset-card.txt&quot;,
+      &quot;line&quot;: 2,
+      &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+      &quot;start_char&quot;: 80,
+      &quot;end_char&quot;: 115,
+      &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+      &quot;matched_terms&quot;: [
+        &quot;records_field&quot;
+      ],
+      &quot;score&quot;: 1.454041660928388
+    },
+    {
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;source_sha256&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;source_hash_scope&quot;: &quot;canonical title/kind/text record&quot;,
+      &quot;title&quot;: &quot;asset-card.txt&quot;,
+      &quot;line&quot;: 3,
+      &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+      &quot;start_char&quot;: 116,
+      &quot;end_char&quot;: 148,
+      &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+      &quot;matched_terms&quot;: [
+        &quot;has_boundary&quot;
+      ],
+      &quot;score&quot;: 1.454041660928388
+    }
+  ]
+}</pre></details><details><summary>6. graph_agent · graph_propose · 0.006s</summary><pre>{
+  &quot;proposal_id&quot;: &quot;3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f&quot;,
+  &quot;unknown_predicates&quot;: [],
+  &quot;pending_ontology_changes&quot;: [],
+  &quot;semantic_truth_verified&quot;: false
+}</pre></details><details><summary>7. graph_agent · graph_apply · 0.005s</summary><pre>{
+  &quot;facts&quot;: [
+    {
+      &quot;citation&quot;: {
+        &quot;columns&quot;: [
+          &quot;subject&quot;,
+          &quot;predicate&quot;,
+          &quot;object&quot;
+        ],
+        &quot;end_char&quot;: 25,
+        &quot;end_line&quot;: 2,
+        &quot;format&quot;: &quot;metadata_triples_csv&quot;,
+        &quot;header_quote&quot;: &quot;实体,关系,值&quot;,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;raw_columns&quot;: [
+          &quot;实体&quot;,
+          &quot;关系&quot;,
+          &quot;值&quot;
+        ],
+        &quot;start_char&quot;: 8
+      },
+      &quot;id&quot;: &quot;e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d&quot;,
+      &quot;object&quot;: &quot;dimensionless&quot;,
+      &quot;predicate&quot;: &quot;uses_unit&quot;,
+      &quot;quote&quot;: &quot;demo_field,单位,无量纲&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_field&quot;,
+      &quot;transformations&quot;: [
+        {
+          &quot;field&quot;: &quot;predicate&quot;,
+          &quot;from&quot;: &quot;单位&quot;,
+          &quot;rule&quot;: &quot;explicit_relation_alias&quot;,
+          &quot;to&quot;: &quot;uses_unit&quot;
+        },
+        {
+          &quot;field&quot;: &quot;object&quot;,
+          &quot;from&quot;: &quot;无量纲&quot;,
+          &quot;rule&quot;: &quot;explicit_label_alias_no_numeric_conversion&quot;,
+          &quot;to&quot;: &quot;dimensionless&quot;
+        }
+      ]
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 115,
+        &quot;format&quot;: &quot;text_triple&quot;,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 80
+      },
+      &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+      &quot;object&quot;: &quot;demo_field&quot;,
+      &quot;predicate&quot;: &quot;records_field&quot;,
+      &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;,
+      &quot;transformations&quot;: []
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 148,
+        &quot;format&quot;: &quot;text_triple&quot;,
+        &quot;line&quot;: 3,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 116
+      },
+      &quot;id&quot;: &quot;3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a&quot;,
+      &quot;object&quot;: &quot;periodic&quot;,
+      &quot;predicate&quot;: &quot;has_boundary&quot;,
+      &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;,
+      &quot;transformations&quot;: []
+    }
+  ],
+  &quot;conflicts&quot;: [],
+  &quot;ontology_version&quot;: 1
+}</pre></details><details><summary>8. graph_agent · evidence_path · 0.003s</summary><pre>{
+  &quot;paths&quot;: [
+    {
+      &quot;edges&quot;: [
+        {
+          &quot;citation&quot;: {
+            &quot;end_char&quot;: 115,
+            &quot;format&quot;: &quot;text_triple&quot;,
+            &quot;line&quot;: 2,
+            &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+            &quot;start_char&quot;: 80
+          },
+          &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+          &quot;object&quot;: &quot;demo_field&quot;,
+          &quot;predicate&quot;: &quot;records_field&quot;,
+          &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+          &quot;relation_assertion_verified&quot;: true,
+          &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+          &quot;status&quot;: &quot;source_span_verified&quot;,
+          &quot;subject&quot;: &quot;demo_grid&quot;,
+          &quot;transformations&quot;: []
+        },
+        {
+          &quot;citation&quot;: {
+            &quot;columns&quot;: [
+              &quot;subject&quot;,
+              &quot;predicate&quot;,
+              &quot;object&quot;
+            ],
+            &quot;end_char&quot;: 25,
+            &quot;end_line&quot;: 2,
+            &quot;format&quot;: &quot;metadata_triples_csv&quot;,
+            &quot;header_quote&quot;: &quot;实体,关系,值&quot;,
+            &quot;line&quot;: 2,
+            &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+            &quot;raw_columns&quot;: [
+              &quot;实体&quot;,
+              &quot;关系&quot;,
+              &quot;值&quot;
+            ],
+            &quot;start_char&quot;: 8
+          },
+          &quot;id&quot;: &quot;e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d&quot;,
+          &quot;object&quot;: &quot;dimensionless&quot;,
+          &quot;predicate&quot;: &quot;uses_unit&quot;,
+          &quot;quote&quot;: &quot;demo_field,单位,无量纲&quot;,
+          &quot;relation_assertion_verified&quot;: true,
+          &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+          &quot;status&quot;: &quot;source_span_verified&quot;,
+          &quot;subject&quot;: &quot;demo_field&quot;,
+          &quot;transformations&quot;: [
+            {
+              &quot;field&quot;: &quot;predicate&quot;,
+              &quot;from&quot;: &quot;单位&quot;,
+              &quot;rule&quot;: &quot;explicit_relation_alias&quot;,
+              &quot;to&quot;: &quot;uses_unit&quot;
+            },
+            {
+              &quot;field&quot;: &quot;object&quot;,
+              &quot;from&quot;: &quot;无量纲&quot;,
+              &quot;rule&quot;: &quot;explicit_label_alias_no_numeric_conversion&quot;,
+              &quot;to&quot;: &quot;dimensionless&quot;
+            }
+          ]
+        }
+      ],
+      &quot;source_ids&quot;: [
+        &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+        &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      ],
+      &quot;all_relations_asserted&quot;: true
+    }
+  ],
+  &quot;found&quot;: true,
+  &quot;search_truncated&quot;: false,
+  &quot;max_hops&quot;: 4,
+  &quot;expanded_nodes&quot;: 3,
+  &quot;new_facts_created&quot;: false,
+  &quot;semantic_truth_verified&quot;: false,
+  &quot;scope&quot;: &quot;paths over cited assertions; not inferred physical causation&quot;,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;conflicts&quot;: [],
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  }
+}</pre></details><details><summary>9. pde_coordinator · case_handoff · 0.002s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;ready&quot;,
+  &quot;state_head&quot;: &quot;5a900ab8808af1ac5931ea005e7e37effeef6471cd4646e1e846286d7e25fd38&quot;,
+  &quot;remaining_experiments&quot;: 2,
+  &quot;next_role&quot;: &quot;pde_agent&quot;,
+  &quot;next_tool&quot;: &quot;pde_identify&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;next_context&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;role&quot;: &quot;pde_agent&quot;,
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;input_snapshot_sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+    &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+    &quot;raw_document_bodies_included&quot;: false,
+    &quot;phase&quot;: &quot;ready&quot;,
+    &quot;metadata_evidence&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      }
+    ],
+    &quot;metadata_records_total&quot;: 3,
+    &quot;metadata_truncated&quot;: false,
+    &quot;discovery_input&quot;: &quot;controlled simulator observations only; uploaded CSV is not training data&quot;,
+    &quot;remaining_experiments&quot;: 2
+  },
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>10. pde_agent · pde_identify · 5.145s</summary><pre>{
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+  &quot;budget_limit&quot;: 7,
+  &quot;charged_experiments&quot;: 5,
+  &quot;measurement_scalars_charged&quot;: 35520,
+  &quot;training_trajectories&quot;: 3,
+  &quot;development_trajectories&quot;: 2,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;selected_equation&quot;: null,
+  &quot;selected_terms&quot;: [],
+  &quot;candidate_supports&quot;: [],
+  &quot;identification_status&quot;: &quot;insufficient&quot;,
+  &quot;identification_failure&quot;: &quot;Best development weak residual exceeds the fixed adequacy limit.&quot;,
+  &quot;uncertainty&quot;: {
+    &quot;method&quot;: &quot;complete_trajectory_bootstrap_full_structure_refit&quot;,
+    &quot;term_inclusion_frequencies&quot;: {
+      &quot;1&quot;: null,
+      &quot;u&quot;: null,
+      &quot;u^2&quot;: null,
+      &quot;u^3&quot;: null,
+      &quot;u_x&quot;: null,
+      &quot;u_xx&quot;: null,
+      &quot;u_xxx&quot;: null,
+      &quot;u_xxxx&quot;: null,
+      &quot;u*u_x&quot;: null
+    },
+    &quot;conditional_on_success_frequency&quot;: {
+      &quot;1&quot;: null,
+      &quot;u&quot;: null,
+      &quot;u^2&quot;: null,
+      &quot;u^3&quot;: null,
+      &quot;u_x&quot;: null,
+      &quot;u_xx&quot;: null,
+      &quot;u_xxx&quot;: null,
+      &quot;u_xxxx&quot;: null,
+      &quot;u*u_x&quot;: null
+    },
+    &quot;frequency_bounds_including_failures&quot;: {
+      &quot;1&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u^2&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u^3&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u_x&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u_xx&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u_xxx&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u_xxxx&quot;: [
+        0.0,
+        1.0
+      ],
+      &quot;u*u_x&quot;: [
+        0.0,
+        1.0
+      ]
+    },
+    &quot;raw_counts&quot;: {
+      &quot;1&quot;: 0,
+      &quot;u&quot;: 0,
+      &quot;u^2&quot;: 0,
+      &quot;u^3&quot;: 0,
+      &quot;u_x&quot;: 0,
+      &quot;u_xx&quot;: 0,
+      &quot;u_xxx&quot;: 0,
+      &quot;u_xxxx&quot;: 0,
+      &quot;u*u_x&quot;: 0
+    },
+    &quot;requested_replicates&quot;: 8,
+    &quot;completed_replicates&quot;: 0,
+    &quot;failed_replicates&quot;: 8,
+    &quot;number_of_available_multiplicity_vectors&quot;: 10,
+    &quot;calibrated&quot;: false,
+    &quot;probability_claimed&quot;: false,
+    &quot;confidence_interval_claimed&quot;: false,
+    &quot;independent_physical_experiments&quot;: 3,
+    &quot;resampling_adds_physical_evidence&quot;: false,
+    &quot;limited_data_warning&quot;: &quot;Few complete trajectories; repeated bootstrap draws do not create independent evidence.&quot;,
+    &quot;reference_used&quot;: false,
+    &quot;final_used&quot;: false
+  },
+  &quot;minimal_near_supports&quot;: [],
+  &quot;recovery_required&quot;: false,
+  &quot;failure&quot;: null,
+  &quot;frequency_calibrated&quot;: false,
+  &quot;final_opened&quot;: false,
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;ontology_version&quot;: 1,
+  &quot;graph_facts&quot;: 3,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;graph_conflicts&quot;: [],
+  &quot;pending_ontology_changes&quot;: 0,
+  &quot;event_count&quot;: 7,
+  &quot;event_head&quot;: &quot;c76d583a41f1983134e11df7d4b944904a521853a95b9427a161c2d1549d71b7&quot;
+}</pre></details><details><summary>11. pde_coordinator · case_handoff · 0.003s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;state_head&quot;: &quot;c76d583a41f1983134e11df7d4b944904a521853a95b9427a161c2d1549d71b7&quot;,
+  &quot;remaining_experiments&quot;: 2,
+  &quot;next_role&quot;: &quot;experiment_agent&quot;,
+  &quot;next_tool&quot;: &quot;experiment_propose&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;next_context&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;role&quot;: &quot;experiment_agent&quot;,
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;input_snapshot_sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+    &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+    &quot;raw_document_bodies_included&quot;: false,
+    &quot;phase&quot;: &quot;identified&quot;,
+    &quot;metadata_evidence&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      }
+    ],
+    &quot;metadata_records_total&quot;: 3,
+    &quot;metadata_truncated&quot;: false,
+    &quot;discovery_input&quot;: &quot;controlled simulator observations only; uploaded CSV is not training data&quot;,
+    &quot;remaining_experiments&quot;: 2
+  },
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>12. experiment_agent · experiment_propose · 0.059s</summary><pre>{
+  &quot;id&quot;: &quot;fa1c093dcaf30a47eb66e5e5f9b31b710cc3507c2496468ed6cf07fd6464ed11&quot;,
+  &quot;action&quot;: {
+    &quot;id&quot;: &quot;fixed-rich&quot;,
+    &quot;a&quot;: [
+      0.2309401076758503,
+      0.11547005383792518,
+      -0.2309401076758503,
+      0.2309401076758503,
+      -0.11547005383792511,
+      -0.2309401076758503
+    ],
+    &quot;b&quot;: [
+      0.0,
+      0.19999999999999998,
+      2.828200636599752e-17,
+      -5.656401273199504e-17,
+      -0.2,
+      5.516420715918146e-16
+    ]
+  },
+  &quot;reason&quot;: &quot;Predetermined rich excitation.&quot;,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;diagnostics&quot;: {
+    &quot;policy&quot;: &quot;fixed_rich&quot;,
+    &quot;selected_action&quot;: {
+      &quot;id&quot;: &quot;fixed-rich&quot;,
+      &quot;a&quot;: [
+        0.2309401076758503,
+        0.11547005383792518,
+        -0.2309401076758503,
+        0.2309401076758503,
+        -0.11547005383792511,
+        -0.2309401076758503
+      ],
+      &quot;b&quot;: [
+        0.0,
+        0.19999999999999998,
+        2.828200636599752e-17,
+        -5.656401273199504e-17,
+        -0.2,
+        5.516420715918146e-16
+      ]
+    },
+    &quot;selected_action_id&quot;: &quot;fixed-rich&quot;,
+    &quot;status&quot;: &quot;selected&quot;,
+    &quot;reason&quot;: &quot;Predetermined rich excitation.&quot;,
+    &quot;fallback_used&quot;: false,
+    &quot;scores&quot;: [
+      {
+        &quot;action_id&quot;: &quot;fixed-rich&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-2&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-3&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-00&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-01&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-02&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-03&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-04&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-05&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-06&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-07&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-08&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-09&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-10&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-11&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-12&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-13&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-14&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-15&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-1-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-1-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-2-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-2-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-3-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-3-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-4-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-4-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-5-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-5-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-6-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-6-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      }
+    ],
+    &quot;raw_committee_members&quot;: 0,
+    &quot;distinct_coefficient_vectors&quot;: 0,
+    &quot;structure_count&quot;: 0,
+    &quot;committee&quot;: [],
+    &quot;available_actions&quot;: 32,
+    &quot;excluded_action_ids&quot;: [],
+    &quot;cost_units&quot;: &quot;caller_declared_cost&quot;,
+    &quot;noise_estimate&quot;: {
+      &quot;estimated_spatial_variance&quot;: 1.6008632036750752e-05,
+      &quot;per_trajectory&quot;: [
+        {
+          &quot;training_trajectory&quot;: 0,
+          &quot;estimated_spatial_variance&quot;: 1.552351433930016e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 1,
+          &quot;estimated_spatial_variance&quot;: 1.645361608068581e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 2,
+          &quot;estimated_spatial_variance&quot;: 1.6048765690266287e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        }
+      ],
+      &quot;aggregation&quot;: &quot;equal trajectory mean variance&quot;,
+      &quot;true_noise_used&quot;: false,
+      &quot;physical_upper_band_signal_can_bias_estimate&quot;: true
+    },
+    &quot;acquisition_times&quot;: [
+      0.0,
+      0.1,
+      0.2
+    ],
+    &quot;acquisition_forecast_duration&quot;: 0.2,
+    &quot;initial_frame_scored&quot;: false,
+    &quot;model_forecast_attempts&quot;: 0,
+    &quot;model_forecast_failures&quot;: 0,
+    &quot;actual_experiment_queries&quot;: 0,
+    &quot;reference_used&quot;: false,
+    &quot;prospective_observations_used&quot;: false,
+    &quot;calibrated_probability_or_information_gain_claimed&quot;: false,
+    &quot;identification_certainty_claimed&quot;: false,
+    &quot;fixed_action_order&quot;: [
+      &quot;fixed-rich&quot;,
+      &quot;fixed-rich-1&quot;,
+      &quot;fixed-rich-2&quot;,
+      &quot;fixed-rich-3&quot;,
+      &quot;mixture-07&quot;,
+      &quot;mixture-04&quot;,
+      &quot;mixture-02&quot;,
+      &quot;mixture-10&quot;,
+      &quot;mixture-06&quot;,
+      &quot;mixture-01&quot;,
+      &quot;mixture-11&quot;,
+      &quot;mixture-15&quot;,
+      &quot;mixture-00&quot;,
+      &quot;mixture-05&quot;,
+      &quot;mixture-13&quot;,
+      &quot;mixture-03&quot;,
+      &quot;mixture-08&quot;,
+      &quot;mixture-09&quot;,
+      &quot;mixture-12&quot;,
+      &quot;mixture-14&quot;,
+      &quot;single-1-0&quot;,
+      &quot;single-1-1&quot;,
+      &quot;single-2-0&quot;,
+      &quot;single-2-1&quot;,
+      &quot;single-3-0&quot;,
+      &quot;single-3-1&quot;,
+      &quot;single-4-0&quot;,
+      &quot;single-4-1&quot;,
+      &quot;single-5-0&quot;,
+      &quot;single-5-1&quot;,
+      &quot;single-6-0&quot;,
+      &quot;single-6-1&quot;
+    ],
+    &quot;compute_seconds&quot;: 0.021370900998590514
+  },
+  &quot;measurement_cost&quot;: 7104,
+  &quot;is_physical_instruction&quot;: false
+}</pre></details><details><summary>13. pde_coordinator · case_handoff · 0.009s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;proposed&quot;,
+  &quot;state_head&quot;: &quot;8ab556c2c8e85c0a6e984ae150fe1dda69b5493c6161b765aebb543533e046b6&quot;,
+  &quot;remaining_experiments&quot;: 2,
+  &quot;next_role&quot;: &quot;experiment_agent&quot;,
+  &quot;next_tool&quot;: &quot;experiment_acquire&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;proposal_id&quot;: &quot;fa1c093dcaf30a47eb66e5e5f9b31b710cc3507c2496468ed6cf07fd6464ed11&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;next_context&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;role&quot;: &quot;experiment_agent&quot;,
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;input_snapshot_sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+    &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+    &quot;raw_document_bodies_included&quot;: false,
+    &quot;phase&quot;: &quot;proposed&quot;,
+    &quot;metadata_evidence&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      }
+    ],
+    &quot;metadata_records_total&quot;: 3,
+    &quot;metadata_truncated&quot;: false,
+    &quot;discovery_input&quot;: &quot;controlled simulator observations only; uploaded CSV is not training data&quot;,
+    &quot;remaining_experiments&quot;: 2
+  },
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>14. experiment_agent · experiment_acquire · 0.016s</summary><pre>{
+  &quot;query&quot;: {
+    &quot;action&quot;: {
+      &quot;a&quot;: [
+        0.2309401076758503,
+        0.11547005383792518,
+        -0.2309401076758503,
+        0.2309401076758503,
+        -0.11547005383792511,
+        -0.2309401076758503
+      ],
+      &quot;b&quot;: [
+        0.0,
+        0.19999999999999998,
+        2.828200636599752e-17,
+        -5.656401273199504e-17,
+        -0.2,
+        5.516420715918146e-16
+      ],
+      &quot;id&quot;: &quot;fixed-rich&quot;
+    },
+    &quot;charged_experiments&quot;: 1,
+    &quot;proposal_id&quot;: &quot;fa1c093dcaf30a47eb66e5e5f9b31b710cc3507c2496468ed6cf07fd6464ed11&quot;,
+    &quot;status&quot;: &quot;observed&quot;,
+    &quot;observation&quot;: {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/query-1.npz&quot;,
+      &quot;sha256&quot;: &quot;471efb818f1daedcbb8f1b98d3189fc06c7e2f150c301da4034b7bbc201b3d6f&quot;
+    },
+    &quot;receipt&quot;: {
+      &quot;experiments&quot;: 1,
+      &quot;measurement_values&quot;: 7104,
+      &quot;measured_frames&quot;: 111,
+      &quot;measured_spatial_points&quot;: 64,
+      &quot;prefix_frames&quot;: 11,
+      &quot;future_frames&quot;: 101,
+      &quot;history_endpoint_counted_once&quot;: true,
+      &quot;future_duration&quot;: 1.0,
+      &quot;action_sha256&quot;: &quot;dd71c01bbfebe0bb72ec136a080227b0ea654dcc221b0b61315fd12c68f7c0b8&quot;,
+      &quot;observed_field_sha256&quot;: &quot;68bf7ecb40d67152c2c644dde1de7b3bf6cea934b77c908c008b638238e1ce57&quot;,
+      &quot;is_measured_physical_data&quot;: false
+    }
+  },
+  &quot;idempotent_replay&quot;: false
+}</pre></details><details><summary>15. pde_agent · pde_identify · 2.289s</summary><pre>{
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+  &quot;budget_limit&quot;: 7,
+  &quot;charged_experiments&quot;: 6,
+  &quot;measurement_scalars_charged&quot;: 42624,
+  &quot;training_trajectories&quot;: 4,
+  &quot;development_trajectories&quot;: 2,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;selected_equation&quot;: &quot;u_t = 0.1135411043 u_xx&quot;,
+  &quot;selected_terms&quot;: [
+    {
+      &quot;name&quot;: &quot;u_xx&quot;,
+      &quot;coefficient&quot;: 0.11354110426424677
+    }
+  ],
+  &quot;candidate_supports&quot;: [
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u_xx&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u_xx&quot;
+    ],
+    [
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ]
+  ],
+  &quot;identification_status&quot;: &quot;observational_ambiguity&quot;,
+  &quot;identification_failure&quot;: null,
+  &quot;uncertainty&quot;: {
+    &quot;method&quot;: &quot;complete_trajectory_bootstrap_full_structure_refit&quot;,
+    &quot;term_inclusion_frequencies&quot;: {
+      &quot;1&quot;: null,
+      &quot;u&quot;: null,
+      &quot;u^2&quot;: null,
+      &quot;u^3&quot;: null,
+      &quot;u_x&quot;: null,
+      &quot;u_xx&quot;: null,
+      &quot;u_xxx&quot;: null,
+      &quot;u_xxxx&quot;: null,
+      &quot;u*u_x&quot;: null
+    },
+    &quot;conditional_on_success_frequency&quot;: {
+      &quot;1&quot;: 0.0,
+      &quot;u&quot;: 0.0,
+      &quot;u^2&quot;: 0.0,
+      &quot;u^3&quot;: 0.0,
+      &quot;u_x&quot;: 0.0,
+      &quot;u_xx&quot;: 1.0,
+      &quot;u_xxx&quot;: 0.0,
+      &quot;u_xxxx&quot;: 0.0,
+      &quot;u*u_x&quot;: 0.0
+    },
+    &quot;frequency_bounds_including_failures&quot;: {
+      &quot;1&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u^2&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u^3&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u_x&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u_xx&quot;: [
+        0.75,
+        1.0
+      ],
+      &quot;u_xxx&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u_xxxx&quot;: [
+        0.0,
+        0.25
+      ],
+      &quot;u*u_x&quot;: [
+        0.0,
+        0.25
+      ]
+    },
+    &quot;raw_counts&quot;: {
+      &quot;1&quot;: 0,
+      &quot;u&quot;: 0,
+      &quot;u^2&quot;: 0,
+      &quot;u^3&quot;: 0,
+      &quot;u_x&quot;: 0,
+      &quot;u_xx&quot;: 6,
+      &quot;u_xxx&quot;: 0,
+      &quot;u_xxxx&quot;: 0,
+      &quot;u*u_x&quot;: 0
+    },
+    &quot;requested_replicates&quot;: 8,
+    &quot;completed_replicates&quot;: 6,
+    &quot;failed_replicates&quot;: 2,
+    &quot;number_of_available_multiplicity_vectors&quot;: 35,
+    &quot;calibrated&quot;: false,
+    &quot;probability_claimed&quot;: false,
+    &quot;confidence_interval_claimed&quot;: false,
+    &quot;independent_physical_experiments&quot;: 4,
+    &quot;resampling_adds_physical_evidence&quot;: false,
+    &quot;limited_data_warning&quot;: &quot;Few complete trajectories; repeated bootstrap draws do not create independent evidence.&quot;,
+    &quot;reference_used&quot;: false,
+    &quot;final_used&quot;: false
+  },
+  &quot;minimal_near_supports&quot;: [
+    [
+      &quot;u_xx&quot;
+    ]
+  ],
+  &quot;recovery_required&quot;: false,
+  &quot;failure&quot;: null,
+  &quot;frequency_calibrated&quot;: false,
+  &quot;final_opened&quot;: false,
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;ontology_version&quot;: 1,
+  &quot;graph_facts&quot;: 3,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;graph_conflicts&quot;: [],
+  &quot;pending_ontology_changes&quot;: 0,
+  &quot;event_count&quot;: 11,
+  &quot;event_head&quot;: &quot;de5e34fb98a1de48920f704f9454e36d640c363f95a203dc3df89fa3ffbfd529&quot;
+}</pre></details><details><summary>16. pde_coordinator · case_handoff · 0.003s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;state_head&quot;: &quot;de5e34fb98a1de48920f704f9454e36d640c363f95a203dc3df89fa3ffbfd529&quot;,
+  &quot;remaining_experiments&quot;: 1,
+  &quot;next_role&quot;: &quot;experiment_agent&quot;,
+  &quot;next_tool&quot;: &quot;experiment_propose&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;next_context&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;role&quot;: &quot;experiment_agent&quot;,
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;input_snapshot_sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+    &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+    &quot;raw_document_bodies_included&quot;: false,
+    &quot;phase&quot;: &quot;identified&quot;,
+    &quot;metadata_evidence&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      }
+    ],
+    &quot;metadata_records_total&quot;: 3,
+    &quot;metadata_truncated&quot;: false,
+    &quot;discovery_input&quot;: &quot;controlled simulator observations only; uploaded CSV is not training data&quot;,
+    &quot;remaining_experiments&quot;: 1
+  },
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>17. experiment_agent · experiment_propose · 0.054s</summary><pre>{
+  &quot;id&quot;: &quot;d7db1554ae819ea9bf67241830c3f91bd0c6b2849d2941a2594cffb6ba9aad13&quot;,
+  &quot;action&quot;: {
+    &quot;id&quot;: &quot;fixed-rich-1&quot;,
+    &quot;a&quot;: [
+      0.17663273708651264,
+      -0.04052716890428186,
+      -0.17663273708651261,
+      0.17663273708651264,
+      0.04052716890428178,
+      -0.1766327370865128
+    ],
+    &quot;b&quot;: [
+      0.14877570205735963,
+      0.22735628848557748,
+      -0.14877570205735963,
+      0.14877570205735963,
+      -0.2273562884855775,
+      -0.14877570205735938
+    ]
+  },
+  &quot;reason&quot;: &quot;Predetermined rich excitation.&quot;,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;diagnostics&quot;: {
+    &quot;policy&quot;: &quot;fixed_rich&quot;,
+    &quot;selected_action&quot;: {
+      &quot;id&quot;: &quot;fixed-rich-1&quot;,
+      &quot;a&quot;: [
+        0.17663273708651264,
+        -0.04052716890428186,
+        -0.17663273708651261,
+        0.17663273708651264,
+        0.04052716890428178,
+        -0.1766327370865128
+      ],
+      &quot;b&quot;: [
+        0.14877570205735963,
+        0.22735628848557748,
+        -0.14877570205735963,
+        0.14877570205735963,
+        -0.2273562884855775,
+        -0.14877570205735938
+      ]
+    },
+    &quot;selected_action_id&quot;: &quot;fixed-rich-1&quot;,
+    &quot;status&quot;: &quot;selected&quot;,
+    &quot;reason&quot;: &quot;Predetermined rich excitation.&quot;,
+    &quot;fallback_used&quot;: false,
+    &quot;scores&quot;: [
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-2&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;fixed-rich-3&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-00&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-01&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-02&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-03&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-04&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-05&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-06&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-07&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-08&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-09&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-10&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-11&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-12&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-13&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-14&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;mixture-15&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-1-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-1-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-2-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-2-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-3-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-3-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-4-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-4-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-5-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-5-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-6-0&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      },
+      {
+        &quot;action_id&quot;: &quot;single-6-1&quot;,
+        &quot;status&quot;: &quot;not_scored_by_policy&quot;,
+        &quot;score&quot;: null,
+        &quot;cost&quot;: 7104.0
+      }
+    ],
+    &quot;raw_committee_members&quot;: 15,
+    &quot;distinct_coefficient_vectors&quot;: 15,
+    &quot;structure_count&quot;: 10,
+    &quot;committee&quot;: [
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: -0.0008117054321065467
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.006636511841354665
+          },
+          {
+            &quot;name&quot;: &quot;u^3&quot;,
+            &quot;coefficient&quot;: -0.0052894170808708875
+          },
+          {
+            &quot;name&quot;: &quot;u_x&quot;,
+            &quot;coefficient&quot;: 0.0007263569553067613
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.1123691749792216
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -5.239142112336101e-05
+          },
+          {
+            &quot;name&quot;: &quot;u*u_x&quot;,
+            &quot;coefficient&quot;: 0.002504921413704623
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u^2&quot;,
+          &quot;u^3&quot;,
+          &quot;u_x&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;,
+          &quot;u*u_x&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-96aa1dc92f8a668a&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          -0.0008117054321065467,
+          0.0,
+          0.006636511841354665,
+          -0.0052894170808708875,
+          0.0007263569553067613,
+          0.1123691749792216,
+          0.0,
+          -5.239142112336101e-05,
+          0.002504921413704623
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.002525707909776748
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.004266961067515503
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11220679790649583
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -5.570545224461719e-05
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u&quot;,
+          &quot;u^2&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-325491c17eca6f14&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          -0.002525707909776748,
+          0.004266961067515503,
+          0.0,
+          0.0,
+          0.11220679790649583,
+          0.0,
+          -5.570545224461719e-05,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.001470811008613343
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.004244876987115209
+          },
+          {
+            &quot;name&quot;: &quot;u^3&quot;,
+            &quot;coefficient&quot;: -0.004846968134997529
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11226276035018445
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -5.45776445748406e-05
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u&quot;,
+          &quot;u^2&quot;,
+          &quot;u^3&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-ab9d761d4e9c9026&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          -0.001470811008613343,
+          0.004244876987115209,
+          -0.004846968134997529,
+          0.0,
+          0.11226276035018445,
+          0.0,
+          -5.45776445748406e-05,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.0014096610810404467
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.0036541576895698733
+          },
+          {
+            &quot;name&quot;: &quot;u_x&quot;,
+            &quot;coefficient&quot;: 0.00042140173231501805
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11238227026433512
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -5.094689919779713e-05
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u&quot;,
+          &quot;u^2&quot;,
+          &quot;u_x&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-b098c816153c64cd&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          -0.0014096610810404467,
+          0.0036541576895698733,
+          0.0,
+          0.00042140173231501805,
+          0.11238227026433512,
+          0.0,
+          -5.094689919779713e-05,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11270174188541414
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -4.0817647520990534e-05
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-154df4b2d438e834&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.11270174188541414,
+          0.0,
+          -4.0817647520990534e-05,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11354110426424677
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-b14696f069e4ebd4&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.11354110426424677,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11357854951772012
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-0a528f20bd31877a&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.11357854951772012,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11361178864422856
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-fc1d65e8b11481df&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.11361178864422856,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11369775316230872
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-14f811472111d971&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.11369775316230872,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11378372168687498
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u_xx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-71939cc1f9ca63c3&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.11378372168687498,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.003655609076917405
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11301022312189851
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -2.9974879867897614e-05
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u^2&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-e7c80f6ef4d047cd&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.003655609076917405,
+          0.0,
+          0.0,
+          0.11301022312189851,
+          0.0,
+          -2.9974879867897614e-05,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.003908871007295018
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.112732798053685
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -4.0322112743735115e-05
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u^2&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-8ac09bc1ebd3766b&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.003908871007295018,
+          0.0,
+          0.0,
+          0.112732798053685,
+          0.0,
+          -4.0322112743735115e-05,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.00480970502010763
+          },
+          {
+            &quot;name&quot;: &quot;u^3&quot;,
+            &quot;coefficient&quot;: -0.015144257316821896
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11236065400814879
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -5.1779180062110946e-05
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u^2&quot;,
+          &quot;u^3&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-13d1c36772eed6f9&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.00480970502010763,
+          -0.015144257316821896,
+          0.0,
+          0.11236065400814879,
+          0.0,
+          -5.1779180062110946e-05,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.004851889942904204
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11377894782916187
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;u^2&quot;,
+          &quot;u_xx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-54674d670822142f&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.0,
+          0.0,
+          0.004851889942904204,
+          0.0,
+          0.0,
+          0.11377894782916187,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        &quot;terms&quot;: [
+          {
+            &quot;name&quot;: &quot;1&quot;,
+            &quot;coefficient&quot;: 0.00022495777883399233
+          },
+          {
+            &quot;name&quot;: &quot;u&quot;,
+            &quot;coefficient&quot;: -0.0018368007517242102
+          },
+          {
+            &quot;name&quot;: &quot;u^2&quot;,
+            &quot;coefficient&quot;: 0.0037224226487634366
+          },
+          {
+            &quot;name&quot;: &quot;u^3&quot;,
+            &quot;coefficient&quot;: -0.008302359405062281
+          },
+          {
+            &quot;name&quot;: &quot;u_xx&quot;,
+            &quot;coefficient&quot;: 0.11214539726190721
+          },
+          {
+            &quot;name&quot;: &quot;u_xxxx&quot;,
+            &quot;coefficient&quot;: -5.766390552308724e-05
+          }
+        ],
+        &quot;support&quot;: [
+          &quot;1&quot;,
+          &quot;u&quot;,
+          &quot;u^2&quot;,
+          &quot;u^3&quot;,
+          &quot;u_xx&quot;,
+          &quot;u_xxxx&quot;
+        ],
+        &quot;candidate_ids&quot;: [
+          &quot;committee-ad3c1a9d8654130a&quot;
+        ],
+        &quot;coefficient_vector&quot;: [
+          0.00022495777883399233,
+          -0.0018368007517242102,
+          0.0037224226487634366,
+          -0.008302359405062281,
+          0.0,
+          0.11214539726190721,
+          0.0,
+          -5.766390552308724e-05,
+          0.0
+        ]
+      }
+    ],
+    &quot;available_actions&quot;: 31,
+    &quot;excluded_action_ids&quot;: [
+      &quot;fixed-rich&quot;
+    ],
+    &quot;cost_units&quot;: &quot;caller_declared_cost&quot;,
+    &quot;noise_estimate&quot;: {
+      &quot;estimated_spatial_variance&quot;: 1.585502235442685e-05,
+      &quot;per_trajectory&quot;: [
+        {
+          &quot;training_trajectory&quot;: 0,
+          &quot;estimated_spatial_variance&quot;: 1.552351433930016e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 1,
+          &quot;estimated_spatial_variance&quot;: 1.645361608068581e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 2,
+          &quot;estimated_spatial_variance&quot;: 1.6048765690266287e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        },
+        {
+          &quot;training_trajectory&quot;: 3,
+          &quot;estimated_spatial_variance&quot;: 1.5394193307455138e-05,
+          &quot;observed_frames&quot;: 101,
+          &quot;spatial_points&quot;: 64
+        }
+      ],
+      &quot;aggregation&quot;: &quot;equal trajectory mean variance&quot;,
+      &quot;true_noise_used&quot;: false,
+      &quot;physical_upper_band_signal_can_bias_estimate&quot;: true
+    },
+    &quot;acquisition_times&quot;: [
+      0.0,
+      0.1,
+      0.2
+    ],
+    &quot;acquisition_forecast_duration&quot;: 0.2,
+    &quot;initial_frame_scored&quot;: false,
+    &quot;model_forecast_attempts&quot;: 0,
+    &quot;model_forecast_failures&quot;: 0,
+    &quot;actual_experiment_queries&quot;: 0,
+    &quot;reference_used&quot;: false,
+    &quot;prospective_observations_used&quot;: false,
+    &quot;calibrated_probability_or_information_gain_claimed&quot;: false,
+    &quot;identification_certainty_claimed&quot;: false,
+    &quot;fixed_action_order&quot;: [
+      &quot;fixed-rich-1&quot;,
+      &quot;fixed-rich-2&quot;,
+      &quot;fixed-rich-3&quot;,
+      &quot;mixture-07&quot;,
+      &quot;mixture-04&quot;,
+      &quot;mixture-02&quot;,
+      &quot;mixture-10&quot;,
+      &quot;mixture-06&quot;,
+      &quot;mixture-01&quot;,
+      &quot;mixture-11&quot;,
+      &quot;mixture-15&quot;,
+      &quot;mixture-00&quot;,
+      &quot;mixture-05&quot;,
+      &quot;mixture-13&quot;,
+      &quot;mixture-03&quot;,
+      &quot;mixture-08&quot;,
+      &quot;mixture-09&quot;,
+      &quot;mixture-12&quot;,
+      &quot;mixture-14&quot;,
+      &quot;single-1-0&quot;,
+      &quot;single-1-1&quot;,
+      &quot;single-2-0&quot;,
+      &quot;single-2-1&quot;,
+      &quot;single-3-0&quot;,
+      &quot;single-3-1&quot;,
+      &quot;single-4-0&quot;,
+      &quot;single-4-1&quot;,
+      &quot;single-5-0&quot;,
+      &quot;single-5-1&quot;,
+      &quot;single-6-0&quot;,
+      &quot;single-6-1&quot;
+    ],
+    &quot;compute_seconds&quot;: 0.02143281600001501
+  },
+  &quot;measurement_cost&quot;: 7104,
+  &quot;is_physical_instruction&quot;: false
+}</pre></details><details><summary>18. pde_coordinator · case_handoff · 0.004s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;proposed&quot;,
+  &quot;state_head&quot;: &quot;09c3e54437815fe83ad0d908e5156398cf770c6ed94cb377204bf7cdd53312e7&quot;,
+  &quot;remaining_experiments&quot;: 1,
+  &quot;next_role&quot;: &quot;experiment_agent&quot;,
+  &quot;next_tool&quot;: &quot;experiment_acquire&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;proposal_id&quot;: &quot;d7db1554ae819ea9bf67241830c3f91bd0c6b2849d2941a2594cffb6ba9aad13&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;next_context&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;role&quot;: &quot;experiment_agent&quot;,
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;input_snapshot_sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+    &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+    &quot;raw_document_bodies_included&quot;: false,
+    &quot;phase&quot;: &quot;proposed&quot;,
+    &quot;metadata_evidence&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      }
+    ],
+    &quot;metadata_records_total&quot;: 3,
+    &quot;metadata_truncated&quot;: false,
+    &quot;discovery_input&quot;: &quot;controlled simulator observations only; uploaded CSV is not training data&quot;,
+    &quot;remaining_experiments&quot;: 1
+  },
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>19. experiment_agent · experiment_acquire · 0.015s</summary><pre>{
+  &quot;query&quot;: {
+    &quot;action&quot;: {
+      &quot;a&quot;: [
+        0.17663273708651264,
+        -0.04052716890428186,
+        -0.17663273708651261,
+        0.17663273708651264,
+        0.04052716890428178,
+        -0.1766327370865128
+      ],
+      &quot;b&quot;: [
+        0.14877570205735963,
+        0.22735628848557748,
+        -0.14877570205735963,
+        0.14877570205735963,
+        -0.2273562884855775,
+        -0.14877570205735938
+      ],
+      &quot;id&quot;: &quot;fixed-rich-1&quot;
+    },
+    &quot;charged_experiments&quot;: 1,
+    &quot;proposal_id&quot;: &quot;d7db1554ae819ea9bf67241830c3f91bd0c6b2849d2941a2594cffb6ba9aad13&quot;,
+    &quot;status&quot;: &quot;observed&quot;,
+    &quot;observation&quot;: {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/query-2.npz&quot;,
+      &quot;sha256&quot;: &quot;e2ef85d94b806de34e9213f5a597a7b3160993bc27ffbdc246741df8b2a9dd47&quot;
+    },
+    &quot;receipt&quot;: {
+      &quot;experiments&quot;: 1,
+      &quot;measurement_values&quot;: 7104,
+      &quot;measured_frames&quot;: 111,
+      &quot;measured_spatial_points&quot;: 64,
+      &quot;prefix_frames&quot;: 11,
+      &quot;future_frames&quot;: 101,
+      &quot;history_endpoint_counted_once&quot;: true,
+      &quot;future_duration&quot;: 1.0,
+      &quot;action_sha256&quot;: &quot;f4b434e36f7979c95d7f55925e8a395ed0ac16fa1dc27efa3d042fa5dfa4ce2e&quot;,
+      &quot;observed_field_sha256&quot;: &quot;6bbab281173efcc24dfb4ed59cca5d34dcfdfde4a103d211c4b254b80a9d372f&quot;,
+      &quot;is_measured_physical_data&quot;: false
+    }
+  },
+  &quot;idempotent_replay&quot;: false
+}</pre></details><details><summary>20. pde_agent · pde_identify · 0.119s</summary><pre>{
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+  &quot;budget_limit&quot;: 7,
+  &quot;charged_experiments&quot;: 7,
+  &quot;measurement_scalars_charged&quot;: 49728,
+  &quot;training_trajectories&quot;: 5,
+  &quot;development_trajectories&quot;: 2,
+  &quot;policy&quot;: &quot;fixed_rich&quot;,
+  &quot;selected_equation&quot;: &quot;u_t = 0.113452369 u_xx&quot;,
+  &quot;selected_terms&quot;: [
+    {
+      &quot;name&quot;: &quot;u_xx&quot;,
+      &quot;coefficient&quot;: 0.1134523689853022
+    }
+  ],
+  &quot;candidate_supports&quot;: [
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;
+    ],
+    [
+      &quot;1&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u_xx&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u_xx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u^3&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u_x&quot;,
+      &quot;u_xx&quot;,
+      &quot;u*u_x&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u_xx&quot;
+    ],
+    [
+      &quot;u^2&quot;,
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ],
+    [
+      &quot;u_xx&quot;
+    ],
+    [
+      &quot;u_xx&quot;,
+      &quot;u_xxxx&quot;
+    ]
+  ],
+  &quot;identification_status&quot;: &quot;observational_ambiguity&quot;,
+  &quot;identification_failure&quot;: null,
+  &quot;uncertainty&quot;: {
+    &quot;method&quot;: &quot;complete_trajectory_bootstrap_full_structure_refit&quot;,
+    &quot;term_inclusion_frequencies&quot;: {
+      &quot;1&quot;: 0.0,
+      &quot;u&quot;: 0.0,
+      &quot;u^2&quot;: 0.0,
+      &quot;u^3&quot;: 0.0,
+      &quot;u_x&quot;: 0.0,
+      &quot;u_xx&quot;: 1.0,
+      &quot;u_xxx&quot;: 0.0,
+      &quot;u_xxxx&quot;: 0.0,
+      &quot;u*u_x&quot;: 0.0
+    },
+    &quot;conditional_on_success_frequency&quot;: {
+      &quot;1&quot;: 0.0,
+      &quot;u&quot;: 0.0,
+      &quot;u^2&quot;: 0.0,
+      &quot;u^3&quot;: 0.0,
+      &quot;u_x&quot;: 0.0,
+      &quot;u_xx&quot;: 1.0,
+      &quot;u_xxx&quot;: 0.0,
+      &quot;u_xxxx&quot;: 0.0,
+      &quot;u*u_x&quot;: 0.0
+    },
+    &quot;frequency_bounds_including_failures&quot;: {
+      &quot;1&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u^2&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u^3&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u_x&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u_xx&quot;: [
+        1.0,
+        1.0
+      ],
+      &quot;u_xxx&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u_xxxx&quot;: [
+        0.0,
+        0.0
+      ],
+      &quot;u*u_x&quot;: [
+        0.0,
+        0.0
+      ]
+    },
+    &quot;raw_counts&quot;: {
+      &quot;1&quot;: 0,
+      &quot;u&quot;: 0,
+      &quot;u^2&quot;: 0,
+      &quot;u^3&quot;: 0,
+      &quot;u_x&quot;: 0,
+      &quot;u_xx&quot;: 8,
+      &quot;u_xxx&quot;: 0,
+      &quot;u_xxxx&quot;: 0,
+      &quot;u*u_x&quot;: 0
+    },
+    &quot;requested_replicates&quot;: 8,
+    &quot;completed_replicates&quot;: 8,
+    &quot;failed_replicates&quot;: 0,
+    &quot;number_of_available_multiplicity_vectors&quot;: 126,
+    &quot;calibrated&quot;: false,
+    &quot;probability_claimed&quot;: false,
+    &quot;confidence_interval_claimed&quot;: false,
+    &quot;independent_physical_experiments&quot;: 5,
+    &quot;resampling_adds_physical_evidence&quot;: false,
+    &quot;limited_data_warning&quot;: null,
+    &quot;reference_used&quot;: false,
+    &quot;final_used&quot;: false
+  },
+  &quot;minimal_near_supports&quot;: [
+    [
+      &quot;u_xx&quot;
+    ]
+  ],
+  &quot;recovery_required&quot;: false,
+  &quot;failure&quot;: null,
+  &quot;frequency_calibrated&quot;: false,
+  &quot;final_opened&quot;: false,
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;ontology_version&quot;: 1,
+  &quot;graph_facts&quot;: 3,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;graph_conflicts&quot;: [],
+  &quot;pending_ontology_changes&quot;: 0,
+  &quot;event_count&quot;: 15,
+  &quot;event_head&quot;: &quot;03915568a3d8c8d9ff6b0e55843fb7f702f0fcfcd57de03331dff1c497229030&quot;
+}</pre></details><details><summary>21. pde_coordinator · case_handoff · 0.004s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;identified&quot;,
+  &quot;state_head&quot;: &quot;03915568a3d8c8d9ff6b0e55843fb7f702f0fcfcd57de03331dff1c497229030&quot;,
+  &quot;remaining_experiments&quot;: 0,
+  &quot;next_role&quot;: &quot;validation_agent&quot;,
+  &quot;next_tool&quot;: &quot;validation_freeze&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;next_context&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;role&quot;: &quot;validation_agent&quot;,
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;input_snapshot_sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+    &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+    &quot;raw_document_bodies_included&quot;: false,
+    &quot;phase&quot;: &quot;identified&quot;,
+    &quot;metadata_evidence&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      }
+    ],
+    &quot;metadata_records_total&quot;: 3,
+    &quot;metadata_truncated&quot;: false,
+    &quot;discovery_input&quot;: &quot;controlled simulator observations only; uploaded CSV is not training data&quot;,
+    &quot;remaining_experiments&quot;: 0
+  },
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: null,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>22. validation_agent · validation_freeze · 0.022s</summary><pre>{
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;model_sha256&quot;: &quot;e3e0fc7af4169d8ad355513f82d91f136820c70095067ad01f03fc3d21a79c3b&quot;,
+  &quot;training&quot;: [
+    {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/train-0.npz&quot;,
+      &quot;sha256&quot;: &quot;5336fed2f165b9f8ce6ddce98756258e16541c999f5f717e567567b43c6c40d7&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/train-1.npz&quot;,
+      &quot;sha256&quot;: &quot;a10435cd2ad0dda9165f84db322accbb743362b6471bffed77e734a068431e82&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/train-2.npz&quot;,
+      &quot;sha256&quot;: &quot;64481bfaacf21312658ef9212a55e772a2741e6f4bb648916431394d5cc3697c&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/query-1.npz&quot;,
+      &quot;sha256&quot;: &quot;471efb818f1daedcbb8f1b98d3189fc06c7e2f150c301da4034b7bbc201b3d6f&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/query-2.npz&quot;,
+      &quot;sha256&quot;: &quot;e2ef85d94b806de34e9213f5a597a7b3160993bc27ffbdc246741df8b2a9dd47&quot;
+    }
+  ],
+  &quot;development&quot;: [
+    {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/dev-0.npz&quot;,
+      &quot;sha256&quot;: &quot;805c9183d2fec51bc7602e4d72797b7894738d7823fe03d4a20eea0e50a21326&quot;
+    },
+    {
+      &quot;file&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048/dev-1.npz&quot;,
+      &quot;sha256&quot;: &quot;c5e4bf99d448ee0cbfc1d79834f31ef574c0f955b5af35d3a7b924aadb2f7524&quot;
+    }
+  ],
+  &quot;charged&quot;: 7,
+  &quot;facts_sha256&quot;: &quot;3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f&quot;,
+  &quot;ontology_sha256&quot;: &quot;f5e8a203b6bcb2356f80bb15bc9aba4fe048a50aa3980d7eb062c334d48508a2&quot;,
+  &quot;setup_sha256&quot;: &quot;45bafe68214f024c81c5eb68ae90ce38b23f33294dce5f7b3aebf535f09c17af&quot;,
+  &quot;sources&quot;: {
+    &quot;active_study/__init__.py&quot;: &quot;23a3b2c71fb042a40f3bf6b356d1e0f91811c7aa7e14a62dc8319f1f8ccdbba7&quot;,
+    &quot;active_study/acquisition.py&quot;: &quot;7c6b45b135bab7541aac4d34643f06fd1db23fa9cbc60e94285e5f1e2493d640&quot;,
+    &quot;active_study/actions.py&quot;: &quot;0ce7c6c91bdfd43869dadc71b0c973b5a7c4a8588a4150ef8d01ff300b295e16&quot;,
+    &quot;active_study/app.py&quot;: &quot;424509cafbf6ea8437baacde7aa99a713f2c52f654abc9d1a99a340e02d7140a&quot;,
+    &quot;active_study/controller.py&quot;: &quot;d80fe2aebbffd18120f2799f7d09858b55fdd3a433bdfda398279331b182d2af&quot;,
+    &quot;active_study/engine.py&quot;: &quot;79a7cbbdad3e79c9f9ebad6179aa52bf205db0a235c42c0da96e37261274634c&quot;,
+    &quot;active_study/forecast.py&quot;: &quot;b2cc6860b1bac2b9e585122140c8811c3f63c74f29f8932ec7a4606a849669c9&quot;,
+    &quot;active_study/provider.py&quot;: &quot;e57aca981abdbbafd77a831ca0479076b3b1e3f4058407666242aa44e21853a0&quot;,
+    &quot;active_study/run.py&quot;: &quot;2587e905447ca85252dfa70c631307afcc292b8a0514a481e498a5f258cef3c2&quot;,
+    &quot;pde_discovery/__init__.py&quot;: &quot;6430a32151716782cafc523a1ed2e6c6a5ee7741bdc89a39dde1baa48a669a7c&quot;,
+    &quot;pde_discovery/__main__.py&quot;: &quot;621b742c86f8ff05d12e46a153f1ccf09eb2603772d23c31642c7ea88e7fd8ff&quot;,
+    &quot;pde_discovery/additive_experiment.py&quot;: &quot;2657260ecb0eb502efbb702a2ae9ab7529d6a517291730672bf0eb8fe0001654&quot;,
+    &quot;pde_discovery/app.py&quot;: &quot;ca033ddfc6e25430bb5fb85a70ef139d08086e42ae795f3027c47850fc6a2d60&quot;,
+    &quot;pde_discovery/controller.py&quot;: &quot;d170b9d9147974c0f0785f10540fa4815fffc4b218bddfa25e19de40b8a645ce&quot;,
+    &quot;pde_discovery/engine.py&quot;: &quot;c7ccef837529d37d126cf6cbac0446b6316b427f7f4b88ef2ab053ed3d391bce&quot;,
+    &quot;pde_discovery/external_experiment.py&quot;: &quot;4f2838e7298cd2904f81bcc13027ae0b4281abe3ec73d10a01220ec9d0ce436a&quot;,
+    &quot;pde_discovery/generic_engine.py&quot;: &quot;09f966462d823ea23d68a211a34c1a5c499075a8599394d0f8d32417d36e670a&quot;,
+    &quot;pde_discovery/generic_experiment.py&quot;: &quot;e5ec3d9d25517ac1099c4b74d47c251915728fe0f48c8f89ee4001e9a4c2f9cf&quot;,
+    &quot;pde_discovery/heat_identifiability.py&quot;: &quot;c8be9a31c840c801f836a4c8df74fe1336a38ac261d10f42273c0b71c00b1a26&quot;,
+    &quot;pde_discovery/real_benchmark.py&quot;: &quot;8da244a69725dd65c5a8832092f92e7a4acbdcf9c9c78720aa315985e58b04d0&quot;,
+    &quot;pde_discovery/real_experiment.py&quot;: &quot;f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04&quot;,
+    &quot;pde_discovery/real_heat.py&quot;: &quot;8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc&quot;,
+    &quot;pde_discovery/real_heat_refined.py&quot;: &quot;88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1&quot;,
+    &quot;pde_discovery/refined_experiment.py&quot;: &quot;26ece449cb4307baf0690384312e6dd7795cd9bd55c569ab2465fbbb79a3a277&quot;,
+    &quot;pde_discovery/simulator.py&quot;: &quot;d35a953db0daf1f3f4f68c806172ae32984dd43cd3b83f37ca3bbe09bebfb1b9&quot;,
+    &quot;coefficient_study/__init__.py&quot;: &quot;1f0e05e3d66912a08002a8c2ceacae8a8c308632b63d1c7a0eee2f3cc9fd0f3a&quot;,
+    &quot;coefficient_study/data.py&quot;: &quot;4889761afa58fa08df4731777b13692fec98cd699cd2f302b091e5f7d2887a47&quot;,
+    &quot;coefficient_study/engine.py&quot;: &quot;6238186265d29b339936f6d642935affe85f64d9e42f3adba4a430c761bf4ecf&quot;,
+    &quot;coefficient_study/generators.py&quot;: &quot;4091a1d79f85145d3d2430f7eafe190280bd621a7c18a15bde6049a53023df11&quot;,
+    &quot;coefficient_study/noise.py&quot;: &quot;dd84fd7c60fb082a86d70dc32c6986d5ca4fb0369b9eaa6af8e0e1ad92ad4232&quot;,
+    &quot;coefficient_study/run.py&quot;: &quot;ab7911dd50b789469750419860461f9157e9b3daa91b0d7f60ff093951ace70b&quot;,
+    &quot;coefficient_study/selection.py&quot;: &quot;85ea4ae9dfa2c0d62f840d7f93c1fac1baec956a36c37c147fee5a9396b5e08c&quot;,
+    &quot;prefix_study/__init__.py&quot;: &quot;0407dbf22cbb7e931232daaf79727c6ad0b6c627f0c47dbf33aa0cf028ed660a&quot;,
+    &quot;prefix_study/data.py&quot;: &quot;5fd4acf36938cb15c0d3879fe3a8e66cd21d158f91656aef68f2444ef68edfb5&quot;,
+    &quot;prefix_study/engine.py&quot;: &quot;d9d144771bf43e067fafd7423d58577f6d8dab141eef99d431def36b015f1acf&quot;,
+    &quot;prefix_study/forecast.py&quot;: &quot;42b533728df0dab390b7d3fc8a8060e306348751a5c1b352a8e6335450417d1e&quot;,
+    &quot;prefix_study/generators.py&quot;: &quot;8f9059c1d609226ed4166cb465e8f81a2d728a1486b577cb7d8df7c0d30cc2be&quot;,
+    &quot;prefix_study/run.py&quot;: &quot;102e3dbb1c8c7c86cad1b69ce44a943cc2924bea0655844690962a809bc40a4d&quot;,
+    &quot;five_study/__init__.py&quot;: &quot;338c7608f5fab6a79789e96d94b49e72c9f6d51f555ba5def675c376e36a1e1e&quot;,
+    &quot;five_study/data.py&quot;: &quot;7cc8b9fc7099e62549deb10f6a48a51b70d30f691b01353ce6f1c985487a3fff&quot;,
+    &quot;five_study/engine.py&quot;: &quot;a516b35dcefcec5fd6b4191aee9bc174af744dbdd87cf9524e07766bb842b2a6&quot;,
+    &quot;five_study/forecast.py&quot;: &quot;0fe822ab050f0ab4572828f75490054819404b7bfded68d6b7e5e0ed6290aa4e&quot;,
+    &quot;five_study/generators.py&quot;: &quot;e167c9026cdb1ebcb9c4e8b71408159e2b71c526b5c78b2f2cdebac571374f03&quot;,
+    &quot;five_study/initial.py&quot;: &quot;abff6b772783472ea6a6a518231a279e92b2085fdbd86597971193c460f3badb&quot;,
+    &quot;five_study/run.py&quot;: &quot;a9742fc83bc88ef186aef02291277dfce350de8f255e0eb97c29591745d2484f&quot;,
+    &quot;resolved_study/__init__.py&quot;: &quot;21b20f27081fe2c9ffda4d95a4806d66dabe2b99faed7d57f6dc659cc31ab53d&quot;,
+    &quot;resolved_study/data.py&quot;: &quot;21be8902ab62f3482fb466738a6c2f96af7ad0df6839f0a783f04e83a5abcf75&quot;,
+    &quot;resolved_study/forecast.py&quot;: &quot;c0412cf5e5a27eac4b5558110fe6939bd1e666568b4743c99665b771bcc5cef4&quot;,
+    &quot;resolved_study/generators.py&quot;: &quot;95e3862c5c56712bd58e9e7adf5a427040c7424e9c0cd11f9b1d9e086529368f&quot;,
+    &quot;resolved_study/run.py&quot;: &quot;b72bd024765e2bdb4ca4d08b889e30bd9d7a1c22e37b2ad580ca8290ade0b2a6&quot;,
+    &quot;resolved_study/selection.py&quot;: &quot;7f93085fb10f7ef57c1c256b696a1fb1e9606290dea71e3a72c02d069335850d&quot;,
+    &quot;weak_study/__init__.py&quot;: &quot;ff8c034d2af458169e0058529c3c7b6b4903cd292fc1968ea8e00a6d804f07b8&quot;,
+    &quot;weak_study/data.py&quot;: &quot;59760dff581d23435b8d985d9142103b916583c04f4f5842d1c04b116a9398e9&quot;,
+    &quot;weak_study/engine.py&quot;: &quot;4a5344dbd203af8955d0962d480805ea7ba1c17729d26082365989e44d2409af&quot;,
+    &quot;weak_study/generators.py&quot;: &quot;ecefc5b5218681cffddc6aeb32b1305962317c6d104d72196c688b9e1022c56b&quot;,
+    &quot;weak_study/run.py&quot;: &quot;01f24a5f1a5de9bdeea1fcbc91600d21504704487fce2c453b2f54ed285bb380&quot;,
+    &quot;l1_study/__init__.py&quot;: &quot;f60f17fc53ea9b395ceb87b36dd1ea6a558138c806ce1f481d80880068215461&quot;,
+    &quot;l1_study/engine.py&quot;: &quot;e91f3dfb634c09eef1083097ad8247cfc23c6a9d7058e701675fb229669b512f&quot;,
+    &quot;l1_study/fixtures.py&quot;: &quot;0869c9838647bebea5cd8a589724422e062f93d1ac89c58f261442ef4d64e956&quot;,
+    &quot;l1_study/gaussian_check.py&quot;: &quot;9892a4330f72d756f58c315179e1e30bfe52bf60eb835c7697de7025a7004f51&quot;,
+    &quot;l1_study/run.py&quot;: &quot;0a23d9c7636b5d11ab1611c36438b09820b3d347c6fd3efea2226e3bc14accea&quot;,
+    &quot;fusion_study/__init__.py&quot;: &quot;25930ef372c6a0de2862ac3447407d42c947fb07d4345efa8bf9146ef8f1e5ed&quot;,
+    &quot;fusion_study/data.py&quot;: &quot;d96e790ce7c7a084331a5832b4111e1341999bb935000adba9cd88fb0da2c71e&quot;,
+    &quot;fusion_study/engine.py&quot;: &quot;25bed3f5f1b33f620a1be99d7810f8fbd3f5148817f9d69020ce42baf903fc1c&quot;,
+    &quot;fusion_study/generators.py&quot;: &quot;7f232406b83325ef7b5344887984575fea392ccb8bbd5b72d9187cf709cd02d9&quot;,
+    &quot;fusion_study/run.py&quot;: &quot;2d8f616c1f5eb3f5ce4fc846cdbc07e5286809de6a69f37f837899e72b40bffe&quot;,
+    &quot;challenge_study/__init__.py&quot;: &quot;cdc5673688815ae0d0780d284fd852c1fe42c1a43811f5898a265cd77325956a&quot;,
+    &quot;challenge_study/data.py&quot;: &quot;8455303f18bed732c568891d1c5fe0e467ae2aa5675f06a7ff82c55f31afa960&quot;,
+    &quot;challenge_study/generators.py&quot;: &quot;1f7d3329b0fe3e564113b6155018a5a6e3964d4223c5a58866e867404293cd4c&quot;,
+    &quot;challenge_study/run.py&quot;: &quot;61e8e4ff7ba5366e2a0cfc049c7d0cc9f01127a5765cbd96be4be9a65811ee9c&quot;,
+    &quot;competition_agent/__init__.py&quot;: &quot;2b924dd67033b8a60affc6dabc377a74cf7fca8559c1b0f298c1c7fe5ce11062&quot;,
+    &quot;competition_agent/bundle.py&quot;: &quot;38403bc365ed489b50bc91d3de4e331e9b6ca3870ecaf71d315b56f221e0cc48&quot;,
+    &quot;competition_agent/demo.py&quot;: &quot;ad58f15f0879571d02094b163f1b10f6676759884e91fc7151cab6c9618f096d&quot;,
+    &quot;competition_agent/evaluate_demo.py&quot;: &quot;5bbe8d5c175e9371bbdbefb91dd451205d99b384340d159a3ef05ada60663259&quot;,
+    &quot;competition_agent/evidence_quality.py&quot;: &quot;44d3f91f91a257f0572c9b9bd11af15201b6c9e0b4973008c280f6f60ac9301a&quot;,
+    &quot;competition_agent/make_document.py&quot;: &quot;fbf56bc50c1cac9143ef872b10438fa8dbbe9798ce7d2360584e9d5742d70e32&quot;,
+    &quot;competition_agent/mcp_server.py&quot;: &quot;0305b6e5b0a846bf4b1c1be736339fd6226ba44be35f1b364c8766f331ee72d7&quot;,
+    &quot;competition_agent/preprocess.py&quot;: &quot;a2425c1cc4f822475eadeb2ebfbf996e60460aa6c46518b576d2d45d0ffcea73&quot;,
+    &quot;competition_agent/quality_probe.py&quot;: &quot;364f05d825b29a1e7edae9d38669de0fb3ce70cfd372649105e023cd69c4c8b0&quot;,
+    &quot;competition_agent/reporting.py&quot;: &quot;25f6ca9f9b8a0d08b2521b508a8954aff3fa1bc7db9f62f0ffedb72f8f878b2c&quot;,
+    &quot;competition_agent/service.py&quot;: &quot;2d0a44ee2920120aa0196ce099fe600e3b4d2fb78a112464a5d0ae5ee4c1e635&quot;
+  },
+  &quot;final_opened&quot;: false,
+  &quot;sha256&quot;: &quot;7a1ec5c8048c8fd38eb6aa7163625dcce4144e35841e87945e776331d8245225&quot;
+}</pre></details><details><summary>23. pde_coordinator · case_handoff · 0.005s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;frozen&quot;,
+  &quot;state_head&quot;: &quot;809e09cb75d3efab0be1d50bab2ccbf0fad89a5f382918a44d050ac7e4ad416f&quot;,
+  &quot;remaining_experiments&quot;: 0,
+  &quot;next_role&quot;: &quot;validation_agent&quot;,
+  &quot;next_tool&quot;: &quot;validation_evaluate&quot;,
+  &quot;next_arguments&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;
+  },
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: true,
+  &quot;stop&quot;: false,
+  &quot;terminal&quot;: false,
+  &quot;reason&quot;: null,
+  &quot;next_context&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;role&quot;: &quot;validation_agent&quot;,
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;input_snapshot_sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+    &quot;format&quot;: &quot;prepared evidence only; role filter is not an authorization boundary&quot;,
+    &quot;raw_document_bodies_included&quot;: false,
+    &quot;phase&quot;: &quot;frozen&quot;,
+    &quot;metadata_evidence&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;
+      }
+    ],
+    &quot;metadata_records_total&quot;: 3,
+    &quot;metadata_truncated&quot;: false,
+    &quot;discovery_input&quot;: &quot;controlled simulator observations only; uploaded CSV is not training data&quot;,
+    &quot;remaining_experiments&quot;: 0
+  },
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: false,
+  &quot;source_ids&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: &quot;7a1ec5c8048c8fd38eb6aa7163625dcce4144e35841e87945e776331d8245225&quot;,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: false
+}</pre></details><details><summary>24. validation_agent · validation_evaluate · 0.114s</summary><pre>{
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+  &quot;nexent_live_llm_verified&quot;: false,
+  &quot;equation&quot;: &quot;u_t = 0.113452369 u_xx&quot;,
+  &quot;terms&quot;: [
+    {
+      &quot;coefficient&quot;: 0.1134523689853022,
+      &quot;name&quot;: &quot;u_xx&quot;
+    }
+  ],
+  &quot;structure&quot;: {
+    &quot;status&quot;: &quot;evaluated&quot;,
+    &quot;exact_support&quot;: true,
+    &quot;precision&quot;: 1.0,
+    &quot;recall&quot;: 1.0,
+    &quot;f1&quot;: 1.0,
+    &quot;true_positive_terms&quot;: [
+      &quot;u_xx&quot;
+    ],
+    &quot;missing_terms&quot;: [],
+    &quot;spurious_terms&quot;: [],
+    &quot;coefficient_relative_l2&quot;: 0.00029062749865073974,
+    &quot;coefficient_comparison&quot;: [
+      {
+        &quot;name&quot;: &quot;u_xx&quot;,
+        &quot;reference&quot;: 0.113485350948982,
+        &quot;discovered&quot;: 0.1134523689853022,
+        &quot;absolute_error&quot;: 3.2981963679803994e-05,
+        &quot;relative_error&quot;: 0.00029062749865073974
+      }
+    ],
+    &quot;reference_terms&quot;: [
+      {
+        &quot;name&quot;: &quot;u_xx&quot;,
+        &quot;coefficient&quot;: 0.113485350948982
+      }
+    ],
+    &quot;coefficient_metric_scope&quot;: &quot;author coordinate/field scaling; not unit-invariant&quot;
+  },
+  &quot;max_true_coefficient_relative_error&quot;: 0.00029062749865073974,
+  &quot;numerical_joint_success&quot;: true,
+  &quot;joint_success_rule&quot;: &quot;exact support AND max true coefficient error &lt;=10% AND all 3 predictions valid AND mean prediction error &lt;=5%&quot;,
+  &quot;predictions&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;status&quot;: &quot;evaluated&quot;,
+      &quot;metrics&quot;: {
+        &quot;rmse&quot;: 0.00023938786207153374,
+        &quot;mae&quot;: 0.00020891997056951328,
+        &quot;max_absolute_error&quot;: 0.000625010786566238,
+        &quot;relative_l2&quot;: 0.0014696830095589774,
+        &quot;excluded_initial_frame&quot;: true,
+        &quot;scored_frames&quot;: 100,
+        &quot;space_points&quot;: 64
+      },
+      &quot;prefix_frames&quot;: 11,
+      &quot;duration&quot;: 1.0
+    },
+    {
+      &quot;index&quot;: 1,
+      &quot;status&quot;: &quot;evaluated&quot;,
+      &quot;metrics&quot;: {
+        &quot;rmse&quot;: 0.0001307116171035373,
+        &quot;mae&quot;: 9.720377458891459e-05,
+        &quot;max_absolute_error&quot;: 0.0005751463518076094,
+        &quot;relative_l2&quot;: 0.0010427560680710847,
+        &quot;excluded_initial_frame&quot;: true,
+        &quot;scored_frames&quot;: 100,
+        &quot;space_points&quot;: 64
+      },
+      &quot;prefix_frames&quot;: 11,
+      &quot;duration&quot;: 1.0
+    },
+    {
+      &quot;index&quot;: 2,
+      &quot;status&quot;: &quot;evaluated&quot;,
+      &quot;metrics&quot;: {
+        &quot;rmse&quot;: 0.00022698371853985836,
+        &quot;mae&quot;: 0.00018350623000734,
+        &quot;max_absolute_error&quot;: 0.000724459367410904,
+        &quot;relative_l2&quot;: 0.0011937722150619611,
+        &quot;excluded_initial_frame&quot;: true,
+        &quot;scored_frames&quot;: 100,
+        &quot;space_points&quot;: 64
+      },
+      &quot;prefix_frames&quot;: 11,
+      &quot;duration&quot;: 1.0
+    }
+  ],
+  &quot;evaluation_slots&quot;: 3,
+  &quot;evaluation_reference_trajectories_generated&quot;: 3,
+  &quot;evaluation_measurement_scalars&quot;: 21312,
+  &quot;discovery_budget_excludes_final_evaluation&quot;: true,
+  &quot;prediction_failure_slots&quot;: 0,
+  &quot;mean_prediction_error&quot;: 0.0012354037642306746,
+  &quot;prediction_5pct_passed&quot;: true,
+  &quot;evidence_ready&quot;: true,
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_conflicts&quot;: [],
+  &quot;pending_ontology_review&quot;: false,
+  &quot;evidence_sources&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;graph&quot;: [
+    {
+      &quot;citation&quot;: {
+        &quot;columns&quot;: [
+          &quot;subject&quot;,
+          &quot;predicate&quot;,
+          &quot;object&quot;
+        ],
+        &quot;end_char&quot;: 25,
+        &quot;end_line&quot;: 2,
+        &quot;format&quot;: &quot;metadata_triples_csv&quot;,
+        &quot;header_quote&quot;: &quot;实体,关系,值&quot;,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;raw_columns&quot;: [
+          &quot;实体&quot;,
+          &quot;关系&quot;,
+          &quot;值&quot;
+        ],
+        &quot;start_char&quot;: 8
+      },
+      &quot;id&quot;: &quot;e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d&quot;,
+      &quot;object&quot;: &quot;dimensionless&quot;,
+      &quot;predicate&quot;: &quot;uses_unit&quot;,
+      &quot;quote&quot;: &quot;demo_field,单位,无量纲&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_field&quot;,
+      &quot;transformations&quot;: [
+        {
+          &quot;field&quot;: &quot;predicate&quot;,
+          &quot;from&quot;: &quot;单位&quot;,
+          &quot;rule&quot;: &quot;explicit_relation_alias&quot;,
+          &quot;to&quot;: &quot;uses_unit&quot;
+        },
+        {
+          &quot;field&quot;: &quot;object&quot;,
+          &quot;from&quot;: &quot;无量纲&quot;,
+          &quot;rule&quot;: &quot;explicit_label_alias_no_numeric_conversion&quot;,
+          &quot;to&quot;: &quot;dimensionless&quot;
+        }
+      ]
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 115,
+        &quot;format&quot;: &quot;text_triple&quot;,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 80
+      },
+      &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+      &quot;object&quot;: &quot;demo_field&quot;,
+      &quot;predicate&quot;: &quot;records_field&quot;,
+      &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;,
+      &quot;transformations&quot;: []
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 148,
+        &quot;format&quot;: &quot;text_triple&quot;,
+        &quot;line&quot;: 3,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 116
+      },
+      &quot;id&quot;: &quot;3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a&quot;,
+      &quot;object&quot;: &quot;periodic&quot;,
+      &quot;predicate&quot;: &quot;has_boundary&quot;,
+      &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;,
+      &quot;transformations&quot;: []
+    }
+  ],
+  &quot;freeze_sha256&quot;: &quot;7a1ec5c8048c8fd38eb6aa7163625dcce4144e35841e87945e776331d8245225&quot;,
+  &quot;measurement_scalars_charged&quot;: 49728,
+  &quot;charged_experiments&quot;: 7,
+  &quot;frequency_is_probability&quot;: false,
+  &quot;real_industry_validation&quot;: false,
+  &quot;final_used_for_discovery&quot;: false,
+  &quot;note&quot;: &quot;This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value.&quot;
+}</pre></details><details><summary>25. pde_coordinator · case_handoff · 0.006s</summary><pre>{
+  &quot;contract_version&quot;: 1,
+  &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+  &quot;phase&quot;: &quot;validated&quot;,
+  &quot;state_head&quot;: &quot;289a0f56d08e9b52e0176d861c0ee26e260b9b5ed2fb01a741aa516016aa5003&quot;,
+  &quot;remaining_experiments&quot;: 0,
+  &quot;next_role&quot;: null,
+  &quot;next_tool&quot;: null,
+  &quot;next_arguments&quot;: {},
+  &quot;required_inputs&quot;: [],
+  &quot;arguments_complete&quot;: false,
+  &quot;stop&quot;: true,
+  &quot;terminal&quot;: true,
+  &quot;reason&quot;: &quot;terminal&quot;,
+  &quot;next_context&quot;: null,
+  &quot;input_preparation&quot;: {
+    &quot;blocked&quot;: false,
+    &quot;candidate_facts&quot;: 3,
+    &quot;duplicate_sources&quot;: 1,
+    &quot;input_documents&quot;: 4,
+    &quot;issues&quot;: [],
+    &quot;issues_truncated&quot;: false,
+    &quot;llm_used&quot;: false,
+    &quot;numerical_training_input&quot;: false,
+    &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+    &quot;priority_order&quot;: [
+      &quot;P0: stop and resolve format/conflicts&quot;,
+      &quot;P1: fill schema/metadata gaps&quot;,
+      &quot;P2: optional enrichment&quot;
+    ],
+    &quot;quarantined_sources&quot;: 0,
+    &quot;ready_for_demo&quot;: true,
+    &quot;stored_sources&quot;: 4,
+    &quot;unique_contents&quot;: 3
+  },
+  &quot;evidence_quality&quot;: {
+    &quot;metadata_ready&quot;: true,
+    &quot;blockers&quot;: [],
+    &quot;required_metadata&quot;: [
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;
+      },
+      {
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;object&quot;: &quot;periodic&quot;
+      }
+    ],
+    &quot;asserted_facts&quot;: 3,
+    &quot;total_facts&quot;: 3,
+    &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+    &quot;semantic_truth_verified&quot;: false,
+    &quot;industrial_readiness&quot;: false
+  },
+  &quot;final_opened&quot;: true,
+  &quot;source_ids&quot;: [
+    &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+    &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+    &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+    &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+  ],
+  &quot;freeze_sha256&quot;: &quot;7a1ec5c8048c8fd38eb6aa7163625dcce4144e35841e87945e776331d8245225&quot;,
+  &quot;authentication_claimed&quot;: false,
+  &quot;final_metrics_must_not_guide_new_selection&quot;: true
+}</pre></details><details><summary>26. validation_agent · evidence_get · 0.006s</summary><pre>{
+  &quot;status&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;phase&quot;: &quot;validated&quot;,
+    &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+    &quot;benchmark_claim&quot;: &quot;engineering demonstration, not a new blind scientific evaluation&quot;,
+    &quot;budget_limit&quot;: 7,
+    &quot;charged_experiments&quot;: 7,
+    &quot;measurement_scalars_charged&quot;: 49728,
+    &quot;training_trajectories&quot;: 5,
+    &quot;development_trajectories&quot;: 2,
+    &quot;policy&quot;: &quot;fixed_rich&quot;,
+    &quot;selected_equation&quot;: &quot;u_t = 0.113452369 u_xx&quot;,
+    &quot;selected_terms&quot;: [
+      {
+        &quot;coefficient&quot;: 0.1134523689853022,
+        &quot;name&quot;: &quot;u_xx&quot;
+      }
+    ],
+    &quot;candidate_supports&quot;: [
+      [
+        &quot;1&quot;,
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;1&quot;,
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;1&quot;,
+        &quot;u^2&quot;,
+        &quot;u^3&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;1&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;
+      ],
+      [
+        &quot;1&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u^3&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u_xx&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u_xx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;u&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u^3&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u_x&quot;,
+        &quot;u_xx&quot;,
+        &quot;u*u_x&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u_xx&quot;
+      ],
+      [
+        &quot;u^2&quot;,
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ],
+      [
+        &quot;u_xx&quot;
+      ],
+      [
+        &quot;u_xx&quot;,
+        &quot;u_xxxx&quot;
+      ]
+    ],
+    &quot;identification_status&quot;: &quot;observational_ambiguity&quot;,
+    &quot;identification_failure&quot;: null,
+    &quot;uncertainty&quot;: {
+      &quot;calibrated&quot;: false,
+      &quot;completed_replicates&quot;: 8,
+      &quot;conditional_on_success_frequency&quot;: {
+        &quot;1&quot;: 0.0,
+        &quot;u&quot;: 0.0,
+        &quot;u*u_x&quot;: 0.0,
+        &quot;u^2&quot;: 0.0,
+        &quot;u^3&quot;: 0.0,
+        &quot;u_x&quot;: 0.0,
+        &quot;u_xx&quot;: 1.0,
+        &quot;u_xxx&quot;: 0.0,
+        &quot;u_xxxx&quot;: 0.0
+      },
+      &quot;confidence_interval_claimed&quot;: false,
+      &quot;failed_replicates&quot;: 0,
+      &quot;final_used&quot;: false,
+      &quot;frequency_bounds_including_failures&quot;: {
+        &quot;1&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u*u_x&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u^2&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u^3&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u_x&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u_xx&quot;: [
+          1.0,
+          1.0
+        ],
+        &quot;u_xxx&quot;: [
+          0.0,
+          0.0
+        ],
+        &quot;u_xxxx&quot;: [
+          0.0,
+          0.0
+        ]
+      },
+      &quot;independent_physical_experiments&quot;: 5,
+      &quot;limited_data_warning&quot;: null,
+      &quot;method&quot;: &quot;complete_trajectory_bootstrap_full_structure_refit&quot;,
+      &quot;number_of_available_multiplicity_vectors&quot;: 126,
+      &quot;probability_claimed&quot;: false,
+      &quot;raw_counts&quot;: {
+        &quot;1&quot;: 0,
+        &quot;u&quot;: 0,
+        &quot;u*u_x&quot;: 0,
+        &quot;u^2&quot;: 0,
+        &quot;u^3&quot;: 0,
+        &quot;u_x&quot;: 0,
+        &quot;u_xx&quot;: 8,
+        &quot;u_xxx&quot;: 0,
+        &quot;u_xxxx&quot;: 0
+      },
+      &quot;reference_used&quot;: false,
+      &quot;requested_replicates&quot;: 8,
+      &quot;resampling_adds_physical_evidence&quot;: false,
+      &quot;term_inclusion_frequencies&quot;: {
+        &quot;1&quot;: 0.0,
+        &quot;u&quot;: 0.0,
+        &quot;u*u_x&quot;: 0.0,
+        &quot;u^2&quot;: 0.0,
+        &quot;u^3&quot;: 0.0,
+        &quot;u_x&quot;: 0.0,
+        &quot;u_xx&quot;: 1.0,
+        &quot;u_xxx&quot;: 0.0,
+        &quot;u_xxxx&quot;: 0.0
+      }
+    },
+    &quot;minimal_near_supports&quot;: [
+      [
+        &quot;u_xx&quot;
+      ]
+    ],
+    &quot;recovery_required&quot;: false,
+    &quot;failure&quot;: null,
+    &quot;frequency_calibrated&quot;: false,
+    &quot;final_opened&quot;: true,
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;ontology_version&quot;: 1,
+    &quot;graph_facts&quot;: 3,
+    &quot;evidence_quality&quot;: {
+      &quot;metadata_ready&quot;: true,
+      &quot;blockers&quot;: [],
+      &quot;required_metadata&quot;: [
+        {
+          &quot;subject&quot;: &quot;demo_grid&quot;,
+          &quot;predicate&quot;: &quot;records_field&quot;,
+          &quot;object&quot;: &quot;demo_field&quot;
+        },
+        {
+          &quot;subject&quot;: &quot;demo_field&quot;,
+          &quot;predicate&quot;: &quot;uses_unit&quot;,
+          &quot;object&quot;: &quot;dimensionless&quot;
+        },
+        {
+          &quot;subject&quot;: &quot;demo_grid&quot;,
+          &quot;predicate&quot;: &quot;has_boundary&quot;,
+          &quot;object&quot;: &quot;periodic&quot;
+        }
+      ],
+      &quot;asserted_facts&quot;: 3,
+      &quot;total_facts&quot;: 3,
+      &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+      &quot;semantic_truth_verified&quot;: false,
+      &quot;industrial_readiness&quot;: false
+    },
+    &quot;graph_conflicts&quot;: [],
+    &quot;pending_ontology_changes&quot;: 0,
+    &quot;event_count&quot;: 18,
+    &quot;event_head&quot;: &quot;289a0f56d08e9b52e0176d861c0ee26e260b9b5ed2fb01a741aa516016aa5003&quot;
+  },
+  &quot;events&quot;: [
+    {
+      &quot;actor&quot;: &quot;asset_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:19.467363+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;experiments&quot;: 5,
+        &quot;is_physical_data&quot;: false
+      },
+      &quot;operation&quot;: &quot;initial_budget_charged&quot;,
+      &quot;previous&quot;: null,
+      &quot;sequence&quot;: 1,
+      &quot;sha256&quot;: &quot;f6e09e14b72633baec4f61bd20a1f827ccdd96bf30190e43aab5fc16b6162fdd&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;asset_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:19.513291+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;observations&quot;: 5
+      },
+      &quot;operation&quot;: &quot;initial_observations_registered&quot;,
+      &quot;previous&quot;: &quot;f6e09e14b72633baec4f61bd20a1f827ccdd96bf30190e43aab5fc16b6162fdd&quot;,
+      &quot;sequence&quot;: 2,
+      &quot;sha256&quot;: &quot;4f4439709d1b3e1c9858ef977a21469e55ee4d216aeac33adab0da9935634778&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;input_preprocessor&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:19.526371+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;sha256&quot;: &quot;f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb&quot;,
+        &quot;summary&quot;: {
+          &quot;blocked&quot;: false,
+          &quot;candidate_facts&quot;: 3,
+          &quot;duplicate_sources&quot;: 1,
+          &quot;input_documents&quot;: 4,
+          &quot;issues&quot;: [],
+          &quot;issues_truncated&quot;: false,
+          &quot;llm_used&quot;: false,
+          &quot;numerical_training_input&quot;: false,
+          &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+          &quot;priority_order&quot;: [
+            &quot;P0: stop and resolve format/conflicts&quot;,
+            &quot;P1: fill schema/metadata gaps&quot;,
+            &quot;P2: optional enrichment&quot;
+          ],
+          &quot;quarantined_sources&quot;: 0,
+          &quot;ready_for_demo&quot;: true,
+          &quot;stored_sources&quot;: 4,
+          &quot;unique_contents&quot;: 3
+        }
+      },
+      &quot;operation&quot;: &quot;input_prepared&quot;,
+      &quot;previous&quot;: &quot;4f4439709d1b3e1c9858ef977a21469e55ee4d216aeac33adab0da9935634778&quot;,
+      &quot;sequence&quot;: 3,
+      &quot;sha256&quot;: &quot;29ebb9f0331385e43b30e11192e58081c9f312f664e023a321565cb553377bd3&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;asset_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:19.526401+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;source_ids&quot;: [
+          &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+          &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;,
+          &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+          &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;
+        ]
+      },
+      &quot;operation&quot;: &quot;documents_ingested&quot;,
+      &quot;previous&quot;: &quot;29ebb9f0331385e43b30e11192e58081c9f312f664e023a321565cb553377bd3&quot;,
+      &quot;sequence&quot;: 4,
+      &quot;sha256&quot;: &quot;2bffa827e0e6f6a1d67b397a84b25b9bec3c1d3ea0c3e4bc19ff2402956431f5&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;graph_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:19.537016+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f&quot;,
+        &quot;unknown_predicates&quot;: []
+      },
+      &quot;operation&quot;: &quot;graph_proposed&quot;,
+      &quot;previous&quot;: &quot;2bffa827e0e6f6a1d67b397a84b25b9bec3c1d3ea0c3e4bc19ff2402956431f5&quot;,
+      &quot;sequence&quot;: 5,
+      &quot;sha256&quot;: &quot;493ea323015bed946b9fa63410ac07a1a9351bdaaedebd45c70cc1b0598811db&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;graph_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:19.544375+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;human_semantic_review&quot;: false,
+        &quot;proposal_id&quot;: &quot;3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f&quot;
+      },
+      &quot;operation&quot;: &quot;source_grounded_graph_applied&quot;,
+      &quot;previous&quot;: &quot;493ea323015bed946b9fa63410ac07a1a9351bdaaedebd45c70cc1b0598811db&quot;,
+      &quot;sequence&quot;: 6,
+      &quot;sha256&quot;: &quot;5a900ab8808af1ac5931ea005e7e37effeef6471cd4646e1e846286d7e25fd38&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;pde_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:24.692834+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;final_used&quot;: false,
+        &quot;model_sha256&quot;: &quot;ec9911cefaeef1dacb499863a4e0282e62d95303c52cb942b48d6c0e91004473&quot;,
+        &quot;training_hashes&quot;: [
+          &quot;5336fed2f165b9f8ce6ddce98756258e16541c999f5f717e567567b43c6c40d7&quot;,
+          &quot;a10435cd2ad0dda9165f84db322accbb743362b6471bffed77e734a068431e82&quot;,
+          &quot;64481bfaacf21312658ef9212a55e772a2741e6f4bb648916431394d5cc3697c&quot;
+        ]
+      },
+      &quot;operation&quot;: &quot;identify&quot;,
+      &quot;previous&quot;: &quot;5a900ab8808af1ac5931ea005e7e37effeef6471cd4646e1e846286d7e25fd38&quot;,
+      &quot;sequence&quot;: 7,
+      &quot;sha256&quot;: &quot;c76d583a41f1983134e11df7d4b944904a521853a95b9427a161c2d1549d71b7&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:24.757095+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;fa1c093dcaf30a47eb66e5e5f9b31b710cc3507c2496468ed6cf07fd6464ed11&quot;
+      },
+      &quot;operation&quot;: &quot;propose&quot;,
+      &quot;previous&quot;: &quot;c76d583a41f1983134e11df7d4b944904a521853a95b9427a161c2d1549d71b7&quot;,
+      &quot;sequence&quot;: 8,
+      &quot;sha256&quot;: &quot;8ab556c2c8e85c0a6e984ae150fe1dda69b5493c6161b765aebb543533e046b6&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:24.778874+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;charged_experiments&quot;: 6,
+        &quot;proposal_id&quot;: &quot;fa1c093dcaf30a47eb66e5e5f9b31b710cc3507c2496468ed6cf07fd6464ed11&quot;
+      },
+      &quot;operation&quot;: &quot;query_charged_before_execution&quot;,
+      &quot;previous&quot;: &quot;8ab556c2c8e85c0a6e984ae150fe1dda69b5493c6161b765aebb543533e046b6&quot;,
+      &quot;sequence&quot;: 9,
+      &quot;sha256&quot;: &quot;1e85e772be10625fb3c41d145fd1e87d0c2e30906082fcff1014db5d9774bfa5&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:24.789034+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;fa1c093dcaf30a47eb66e5e5f9b31b710cc3507c2496468ed6cf07fd6464ed11&quot;,
+        &quot;status&quot;: &quot;observed&quot;
+      },
+      &quot;operation&quot;: &quot;query_completed&quot;,
+      &quot;previous&quot;: &quot;1e85e772be10625fb3c41d145fd1e87d0c2e30906082fcff1014db5d9774bfa5&quot;,
+      &quot;sequence&quot;: 10,
+      &quot;sha256&quot;: &quot;5093d249ddddb88d265ea3080760086078a3eb21bac6173be1d3085a1d4d707b&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;pde_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:27.078743+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;final_used&quot;: false,
+        &quot;model_sha256&quot;: &quot;5d1ed6bff470621ee0e5e6f4a5a2f5e474db91530b4cdf088501e9ab54738aa4&quot;,
+        &quot;training_hashes&quot;: [
+          &quot;5336fed2f165b9f8ce6ddce98756258e16541c999f5f717e567567b43c6c40d7&quot;,
+          &quot;a10435cd2ad0dda9165f84db322accbb743362b6471bffed77e734a068431e82&quot;,
+          &quot;64481bfaacf21312658ef9212a55e772a2741e6f4bb648916431394d5cc3697c&quot;,
+          &quot;471efb818f1daedcbb8f1b98d3189fc06c7e2f150c301da4034b7bbc201b3d6f&quot;
+        ]
+      },
+      &quot;operation&quot;: &quot;identify&quot;,
+      &quot;previous&quot;: &quot;5093d249ddddb88d265ea3080760086078a3eb21bac6173be1d3085a1d4d707b&quot;,
+      &quot;sequence&quot;: 11,
+      &quot;sha256&quot;: &quot;de5e34fb98a1de48920f704f9454e36d640c363f95a203dc3df89fa3ffbfd529&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:27.138295+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;d7db1554ae819ea9bf67241830c3f91bd0c6b2849d2941a2594cffb6ba9aad13&quot;
+      },
+      &quot;operation&quot;: &quot;propose&quot;,
+      &quot;previous&quot;: &quot;de5e34fb98a1de48920f704f9454e36d640c363f95a203dc3df89fa3ffbfd529&quot;,
+      &quot;sequence&quot;: 12,
+      &quot;sha256&quot;: &quot;09c3e54437815fe83ad0d908e5156398cf770c6ed94cb377204bf7cdd53312e7&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:27.154998+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;charged_experiments&quot;: 7,
+        &quot;proposal_id&quot;: &quot;d7db1554ae819ea9bf67241830c3f91bd0c6b2849d2941a2594cffb6ba9aad13&quot;
+      },
+      &quot;operation&quot;: &quot;query_charged_before_execution&quot;,
+      &quot;previous&quot;: &quot;09c3e54437815fe83ad0d908e5156398cf770c6ed94cb377204bf7cdd53312e7&quot;,
+      &quot;sequence&quot;: 13,
+      &quot;sha256&quot;: &quot;8b8f2bb885bbe33ed38bbd448338759dd966c30889793a28808259139b09a3db&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;experiment_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:27.164613+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;proposal_id&quot;: &quot;d7db1554ae819ea9bf67241830c3f91bd0c6b2849d2941a2594cffb6ba9aad13&quot;,
+        &quot;status&quot;: &quot;observed&quot;
+      },
+      &quot;operation&quot;: &quot;query_completed&quot;,
+      &quot;previous&quot;: &quot;8b8f2bb885bbe33ed38bbd448338759dd966c30889793a28808259139b09a3db&quot;,
+      &quot;sequence&quot;: 14,
+      &quot;sha256&quot;: &quot;d886cf7159b68cd91fcd88f4026d1d34d33621ca53e8aa909dd62074fd2f78ff&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;pde_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:27.283841+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;final_used&quot;: false,
+        &quot;model_sha256&quot;: &quot;e3e0fc7af4169d8ad355513f82d91f136820c70095067ad01f03fc3d21a79c3b&quot;,
+        &quot;training_hashes&quot;: [
+          &quot;5336fed2f165b9f8ce6ddce98756258e16541c999f5f717e567567b43c6c40d7&quot;,
+          &quot;a10435cd2ad0dda9165f84db322accbb743362b6471bffed77e734a068431e82&quot;,
+          &quot;64481bfaacf21312658ef9212a55e772a2741e6f4bb648916431394d5cc3697c&quot;,
+          &quot;471efb818f1daedcbb8f1b98d3189fc06c7e2f150c301da4034b7bbc201b3d6f&quot;,
+          &quot;e2ef85d94b806de34e9213f5a597a7b3160993bc27ffbdc246741df8b2a9dd47&quot;
+        ]
+      },
+      &quot;operation&quot;: &quot;identify&quot;,
+      &quot;previous&quot;: &quot;d886cf7159b68cd91fcd88f4026d1d34d33621ca53e8aa909dd62074fd2f78ff&quot;,
+      &quot;sequence&quot;: 15,
+      &quot;sha256&quot;: &quot;03915568a3d8c8d9ff6b0e55843fb7f702f0fcfcd57de03331dff1c497229030&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;validation_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:27.315196+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;sha256&quot;: &quot;7a1ec5c8048c8fd38eb6aa7163625dcce4144e35841e87945e776331d8245225&quot;
+      },
+      &quot;operation&quot;: &quot;freeze&quot;,
+      &quot;previous&quot;: &quot;03915568a3d8c8d9ff6b0e55843fb7f702f0fcfcd57de03331dff1c497229030&quot;,
+      &quot;sequence&quot;: 16,
+      &quot;sha256&quot;: &quot;809e09cb75d3efab0be1d50bab2ccbf0fad89a5f382918a44d050ac7e4ad416f&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;validation_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:27.348117+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;freeze_sha256&quot;: &quot;7a1ec5c8048c8fd38eb6aa7163625dcce4144e35841e87945e776331d8245225&quot;
+      },
+      &quot;operation&quot;: &quot;final_opened&quot;,
+      &quot;previous&quot;: &quot;809e09cb75d3efab0be1d50bab2ccbf0fad89a5f382918a44d050ac7e4ad416f&quot;,
+      &quot;sequence&quot;: 17,
+      &quot;sha256&quot;: &quot;e0f4a84f785467e8fc73dc073d81d31ef3b532469df9b8163727e8911d1d1bfe&quot;
+    },
+    {
+      &quot;actor&quot;: &quot;validation_agent&quot;,
+      &quot;at_utc&quot;: &quot;2026-11-05T02:00:27.440110+00:00&quot;,
+      &quot;details&quot;: {
+        &quot;report_sha256&quot;: &quot;275760133be8e79f13d153d3d87657b311f41b351602bf3678c01b74c2afc762&quot;
+      },
+      &quot;operation&quot;: &quot;validation_completed&quot;,
+      &quot;previous&quot;: &quot;e0f4a84f785467e8fc73dc073d81d31ef3b532469df9b8163727e8911d1d1bfe&quot;,
+      &quot;sequence&quot;: 18,
+      &quot;sha256&quot;: &quot;289a0f56d08e9b52e0176d861c0ee26e260b9b5ed2fb01a741aa516016aa5003&quot;
+    }
+  ],
+  &quot;facts&quot;: [
+    {
+      &quot;citation&quot;: {
+        &quot;columns&quot;: [
+          &quot;subject&quot;,
+          &quot;predicate&quot;,
+          &quot;object&quot;
+        ],
+        &quot;end_char&quot;: 25,
+        &quot;end_line&quot;: 2,
+        &quot;format&quot;: &quot;metadata_triples_csv&quot;,
+        &quot;header_quote&quot;: &quot;实体,关系,值&quot;,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;raw_columns&quot;: [
+          &quot;实体&quot;,
+          &quot;关系&quot;,
+          &quot;值&quot;
+        ],
+        &quot;start_char&quot;: 8
+      },
+      &quot;id&quot;: &quot;e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d&quot;,
+      &quot;object&quot;: &quot;dimensionless&quot;,
+      &quot;predicate&quot;: &quot;uses_unit&quot;,
+      &quot;quote&quot;: &quot;demo_field,单位,无量纲&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_field&quot;,
+      &quot;transformations&quot;: [
+        {
+          &quot;field&quot;: &quot;predicate&quot;,
+          &quot;from&quot;: &quot;单位&quot;,
+          &quot;rule&quot;: &quot;explicit_relation_alias&quot;,
+          &quot;to&quot;: &quot;uses_unit&quot;
+        },
+        {
+          &quot;field&quot;: &quot;object&quot;,
+          &quot;from&quot;: &quot;无量纲&quot;,
+          &quot;rule&quot;: &quot;explicit_label_alias_no_numeric_conversion&quot;,
+          &quot;to&quot;: &quot;dimensionless&quot;
+        }
+      ]
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 115,
+        &quot;format&quot;: &quot;text_triple&quot;,
+        &quot;line&quot;: 2,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 80
+      },
+      &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+      &quot;object&quot;: &quot;demo_field&quot;,
+      &quot;predicate&quot;: &quot;records_field&quot;,
+      &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;,
+      &quot;transformations&quot;: []
+    },
+    {
+      &quot;citation&quot;: {
+        &quot;end_char&quot;: 148,
+        &quot;format&quot;: &quot;text_triple&quot;,
+        &quot;line&quot;: 3,
+        &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+        &quot;start_char&quot;: 116
+      },
+      &quot;id&quot;: &quot;3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a&quot;,
+      &quot;object&quot;: &quot;periodic&quot;,
+      &quot;predicate&quot;: &quot;has_boundary&quot;,
+      &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+      &quot;relation_assertion_verified&quot;: true,
+      &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;status&quot;: &quot;source_span_verified&quot;,
+      &quot;subject&quot;: &quot;demo_grid&quot;,
+      &quot;transformations&quot;: []
+    }
+  ],
+  &quot;ontology&quot;: {
+    &quot;predicates&quot;: [
+      &quot;uses_unit&quot;,
+      &quot;has_boundary&quot;,
+      &quot;records_field&quot;,
+      &quot;measures&quot;,
+      &quot;derived_from&quot;,
+      &quot;supported_by&quot;
+    ],
+    &quot;version&quot;: 1
+  },
+  &quot;report&quot;: {
+    &quot;case_id&quot;: &quot;a4aa4cb1f64142a79b5a2e15dfdec048&quot;,
+    &quot;charged_experiments&quot;: 7,
+    &quot;discovery_budget_excludes_final_evaluation&quot;: true,
+    &quot;equation&quot;: &quot;u_t = 0.113452369 u_xx&quot;,
+    &quot;evaluation_measurement_scalars&quot;: 21312,
+    &quot;evaluation_reference_trajectories_generated&quot;: 3,
+    &quot;evaluation_slots&quot;: 3,
+    &quot;evidence_conflicts&quot;: [],
+    &quot;evidence_quality&quot;: {
+      &quot;asserted_facts&quot;: 3,
+      &quot;blockers&quot;: [],
+      &quot;industrial_readiness&quot;: false,
+      &quot;metadata_ready&quot;: true,
+      &quot;required_metadata&quot;: [
+        {
+          &quot;object&quot;: &quot;demo_field&quot;,
+          &quot;predicate&quot;: &quot;records_field&quot;,
+          &quot;subject&quot;: &quot;demo_grid&quot;
+        },
+        {
+          &quot;object&quot;: &quot;dimensionless&quot;,
+          &quot;predicate&quot;: &quot;uses_unit&quot;,
+          &quot;subject&quot;: &quot;demo_field&quot;
+        },
+        {
+          &quot;object&quot;: &quot;periodic&quot;,
+          &quot;predicate&quot;: &quot;has_boundary&quot;,
+          &quot;subject&quot;: &quot;demo_grid&quot;
+        }
+      ],
+      &quot;scope&quot;: &quot;fixed synthetic observation metadata consistency only&quot;,
+      &quot;semantic_truth_verified&quot;: false,
+      &quot;total_facts&quot;: 3
+    },
+    &quot;evidence_ready&quot;: true,
+    &quot;evidence_sources&quot;: [
+      &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+      &quot;8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9&quot;,
+      &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+      &quot;e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d&quot;
+    ],
+    &quot;final_used_for_discovery&quot;: false,
+    &quot;freeze_sha256&quot;: &quot;7a1ec5c8048c8fd38eb6aa7163625dcce4144e35841e87945e776331d8245225&quot;,
+    &quot;frequency_is_probability&quot;: false,
+    &quot;graph&quot;: [
+      {
+        &quot;citation&quot;: {
+          &quot;columns&quot;: [
+            &quot;subject&quot;,
+            &quot;predicate&quot;,
+            &quot;object&quot;
+          ],
+          &quot;end_char&quot;: 25,
+          &quot;end_line&quot;: 2,
+          &quot;format&quot;: &quot;metadata_triples_csv&quot;,
+          &quot;header_quote&quot;: &quot;实体,关系,值&quot;,
+          &quot;line&quot;: 2,
+          &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+          &quot;raw_columns&quot;: [
+            &quot;实体&quot;,
+            &quot;关系&quot;,
+            &quot;值&quot;
+          ],
+          &quot;start_char&quot;: 8
+        },
+        &quot;id&quot;: &quot;e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d&quot;,
+        &quot;object&quot;: &quot;dimensionless&quot;,
+        &quot;predicate&quot;: &quot;uses_unit&quot;,
+        &quot;quote&quot;: &quot;demo_field,单位,无量纲&quot;,
+        &quot;relation_assertion_verified&quot;: true,
+        &quot;source_id&quot;: &quot;8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1&quot;,
+        &quot;status&quot;: &quot;source_span_verified&quot;,
+        &quot;subject&quot;: &quot;demo_field&quot;,
+        &quot;transformations&quot;: [
+          {
+            &quot;field&quot;: &quot;predicate&quot;,
+            &quot;from&quot;: &quot;单位&quot;,
+            &quot;rule&quot;: &quot;explicit_relation_alias&quot;,
+            &quot;to&quot;: &quot;uses_unit&quot;
+          },
+          {
+            &quot;field&quot;: &quot;object&quot;,
+            &quot;from&quot;: &quot;无量纲&quot;,
+            &quot;rule&quot;: &quot;explicit_label_alias_no_numeric_conversion&quot;,
+            &quot;to&quot;: &quot;dimensionless&quot;
+          }
+        ]
+      },
+      {
+        &quot;citation&quot;: {
+          &quot;end_char&quot;: 115,
+          &quot;format&quot;: &quot;text_triple&quot;,
+          &quot;line&quot;: 2,
+          &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+          &quot;start_char&quot;: 80
+        },
+        &quot;id&quot;: &quot;6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629&quot;,
+        &quot;object&quot;: &quot;demo_field&quot;,
+        &quot;predicate&quot;: &quot;records_field&quot;,
+        &quot;quote&quot;: &quot;demo_grid records_field demo_field.&quot;,
+        &quot;relation_assertion_verified&quot;: true,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+        &quot;status&quot;: &quot;source_span_verified&quot;,
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;transformations&quot;: []
+      },
+      {
+        &quot;citation&quot;: {
+          &quot;end_char&quot;: 148,
+          &quot;format&quot;: &quot;text_triple&quot;,
+          &quot;line&quot;: 3,
+          &quot;offset_unit&quot;: &quot;Unicode code points, half-open&quot;,
+          &quot;start_char&quot;: 116
+        },
+        &quot;id&quot;: &quot;3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a&quot;,
+        &quot;object&quot;: &quot;periodic&quot;,
+        &quot;predicate&quot;: &quot;has_boundary&quot;,
+        &quot;quote&quot;: &quot;demo_grid has_boundary periodic.&quot;,
+        &quot;relation_assertion_verified&quot;: true,
+        &quot;source_id&quot;: &quot;c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186&quot;,
+        &quot;status&quot;: &quot;source_span_verified&quot;,
+        &quot;subject&quot;: &quot;demo_grid&quot;,
+        &quot;transformations&quot;: []
+      }
+    ],
+    &quot;input_preparation&quot;: {
+      &quot;blocked&quot;: false,
+      &quot;candidate_facts&quot;: 3,
+      &quot;duplicate_sources&quot;: 1,
+      &quot;input_documents&quot;: 4,
+      &quot;issues&quot;: [],
+      &quot;issues_truncated&quot;: false,
+      &quot;llm_used&quot;: false,
+      &quot;numerical_training_input&quot;: false,
+      &quot;parser_version&quot;: &quot;input-preparation-v1&quot;,
+      &quot;priority_order&quot;: [
+        &quot;P0: stop and resolve format/conflicts&quot;,
+        &quot;P1: fill schema/metadata gaps&quot;,
+        &quot;P2: optional enrichment&quot;
+      ],
+      &quot;quarantined_sources&quot;: 0,
+      &quot;ready_for_demo&quot;: true,
+      &quot;stored_sources&quot;: 4,
+      &quot;unique_contents&quot;: 3
+    },
+    &quot;joint_success_rule&quot;: &quot;exact support AND max true coefficient error &lt;=10% AND all 3 predictions valid AND mean prediction error &lt;=5%&quot;,
+    &quot;max_true_coefficient_relative_error&quot;: 0.00029062749865073974,
+    &quot;mean_prediction_error&quot;: 0.0012354037642306746,
+    &quot;measurement_scalars_charged&quot;: 49728,
+    &quot;nexent_live_llm_verified&quot;: false,
+    &quot;note&quot;: &quot;This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value.&quot;,
+    &quot;numerical_joint_success&quot;: true,
+    &quot;origin&quot;: &quot;controlled_synthetic_demo&quot;,
+    &quot;pending_ontology_review&quot;: false,
+    &quot;prediction_5pct_passed&quot;: true,
+    &quot;prediction_failure_slots&quot;: 0,
+    &quot;predictions&quot;: [
+      {
+        &quot;duration&quot;: 1.0,
+        &quot;index&quot;: 0,
+        &quot;metrics&quot;: {
+          &quot;excluded_initial_frame&quot;: true,
+          &quot;mae&quot;: 0.00020891997056951328,
+          &quot;max_absolute_error&quot;: 0.000625010786566238,
+          &quot;relative_l2&quot;: 0.0014696830095589774,
+          &quot;rmse&quot;: 0.00023938786207153374,
+          &quot;scored_frames&quot;: 100,
+          &quot;space_points&quot;: 64
+        },
+        &quot;prefix_frames&quot;: 11,
+        &quot;status&quot;: &quot;evaluated&quot;
+      },
+      {
+        &quot;duration&quot;: 1.0,
+        &quot;index&quot;: 1,
+        &quot;metrics&quot;: {
+          &quot;excluded_initial_frame&quot;: true,
+          &quot;mae&quot;: 9.720377458891459e-05,
+          &quot;max_absolute_error&quot;: 0.0005751463518076094,
+          &quot;relative_l2&quot;: 0.0010427560680710847,
+          &quot;rmse&quot;: 0.0001307116171035373,
+          &quot;scored_frames&quot;: 100,
+          &quot;space_points&quot;: 64
+        },
+        &quot;prefix_frames&quot;: 11,
+        &quot;status&quot;: &quot;evaluated&quot;
+      },
+      {
+        &quot;duration&quot;: 1.0,
+        &quot;index&quot;: 2,
+        &quot;metrics&quot;: {
+          &quot;excluded_initial_frame&quot;: true,
+          &quot;mae&quot;: 0.00018350623000734,
+          &quot;max_absolute_error&quot;: 0.000724459367410904,
+          &quot;relative_l2&quot;: 0.0011937722150619611,
+          &quot;rmse&quot;: 0.00022698371853985836,
+          &quot;scored_frames&quot;: 100,
+          &quot;space_points&quot;: 64
+        },
+        &quot;prefix_frames&quot;: 11,
+        &quot;status&quot;: &quot;evaluated&quot;
+      }
+    ],
+    &quot;real_industry_validation&quot;: false,
+    &quot;structure&quot;: {
+      &quot;coefficient_comparison&quot;: [
+        {
+          &quot;absolute_error&quot;: 3.2981963679803994e-05,
+          &quot;discovered&quot;: 0.1134523689853022,
+          &quot;name&quot;: &quot;u_xx&quot;,
+          &quot;reference&quot;: 0.113485350948982,
+          &quot;relative_error&quot;: 0.00029062749865073974
+        }
+      ],
+      &quot;coefficient_metric_scope&quot;: &quot;author coordinate/field scaling; not unit-invariant&quot;,
+      &quot;coefficient_relative_l2&quot;: 0.00029062749865073974,
+      &quot;exact_support&quot;: true,
+      &quot;f1&quot;: 1.0,
+      &quot;missing_terms&quot;: [],
+      &quot;precision&quot;: 1.0,
+      &quot;recall&quot;: 1.0,
+      &quot;reference_terms&quot;: [
+        {
+          &quot;coefficient&quot;: 0.113485350948982,
+          &quot;name&quot;: &quot;u_xx&quot;
+        }
+      ],
+      &quot;spurious_terms&quot;: [],
+      &quot;status&quot;: &quot;evaluated&quot;,
+      &quot;true_positive_terms&quot;: [
+        &quot;u_xx&quot;
+      ]
+    },
+    &quot;terms&quot;: [
+      {
+        &quot;coefficient&quot;: 0.1134523689853022,
+        &quot;name&quot;: &quot;u_xx&quot;
+      }
+    ]
+  },
+  &quot;chain_consistent&quot;: true,
+  &quot;historical_runtime_independently_authenticated&quot;: false
+}</pre></details></section></main></html>

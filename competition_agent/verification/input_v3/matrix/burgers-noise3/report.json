@@ -1,0 +1,451 @@
+{
+  "created_at_utc": "2026-11-05T02:01:04.588296+00:00",
+  "execution": "actual MCP stdio with deterministic routing; no LLM",
+  "inputs": {
+    "fixture": "burgers",
+    "noise": 0.03,
+    "budget": 7,
+    "seed": 240,
+    "policy": "fixed_rich"
+  },
+  "protocol_version": "2025-11-25",
+  "tools": [
+    "asset_context",
+    "asset_ingest",
+    "asset_search",
+    "case_handoff",
+    "case_status",
+    "evidence_get",
+    "evidence_path",
+    "experiment_acquire",
+    "experiment_propose",
+    "graph_apply",
+    "graph_propose",
+    "pde_case_create",
+    "pde_identify",
+    "validation_evaluate",
+    "validation_freeze"
+  ],
+  "tool_calls": 26,
+  "report": {
+    "case_id": "4c167c79b3194af183fec361c24269e8",
+    "origin": "controlled_synthetic_demo",
+    "nexent_live_llm_verified": false,
+    "equation": null,
+    "terms": [],
+    "structure": {
+      "status": "evaluated",
+      "exact_support": false,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "true_positive_terms": [],
+      "missing_terms": [
+        "u*u_x",
+        "u_xx"
+      ],
+      "spurious_terms": [],
+      "coefficient_relative_l2": 1.0,
+      "coefficient_comparison": [
+        {
+          "name": "u_xx",
+          "reference": 0.07728252076215097,
+          "discovered": 0.0,
+          "absolute_error": 0.07728252076215097,
+          "relative_error": 1.0
+        },
+        {
+          "name": "u*u_x",
+          "reference": -0.7594290179477836,
+          "discovered": 0.0,
+          "absolute_error": 0.7594290179477836,
+          "relative_error": 1.0
+        }
+      ],
+      "reference_terms": [
+        {
+          "name": "u_xx",
+          "coefficient": 0.07728252076215097
+        },
+        {
+          "name": "u*u_x",
+          "coefficient": -0.7594290179477836
+        }
+      ],
+      "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+    },
+    "max_true_coefficient_relative_error": 1.0,
+    "numerical_joint_success": false,
+    "joint_success_rule": "exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%",
+    "predictions": [
+      {
+        "index": 0,
+        "status": "failed",
+        "reason": "No selected model; failure is retained"
+      },
+      {
+        "index": 1,
+        "status": "failed",
+        "reason": "No selected model; failure is retained"
+      },
+      {
+        "index": 2,
+        "status": "failed",
+        "reason": "No selected model; failure is retained"
+      }
+    ],
+    "evaluation_slots": 3,
+    "evaluation_reference_trajectories_generated": 0,
+    "evaluation_measurement_scalars": 0,
+    "discovery_budget_excludes_final_evaluation": true,
+    "prediction_failure_slots": 3,
+    "mean_prediction_error": null,
+    "prediction_5pct_passed": false,
+    "evidence_ready": true,
+    "evidence_quality": {
+      "metadata_ready": true,
+      "blockers": [],
+      "required_metadata": [
+        {
+          "subject": "demo_grid",
+          "predicate": "records_field",
+          "object": "demo_field"
+        },
+        {
+          "subject": "demo_field",
+          "predicate": "uses_unit",
+          "object": "dimensionless"
+        },
+        {
+          "subject": "demo_grid",
+          "predicate": "has_boundary",
+          "object": "periodic"
+        }
+      ],
+      "asserted_facts": 3,
+      "total_facts": 3,
+      "scope": "fixed synthetic observation metadata consistency only",
+      "semantic_truth_verified": false,
+      "industrial_readiness": false
+    },
+    "input_preparation": {
+      "blocked": false,
+      "candidate_facts": 3,
+      "duplicate_sources": 1,
+      "input_documents": 4,
+      "issues": [],
+      "issues_truncated": false,
+      "llm_used": false,
+      "numerical_training_input": false,
+      "parser_version": "input-preparation-v1",
+      "priority_order": [
+        "P0: stop and resolve format/conflicts",
+        "P1: fill schema/metadata gaps",
+        "P2: optional enrichment"
+      ],
+      "quarantined_sources": 0,
+      "ready_for_demo": true,
+      "stored_sources": 4,
+      "unique_contents": 3
+    },
+    "evidence_conflicts": [],
+    "pending_ontology_review": false,
+    "evidence_sources": [
+      "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+      "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+      "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+      "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+    ],
+    "graph": [
+      {
+        "citation": {
+          "columns": [
+            "subject",
+            "predicate",
+            "object"
+          ],
+          "end_char": 25,
+          "end_line": 2,
+          "format": "metadata_triples_csv",
+          "header_quote": "实体,关系,值",
+          "line": 2,
+          "offset_unit": "Unicode code points, half-open",
+          "raw_columns": [
+            "实体",
+            "关系",
+            "值"
+          ],
+          "start_char": 8
+        },
+        "id": "e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d",
+        "object": "dimensionless",
+        "predicate": "uses_unit",
+        "quote": "demo_field,单位,无量纲",
+        "relation_assertion_verified": true,
+        "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "status": "source_span_verified",
+        "subject": "demo_field",
+        "transformations": [
+          {
+            "field": "predicate",
+            "from": "单位",
+            "rule": "explicit_relation_alias",
+            "to": "uses_unit"
+          },
+          {
+            "field": "object",
+            "from": "无量纲",
+            "rule": "explicit_label_alias_no_numeric_conversion",
+            "to": "dimensionless"
+          }
+        ]
+      },
+      {
+        "citation": {
+          "end_char": 115,
+          "format": "text_triple",
+          "line": 2,
+          "offset_unit": "Unicode code points, half-open",
+          "start_char": 80
+        },
+        "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+        "object": "demo_field",
+        "predicate": "records_field",
+        "quote": "demo_grid records_field demo_field.",
+        "relation_assertion_verified": true,
+        "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "status": "source_span_verified",
+        "subject": "demo_grid",
+        "transformations": []
+      },
+      {
+        "citation": {
+          "end_char": 148,
+          "format": "text_triple",
+          "line": 3,
+          "offset_unit": "Unicode code points, half-open",
+          "start_char": 116
+        },
+        "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+        "object": "periodic",
+        "predicate": "has_boundary",
+        "quote": "demo_grid has_boundary periodic.",
+        "relation_assertion_verified": true,
+        "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "status": "source_span_verified",
+        "subject": "demo_grid",
+        "transformations": []
+      }
+    ],
+    "freeze_sha256": "756c7ec4dcc98ad9d4135a86b01851375253fe4cc1219372f1306f411625f1f7",
+    "measurement_scalars_charged": 49728,
+    "charged_experiments": 7,
+    "frequency_is_probability": false,
+    "real_industry_validation": false,
+    "final_used_for_discovery": false,
+    "note": "This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value."
+  },
+  "chain_consistent": true,
+  "live_nexent_verified": false,
+  "evidence_paths": {
+    "paths": [
+      {
+        "edges": [
+          {
+            "citation": {
+              "end_char": 115,
+              "format": "text_triple",
+              "line": 2,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 80
+            },
+            "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+            "object": "demo_field",
+            "predicate": "records_field",
+            "quote": "demo_grid records_field demo_field.",
+            "relation_assertion_verified": true,
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "status": "source_span_verified",
+            "subject": "demo_grid",
+            "transformations": []
+          },
+          {
+            "citation": {
+              "columns": [
+                "subject",
+                "predicate",
+                "object"
+              ],
+              "end_char": 25,
+              "end_line": 2,
+              "format": "metadata_triples_csv",
+              "header_quote": "实体,关系,值",
+              "line": 2,
+              "offset_unit": "Unicode code points, half-open",
+              "raw_columns": [
+                "实体",
+                "关系",
+                "值"
+              ],
+              "start_char": 8
+            },
+            "id": "e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d",
+            "object": "dimensionless",
+            "predicate": "uses_unit",
+            "quote": "demo_field,单位,无量纲",
+            "relation_assertion_verified": true,
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+            "status": "source_span_verified",
+            "subject": "demo_field",
+            "transformations": [
+              {
+                "field": "predicate",
+                "from": "单位",
+                "rule": "explicit_relation_alias",
+                "to": "uses_unit"
+              },
+              {
+                "field": "object",
+                "from": "无量纲",
+                "rule": "explicit_label_alias_no_numeric_conversion",
+                "to": "dimensionless"
+              }
+            ]
+          }
+        ],
+        "source_ids": [
+          "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+        ],
+        "all_relations_asserted": true
+      }
+    ],
+    "found": true,
+    "search_truncated": false,
+    "max_hops": 4,
+    "expanded_nodes": 3,
+    "new_facts_created": false,
+    "semantic_truth_verified": false,
+    "scope": "paths over cited assertions; not inferred physical causation",
+    "case_id": "4c167c79b3194af183fec361c24269e8",
+    "conflicts": [],
+    "evidence_quality": {
+      "metadata_ready": true,
+      "blockers": [],
+      "required_metadata": [
+        {
+          "subject": "demo_grid",
+          "predicate": "records_field",
+          "object": "demo_field"
+        },
+        {
+          "subject": "demo_field",
+          "predicate": "uses_unit",
+          "object": "dimensionless"
+        },
+        {
+          "subject": "demo_grid",
+          "predicate": "has_boundary",
+          "object": "periodic"
+        }
+      ],
+      "asserted_facts": 3,
+      "total_facts": 3,
+      "scope": "fixed synthetic observation metadata consistency only",
+      "semantic_truth_verified": false,
+      "industrial_readiness": false
+    }
+  },
+  "final_handoff": {
+    "contract_version": 1,
+    "case_id": "4c167c79b3194af183fec361c24269e8",
+    "phase": "validated",
+    "state_head": "6455a1f1384d1132496500c13ce3ba1f6a2d106bdc76db419a169ecf5d82e8f4",
+    "remaining_experiments": 0,
+    "next_role": null,
+    "next_tool": null,
+    "next_arguments": {},
+    "required_inputs": [],
+    "arguments_complete": false,
+    "stop": true,
+    "terminal": true,
+    "reason": "terminal",
+    "next_context": null,
+    "input_preparation": {
+      "blocked": false,
+      "candidate_facts": 3,
+      "duplicate_sources": 1,
+      "input_documents": 4,
+      "issues": [],
+      "issues_truncated": false,
+      "llm_used": false,
+      "numerical_training_input": false,
+      "parser_version": "input-preparation-v1",
+      "priority_order": [
+        "P0: stop and resolve format/conflicts",
+        "P1: fill schema/metadata gaps",
+        "P2: optional enrichment"
+      ],
+      "quarantined_sources": 0,
+      "ready_for_demo": true,
+      "stored_sources": 4,
+      "unique_contents": 3
+    },
+    "evidence_quality": {
+      "metadata_ready": true,
+      "blockers": [],
+      "required_metadata": [
+        {
+          "subject": "demo_grid",
+          "predicate": "records_field",
+          "object": "demo_field"
+        },
+        {
+          "subject": "demo_field",
+          "predicate": "uses_unit",
+          "object": "dimensionless"
+        },
+        {
+          "subject": "demo_grid",
+          "predicate": "has_boundary",
+          "object": "periodic"
+        }
+      ],
+      "asserted_facts": 3,
+      "total_facts": 3,
+      "scope": "fixed synthetic observation metadata consistency only",
+      "semantic_truth_verified": false,
+      "industrial_readiness": false
+    },
+    "final_opened": true,
+    "source_ids": [
+      "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+      "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+      "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+      "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+    ],
+    "freeze_sha256": "756c7ec4dcc98ad9d4135a86b01851375253fe4cc1219372f1306f411625f1f7",
+    "authentication_claimed": false,
+    "final_metrics_must_not_guide_new_selection": true
+  },
+  "pre_agent_input_preparation": {
+    "parser_version": "input-preparation-v1",
+    "priority_order": [
+      "P0: stop and resolve format/conflicts",
+      "P1: fill schema/metadata gaps",
+      "P2: optional enrichment"
+    ],
+    "input_documents": 4,
+    "stored_sources": 4,
+    "unique_contents": 3,
+    "duplicate_sources": 1,
+    "quarantined_sources": 0,
+    "candidate_facts": 3,
+    "blocked": false,
+    "issues": [],
+    "issues_truncated": false,
+    "ready_for_demo": true,
+    "numerical_training_input": false,
+    "llm_used": false
+  }
+}

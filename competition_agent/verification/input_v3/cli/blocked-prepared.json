@@ -1,0 +1,93 @@
+{
+  "summary": {
+    "parser_version": "input-preparation-v1",
+    "priority_order": [
+      "P0: stop and resolve format/conflicts",
+      "P1: fill schema/metadata gaps",
+      "P2: optional enrichment"
+    ],
+    "input_documents": 1,
+    "stored_sources": 1,
+    "unique_contents": 1,
+    "duplicate_sources": 0,
+    "quarantined_sources": 1,
+    "candidate_facts": 0,
+    "blocked": true,
+    "issues": [
+      {
+        "priority": "P0",
+        "code": "ragged_csv_record",
+        "source_id": "a0bb96d33d8f7d2bbf286bf1899e81278468bcb214390356e63f1824a6cd89c5",
+        "line": 2,
+        "expected_columns": 3,
+        "actual_columns": 2
+      },
+      {
+        "priority": "P1",
+        "code": "missing_demo_metadata",
+        "requirements": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ]
+      }
+    ],
+    "issues_truncated": false,
+    "ready_for_demo": false,
+    "numerical_training_input": false,
+    "llm_used": false
+  },
+  "records": {
+    "a0bb96d33d8f7d2bbf286bf1899e81278468bcb214390356e63f1824a6cd89c5": {
+      "source_id": "a0bb96d33d8f7d2bbf286bf1899e81278468bcb214390356e63f1824a6cd89c5",
+      "title": "bad.csv",
+      "kind": "csv",
+      "content_id": "9b501fa0746b55e382131dd820acc57cc44706683c7b82dca035f3137ba21ffe",
+      "status": "blocked",
+      "classification": "metadata_triples",
+      "issues": [
+        {
+          "priority": "P0",
+          "code": "ragged_csv_record",
+          "source_id": "a0bb96d33d8f7d2bbf286bf1899e81278468bcb214390356e63f1824a6cd89c5",
+          "line": 2,
+          "expected_columns": 3,
+          "actual_columns": 2
+        }
+      ],
+      "issue_count": 1,
+      "candidates": [],
+      "parser_version": "input-preparation-v1",
+      "raw_text_changed": false,
+      "numerical_training_input": false,
+      "columns": [
+        "subject",
+        "predicate",
+        "object"
+      ],
+      "raw_columns": [
+        "subject",
+        "predicate",
+        "object"
+      ],
+      "row_count": 1,
+      "register_records": [],
+      "preview_rows": [],
+      "duplicate_of": null
+    }
+  },
+  "candidates": [],
+  "usable_source_ids": []
+}

@@ -19,15 +19,19 @@ def build_server(directory=None, host='127.0.0.1', port=8769):
         return lab.status(case_id)
     @app.tool()
     def asset_ingest(case_id:str,documents:list[dict[str,str]])->dict:
-        """Register 1..10 text or CSV evidence documents, each with title,kind,text. CSV is textual evidence, not numerical training input. Returns source IDs. Frozen evidence cannot change."""
+        """Register 1..10 text or CSV evidence documents, each with title,kind,text. Parse text/CSV before agent dispatch, retain originals, quarantine malformed tables, deduplicate content and return prioritized issues. Uploaded CSV is never numerical training input. Returns source IDs. Frozen evidence cannot change."""
         return lab.ingest(case_id,documents)
+    @app.tool()
+    def asset_context(case_id:str,role:str='graph_agent',offset:int=0,limit:int=20)->dict:
+        """Get a bounded prepared context packet for a named role: priority issues, source catalog and paginated graph fact candidates with exact citation/alias lineage. No full document bodies; numerical roles never receive raw CSV as training data. Role labels are filters, not authentication. Resolve P0 issues before dispatch."""
+        return lab.context(case_id,role,offset,limit)
     @app.tool()
     def asset_search(case_id:str,query:str,limit:int=5)->dict:
         """Lexical BM25 with Chinese bigrams and explicit bilingual aliases. Returns source ID, exact character offsets, line, quote and matched tokens. No embedding retrieval or semantic verification."""
         return lab.search(case_id,query,limit)
     @app.tool()
     def graph_propose(case_id:str,facts:list[dict[str,str]])->dict:
-        """Propose source-backed facts: subject,predicate,object,source_id,quote. Subject/object must appear in exact quote. Unknown relations await operator review; spans do not prove semantic truth."""
+        """Propose source-backed facts: subject,predicate,object,source_id,quote. Fact must match a parsed source record with explicit alias lineage, or literal subject/object evidence. Unknown relations await operator review; spans do not prove semantic truth."""
         return lab.graph_propose(case_id,facts)
     @app.tool()
     def graph_apply(case_id:str,proposal_id:str)->dict:

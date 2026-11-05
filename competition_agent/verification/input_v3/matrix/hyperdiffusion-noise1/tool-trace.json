@@ -1,0 +1,5257 @@
+[
+  {
+    "step": 1,
+    "planned_role": "asset_agent",
+    "tool": "pde_case_create",
+    "arguments": {
+      "fixture": "hyperdiffusion",
+      "noise": 0.01,
+      "budget": 7,
+      "seed": 240,
+      "policy": "fixed_rich",
+      "request_id": "9cd393365a844e97a6c8eefe8f072a24"
+    },
+    "result": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "ready",
+      "origin": "controlled_synthetic_demo",
+      "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+      "budget_limit": 7,
+      "charged_experiments": 5,
+      "measurement_scalars_charged": 35520,
+      "training_trajectories": 3,
+      "development_trajectories": 2,
+      "policy": "fixed_rich",
+      "selected_equation": null,
+      "selected_terms": [],
+      "candidate_supports": [],
+      "identification_status": null,
+      "identification_failure": null,
+      "uncertainty": {},
+      "minimal_near_supports": [],
+      "recovery_required": false,
+      "failure": null,
+      "frequency_calibrated": false,
+      "final_opened": false,
+      "input_preparation": {
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "input_documents": 0,
+        "stored_sources": 0,
+        "unique_contents": 0,
+        "duplicate_sources": 0,
+        "quarantined_sources": 0,
+        "candidate_facts": 0,
+        "blocked": false,
+        "issues": [
+          {
+            "priority": "P1",
+            "code": "missing_demo_metadata",
+            "requirements": [
+              {
+                "subject": "demo_grid",
+                "predicate": "records_field",
+                "object": "demo_field"
+              },
+              {
+                "subject": "demo_field",
+                "predicate": "uses_unit",
+                "object": "dimensionless"
+              },
+              {
+                "subject": "demo_grid",
+                "predicate": "has_boundary",
+                "object": "periodic"
+              }
+            ]
+          }
+        ],
+        "issues_truncated": false,
+        "ready_for_demo": false,
+        "numerical_training_input": false,
+        "llm_used": false
+      },
+      "ontology_version": 1,
+      "graph_facts": 0,
+      "evidence_quality": {
+        "metadata_ready": false,
+        "blockers": [
+          {
+            "code": "missing_required_metadata",
+            "details": [
+              {
+                "subject": "demo_grid",
+                "predicate": "records_field",
+                "object": "demo_field"
+              },
+              {
+                "subject": "demo_field",
+                "predicate": "uses_unit",
+                "object": "dimensionless"
+              },
+              {
+                "subject": "demo_grid",
+                "predicate": "has_boundary",
+                "object": "periodic"
+              }
+            ]
+          }
+        ],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 0,
+        "total_facts": 0,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "graph_conflicts": [],
+      "pending_ontology_changes": 0,
+      "event_count": 2,
+      "event_head": "0290e164094e5d1800a426606160075ba119f0c3caf509bef8de9861a6747189"
+    },
+    "is_error": false,
+    "duration_seconds": 0.0477343859965913
+  },
+  {
+    "step": 2,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "ready",
+      "state_head": "0290e164094e5d1800a426606160075ba119f0c3caf509bef8de9861a6747189",
+      "remaining_experiments": 2,
+      "next_role": "asset_agent",
+      "next_tool": "asset_ingest",
+      "next_arguments": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719"
+      },
+      "required_inputs": [
+        "documents"
+      ],
+      "arguments_complete": false,
+      "stop": false,
+      "terminal": false,
+      "reason": "evidence_review_required; numerical diagnostics remain possible but cannot imply metadata readiness",
+      "next_context": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "role": "asset_agent",
+        "input_preparation": {
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "input_documents": 0,
+          "stored_sources": 0,
+          "unique_contents": 0,
+          "duplicate_sources": 0,
+          "quarantined_sources": 0,
+          "candidate_facts": 0,
+          "blocked": false,
+          "issues": [
+            {
+              "priority": "P1",
+              "code": "missing_demo_metadata",
+              "requirements": [
+                {
+                  "subject": "demo_grid",
+                  "predicate": "records_field",
+                  "object": "demo_field"
+                },
+                {
+                  "subject": "demo_field",
+                  "predicate": "uses_unit",
+                  "object": "dimensionless"
+                },
+                {
+                  "subject": "demo_grid",
+                  "predicate": "has_boundary",
+                  "object": "periodic"
+                }
+              ]
+            }
+          ],
+          "issues_truncated": false,
+          "ready_for_demo": false,
+          "numerical_training_input": false,
+          "llm_used": false
+        },
+        "input_snapshot_sha256": "0eec3eaf3c0a9f1ffddf974a6b188f47579bd7dfb332607c576faabccaedfab4",
+        "format": "prepared evidence only; role filter is not an authorization boundary",
+        "raw_document_bodies_included": false,
+        "phase": "ready",
+        "source_catalog": []
+      },
+      "input_preparation": {
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "input_documents": 0,
+        "stored_sources": 0,
+        "unique_contents": 0,
+        "duplicate_sources": 0,
+        "quarantined_sources": 0,
+        "candidate_facts": 0,
+        "blocked": false,
+        "issues": [
+          {
+            "priority": "P1",
+            "code": "missing_demo_metadata",
+            "requirements": [
+              {
+                "subject": "demo_grid",
+                "predicate": "records_field",
+                "object": "demo_field"
+              },
+              {
+                "subject": "demo_field",
+                "predicate": "uses_unit",
+                "object": "dimensionless"
+              },
+              {
+                "subject": "demo_grid",
+                "predicate": "has_boundary",
+                "object": "periodic"
+              }
+            ]
+          }
+        ],
+        "issues_truncated": false,
+        "ready_for_demo": false,
+        "numerical_training_input": false,
+        "llm_used": false
+      },
+      "evidence_quality": {
+        "metadata_ready": false,
+        "blockers": [
+          {
+            "code": "missing_required_metadata",
+            "details": [
+              {
+                "subject": "demo_grid",
+                "predicate": "records_field",
+                "object": "demo_field"
+              },
+              {
+                "subject": "demo_field",
+                "predicate": "uses_unit",
+                "object": "dimensionless"
+              },
+              {
+                "subject": "demo_grid",
+                "predicate": "has_boundary",
+                "object": "periodic"
+              }
+            ]
+          }
+        ],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 0,
+        "total_facts": 0,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.0024317130009876564
+  },
+  {
+    "step": 3,
+    "planned_role": "asset_agent",
+    "tool": "asset_ingest",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "documents": [
+        {
+          "title": "asset-card.txt",
+          "kind": "text",
+          "text": "This is a controlled synthetic research fixture, not an industrial measurement.\ndemo_grid records_field demo_field.\ndemo_grid has_boundary periodic.\nThe observation grid has 64 positions and 111 frames per experiment.\nFive initial experiments consist of three training and two development trajectories.\nNumerical observations come from the simulator; this document is metadata only.\n"
+        },
+        {
+          "title": "experiment-register.csv",
+          "kind": "csv",
+          "text": "asset_id,group,trajectories,source_kind\ndemo_grid,training,3,controlled_synthetic\ndemo_grid,development,2,controlled_synthetic\n"
+        },
+        {
+          "title": "field-card.csv",
+          "kind": "csv",
+          "text": "实体,关系,值\ndemo_field,单位,无量纲\n"
+        },
+        {
+          "title": "field-card-copy.csv",
+          "kind": "csv",
+          "text": "实体,关系,值\ndemo_field,单位,无量纲\n"
+        }
+      ]
+    },
+    "result": {
+      "sources": [
+        {
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "title": "asset-card.txt",
+          "kind": "text",
+          "status": "ready"
+        },
+        {
+          "source_id": "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d",
+          "title": "experiment-register.csv",
+          "kind": "csv",
+          "status": "ready"
+        },
+        {
+          "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "title": "field-card.csv",
+          "kind": "csv",
+          "status": "ready"
+        },
+        {
+          "source_id": "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+          "title": "field-card-copy.csv",
+          "kind": "csv",
+          "status": "ready"
+        }
+      ],
+      "input_preparation": {
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "input_documents": 4,
+        "stored_sources": 4,
+        "unique_contents": 3,
+        "duplicate_sources": 1,
+        "quarantined_sources": 0,
+        "candidate_facts": 3,
+        "blocked": false,
+        "issues": [],
+        "issues_truncated": false,
+        "ready_for_demo": true,
+        "numerical_training_input": false,
+        "llm_used": false
+      }
+    },
+    "is_error": false,
+    "duration_seconds": 0.0037671829995815642
+  },
+  {
+    "step": 4,
+    "planned_role": "graph_agent",
+    "tool": "asset_context",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "role": "graph_agent"
+    },
+    "result": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "role": "graph_agent",
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "input_snapshot_sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+      "format": "prepared evidence only; role filter is not an authorization boundary",
+      "raw_document_bodies_included": false,
+      "phase": "ready",
+      "source_catalog": [
+        {
+          "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "title": "field-card.csv",
+          "kind": "csv",
+          "status": "ready",
+          "classification": "metadata_triples",
+          "duplicate_of": null,
+          "columns": [
+            "subject",
+            "predicate",
+            "object"
+          ],
+          "row_count": 1
+        },
+        {
+          "source_id": "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+          "title": "field-card-copy.csv",
+          "kind": "csv",
+          "status": "ready",
+          "classification": "metadata_triples",
+          "duplicate_of": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "columns": [
+            "subject",
+            "predicate",
+            "object"
+          ],
+          "row_count": 1
+        },
+        {
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "title": "asset-card.txt",
+          "kind": "text",
+          "status": "ready",
+          "classification": "text",
+          "duplicate_of": null,
+          "columns": null,
+          "row_count": null
+        },
+        {
+          "source_id": "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d",
+          "title": "experiment-register.csv",
+          "kind": "csv",
+          "status": "ready",
+          "classification": "experiment_register",
+          "duplicate_of": null,
+          "columns": [
+            "asset_id",
+            "group",
+            "trajectories",
+            "source_kind"
+          ],
+          "row_count": 2
+        }
+      ],
+      "fact_candidates": [
+        {
+          "citation": {
+            "columns": [
+              "subject",
+              "predicate",
+              "object"
+            ],
+            "end_char": 25,
+            "end_line": 2,
+            "format": "metadata_triples_csv",
+            "header_quote": "实体,关系,值",
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "raw_columns": [
+              "实体",
+              "关系",
+              "值"
+            ],
+            "start_char": 8
+          },
+          "fact": {
+            "object": "dimensionless",
+            "predicate": "uses_unit",
+            "quote": "demo_field,单位,无量纲",
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+            "subject": "demo_field"
+          },
+          "parser_version": "input-preparation-v1",
+          "transformations": [
+            {
+              "field": "predicate",
+              "from": "单位",
+              "rule": "explicit_relation_alias",
+              "to": "uses_unit"
+            },
+            {
+              "field": "object",
+              "from": "无量纲",
+              "rule": "explicit_label_alias_no_numeric_conversion",
+              "to": "dimensionless"
+            }
+          ],
+          "verification": "declared format assertion only, not external truth"
+        },
+        {
+          "citation": {
+            "end_char": 115,
+            "format": "text_triple",
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 80
+          },
+          "fact": {
+            "object": "demo_field",
+            "predicate": "records_field",
+            "quote": "demo_grid records_field demo_field.",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "subject": "demo_grid"
+          },
+          "parser_version": "input-preparation-v1",
+          "transformations": [],
+          "verification": "declared format assertion only, not external truth"
+        },
+        {
+          "citation": {
+            "end_char": 148,
+            "format": "text_triple",
+            "line": 3,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 116
+          },
+          "fact": {
+            "object": "periodic",
+            "predicate": "has_boundary",
+            "quote": "demo_grid has_boundary periodic.",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "subject": "demo_grid"
+          },
+          "parser_version": "input-preparation-v1",
+          "transformations": [],
+          "verification": "declared format assertion only, not external truth"
+        }
+      ],
+      "next_offset": null,
+      "candidate_packet_bytes": 1700
+    },
+    "is_error": false,
+    "duration_seconds": 0.0017891289971885271
+  },
+  {
+    "step": 5,
+    "planned_role": "graph_agent",
+    "tool": "asset_search",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "query": "网格 字段 单位 边界",
+      "limit": 10
+    },
+    "result": {
+      "method": "lexical BM25 with Chinese bigrams and explicit bilingual aliases; no embeddings or LLM",
+      "hits": [
+        {
+          "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "source_sha256": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "source_hash_scope": "canonical title/kind/text record",
+          "title": "field-card.csv",
+          "line": 2,
+          "quote": "demo_field,单位,无量纲",
+          "start_char": 8,
+          "end_char": 25,
+          "offset_unit": "Unicode code points, half-open",
+          "matched_terms": [
+            "单位"
+          ],
+          "score": 2.441293318074239
+        },
+        {
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "source_sha256": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "source_hash_scope": "canonical title/kind/text record",
+          "title": "asset-card.txt",
+          "line": 2,
+          "quote": "demo_grid records_field demo_field.",
+          "start_char": 80,
+          "end_char": 115,
+          "offset_unit": "Unicode code points, half-open",
+          "matched_terms": [
+            "records_field"
+          ],
+          "score": 1.454041660928388
+        },
+        {
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "source_sha256": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "source_hash_scope": "canonical title/kind/text record",
+          "title": "asset-card.txt",
+          "line": 3,
+          "quote": "demo_grid has_boundary periodic.",
+          "start_char": 116,
+          "end_char": 148,
+          "offset_unit": "Unicode code points, half-open",
+          "matched_terms": [
+            "has_boundary"
+          ],
+          "score": 1.454041660928388
+        }
+      ]
+    },
+    "is_error": false,
+    "duration_seconds": 0.0027915770042454824
+  },
+  {
+    "step": 6,
+    "planned_role": "graph_agent",
+    "tool": "graph_propose",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "facts": [
+        {
+          "object": "dimensionless",
+          "predicate": "uses_unit",
+          "quote": "demo_field,单位,无量纲",
+          "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "subject": "demo_field"
+        },
+        {
+          "object": "demo_field",
+          "predicate": "records_field",
+          "quote": "demo_grid records_field demo_field.",
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "subject": "demo_grid"
+        },
+        {
+          "object": "periodic",
+          "predicate": "has_boundary",
+          "quote": "demo_grid has_boundary periodic.",
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "subject": "demo_grid"
+        }
+      ]
+    },
+    "result": {
+      "proposal_id": "3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f",
+      "unknown_predicates": [],
+      "pending_ontology_changes": [],
+      "semantic_truth_verified": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.0039189279996207915
+  },
+  {
+    "step": 7,
+    "planned_role": "graph_agent",
+    "tool": "graph_apply",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "proposal_id": "3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f"
+    },
+    "result": {
+      "facts": [
+        {
+          "citation": {
+            "columns": [
+              "subject",
+              "predicate",
+              "object"
+            ],
+            "end_char": 25,
+            "end_line": 2,
+            "format": "metadata_triples_csv",
+            "header_quote": "实体,关系,值",
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "raw_columns": [
+              "实体",
+              "关系",
+              "值"
+            ],
+            "start_char": 8
+          },
+          "id": "e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d",
+          "object": "dimensionless",
+          "predicate": "uses_unit",
+          "quote": "demo_field,单位,无量纲",
+          "relation_assertion_verified": true,
+          "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "status": "source_span_verified",
+          "subject": "demo_field",
+          "transformations": [
+            {
+              "field": "predicate",
+              "from": "单位",
+              "rule": "explicit_relation_alias",
+              "to": "uses_unit"
+            },
+            {
+              "field": "object",
+              "from": "无量纲",
+              "rule": "explicit_label_alias_no_numeric_conversion",
+              "to": "dimensionless"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "end_char": 115,
+            "format": "text_triple",
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 80
+          },
+          "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+          "object": "demo_field",
+          "predicate": "records_field",
+          "quote": "demo_grid records_field demo_field.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid",
+          "transformations": []
+        },
+        {
+          "citation": {
+            "end_char": 148,
+            "format": "text_triple",
+            "line": 3,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 116
+          },
+          "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+          "object": "periodic",
+          "predicate": "has_boundary",
+          "quote": "demo_grid has_boundary periodic.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid",
+          "transformations": []
+        }
+      ],
+      "conflicts": [],
+      "ontology_version": 1
+    },
+    "is_error": false,
+    "duration_seconds": 0.003607702994486317
+  },
+  {
+    "step": 8,
+    "planned_role": "graph_agent",
+    "tool": "evidence_path",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "source": "demo_grid",
+      "target": "dimensionless"
+    },
+    "result": {
+      "paths": [
+        {
+          "edges": [
+            {
+              "citation": {
+                "end_char": 115,
+                "format": "text_triple",
+                "line": 2,
+                "offset_unit": "Unicode code points, half-open",
+                "start_char": 80
+              },
+              "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+              "object": "demo_field",
+              "predicate": "records_field",
+              "quote": "demo_grid records_field demo_field.",
+              "relation_assertion_verified": true,
+              "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+              "status": "source_span_verified",
+              "subject": "demo_grid",
+              "transformations": []
+            },
+            {
+              "citation": {
+                "columns": [
+                  "subject",
+                  "predicate",
+                  "object"
+                ],
+                "end_char": 25,
+                "end_line": 2,
+                "format": "metadata_triples_csv",
+                "header_quote": "实体,关系,值",
+                "line": 2,
+                "offset_unit": "Unicode code points, half-open",
+                "raw_columns": [
+                  "实体",
+                  "关系",
+                  "值"
+                ],
+                "start_char": 8
+              },
+              "id": "e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d",
+              "object": "dimensionless",
+              "predicate": "uses_unit",
+              "quote": "demo_field,单位,无量纲",
+              "relation_assertion_verified": true,
+              "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+              "status": "source_span_verified",
+              "subject": "demo_field",
+              "transformations": [
+                {
+                  "field": "predicate",
+                  "from": "单位",
+                  "rule": "explicit_relation_alias",
+                  "to": "uses_unit"
+                },
+                {
+                  "field": "object",
+                  "from": "无量纲",
+                  "rule": "explicit_label_alias_no_numeric_conversion",
+                  "to": "dimensionless"
+                }
+              ]
+            }
+          ],
+          "source_ids": [
+            "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+            "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          ],
+          "all_relations_asserted": true
+        }
+      ],
+      "found": true,
+      "search_truncated": false,
+      "max_hops": 4,
+      "expanded_nodes": 3,
+      "new_facts_created": false,
+      "semantic_truth_verified": false,
+      "scope": "paths over cited assertions; not inferred physical causation",
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "conflicts": [],
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      }
+    },
+    "is_error": false,
+    "duration_seconds": 0.0018931809972855262
+  },
+  {
+    "step": 9,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "ready",
+      "state_head": "0fdcfc2ef216b861ab7ed78172684c9e26e85c2f5b61b2d8b62623a1e368e2b3",
+      "remaining_experiments": 2,
+      "next_role": "pde_agent",
+      "next_tool": "pde_identify",
+      "next_arguments": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "next_context": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "role": "pde_agent",
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "input_snapshot_sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+        "format": "prepared evidence only; role filter is not an authorization boundary",
+        "raw_document_bodies_included": false,
+        "phase": "ready",
+        "metadata_evidence": [
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless",
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          }
+        ],
+        "metadata_records_total": 3,
+        "metadata_truncated": false,
+        "discovery_input": "controlled simulator observations only; uploaded CSV is not training data",
+        "remaining_experiments": 2
+      },
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.001776584998879116
+  },
+  {
+    "step": 10,
+    "planned_role": "pde_agent",
+    "tool": "pde_identify",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "identified",
+      "origin": "controlled_synthetic_demo",
+      "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+      "budget_limit": 7,
+      "charged_experiments": 5,
+      "measurement_scalars_charged": 35520,
+      "training_trajectories": 3,
+      "development_trajectories": 2,
+      "policy": "fixed_rich",
+      "selected_equation": null,
+      "selected_terms": [],
+      "candidate_supports": [],
+      "identification_status": "insufficient",
+      "identification_failure": "Best development weak residual exceeds the fixed adequacy limit.",
+      "uncertainty": {
+        "method": "complete_trajectory_bootstrap_full_structure_refit",
+        "term_inclusion_frequencies": {
+          "1": null,
+          "u": null,
+          "u^2": null,
+          "u^3": null,
+          "u_x": null,
+          "u_xx": null,
+          "u_xxx": null,
+          "u_xxxx": null,
+          "u*u_x": null
+        },
+        "conditional_on_success_frequency": {
+          "1": null,
+          "u": null,
+          "u^2": null,
+          "u^3": null,
+          "u_x": null,
+          "u_xx": null,
+          "u_xxx": null,
+          "u_xxxx": null,
+          "u*u_x": null
+        },
+        "frequency_bounds_including_failures": {
+          "1": [
+            0.0,
+            1.0
+          ],
+          "u": [
+            0.0,
+            1.0
+          ],
+          "u^2": [
+            0.0,
+            1.0
+          ],
+          "u^3": [
+            0.0,
+            1.0
+          ],
+          "u_x": [
+            0.0,
+            1.0
+          ],
+          "u_xx": [
+            0.0,
+            1.0
+          ],
+          "u_xxx": [
+            0.0,
+            1.0
+          ],
+          "u_xxxx": [
+            0.0,
+            1.0
+          ],
+          "u*u_x": [
+            0.0,
+            1.0
+          ]
+        },
+        "raw_counts": {
+          "1": 0,
+          "u": 0,
+          "u^2": 0,
+          "u^3": 0,
+          "u_x": 0,
+          "u_xx": 0,
+          "u_xxx": 0,
+          "u_xxxx": 0,
+          "u*u_x": 0
+        },
+        "requested_replicates": 8,
+        "completed_replicates": 0,
+        "failed_replicates": 8,
+        "number_of_available_multiplicity_vectors": 10,
+        "calibrated": false,
+        "probability_claimed": false,
+        "confidence_interval_claimed": false,
+        "independent_physical_experiments": 3,
+        "resampling_adds_physical_evidence": false,
+        "limited_data_warning": "Few complete trajectories; repeated bootstrap draws do not create independent evidence.",
+        "reference_used": false,
+        "final_used": false
+      },
+      "minimal_near_supports": [],
+      "recovery_required": false,
+      "failure": null,
+      "frequency_calibrated": false,
+      "final_opened": false,
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "ontology_version": 1,
+      "graph_facts": 3,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "graph_conflicts": [],
+      "pending_ontology_changes": 0,
+      "event_count": 7,
+      "event_head": "478a2f05ec246657f13dc1a5b17929a917ec977ef3a55cbdba77a6aec0bc021d"
+    },
+    "is_error": false,
+    "duration_seconds": 6.095346371002961
+  },
+  {
+    "step": 11,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "identified",
+      "state_head": "478a2f05ec246657f13dc1a5b17929a917ec977ef3a55cbdba77a6aec0bc021d",
+      "remaining_experiments": 2,
+      "next_role": "experiment_agent",
+      "next_tool": "experiment_propose",
+      "next_arguments": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "next_context": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "role": "experiment_agent",
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "input_snapshot_sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+        "format": "prepared evidence only; role filter is not an authorization boundary",
+        "raw_document_bodies_included": false,
+        "phase": "identified",
+        "metadata_evidence": [
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless",
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          }
+        ],
+        "metadata_records_total": 3,
+        "metadata_truncated": false,
+        "discovery_input": "controlled simulator observations only; uploaded CSV is not training data",
+        "remaining_experiments": 2
+      },
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.0031388759962283075
+  },
+  {
+    "step": 12,
+    "planned_role": "experiment_agent",
+    "tool": "experiment_propose",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "id": "60e9cb397055ad4e0930c2091cfe704673a685e4876958a8ce59f90c4633e14a",
+      "action": {
+        "id": "fixed-rich",
+        "a": [
+          0.2309401076758503,
+          0.11547005383792518,
+          -0.2309401076758503,
+          0.2309401076758503,
+          -0.11547005383792511,
+          -0.2309401076758503
+        ],
+        "b": [
+          0.0,
+          0.19999999999999998,
+          2.828200636599752e-17,
+          -5.656401273199504e-17,
+          -0.2,
+          5.516420715918146e-16
+        ]
+      },
+      "reason": "Predetermined rich excitation.",
+      "policy": "fixed_rich",
+      "diagnostics": {
+        "policy": "fixed_rich",
+        "selected_action": {
+          "id": "fixed-rich",
+          "a": [
+            0.2309401076758503,
+            0.11547005383792518,
+            -0.2309401076758503,
+            0.2309401076758503,
+            -0.11547005383792511,
+            -0.2309401076758503
+          ],
+          "b": [
+            0.0,
+            0.19999999999999998,
+            2.828200636599752e-17,
+            -5.656401273199504e-17,
+            -0.2,
+            5.516420715918146e-16
+          ]
+        },
+        "selected_action_id": "fixed-rich",
+        "status": "selected",
+        "reason": "Predetermined rich excitation.",
+        "fallback_used": false,
+        "scores": [
+          {
+            "action_id": "fixed-rich",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-2",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-3",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-00",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-01",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-02",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-03",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-04",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-05",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-06",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-07",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-08",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-09",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-10",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-11",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-12",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-13",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-14",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-15",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-1-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-1-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-2-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-2-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-3-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-3-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-4-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-4-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-5-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-5-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-6-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-6-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          }
+        ],
+        "raw_committee_members": 0,
+        "distinct_coefficient_vectors": 0,
+        "structure_count": 0,
+        "committee": [],
+        "available_actions": 32,
+        "excluded_action_ids": [],
+        "cost_units": "caller_declared_cost",
+        "noise_estimate": {
+          "estimated_spatial_variance": 1.6008632036751003e-05,
+          "per_trajectory": [
+            {
+              "training_trajectory": 0,
+              "estimated_spatial_variance": 1.5523514339299924e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 1,
+              "estimated_spatial_variance": 1.645361608068575e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 2,
+              "estimated_spatial_variance": 1.6048765690267324e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            }
+          ],
+          "aggregation": "equal trajectory mean variance",
+          "true_noise_used": false,
+          "physical_upper_band_signal_can_bias_estimate": true
+        },
+        "acquisition_times": [
+          0.0,
+          0.1,
+          0.2
+        ],
+        "acquisition_forecast_duration": 0.2,
+        "initial_frame_scored": false,
+        "model_forecast_attempts": 0,
+        "model_forecast_failures": 0,
+        "actual_experiment_queries": 0,
+        "reference_used": false,
+        "prospective_observations_used": false,
+        "calibrated_probability_or_information_gain_claimed": false,
+        "identification_certainty_claimed": false,
+        "fixed_action_order": [
+          "fixed-rich",
+          "fixed-rich-1",
+          "fixed-rich-2",
+          "fixed-rich-3",
+          "mixture-07",
+          "mixture-04",
+          "mixture-02",
+          "mixture-10",
+          "mixture-06",
+          "mixture-01",
+          "mixture-11",
+          "mixture-15",
+          "mixture-00",
+          "mixture-05",
+          "mixture-13",
+          "mixture-03",
+          "mixture-08",
+          "mixture-09",
+          "mixture-12",
+          "mixture-14",
+          "single-1-0",
+          "single-1-1",
+          "single-2-0",
+          "single-2-1",
+          "single-3-0",
+          "single-3-1",
+          "single-4-0",
+          "single-4-1",
+          "single-5-0",
+          "single-5-1",
+          "single-6-0",
+          "single-6-1"
+        ],
+        "compute_seconds": 0.024942234995251056
+      },
+      "measurement_cost": 7104,
+      "is_physical_instruction": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.06059665900102118
+  },
+  {
+    "step": 13,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "proposed",
+      "state_head": "d039b518a033ee617cccde1d1270294099939339236d0409718c52c7984f812a",
+      "remaining_experiments": 2,
+      "next_role": "experiment_agent",
+      "next_tool": "experiment_acquire",
+      "next_arguments": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "proposal_id": "60e9cb397055ad4e0930c2091cfe704673a685e4876958a8ce59f90c4633e14a"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "next_context": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "role": "experiment_agent",
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "input_snapshot_sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+        "format": "prepared evidence only; role filter is not an authorization boundary",
+        "raw_document_bodies_included": false,
+        "phase": "proposed",
+        "metadata_evidence": [
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless",
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          }
+        ],
+        "metadata_records_total": 3,
+        "metadata_truncated": false,
+        "discovery_input": "controlled simulator observations only; uploaded CSV is not training data",
+        "remaining_experiments": 2
+      },
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.0031796620023669675
+  },
+  {
+    "step": 14,
+    "planned_role": "experiment_agent",
+    "tool": "experiment_acquire",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "proposal_id": "60e9cb397055ad4e0930c2091cfe704673a685e4876958a8ce59f90c4633e14a"
+    },
+    "result": {
+      "query": {
+        "action": {
+          "a": [
+            0.2309401076758503,
+            0.11547005383792518,
+            -0.2309401076758503,
+            0.2309401076758503,
+            -0.11547005383792511,
+            -0.2309401076758503
+          ],
+          "b": [
+            0.0,
+            0.19999999999999998,
+            2.828200636599752e-17,
+            -5.656401273199504e-17,
+            -0.2,
+            5.516420715918146e-16
+          ],
+          "id": "fixed-rich"
+        },
+        "charged_experiments": 1,
+        "proposal_id": "60e9cb397055ad4e0930c2091cfe704673a685e4876958a8ce59f90c4633e14a",
+        "status": "observed",
+        "observation": {
+          "file": "13578f089965415cb0f8f05c7ab9d719/query-1.npz",
+          "sha256": "3d3a4e9ce6630bc445fdfa8096fdc41c4d79bc746de99adfac356f9f011051ac"
+        },
+        "receipt": {
+          "experiments": 1,
+          "measurement_values": 7104,
+          "measured_frames": 111,
+          "measured_spatial_points": 64,
+          "prefix_frames": 11,
+          "future_frames": 101,
+          "history_endpoint_counted_once": true,
+          "future_duration": 1.0,
+          "action_sha256": "dd71c01bbfebe0bb72ec136a080227b0ea654dcc221b0b61315fd12c68f7c0b8",
+          "observed_field_sha256": "cb4263b3dcabeae00d958c5d22f4c229ee047b8fa1d6aace746a209df7bce8a5",
+          "is_measured_physical_data": false
+        }
+      },
+      "idempotent_replay": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.013072786998236552
+  },
+  {
+    "step": 15,
+    "planned_role": "pde_agent",
+    "tool": "pde_identify",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "identified",
+      "origin": "controlled_synthetic_demo",
+      "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+      "budget_limit": 7,
+      "charged_experiments": 6,
+      "measurement_scalars_charged": 42624,
+      "training_trajectories": 4,
+      "development_trajectories": 2,
+      "policy": "fixed_rich",
+      "selected_equation": "u_t = - 0.001904134713 u_xxxx",
+      "selected_terms": [
+        {
+          "name": "u_xxxx",
+          "coefficient": -0.0019041347127182284
+        }
+      ],
+      "candidate_supports": [
+        [
+          "1",
+          "u",
+          "u^2",
+          "u_x",
+          "u_xx",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u^2",
+          "u_x",
+          "u_xx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u^2",
+          "u_xx",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u^2",
+          "u_xx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u_xx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u^2",
+          "u_x",
+          "u_xx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u^2",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u^2",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u_xxxx"
+        ]
+      ],
+      "identification_status": "observational_ambiguity",
+      "identification_failure": null,
+      "uncertainty": {
+        "method": "complete_trajectory_bootstrap_full_structure_refit",
+        "term_inclusion_frequencies": {
+          "1": null,
+          "u": null,
+          "u^2": null,
+          "u^3": null,
+          "u_x": null,
+          "u_xx": null,
+          "u_xxx": null,
+          "u_xxxx": null,
+          "u*u_x": null
+        },
+        "conditional_on_success_frequency": {
+          "1": 0.0,
+          "u": 0.0,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.0,
+          "u_xxx": 0.0,
+          "u_xxxx": 1.0,
+          "u*u_x": 0.0
+        },
+        "frequency_bounds_including_failures": {
+          "1": [
+            0.0,
+            0.25
+          ],
+          "u": [
+            0.0,
+            0.25
+          ],
+          "u^2": [
+            0.0,
+            0.25
+          ],
+          "u^3": [
+            0.0,
+            0.25
+          ],
+          "u_x": [
+            0.0,
+            0.25
+          ],
+          "u_xx": [
+            0.0,
+            0.25
+          ],
+          "u_xxx": [
+            0.0,
+            0.25
+          ],
+          "u_xxxx": [
+            0.75,
+            1.0
+          ],
+          "u*u_x": [
+            0.0,
+            0.25
+          ]
+        },
+        "raw_counts": {
+          "1": 0,
+          "u": 0,
+          "u^2": 0,
+          "u^3": 0,
+          "u_x": 0,
+          "u_xx": 0,
+          "u_xxx": 0,
+          "u_xxxx": 6,
+          "u*u_x": 0
+        },
+        "requested_replicates": 8,
+        "completed_replicates": 6,
+        "failed_replicates": 2,
+        "number_of_available_multiplicity_vectors": 35,
+        "calibrated": false,
+        "probability_claimed": false,
+        "confidence_interval_claimed": false,
+        "independent_physical_experiments": 4,
+        "resampling_adds_physical_evidence": false,
+        "limited_data_warning": "Few complete trajectories; repeated bootstrap draws do not create independent evidence.",
+        "reference_used": false,
+        "final_used": false
+      },
+      "minimal_near_supports": [
+        [
+          "u_xxxx"
+        ]
+      ],
+      "recovery_required": false,
+      "failure": null,
+      "frequency_calibrated": false,
+      "final_opened": false,
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "ontology_version": 1,
+      "graph_facts": 3,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "graph_conflicts": [],
+      "pending_ontology_changes": 0,
+      "event_count": 11,
+      "event_head": "1c16c80302d34dfada5dc7d90bf85db3e4b9a5426d67ee7745e3f762dcff59fa"
+    },
+    "is_error": false,
+    "duration_seconds": 3.9696634599968093
+  },
+  {
+    "step": 16,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "identified",
+      "state_head": "1c16c80302d34dfada5dc7d90bf85db3e4b9a5426d67ee7745e3f762dcff59fa",
+      "remaining_experiments": 1,
+      "next_role": "experiment_agent",
+      "next_tool": "experiment_propose",
+      "next_arguments": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "next_context": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "role": "experiment_agent",
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "input_snapshot_sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+        "format": "prepared evidence only; role filter is not an authorization boundary",
+        "raw_document_bodies_included": false,
+        "phase": "identified",
+        "metadata_evidence": [
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless",
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          }
+        ],
+        "metadata_records_total": 3,
+        "metadata_truncated": false,
+        "discovery_input": "controlled simulator observations only; uploaded CSV is not training data",
+        "remaining_experiments": 1
+      },
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.003937394998501986
+  },
+  {
+    "step": 17,
+    "planned_role": "experiment_agent",
+    "tool": "experiment_propose",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "id": "a2f302eb0161dd19570668bf495a9d7e8e3b78bb9b43fcdaa1ea6125f4945582",
+      "action": {
+        "id": "fixed-rich-1",
+        "a": [
+          0.17663273708651264,
+          -0.04052716890428186,
+          -0.17663273708651261,
+          0.17663273708651264,
+          0.04052716890428178,
+          -0.1766327370865128
+        ],
+        "b": [
+          0.14877570205735963,
+          0.22735628848557748,
+          -0.14877570205735963,
+          0.14877570205735963,
+          -0.2273562884855775,
+          -0.14877570205735938
+        ]
+      },
+      "reason": "Predetermined rich excitation.",
+      "policy": "fixed_rich",
+      "diagnostics": {
+        "policy": "fixed_rich",
+        "selected_action": {
+          "id": "fixed-rich-1",
+          "a": [
+            0.17663273708651264,
+            -0.04052716890428186,
+            -0.17663273708651261,
+            0.17663273708651264,
+            0.04052716890428178,
+            -0.1766327370865128
+          ],
+          "b": [
+            0.14877570205735963,
+            0.22735628848557748,
+            -0.14877570205735963,
+            0.14877570205735963,
+            -0.2273562884855775,
+            -0.14877570205735938
+          ]
+        },
+        "selected_action_id": "fixed-rich-1",
+        "status": "selected",
+        "reason": "Predetermined rich excitation.",
+        "fallback_used": false,
+        "scores": [
+          {
+            "action_id": "fixed-rich-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-2",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "fixed-rich-3",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-00",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-01",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-02",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-03",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-04",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-05",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-06",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-07",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-08",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-09",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-10",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-11",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-12",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-13",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-14",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "mixture-15",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-1-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-1-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-2-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-2-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-3-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-3-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-4-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-4-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-5-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-5-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-6-0",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          },
+          {
+            "action_id": "single-6-1",
+            "status": "not_scored_by_policy",
+            "score": null,
+            "cost": 7104.0
+          }
+        ],
+        "raw_committee_members": 16,
+        "distinct_coefficient_vectors": 16,
+        "structure_count": 11,
+        "committee": [
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": -0.0007135688373405564
+              },
+              {
+                "name": "u",
+                "coefficient": 0.0005327552900262902
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0038804533928452067
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.001076908420266274
+              },
+              {
+                "name": "u_xx",
+                "coefficient": -0.0002454879081059825
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": 3.8741927771954816e-05
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019151007585571393
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^2",
+              "u_x",
+              "u_xx",
+              "u_xxx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-b712cad7bc55d880"
+            ],
+            "coefficient_vector": [
+              -0.0007135688373405564,
+              0.0005327552900262902,
+              0.0038804533928452067,
+              0.0,
+              0.001076908420266274,
+              -0.0002454879081059825,
+              3.8741927771954816e-05,
+              -0.0019151007585571393,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": -0.00026537874497667104
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.00046365982789910653
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019041547262868964
+              }
+            ],
+            "support": [
+              "1",
+              "u_x",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-89e27941e316b8cb"
+            ],
+            "coefficient_vector": [
+              -0.00026537874497667104,
+              0.0,
+              0.0,
+              0.0,
+              0.00046365982789910653,
+              0.0,
+              0.0,
+              -0.0019041547262868964,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019042799208783972
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-7642444357f5001f"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019042799208783972,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.00190423050736172
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-60b784c647a0e1d6"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.00190423050736172,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019041810938464107
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-1712be67c38e684f"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019041810938464107,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019041547262868956
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-6293bd3366ab5209"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019041547262868956,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019041347127182284
+              }
+            ],
+            "support": [
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-6cd0249e99940e02"
+            ],
+            "coefficient_vector": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019041347127182284,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0002624990629828088
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.001603506976793699
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.00037296027962279967
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.001904514067468169
+              }
+            ],
+            "support": [
+              "1",
+              "u^2",
+              "u_x",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-c9eef541c2b5a50a"
+            ],
+            "coefficient_vector": [
+              0.0002624990629828088,
+              0.0,
+              0.001603506976793699,
+              0.0,
+              0.00037296027962279967,
+              0.0,
+              0.0,
+              -0.001904514067468169,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.00026426458144877715
+              },
+              {
+                "name": "u",
+                "coefficient": -0.0007466874583633398
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.001591768058726578
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.00037296025935811727
+              },
+              {
+                "name": "u_xx",
+                "coefficient": -0.0004003482922387532
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019183222866453779
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^2",
+              "u_x",
+              "u_xx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-2da4cd739e917cca"
+            ],
+            "coefficient_vector": [
+              0.00026426458144877715,
+              -0.0007466874583633398,
+              0.001591768058726578,
+              0.0,
+              0.00037296025935811727,
+              -0.0004003482922387532,
+              0.0,
+              -0.0019183222866453779,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.000277959785153124
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0018124713126265854
+              },
+              {
+                "name": "u_x",
+                "coefficient": 0.00029818577818529487
+              },
+              {
+                "name": "u_xx",
+                "coefficient": -0.00032880947704898544
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019169120073161275
+              }
+            ],
+            "support": [
+              "1",
+              "u^2",
+              "u_x",
+              "u_xx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-0f631ce863f9a981"
+            ],
+            "coefficient_vector": [
+              0.000277959785153124,
+              0.0,
+              0.0018124713126265854,
+              0.0,
+              0.00029818577818529487,
+              -0.00032880947704898544,
+              0.0,
+              -0.0019169120073161275,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.00030050554725147673
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0016568865999310948
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019044787610414493
+              }
+            ],
+            "support": [
+              "1",
+              "u^2",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-51ab764e8d570259"
+            ],
+            "coefficient_vector": [
+              0.00030050554725147673,
+              0.0,
+              0.0016568865999310948,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019044787610414493,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.00037302249378777156
+              },
+              {
+                "name": "u",
+                "coefficient": -0.0017037262120514587
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0015046854683740858
+              },
+              {
+                "name": "u_xx",
+                "coefficient": -0.000525725854139927
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.001921430904250557
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^2",
+              "u_xx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-5a9533b5e0aa8430"
+            ],
+            "coefficient_vector": [
+              0.00037302249378777156,
+              -0.0017037262120514587,
+              0.0015046854683740858,
+              0.0,
+              0.0,
+              -0.000525725854139927,
+              0.0,
+              -0.001921430904250557,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0004882340797547994
+              },
+              {
+                "name": "u",
+                "coefficient": -0.0026620828169967876
+              },
+              {
+                "name": "u^2",
+                "coefficient": 0.0013726062080508632
+              },
+              {
+                "name": "u_xx",
+                "coefficient": -0.0006510056146294534
+              },
+              {
+                "name": "u_xxx",
+                "coefficient": -9.482762422861202e-06
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019245242401197602
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u^2",
+              "u_xx",
+              "u_xxx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-180f4e563333af7c"
+            ],
+            "coefficient_vector": [
+              0.0004882340797547994,
+              -0.0026620828169967876,
+              0.0013726062080508632,
+              0.0,
+              0.0,
+              -0.0006510056146294534,
+              -9.482762422861202e-06,
+              -0.0019245242401197602,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0005910441670321121
+              },
+              {
+                "name": "u",
+                "coefficient": -0.0009984595729565688
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.001902507755131555
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-85292f4d0ea4cf67"
+            ],
+            "coefficient_vector": [
+              0.0005910441670321121,
+              -0.0009984595729565688,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.001902507755131555,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0006870916069863301
+              },
+              {
+                "name": "u",
+                "coefficient": -0.001776596124302112
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019012145885328154
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-aba0cf2a49985415"
+            ],
+            "coefficient_vector": [
+              0.0006870916069863301,
+              -0.001776596124302112,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -0.0019012145885328154,
+              0.0
+            ]
+          },
+          {
+            "terms": [
+              {
+                "name": "1",
+                "coefficient": 0.0006871119484802593
+              },
+              {
+                "name": "u",
+                "coefficient": -0.0026904551551061844
+              },
+              {
+                "name": "u_xx",
+                "coefficient": -0.00064684101759796
+              },
+              {
+                "name": "u_xxxx",
+                "coefficient": -0.0019240332066953485
+              }
+            ],
+            "support": [
+              "1",
+              "u",
+              "u_xx",
+              "u_xxxx"
+            ],
+            "candidate_ids": [
+              "committee-75b58c84095df961"
+            ],
+            "coefficient_vector": [
+              0.0006871119484802593,
+              -0.0026904551551061844,
+              0.0,
+              0.0,
+              0.0,
+              -0.00064684101759796,
+              0.0,
+              -0.0019240332066953485,
+              0.0
+            ]
+          }
+        ],
+        "available_actions": 31,
+        "excluded_action_ids": [
+          "fixed-rich"
+        ],
+        "cost_units": "caller_declared_cost",
+        "noise_estimate": {
+          "estimated_spatial_variance": 1.5855022354427083e-05,
+          "per_trajectory": [
+            {
+              "training_trajectory": 0,
+              "estimated_spatial_variance": 1.5523514339299924e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 1,
+              "estimated_spatial_variance": 1.645361608068575e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 2,
+              "estimated_spatial_variance": 1.6048765690267324e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            },
+            {
+              "training_trajectory": 3,
+              "estimated_spatial_variance": 1.5394193307455328e-05,
+              "observed_frames": 101,
+              "spatial_points": 64
+            }
+          ],
+          "aggregation": "equal trajectory mean variance",
+          "true_noise_used": false,
+          "physical_upper_band_signal_can_bias_estimate": true
+        },
+        "acquisition_times": [
+          0.0,
+          0.1,
+          0.2
+        ],
+        "acquisition_forecast_duration": 0.2,
+        "initial_frame_scored": false,
+        "model_forecast_attempts": 0,
+        "model_forecast_failures": 0,
+        "actual_experiment_queries": 0,
+        "reference_used": false,
+        "prospective_observations_used": false,
+        "calibrated_probability_or_information_gain_claimed": false,
+        "identification_certainty_claimed": false,
+        "fixed_action_order": [
+          "fixed-rich-1",
+          "fixed-rich-2",
+          "fixed-rich-3",
+          "mixture-07",
+          "mixture-04",
+          "mixture-02",
+          "mixture-10",
+          "mixture-06",
+          "mixture-01",
+          "mixture-11",
+          "mixture-15",
+          "mixture-00",
+          "mixture-05",
+          "mixture-13",
+          "mixture-03",
+          "mixture-08",
+          "mixture-09",
+          "mixture-12",
+          "mixture-14",
+          "single-1-0",
+          "single-1-1",
+          "single-2-0",
+          "single-2-1",
+          "single-3-0",
+          "single-3-1",
+          "single-4-0",
+          "single-4-1",
+          "single-5-0",
+          "single-5-1",
+          "single-6-0",
+          "single-6-1"
+        ],
+        "compute_seconds": 0.025838761997874826
+      },
+      "measurement_cost": 7104,
+      "is_physical_instruction": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.06405716400331585
+  },
+  {
+    "step": 18,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "proposed",
+      "state_head": "310efc7536f9ed7c69d8a12c918acbf5188b1cd7557032c7d9829dcf610e6bf5",
+      "remaining_experiments": 1,
+      "next_role": "experiment_agent",
+      "next_tool": "experiment_acquire",
+      "next_arguments": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "proposal_id": "a2f302eb0161dd19570668bf495a9d7e8e3b78bb9b43fcdaa1ea6125f4945582"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "next_context": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "role": "experiment_agent",
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "input_snapshot_sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+        "format": "prepared evidence only; role filter is not an authorization boundary",
+        "raw_document_bodies_included": false,
+        "phase": "proposed",
+        "metadata_evidence": [
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless",
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          }
+        ],
+        "metadata_records_total": 3,
+        "metadata_truncated": false,
+        "discovery_input": "controlled simulator observations only; uploaded CSV is not training data",
+        "remaining_experiments": 1
+      },
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.003886794002028182
+  },
+  {
+    "step": 19,
+    "planned_role": "experiment_agent",
+    "tool": "experiment_acquire",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "proposal_id": "a2f302eb0161dd19570668bf495a9d7e8e3b78bb9b43fcdaa1ea6125f4945582"
+    },
+    "result": {
+      "query": {
+        "action": {
+          "a": [
+            0.17663273708651264,
+            -0.04052716890428186,
+            -0.17663273708651261,
+            0.17663273708651264,
+            0.04052716890428178,
+            -0.1766327370865128
+          ],
+          "b": [
+            0.14877570205735963,
+            0.22735628848557748,
+            -0.14877570205735963,
+            0.14877570205735963,
+            -0.2273562884855775,
+            -0.14877570205735938
+          ],
+          "id": "fixed-rich-1"
+        },
+        "charged_experiments": 1,
+        "proposal_id": "a2f302eb0161dd19570668bf495a9d7e8e3b78bb9b43fcdaa1ea6125f4945582",
+        "status": "observed",
+        "observation": {
+          "file": "13578f089965415cb0f8f05c7ab9d719/query-2.npz",
+          "sha256": "ff82a501bda31e8188f2bcfa48c95bc7397f0e7156399f386fa33b42d59a7996"
+        },
+        "receipt": {
+          "experiments": 1,
+          "measurement_values": 7104,
+          "measured_frames": 111,
+          "measured_spatial_points": 64,
+          "prefix_frames": 11,
+          "future_frames": 101,
+          "history_endpoint_counted_once": true,
+          "future_duration": 1.0,
+          "action_sha256": "f4b434e36f7979c95d7f55925e8a395ed0ac16fa1dc27efa3d042fa5dfa4ce2e",
+          "observed_field_sha256": "35c58bcba00fceecb88ada6241ff09801ad49204059736bc55ed371a0af67214",
+          "is_measured_physical_data": false
+        }
+      },
+      "idempotent_replay": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.015503039001487195
+  },
+  {
+    "step": 20,
+    "planned_role": "pde_agent",
+    "tool": "pde_identify",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "identified",
+      "origin": "controlled_synthetic_demo",
+      "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+      "budget_limit": 7,
+      "charged_experiments": 7,
+      "measurement_scalars_charged": 49728,
+      "training_trajectories": 5,
+      "development_trajectories": 2,
+      "policy": "fixed_rich",
+      "selected_equation": "u_t = - 0.001898284711 u_xxxx",
+      "selected_terms": [
+        {
+          "name": "u_xxxx",
+          "coefficient": -0.0018982847111038777
+        }
+      ],
+      "candidate_supports": [
+        [
+          "1",
+          "u",
+          "u^2",
+          "u_x",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u",
+          "u^2",
+          "u_x",
+          "u_xxx",
+          "u_xxxx",
+          "u*u_x"
+        ],
+        [
+          "1",
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xx",
+          "u_xxx",
+          "u_xxxx",
+          "u*u_x"
+        ],
+        [
+          "1",
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "1",
+          "u^2",
+          "u_x",
+          "u_xx",
+          "u_xxxx"
+        ],
+        [
+          "u",
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xxx",
+          "u_xxxx",
+          "u*u_x"
+        ],
+        [
+          "u",
+          "u^2",
+          "u_x",
+          "u_xxx",
+          "u_xxxx"
+        ],
+        [
+          "u",
+          "u^2",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u",
+          "u_xxxx"
+        ],
+        [
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xx",
+          "u_xxxx"
+        ],
+        [
+          "u^2",
+          "u^3",
+          "u_x",
+          "u_xxx",
+          "u_xxxx",
+          "u*u_x"
+        ],
+        [
+          "u^2",
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u^2",
+          "u_x",
+          "u_xxxx",
+          "u*u_x"
+        ],
+        [
+          "u^2",
+          "u_xxxx"
+        ],
+        [
+          "u_x",
+          "u_xxxx"
+        ],
+        [
+          "u_xxxx"
+        ]
+      ],
+      "identification_status": "observational_ambiguity",
+      "identification_failure": null,
+      "uncertainty": {
+        "method": "complete_trajectory_bootstrap_full_structure_refit",
+        "term_inclusion_frequencies": {
+          "1": 0.0,
+          "u": 0.0,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.0,
+          "u_xxx": 0.0,
+          "u_xxxx": 1.0,
+          "u*u_x": 0.0
+        },
+        "conditional_on_success_frequency": {
+          "1": 0.0,
+          "u": 0.0,
+          "u^2": 0.0,
+          "u^3": 0.0,
+          "u_x": 0.0,
+          "u_xx": 0.0,
+          "u_xxx": 0.0,
+          "u_xxxx": 1.0,
+          "u*u_x": 0.0
+        },
+        "frequency_bounds_including_failures": {
+          "1": [
+            0.0,
+            0.0
+          ],
+          "u": [
+            0.0,
+            0.0
+          ],
+          "u^2": [
+            0.0,
+            0.0
+          ],
+          "u^3": [
+            0.0,
+            0.0
+          ],
+          "u_x": [
+            0.0,
+            0.0
+          ],
+          "u_xx": [
+            0.0,
+            0.0
+          ],
+          "u_xxx": [
+            0.0,
+            0.0
+          ],
+          "u_xxxx": [
+            1.0,
+            1.0
+          ],
+          "u*u_x": [
+            0.0,
+            0.0
+          ]
+        },
+        "raw_counts": {
+          "1": 0,
+          "u": 0,
+          "u^2": 0,
+          "u^3": 0,
+          "u_x": 0,
+          "u_xx": 0,
+          "u_xxx": 0,
+          "u_xxxx": 8,
+          "u*u_x": 0
+        },
+        "requested_replicates": 8,
+        "completed_replicates": 8,
+        "failed_replicates": 0,
+        "number_of_available_multiplicity_vectors": 126,
+        "calibrated": false,
+        "probability_claimed": false,
+        "confidence_interval_claimed": false,
+        "independent_physical_experiments": 5,
+        "resampling_adds_physical_evidence": false,
+        "limited_data_warning": null,
+        "reference_used": false,
+        "final_used": false
+      },
+      "minimal_near_supports": [
+        [
+          "u_xxxx"
+        ]
+      ],
+      "recovery_required": false,
+      "failure": null,
+      "frequency_calibrated": false,
+      "final_opened": false,
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "ontology_version": 1,
+      "graph_facts": 3,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "graph_conflicts": [],
+      "pending_ontology_changes": 0,
+      "event_count": 15,
+      "event_head": "30ffa30d2d5a3c13054476f98372a72f155fde4d89d388b4f5178464380f662f"
+    },
+    "is_error": false,
+    "duration_seconds": 0.12722413000301458
+  },
+  {
+    "step": 21,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "identified",
+      "state_head": "30ffa30d2d5a3c13054476f98372a72f155fde4d89d388b4f5178464380f662f",
+      "remaining_experiments": 0,
+      "next_role": "validation_agent",
+      "next_tool": "validation_freeze",
+      "next_arguments": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "next_context": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "role": "validation_agent",
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "input_snapshot_sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+        "format": "prepared evidence only; role filter is not an authorization boundary",
+        "raw_document_bodies_included": false,
+        "phase": "identified",
+        "metadata_evidence": [
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless",
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          }
+        ],
+        "metadata_records_total": 3,
+        "metadata_truncated": false,
+        "discovery_input": "controlled simulator observations only; uploaded CSV is not training data",
+        "remaining_experiments": 0
+      },
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": null,
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.004534760999376886
+  },
+  {
+    "step": 22,
+    "planned_role": "validation_agent",
+    "tool": "validation_freeze",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "model_sha256": "8b7265ca876a678f6d8639b70591d27ec00de0505ae9ed2e82a3928dac58d6b2",
+      "training": [
+        {
+          "file": "13578f089965415cb0f8f05c7ab9d719/train-0.npz",
+          "sha256": "8b3c76f3525674148c461f1b216bba3153bea9f93a6de840f4922cc9e3acc7ef"
+        },
+        {
+          "file": "13578f089965415cb0f8f05c7ab9d719/train-1.npz",
+          "sha256": "16344b5d090d5abe84e94450437f5292aa3a179ffb65f238767a7a76986523df"
+        },
+        {
+          "file": "13578f089965415cb0f8f05c7ab9d719/train-2.npz",
+          "sha256": "364ce2abdb348256f3cd864cb0e4ec6f90e999b831854e3131b36ca1a519f18c"
+        },
+        {
+          "file": "13578f089965415cb0f8f05c7ab9d719/query-1.npz",
+          "sha256": "3d3a4e9ce6630bc445fdfa8096fdc41c4d79bc746de99adfac356f9f011051ac"
+        },
+        {
+          "file": "13578f089965415cb0f8f05c7ab9d719/query-2.npz",
+          "sha256": "ff82a501bda31e8188f2bcfa48c95bc7397f0e7156399f386fa33b42d59a7996"
+        }
+      ],
+      "development": [
+        {
+          "file": "13578f089965415cb0f8f05c7ab9d719/dev-0.npz",
+          "sha256": "bbc35ea15b4ed98d008dd6fa0e1722bcfdfa3183c3938b802a41d83b705da4c4"
+        },
+        {
+          "file": "13578f089965415cb0f8f05c7ab9d719/dev-1.npz",
+          "sha256": "fdb8053fdc2cd4d8791fc378b5d318517ab992302b257e5773331d6ac74b766e"
+        }
+      ],
+      "charged": 7,
+      "facts_sha256": "3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f",
+      "ontology_sha256": "f5e8a203b6bcb2356f80bb15bc9aba4fe048a50aa3980d7eb062c334d48508a2",
+      "setup_sha256": "a6ffebbd96cbbf3c7ff4b29358c77f5d0037b8af06ff673e6245bcd4a16298e8",
+      "sources": {
+        "active_study/__init__.py": "23a3b2c71fb042a40f3bf6b356d1e0f91811c7aa7e14a62dc8319f1f8ccdbba7",
+        "active_study/acquisition.py": "7c6b45b135bab7541aac4d34643f06fd1db23fa9cbc60e94285e5f1e2493d640",
+        "active_study/actions.py": "0ce7c6c91bdfd43869dadc71b0c973b5a7c4a8588a4150ef8d01ff300b295e16",
+        "active_study/app.py": "424509cafbf6ea8437baacde7aa99a713f2c52f654abc9d1a99a340e02d7140a",
+        "active_study/controller.py": "d80fe2aebbffd18120f2799f7d09858b55fdd3a433bdfda398279331b182d2af",
+        "active_study/engine.py": "79a7cbbdad3e79c9f9ebad6179aa52bf205db0a235c42c0da96e37261274634c",
+        "active_study/forecast.py": "b2cc6860b1bac2b9e585122140c8811c3f63c74f29f8932ec7a4606a849669c9",
+        "active_study/provider.py": "e57aca981abdbbafd77a831ca0479076b3b1e3f4058407666242aa44e21853a0",
+        "active_study/run.py": "2587e905447ca85252dfa70c631307afcc292b8a0514a481e498a5f258cef3c2",
+        "pde_discovery/__init__.py": "6430a32151716782cafc523a1ed2e6c6a5ee7741bdc89a39dde1baa48a669a7c",
+        "pde_discovery/__main__.py": "621b742c86f8ff05d12e46a153f1ccf09eb2603772d23c31642c7ea88e7fd8ff",
+        "pde_discovery/additive_experiment.py": "2657260ecb0eb502efbb702a2ae9ab7529d6a517291730672bf0eb8fe0001654",
+        "pde_discovery/app.py": "ca033ddfc6e25430bb5fb85a70ef139d08086e42ae795f3027c47850fc6a2d60",
+        "pde_discovery/controller.py": "d170b9d9147974c0f0785f10540fa4815fffc4b218bddfa25e19de40b8a645ce",
+        "pde_discovery/engine.py": "c7ccef837529d37d126cf6cbac0446b6316b427f7f4b88ef2ab053ed3d391bce",
+        "pde_discovery/external_experiment.py": "4f2838e7298cd2904f81bcc13027ae0b4281abe3ec73d10a01220ec9d0ce436a",
+        "pde_discovery/generic_engine.py": "09f966462d823ea23d68a211a34c1a5c499075a8599394d0f8d32417d36e670a",
+        "pde_discovery/generic_experiment.py": "e5ec3d9d25517ac1099c4b74d47c251915728fe0f48c8f89ee4001e9a4c2f9cf",
+        "pde_discovery/heat_identifiability.py": "c8be9a31c840c801f836a4c8df74fe1336a38ac261d10f42273c0b71c00b1a26",
+        "pde_discovery/real_benchmark.py": "8da244a69725dd65c5a8832092f92e7a4acbdcf9c9c78720aa315985e58b04d0",
+        "pde_discovery/real_experiment.py": "f609f31e924bd4fe390d625a0021b5c3d68c599727b11a76d219ae012662cf04",
+        "pde_discovery/real_heat.py": "8226dbfcc09246e38ca366f6ae562b0a2a732217af19dc42674189a4c68cd9fc",
+        "pde_discovery/real_heat_refined.py": "88568825941537a2414ff0d075c1718546a64f6cbd288ae9423f283a8ca174c1",
+        "pde_discovery/refined_experiment.py": "26ece449cb4307baf0690384312e6dd7795cd9bd55c569ab2465fbbb79a3a277",
+        "pde_discovery/simulator.py": "d35a953db0daf1f3f4f68c806172ae32984dd43cd3b83f37ca3bbe09bebfb1b9",
+        "coefficient_study/__init__.py": "1f0e05e3d66912a08002a8c2ceacae8a8c308632b63d1c7a0eee2f3cc9fd0f3a",
+        "coefficient_study/data.py": "4889761afa58fa08df4731777b13692fec98cd699cd2f302b091e5f7d2887a47",
+        "coefficient_study/engine.py": "6238186265d29b339936f6d642935affe85f64d9e42f3adba4a430c761bf4ecf",
+        "coefficient_study/generators.py": "4091a1d79f85145d3d2430f7eafe190280bd621a7c18a15bde6049a53023df11",
+        "coefficient_study/noise.py": "dd84fd7c60fb082a86d70dc32c6986d5ca4fb0369b9eaa6af8e0e1ad92ad4232",
+        "coefficient_study/run.py": "ab7911dd50b789469750419860461f9157e9b3daa91b0d7f60ff093951ace70b",
+        "coefficient_study/selection.py": "85ea4ae9dfa2c0d62f840d7f93c1fac1baec956a36c37c147fee5a9396b5e08c",
+        "prefix_study/__init__.py": "0407dbf22cbb7e931232daaf79727c6ad0b6c627f0c47dbf33aa0cf028ed660a",
+        "prefix_study/data.py": "5fd4acf36938cb15c0d3879fe3a8e66cd21d158f91656aef68f2444ef68edfb5",
+        "prefix_study/engine.py": "d9d144771bf43e067fafd7423d58577f6d8dab141eef99d431def36b015f1acf",
+        "prefix_study/forecast.py": "42b533728df0dab390b7d3fc8a8060e306348751a5c1b352a8e6335450417d1e",
+        "prefix_study/generators.py": "8f9059c1d609226ed4166cb465e8f81a2d728a1486b577cb7d8df7c0d30cc2be",
+        "prefix_study/run.py": "102e3dbb1c8c7c86cad1b69ce44a943cc2924bea0655844690962a809bc40a4d",
+        "five_study/__init__.py": "338c7608f5fab6a79789e96d94b49e72c9f6d51f555ba5def675c376e36a1e1e",
+        "five_study/data.py": "7cc8b9fc7099e62549deb10f6a48a51b70d30f691b01353ce6f1c985487a3fff",
+        "five_study/engine.py": "a516b35dcefcec5fd6b4191aee9bc174af744dbdd87cf9524e07766bb842b2a6",
+        "five_study/forecast.py": "0fe822ab050f0ab4572828f75490054819404b7bfded68d6b7e5e0ed6290aa4e",
+        "five_study/generators.py": "e167c9026cdb1ebcb9c4e8b71408159e2b71c526b5c78b2f2cdebac571374f03",
+        "five_study/initial.py": "abff6b772783472ea6a6a518231a279e92b2085fdbd86597971193c460f3badb",
+        "five_study/run.py": "a9742fc83bc88ef186aef02291277dfce350de8f255e0eb97c29591745d2484f",
+        "resolved_study/__init__.py": "21b20f27081fe2c9ffda4d95a4806d66dabe2b99faed7d57f6dc659cc31ab53d",
+        "resolved_study/data.py": "21be8902ab62f3482fb466738a6c2f96af7ad0df6839f0a783f04e83a5abcf75",
+        "resolved_study/forecast.py": "c0412cf5e5a27eac4b5558110fe6939bd1e666568b4743c99665b771bcc5cef4",
+        "resolved_study/generators.py": "95e3862c5c56712bd58e9e7adf5a427040c7424e9c0cd11f9b1d9e086529368f",
+        "resolved_study/run.py": "b72bd024765e2bdb4ca4d08b889e30bd9d7a1c22e37b2ad580ca8290ade0b2a6",
+        "resolved_study/selection.py": "7f93085fb10f7ef57c1c256b696a1fb1e9606290dea71e3a72c02d069335850d",
+        "weak_study/__init__.py": "ff8c034d2af458169e0058529c3c7b6b4903cd292fc1968ea8e00a6d804f07b8",
+        "weak_study/data.py": "59760dff581d23435b8d985d9142103b916583c04f4f5842d1c04b116a9398e9",
+        "weak_study/engine.py": "4a5344dbd203af8955d0962d480805ea7ba1c17729d26082365989e44d2409af",
+        "weak_study/generators.py": "ecefc5b5218681cffddc6aeb32b1305962317c6d104d72196c688b9e1022c56b",
+        "weak_study/run.py": "01f24a5f1a5de9bdeea1fcbc91600d21504704487fce2c453b2f54ed285bb380",
+        "l1_study/__init__.py": "f60f17fc53ea9b395ceb87b36dd1ea6a558138c806ce1f481d80880068215461",
+        "l1_study/engine.py": "e91f3dfb634c09eef1083097ad8247cfc23c6a9d7058e701675fb229669b512f",
+        "l1_study/fixtures.py": "0869c9838647bebea5cd8a589724422e062f93d1ac89c58f261442ef4d64e956",
+        "l1_study/gaussian_check.py": "9892a4330f72d756f58c315179e1e30bfe52bf60eb835c7697de7025a7004f51",
+        "l1_study/run.py": "0a23d9c7636b5d11ab1611c36438b09820b3d347c6fd3efea2226e3bc14accea",
+        "fusion_study/__init__.py": "25930ef372c6a0de2862ac3447407d42c947fb07d4345efa8bf9146ef8f1e5ed",
+        "fusion_study/data.py": "d96e790ce7c7a084331a5832b4111e1341999bb935000adba9cd88fb0da2c71e",
+        "fusion_study/engine.py": "25bed3f5f1b33f620a1be99d7810f8fbd3f5148817f9d69020ce42baf903fc1c",
+        "fusion_study/generators.py": "7f232406b83325ef7b5344887984575fea392ccb8bbd5b72d9187cf709cd02d9",
+        "fusion_study/run.py": "2d8f616c1f5eb3f5ce4fc846cdbc07e5286809de6a69f37f837899e72b40bffe",
+        "challenge_study/__init__.py": "cdc5673688815ae0d0780d284fd852c1fe42c1a43811f5898a265cd77325956a",
+        "challenge_study/data.py": "8455303f18bed732c568891d1c5fe0e467ae2aa5675f06a7ff82c55f31afa960",
+        "challenge_study/generators.py": "1f7d3329b0fe3e564113b6155018a5a6e3964d4223c5a58866e867404293cd4c",
+        "challenge_study/run.py": "61e8e4ff7ba5366e2a0cfc049c7d0cc9f01127a5765cbd96be4be9a65811ee9c",
+        "competition_agent/__init__.py": "2b924dd67033b8a60affc6dabc377a74cf7fca8559c1b0f298c1c7fe5ce11062",
+        "competition_agent/bundle.py": "38403bc365ed489b50bc91d3de4e331e9b6ca3870ecaf71d315b56f221e0cc48",
+        "competition_agent/demo.py": "ad58f15f0879571d02094b163f1b10f6676759884e91fc7151cab6c9618f096d",
+        "competition_agent/evaluate_demo.py": "5bbe8d5c175e9371bbdbefb91dd451205d99b384340d159a3ef05ada60663259",
+        "competition_agent/evidence_quality.py": "44d3f91f91a257f0572c9b9bd11af15201b6c9e0b4973008c280f6f60ac9301a",
+        "competition_agent/make_document.py": "fbf56bc50c1cac9143ef872b10438fa8dbbe9798ce7d2360584e9d5742d70e32",
+        "competition_agent/mcp_server.py": "0305b6e5b0a846bf4b1c1be736339fd6226ba44be35f1b364c8766f331ee72d7",
+        "competition_agent/preprocess.py": "a2425c1cc4f822475eadeb2ebfbf996e60460aa6c46518b576d2d45d0ffcea73",
+        "competition_agent/quality_probe.py": "364f05d825b29a1e7edae9d38669de0fb3ce70cfd372649105e023cd69c4c8b0",
+        "competition_agent/reporting.py": "25f6ca9f9b8a0d08b2521b508a8954aff3fa1bc7db9f62f0ffedb72f8f878b2c",
+        "competition_agent/service.py": "2d0a44ee2920120aa0196ce099fe600e3b4d2fb78a112464a5d0ae5ee4c1e635"
+      },
+      "final_opened": false,
+      "sha256": "404983e6bea9bc7ef6a6c5a4a22d0525efd0546ce4f180e644fa78af494c8add"
+    },
+    "is_error": false,
+    "duration_seconds": 0.025333298995974474
+  },
+  {
+    "step": 23,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "frozen",
+      "state_head": "3c87b280ea36701e7db4b0f0f398969561475335b3d1e1bc0efda38ebf4730a2",
+      "remaining_experiments": 0,
+      "next_role": "validation_agent",
+      "next_tool": "validation_evaluate",
+      "next_arguments": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719"
+      },
+      "required_inputs": [],
+      "arguments_complete": true,
+      "stop": false,
+      "terminal": false,
+      "reason": null,
+      "next_context": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "role": "validation_agent",
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "input_snapshot_sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+        "format": "prepared evidence only; role filter is not an authorization boundary",
+        "raw_document_bodies_included": false,
+        "phase": "frozen",
+        "metadata_evidence": [
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless",
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic",
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186"
+          }
+        ],
+        "metadata_records_total": 3,
+        "metadata_truncated": false,
+        "discovery_input": "controlled simulator observations only; uploaded CSV is not training data",
+        "remaining_experiments": 0
+      },
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": false,
+      "source_ids": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": "404983e6bea9bc7ef6a6c5a4a22d0525efd0546ce4f180e644fa78af494c8add",
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.006340865998936351
+  },
+  {
+    "step": 24,
+    "planned_role": "validation_agent",
+    "tool": "validation_evaluate",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "origin": "controlled_synthetic_demo",
+      "nexent_live_llm_verified": false,
+      "equation": "u_t = - 0.001898284711 u_xxxx",
+      "terms": [
+        {
+          "coefficient": -0.0018982847111038777,
+          "name": "u_xxxx"
+        }
+      ],
+      "structure": {
+        "status": "evaluated",
+        "exact_support": true,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "true_positive_terms": [
+          "u_xxxx"
+        ],
+        "missing_terms": [],
+        "spurious_terms": [],
+        "coefficient_relative_l2": 0.0021223489082651445,
+        "coefficient_comparison": [
+          {
+            "name": "u_xxxx",
+            "reference": -0.0018942644210778376,
+            "discovered": -0.0018982847111038777,
+            "absolute_error": 4.020290026040055e-06,
+            "relative_error": 0.0021223489082651445
+          }
+        ],
+        "reference_terms": [
+          {
+            "name": "u_xxxx",
+            "coefficient": -0.0018942644210778376
+          }
+        ],
+        "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant"
+      },
+      "max_true_coefficient_relative_error": 0.0021223489082651445,
+      "numerical_joint_success": true,
+      "joint_success_rule": "exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%",
+      "predictions": [
+        {
+          "index": 0,
+          "status": "evaluated",
+          "metrics": {
+            "rmse": 0.0002854203202248065,
+            "mae": 0.00023795156598231898,
+            "max_absolute_error": 0.0006128344538660624,
+            "relative_l2": 0.0014494814225220335,
+            "excluded_initial_frame": true,
+            "scored_frames": 100,
+            "space_points": 64
+          },
+          "prefix_frames": 11,
+          "duration": 1.0
+        },
+        {
+          "index": 1,
+          "status": "evaluated",
+          "metrics": {
+            "rmse": 0.0002748349030207367,
+            "mae": 0.00022373251377268594,
+            "max_absolute_error": 0.0005820155602175303,
+            "relative_l2": 0.001293211300512435,
+            "excluded_initial_frame": true,
+            "scored_frames": 100,
+            "space_points": 64
+          },
+          "prefix_frames": 11,
+          "duration": 1.0
+        },
+        {
+          "index": 2,
+          "status": "evaluated",
+          "metrics": {
+            "rmse": 0.0003434070438629676,
+            "mae": 0.0002906965764320051,
+            "max_absolute_error": 0.0008115128156349904,
+            "relative_l2": 0.001266176282615755,
+            "excluded_initial_frame": true,
+            "scored_frames": 100,
+            "space_points": 64
+          },
+          "prefix_frames": 11,
+          "duration": 1.0
+        }
+      ],
+      "evaluation_slots": 3,
+      "evaluation_reference_trajectories_generated": 3,
+      "evaluation_measurement_scalars": 21312,
+      "discovery_budget_excludes_final_evaluation": true,
+      "prediction_failure_slots": 0,
+      "mean_prediction_error": 0.0013362896685500745,
+      "prediction_5pct_passed": true,
+      "evidence_ready": true,
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_conflicts": [],
+      "pending_ontology_review": false,
+      "evidence_sources": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "graph": [
+        {
+          "citation": {
+            "columns": [
+              "subject",
+              "predicate",
+              "object"
+            ],
+            "end_char": 25,
+            "end_line": 2,
+            "format": "metadata_triples_csv",
+            "header_quote": "实体,关系,值",
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "raw_columns": [
+              "实体",
+              "关系",
+              "值"
+            ],
+            "start_char": 8
+          },
+          "id": "e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d",
+          "object": "dimensionless",
+          "predicate": "uses_unit",
+          "quote": "demo_field,单位,无量纲",
+          "relation_assertion_verified": true,
+          "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "status": "source_span_verified",
+          "subject": "demo_field",
+          "transformations": [
+            {
+              "field": "predicate",
+              "from": "单位",
+              "rule": "explicit_relation_alias",
+              "to": "uses_unit"
+            },
+            {
+              "field": "object",
+              "from": "无量纲",
+              "rule": "explicit_label_alias_no_numeric_conversion",
+              "to": "dimensionless"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "end_char": 115,
+            "format": "text_triple",
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 80
+          },
+          "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+          "object": "demo_field",
+          "predicate": "records_field",
+          "quote": "demo_grid records_field demo_field.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid",
+          "transformations": []
+        },
+        {
+          "citation": {
+            "end_char": 148,
+            "format": "text_triple",
+            "line": 3,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 116
+          },
+          "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+          "object": "periodic",
+          "predicate": "has_boundary",
+          "quote": "demo_grid has_boundary periodic.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid",
+          "transformations": []
+        }
+      ],
+      "freeze_sha256": "404983e6bea9bc7ef6a6c5a4a22d0525efd0546ce4f180e644fa78af494c8add",
+      "measurement_scalars_charged": 49728,
+      "charged_experiments": 7,
+      "frequency_is_probability": false,
+      "real_industry_validation": false,
+      "final_used_for_discovery": false,
+      "note": "This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value."
+    },
+    "is_error": false,
+    "duration_seconds": 0.1141280879965052
+  },
+  {
+    "step": 25,
+    "planned_role": "pde_coordinator",
+    "tool": "case_handoff",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "contract_version": 1,
+      "case_id": "13578f089965415cb0f8f05c7ab9d719",
+      "phase": "validated",
+      "state_head": "c46785943e9873693e3ed7a3ffc1f37d220f04653e2c9607b60ab2a0fbe7e81f",
+      "remaining_experiments": 0,
+      "next_role": null,
+      "next_tool": null,
+      "next_arguments": {},
+      "required_inputs": [],
+      "arguments_complete": false,
+      "stop": true,
+      "terminal": true,
+      "reason": "terminal",
+      "next_context": null,
+      "input_preparation": {
+        "blocked": false,
+        "candidate_facts": 3,
+        "duplicate_sources": 1,
+        "input_documents": 4,
+        "issues": [],
+        "issues_truncated": false,
+        "llm_used": false,
+        "numerical_training_input": false,
+        "parser_version": "input-preparation-v1",
+        "priority_order": [
+          "P0: stop and resolve format/conflicts",
+          "P1: fill schema/metadata gaps",
+          "P2: optional enrichment"
+        ],
+        "quarantined_sources": 0,
+        "ready_for_demo": true,
+        "stored_sources": 4,
+        "unique_contents": 3
+      },
+      "evidence_quality": {
+        "metadata_ready": true,
+        "blockers": [],
+        "required_metadata": [
+          {
+            "subject": "demo_grid",
+            "predicate": "records_field",
+            "object": "demo_field"
+          },
+          {
+            "subject": "demo_field",
+            "predicate": "uses_unit",
+            "object": "dimensionless"
+          },
+          {
+            "subject": "demo_grid",
+            "predicate": "has_boundary",
+            "object": "periodic"
+          }
+        ],
+        "asserted_facts": 3,
+        "total_facts": 3,
+        "scope": "fixed synthetic observation metadata consistency only",
+        "semantic_truth_verified": false,
+        "industrial_readiness": false
+      },
+      "final_opened": true,
+      "source_ids": [
+        "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+        "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+        "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+        "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+      ],
+      "freeze_sha256": "404983e6bea9bc7ef6a6c5a4a22d0525efd0546ce4f180e644fa78af494c8add",
+      "authentication_claimed": false,
+      "final_metrics_must_not_guide_new_selection": true
+    },
+    "is_error": false,
+    "duration_seconds": 0.006040913998731412
+  },
+  {
+    "step": 26,
+    "planned_role": "validation_agent",
+    "tool": "evidence_get",
+    "arguments": {
+      "case_id": "13578f089965415cb0f8f05c7ab9d719"
+    },
+    "result": {
+      "status": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "phase": "validated",
+        "origin": "controlled_synthetic_demo",
+        "benchmark_claim": "engineering demonstration, not a new blind scientific evaluation",
+        "budget_limit": 7,
+        "charged_experiments": 7,
+        "measurement_scalars_charged": 49728,
+        "training_trajectories": 5,
+        "development_trajectories": 2,
+        "policy": "fixed_rich",
+        "selected_equation": "u_t = - 0.001898284711 u_xxxx",
+        "selected_terms": [
+          {
+            "coefficient": -0.0018982847111038777,
+            "name": "u_xxxx"
+          }
+        ],
+        "candidate_supports": [
+          [
+            "1",
+            "u",
+            "u^2",
+            "u_x",
+            "u_xxx",
+            "u_xxxx"
+          ],
+          [
+            "1",
+            "u",
+            "u^2",
+            "u_x",
+            "u_xxx",
+            "u_xxxx",
+            "u*u_x"
+          ],
+          [
+            "1",
+            "u^2",
+            "u^3",
+            "u_x",
+            "u_xx",
+            "u_xxx",
+            "u_xxxx",
+            "u*u_x"
+          ],
+          [
+            "1",
+            "u^2",
+            "u^3",
+            "u_x",
+            "u_xxxx"
+          ],
+          [
+            "1",
+            "u^2",
+            "u_x",
+            "u_xx",
+            "u_xxxx"
+          ],
+          [
+            "u",
+            "u^2",
+            "u^3",
+            "u_x",
+            "u_xxx",
+            "u_xxxx",
+            "u*u_x"
+          ],
+          [
+            "u",
+            "u^2",
+            "u_x",
+            "u_xxx",
+            "u_xxxx"
+          ],
+          [
+            "u",
+            "u^2",
+            "u_x",
+            "u_xxxx"
+          ],
+          [
+            "u",
+            "u_xxxx"
+          ],
+          [
+            "u^2",
+            "u^3",
+            "u_x",
+            "u_xx",
+            "u_xxxx"
+          ],
+          [
+            "u^2",
+            "u^3",
+            "u_x",
+            "u_xxx",
+            "u_xxxx",
+            "u*u_x"
+          ],
+          [
+            "u^2",
+            "u_x",
+            "u_xxxx"
+          ],
+          [
+            "u^2",
+            "u_x",
+            "u_xxxx",
+            "u*u_x"
+          ],
+          [
+            "u^2",
+            "u_xxxx"
+          ],
+          [
+            "u_x",
+            "u_xxxx"
+          ],
+          [
+            "u_xxxx"
+          ]
+        ],
+        "identification_status": "observational_ambiguity",
+        "identification_failure": null,
+        "uncertainty": {
+          "calibrated": false,
+          "completed_replicates": 8,
+          "conditional_on_success_frequency": {
+            "1": 0.0,
+            "u": 0.0,
+            "u*u_x": 0.0,
+            "u^2": 0.0,
+            "u^3": 0.0,
+            "u_x": 0.0,
+            "u_xx": 0.0,
+            "u_xxx": 0.0,
+            "u_xxxx": 1.0
+          },
+          "confidence_interval_claimed": false,
+          "failed_replicates": 0,
+          "final_used": false,
+          "frequency_bounds_including_failures": {
+            "1": [
+              0.0,
+              0.0
+            ],
+            "u": [
+              0.0,
+              0.0
+            ],
+            "u*u_x": [
+              0.0,
+              0.0
+            ],
+            "u^2": [
+              0.0,
+              0.0
+            ],
+            "u^3": [
+              0.0,
+              0.0
+            ],
+            "u_x": [
+              0.0,
+              0.0
+            ],
+            "u_xx": [
+              0.0,
+              0.0
+            ],
+            "u_xxx": [
+              0.0,
+              0.0
+            ],
+            "u_xxxx": [
+              1.0,
+              1.0
+            ]
+          },
+          "independent_physical_experiments": 5,
+          "limited_data_warning": null,
+          "method": "complete_trajectory_bootstrap_full_structure_refit",
+          "number_of_available_multiplicity_vectors": 126,
+          "probability_claimed": false,
+          "raw_counts": {
+            "1": 0,
+            "u": 0,
+            "u*u_x": 0,
+            "u^2": 0,
+            "u^3": 0,
+            "u_x": 0,
+            "u_xx": 0,
+            "u_xxx": 0,
+            "u_xxxx": 8
+          },
+          "reference_used": false,
+          "requested_replicates": 8,
+          "resampling_adds_physical_evidence": false,
+          "term_inclusion_frequencies": {
+            "1": 0.0,
+            "u": 0.0,
+            "u*u_x": 0.0,
+            "u^2": 0.0,
+            "u^3": 0.0,
+            "u_x": 0.0,
+            "u_xx": 0.0,
+            "u_xxx": 0.0,
+            "u_xxxx": 1.0
+          }
+        },
+        "minimal_near_supports": [
+          [
+            "u_xxxx"
+          ]
+        ],
+        "recovery_required": false,
+        "failure": null,
+        "frequency_calibrated": false,
+        "final_opened": true,
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "ontology_version": 1,
+        "graph_facts": 3,
+        "evidence_quality": {
+          "metadata_ready": true,
+          "blockers": [],
+          "required_metadata": [
+            {
+              "subject": "demo_grid",
+              "predicate": "records_field",
+              "object": "demo_field"
+            },
+            {
+              "subject": "demo_field",
+              "predicate": "uses_unit",
+              "object": "dimensionless"
+            },
+            {
+              "subject": "demo_grid",
+              "predicate": "has_boundary",
+              "object": "periodic"
+            }
+          ],
+          "asserted_facts": 3,
+          "total_facts": 3,
+          "scope": "fixed synthetic observation metadata consistency only",
+          "semantic_truth_verified": false,
+          "industrial_readiness": false
+        },
+        "graph_conflicts": [],
+        "pending_ontology_changes": 0,
+        "event_count": 18,
+        "event_head": "c46785943e9873693e3ed7a3ffc1f37d220f04653e2c9607b60ab2a0fbe7e81f"
+      },
+      "events": [
+        {
+          "actor": "asset_agent",
+          "at_utc": "2026-11-05T02:00:29.248194+00:00",
+          "details": {
+            "experiments": 5,
+            "is_physical_data": false
+          },
+          "operation": "initial_budget_charged",
+          "previous": null,
+          "sequence": 1,
+          "sha256": "703194e0e559114ed901663006914d9af29467db40175374c5915377c455786d"
+        },
+        {
+          "actor": "asset_agent",
+          "at_utc": "2026-11-05T02:00:29.291318+00:00",
+          "details": {
+            "observations": 5
+          },
+          "operation": "initial_observations_registered",
+          "previous": "703194e0e559114ed901663006914d9af29467db40175374c5915377c455786d",
+          "sequence": 2,
+          "sha256": "0290e164094e5d1800a426606160075ba119f0c3caf509bef8de9861a6747189"
+        },
+        {
+          "actor": "input_preprocessor",
+          "at_utc": "2026-11-05T02:00:29.299436+00:00",
+          "details": {
+            "sha256": "f534f825ebc34f98641f31701ab821eecd402fa14bceaa93ebef3018f10eeafb",
+            "summary": {
+              "blocked": false,
+              "candidate_facts": 3,
+              "duplicate_sources": 1,
+              "input_documents": 4,
+              "issues": [],
+              "issues_truncated": false,
+              "llm_used": false,
+              "numerical_training_input": false,
+              "parser_version": "input-preparation-v1",
+              "priority_order": [
+                "P0: stop and resolve format/conflicts",
+                "P1: fill schema/metadata gaps",
+                "P2: optional enrichment"
+              ],
+              "quarantined_sources": 0,
+              "ready_for_demo": true,
+              "stored_sources": 4,
+              "unique_contents": 3
+            }
+          },
+          "operation": "input_prepared",
+          "previous": "0290e164094e5d1800a426606160075ba119f0c3caf509bef8de9861a6747189",
+          "sequence": 3,
+          "sha256": "4e1508df9ba22c0efaaac271e1db763566e8bd70ffe41b052ddfb66e444be567"
+        },
+        {
+          "actor": "asset_agent",
+          "at_utc": "2026-11-05T02:00:29.299459+00:00",
+          "details": {
+            "source_ids": [
+              "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+              "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d",
+              "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+              "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9"
+            ]
+          },
+          "operation": "documents_ingested",
+          "previous": "4e1508df9ba22c0efaaac271e1db763566e8bd70ffe41b052ddfb66e444be567",
+          "sequence": 4,
+          "sha256": "63b5081e4a663cd7c7ac0c7b27526872c662ada1d59f2c00e4a0d4c24cd9271f"
+        },
+        {
+          "actor": "graph_agent",
+          "at_utc": "2026-11-05T02:00:29.309401+00:00",
+          "details": {
+            "proposal_id": "3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f",
+            "unknown_predicates": []
+          },
+          "operation": "graph_proposed",
+          "previous": "63b5081e4a663cd7c7ac0c7b27526872c662ada1d59f2c00e4a0d4c24cd9271f",
+          "sequence": 5,
+          "sha256": "a1841ffe8fdd730f06d98e834db38e815971284f7b9b13e6b4d85d77abec1681"
+        },
+        {
+          "actor": "graph_agent",
+          "at_utc": "2026-11-05T02:00:29.313063+00:00",
+          "details": {
+            "human_semantic_review": false,
+            "proposal_id": "3aedfa451c7932abe48ae8f4753e8716f9c673148837fc606dece7bd3fa35d8f"
+          },
+          "operation": "source_grounded_graph_applied",
+          "previous": "a1841ffe8fdd730f06d98e834db38e815971284f7b9b13e6b4d85d77abec1681",
+          "sequence": 6,
+          "sha256": "0fdcfc2ef216b861ab7ed78172684c9e26e85c2f5b61b2d8b62623a1e368e2b3"
+        },
+        {
+          "actor": "pde_agent",
+          "at_utc": "2026-11-05T02:00:35.412049+00:00",
+          "details": {
+            "final_used": false,
+            "model_sha256": "e3a49f80e9ecdcdb6e02afbb8175f0a9abf7a0f15cd07d87b4a99afc1e4b1281",
+            "training_hashes": [
+              "8b3c76f3525674148c461f1b216bba3153bea9f93a6de840f4922cc9e3acc7ef",
+              "16344b5d090d5abe84e94450437f5292aa3a179ffb65f238767a7a76986523df",
+              "364ce2abdb348256f3cd864cb0e4ec6f90e999b831854e3131b36ca1a519f18c"
+            ]
+          },
+          "operation": "identify",
+          "previous": "0fdcfc2ef216b861ab7ed78172684c9e26e85c2f5b61b2d8b62623a1e368e2b3",
+          "sequence": 7,
+          "sha256": "478a2f05ec246657f13dc1a5b17929a917ec977ef3a55cbdba77a6aec0bc021d"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-05T02:00:35.478675+00:00",
+          "details": {
+            "proposal_id": "60e9cb397055ad4e0930c2091cfe704673a685e4876958a8ce59f90c4633e14a"
+          },
+          "operation": "propose",
+          "previous": "478a2f05ec246657f13dc1a5b17929a917ec977ef3a55cbdba77a6aec0bc021d",
+          "sequence": 8,
+          "sha256": "d039b518a033ee617cccde1d1270294099939339236d0409718c52c7984f812a"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-05T02:00:35.491224+00:00",
+          "details": {
+            "charged_experiments": 6,
+            "proposal_id": "60e9cb397055ad4e0930c2091cfe704673a685e4876958a8ce59f90c4633e14a"
+          },
+          "operation": "query_charged_before_execution",
+          "previous": "d039b518a033ee617cccde1d1270294099939339236d0409718c52c7984f812a",
+          "sequence": 9,
+          "sha256": "fed50831491ec25ef582b04a2aa0d0e51a1e47acd56f7fc77234486dfff1b070"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-05T02:00:35.500258+00:00",
+          "details": {
+            "proposal_id": "60e9cb397055ad4e0930c2091cfe704673a685e4876958a8ce59f90c4633e14a",
+            "status": "observed"
+          },
+          "operation": "query_completed",
+          "previous": "fed50831491ec25ef582b04a2aa0d0e51a1e47acd56f7fc77234486dfff1b070",
+          "sequence": 10,
+          "sha256": "7d29db749729755562742e4e07ddd5c4e0a3f79cbad7462f80062e03ced4714f"
+        },
+        {
+          "actor": "pde_agent",
+          "at_utc": "2026-11-05T02:00:39.468322+00:00",
+          "details": {
+            "final_used": false,
+            "model_sha256": "b071c233faa0e7b8806a6673c1352f7da09998ccc2835bf3df0e40fa9a9aca1b",
+            "training_hashes": [
+              "8b3c76f3525674148c461f1b216bba3153bea9f93a6de840f4922cc9e3acc7ef",
+              "16344b5d090d5abe84e94450437f5292aa3a179ffb65f238767a7a76986523df",
+              "364ce2abdb348256f3cd864cb0e4ec6f90e999b831854e3131b36ca1a519f18c",
+              "3d3a4e9ce6630bc445fdfa8096fdc41c4d79bc746de99adfac356f9f011051ac"
+            ]
+          },
+          "operation": "identify",
+          "previous": "7d29db749729755562742e4e07ddd5c4e0a3f79cbad7462f80062e03ced4714f",
+          "sequence": 11,
+          "sha256": "1c16c80302d34dfada5dc7d90bf85db3e4b9a5426d67ee7745e3f762dcff59fa"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-05T02:00:39.538706+00:00",
+          "details": {
+            "proposal_id": "a2f302eb0161dd19570668bf495a9d7e8e3b78bb9b43fcdaa1ea6125f4945582"
+          },
+          "operation": "propose",
+          "previous": "1c16c80302d34dfada5dc7d90bf85db3e4b9a5426d67ee7745e3f762dcff59fa",
+          "sequence": 12,
+          "sha256": "310efc7536f9ed7c69d8a12c918acbf5188b1cd7557032c7d9829dcf610e6bf5"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-05T02:00:39.556612+00:00",
+          "details": {
+            "charged_experiments": 7,
+            "proposal_id": "a2f302eb0161dd19570668bf495a9d7e8e3b78bb9b43fcdaa1ea6125f4945582"
+          },
+          "operation": "query_charged_before_execution",
+          "previous": "310efc7536f9ed7c69d8a12c918acbf5188b1cd7557032c7d9829dcf610e6bf5",
+          "sequence": 13,
+          "sha256": "b882a60c224118b4a0b249d806fc89faa537727026dcd14c7deaa7af9e7e9874"
+        },
+        {
+          "actor": "experiment_agent",
+          "at_utc": "2026-11-05T02:00:39.566528+00:00",
+          "details": {
+            "proposal_id": "a2f302eb0161dd19570668bf495a9d7e8e3b78bb9b43fcdaa1ea6125f4945582",
+            "status": "observed"
+          },
+          "operation": "query_completed",
+          "previous": "b882a60c224118b4a0b249d806fc89faa537727026dcd14c7deaa7af9e7e9874",
+          "sequence": 14,
+          "sha256": "bc450ed078a81971811b5a2b85dde2030d6ace2929f98cac672b7671c62f49c8"
+        },
+        {
+          "actor": "pde_agent",
+          "at_utc": "2026-11-05T02:00:39.694946+00:00",
+          "details": {
+            "final_used": false,
+            "model_sha256": "8b7265ca876a678f6d8639b70591d27ec00de0505ae9ed2e82a3928dac58d6b2",
+            "training_hashes": [
+              "8b3c76f3525674148c461f1b216bba3153bea9f93a6de840f4922cc9e3acc7ef",
+              "16344b5d090d5abe84e94450437f5292aa3a179ffb65f238767a7a76986523df",
+              "364ce2abdb348256f3cd864cb0e4ec6f90e999b831854e3131b36ca1a519f18c",
+              "3d3a4e9ce6630bc445fdfa8096fdc41c4d79bc746de99adfac356f9f011051ac",
+              "ff82a501bda31e8188f2bcfa48c95bc7397f0e7156399f386fa33b42d59a7996"
+            ]
+          },
+          "operation": "identify",
+          "previous": "bc450ed078a81971811b5a2b85dde2030d6ace2929f98cac672b7671c62f49c8",
+          "sequence": 15,
+          "sha256": "30ffa30d2d5a3c13054476f98372a72f155fde4d89d388b4f5178464380f662f"
+        },
+        {
+          "actor": "validation_agent",
+          "at_utc": "2026-11-05T02:00:39.729666+00:00",
+          "details": {
+            "sha256": "404983e6bea9bc7ef6a6c5a4a22d0525efd0546ce4f180e644fa78af494c8add"
+          },
+          "operation": "freeze",
+          "previous": "30ffa30d2d5a3c13054476f98372a72f155fde4d89d388b4f5178464380f662f",
+          "sequence": 16,
+          "sha256": "3c87b280ea36701e7db4b0f0f398969561475335b3d1e1bc0efda38ebf4730a2"
+        },
+        {
+          "actor": "validation_agent",
+          "at_utc": "2026-11-05T02:00:39.766413+00:00",
+          "details": {
+            "freeze_sha256": "404983e6bea9bc7ef6a6c5a4a22d0525efd0546ce4f180e644fa78af494c8add"
+          },
+          "operation": "final_opened",
+          "previous": "3c87b280ea36701e7db4b0f0f398969561475335b3d1e1bc0efda38ebf4730a2",
+          "sequence": 17,
+          "sha256": "f551270c93442ec4adf7f5a045a152da4c50c70dba4dc924d2fe285bb653af79"
+        },
+        {
+          "actor": "validation_agent",
+          "at_utc": "2026-11-05T02:00:39.856306+00:00",
+          "details": {
+            "report_sha256": "c948a94f84473a3442f346764802d6a3ee1c6c5b3bc11613a1428544cb60d6b4"
+          },
+          "operation": "validation_completed",
+          "previous": "f551270c93442ec4adf7f5a045a152da4c50c70dba4dc924d2fe285bb653af79",
+          "sequence": 18,
+          "sha256": "c46785943e9873693e3ed7a3ffc1f37d220f04653e2c9607b60ab2a0fbe7e81f"
+        }
+      ],
+      "facts": [
+        {
+          "citation": {
+            "columns": [
+              "subject",
+              "predicate",
+              "object"
+            ],
+            "end_char": 25,
+            "end_line": 2,
+            "format": "metadata_triples_csv",
+            "header_quote": "实体,关系,值",
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "raw_columns": [
+              "实体",
+              "关系",
+              "值"
+            ],
+            "start_char": 8
+          },
+          "id": "e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d",
+          "object": "dimensionless",
+          "predicate": "uses_unit",
+          "quote": "demo_field,单位,无量纲",
+          "relation_assertion_verified": true,
+          "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "status": "source_span_verified",
+          "subject": "demo_field",
+          "transformations": [
+            {
+              "field": "predicate",
+              "from": "单位",
+              "rule": "explicit_relation_alias",
+              "to": "uses_unit"
+            },
+            {
+              "field": "object",
+              "from": "无量纲",
+              "rule": "explicit_label_alias_no_numeric_conversion",
+              "to": "dimensionless"
+            }
+          ]
+        },
+        {
+          "citation": {
+            "end_char": 115,
+            "format": "text_triple",
+            "line": 2,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 80
+          },
+          "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+          "object": "demo_field",
+          "predicate": "records_field",
+          "quote": "demo_grid records_field demo_field.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid",
+          "transformations": []
+        },
+        {
+          "citation": {
+            "end_char": 148,
+            "format": "text_triple",
+            "line": 3,
+            "offset_unit": "Unicode code points, half-open",
+            "start_char": 116
+          },
+          "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+          "object": "periodic",
+          "predicate": "has_boundary",
+          "quote": "demo_grid has_boundary periodic.",
+          "relation_assertion_verified": true,
+          "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "status": "source_span_verified",
+          "subject": "demo_grid",
+          "transformations": []
+        }
+      ],
+      "ontology": {
+        "predicates": [
+          "uses_unit",
+          "has_boundary",
+          "records_field",
+          "measures",
+          "derived_from",
+          "supported_by"
+        ],
+        "version": 1
+      },
+      "report": {
+        "case_id": "13578f089965415cb0f8f05c7ab9d719",
+        "charged_experiments": 7,
+        "discovery_budget_excludes_final_evaluation": true,
+        "equation": "u_t = - 0.001898284711 u_xxxx",
+        "evaluation_measurement_scalars": 21312,
+        "evaluation_reference_trajectories_generated": 3,
+        "evaluation_slots": 3,
+        "evidence_conflicts": [],
+        "evidence_quality": {
+          "asserted_facts": 3,
+          "blockers": [],
+          "industrial_readiness": false,
+          "metadata_ready": true,
+          "required_metadata": [
+            {
+              "object": "demo_field",
+              "predicate": "records_field",
+              "subject": "demo_grid"
+            },
+            {
+              "object": "dimensionless",
+              "predicate": "uses_unit",
+              "subject": "demo_field"
+            },
+            {
+              "object": "periodic",
+              "predicate": "has_boundary",
+              "subject": "demo_grid"
+            }
+          ],
+          "scope": "fixed synthetic observation metadata consistency only",
+          "semantic_truth_verified": false,
+          "total_facts": 3
+        },
+        "evidence_ready": true,
+        "evidence_sources": [
+          "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+          "8dedc8d10037dae86c6df5083ae919b0e47bdfe0b9424c82f65f5ce87a740bb9",
+          "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+          "e2ca34313267c6ca8d66aa798beb96291b6cc67238059c0e3527026e2305f35d"
+        ],
+        "final_used_for_discovery": false,
+        "freeze_sha256": "404983e6bea9bc7ef6a6c5a4a22d0525efd0546ce4f180e644fa78af494c8add",
+        "frequency_is_probability": false,
+        "graph": [
+          {
+            "citation": {
+              "columns": [
+                "subject",
+                "predicate",
+                "object"
+              ],
+              "end_char": 25,
+              "end_line": 2,
+              "format": "metadata_triples_csv",
+              "header_quote": "实体,关系,值",
+              "line": 2,
+              "offset_unit": "Unicode code points, half-open",
+              "raw_columns": [
+                "实体",
+                "关系",
+                "值"
+              ],
+              "start_char": 8
+            },
+            "id": "e3cc01d927989450b8978721316853bae1f490d1e703d17b12ee299bf97a871d",
+            "object": "dimensionless",
+            "predicate": "uses_unit",
+            "quote": "demo_field,单位,无量纲",
+            "relation_assertion_verified": true,
+            "source_id": "8d22f28314ed5786f050aacd901d0c71bece31c77c4c55e76971bf36953eb2e1",
+            "status": "source_span_verified",
+            "subject": "demo_field",
+            "transformations": [
+              {
+                "field": "predicate",
+                "from": "单位",
+                "rule": "explicit_relation_alias",
+                "to": "uses_unit"
+              },
+              {
+                "field": "object",
+                "from": "无量纲",
+                "rule": "explicit_label_alias_no_numeric_conversion",
+                "to": "dimensionless"
+              }
+            ]
+          },
+          {
+            "citation": {
+              "end_char": 115,
+              "format": "text_triple",
+              "line": 2,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 80
+            },
+            "id": "6ffbd70bbe0175a45532d38355bf5be466dabd304593e8555d4166fee2655629",
+            "object": "demo_field",
+            "predicate": "records_field",
+            "quote": "demo_grid records_field demo_field.",
+            "relation_assertion_verified": true,
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "status": "source_span_verified",
+            "subject": "demo_grid",
+            "transformations": []
+          },
+          {
+            "citation": {
+              "end_char": 148,
+              "format": "text_triple",
+              "line": 3,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 116
+            },
+            "id": "3a0f1b4fbdd842fd61cc44bfedbca7a7c642eab69073efcf7b42a2054e19a68a",
+            "object": "periodic",
+            "predicate": "has_boundary",
+            "quote": "demo_grid has_boundary periodic.",
+            "relation_assertion_verified": true,
+            "source_id": "c3ffd63810bf86d3a3c09d131595f7b4b910516c15018f3750b09d64379e8186",
+            "status": "source_span_verified",
+            "subject": "demo_grid",
+            "transformations": []
+          }
+        ],
+        "input_preparation": {
+          "blocked": false,
+          "candidate_facts": 3,
+          "duplicate_sources": 1,
+          "input_documents": 4,
+          "issues": [],
+          "issues_truncated": false,
+          "llm_used": false,
+          "numerical_training_input": false,
+          "parser_version": "input-preparation-v1",
+          "priority_order": [
+            "P0: stop and resolve format/conflicts",
+            "P1: fill schema/metadata gaps",
+            "P2: optional enrichment"
+          ],
+          "quarantined_sources": 0,
+          "ready_for_demo": true,
+          "stored_sources": 4,
+          "unique_contents": 3
+        },
+        "joint_success_rule": "exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%",
+        "max_true_coefficient_relative_error": 0.0021223489082651445,
+        "mean_prediction_error": 0.0013362896685500745,
+        "measurement_scalars_charged": 49728,
+        "nexent_live_llm_verified": false,
+        "note": "This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value.",
+        "numerical_joint_success": true,
+        "origin": "controlled_synthetic_demo",
+        "pending_ontology_review": false,
+        "prediction_5pct_passed": true,
+        "prediction_failure_slots": 0,
+        "predictions": [
+          {
+            "duration": 1.0,
+            "index": 0,
+            "metrics": {
+              "excluded_initial_frame": true,
+              "mae": 0.00023795156598231898,
+              "max_absolute_error": 0.0006128344538660624,
+              "relative_l2": 0.0014494814225220335,
+              "rmse": 0.0002854203202248065,
+              "scored_frames": 100,
+              "space_points": 64
+            },
+            "prefix_frames": 11,
+            "status": "evaluated"
+          },
+          {
+            "duration": 1.0,
+            "index": 1,
+            "metrics": {
+              "excluded_initial_frame": true,
+              "mae": 0.00022373251377268594,
+              "max_absolute_error": 0.0005820155602175303,
+              "relative_l2": 0.001293211300512435,
+              "rmse": 0.0002748349030207367,
+              "scored_frames": 100,
+              "space_points": 64
+            },
+            "prefix_frames": 11,
+            "status": "evaluated"
+          },
+          {
+            "duration": 1.0,
+            "index": 2,
+            "metrics": {
+              "excluded_initial_frame": true,
+              "mae": 0.0002906965764320051,
+              "max_absolute_error": 0.0008115128156349904,
+              "relative_l2": 0.001266176282615755,
+              "rmse": 0.0003434070438629676,
+              "scored_frames": 100,
+              "space_points": 64
+            },
+            "prefix_frames": 11,
+            "status": "evaluated"
+          }
+        ],
+        "real_industry_validation": false,
+        "structure": {
+          "coefficient_comparison": [
+            {
+              "absolute_error": 4.020290026040055e-06,
+              "discovered": -0.0018982847111038777,
+              "name": "u_xxxx",
+              "reference": -0.0018942644210778376,
+              "relative_error": 0.0021223489082651445
+            }
+          ],
+          "coefficient_metric_scope": "author coordinate/field scaling; not unit-invariant",
+          "coefficient_relative_l2": 0.0021223489082651445,
+          "exact_support": true,
+          "f1": 1.0,
+          "missing_terms": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "reference_terms": [
+            {
+              "coefficient": -0.0018942644210778376,
+              "name": "u_xxxx"
+            }
+          ],
+          "spurious_terms": [],
+          "status": "evaluated",
+          "true_positive_terms": [
+            "u_xxxx"
+          ]
+        },
+        "terms": [
+          {
+            "coefficient": -0.0018982847111038777,
+            "name": "u_xxxx"
+          }
+        ]
+      },
+      "chain_consistent": true,
+      "historical_runtime_independently_authenticated": false
+    },
+    "is_error": false,
+    "duration_seconds": 0.006133603004855104
+  }
+]

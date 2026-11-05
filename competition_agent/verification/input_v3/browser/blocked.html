@@ -1,0 +1,33 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>智能体前置信息处理</title>
+<style>body{font:16px/1.6 system-ui,sans-serif;background:#f5f7fb;color:#20334d;margin:0}main{max-width:1000px;margin:auto;padding:24px}table{width:100%;min-width:640px;border-collapse:collapse;background:white}td,th{padding:10px;text-align:left;border-bottom:1px solid #d8e0ed;overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}.table{overflow-x:auto}h1{font-size:28px}</style><main>
+<h1>智能体前置信息处理</h1><p><b>停止并先修复资料</b>。先处理 P0 格式与来源冲突，再补齐 P1 元数据，最后分派智能体。</p>
+<p>原始资料 1 份，独立内容 1 份，重复 0 份，隔离 1 份。此步骤不使用 LLM，不启动实验，不把 CSV 当训练数据。</p>
+<div class="table"><table><thead><tr><th>资料</th><th>分类</th><th>状态</th><th>重复来源</th><th>候选事实</th></tr></thead><tbody><tr><td>broken.csv</td><td>metadata_triples</td><td>blocked</td><td>独立内容</td><td>0</td></tr></tbody></table></div>
+<h2>按优先级处理的问题</h2><ul><li><b>P0</b> ragged_csv_record<pre>{
+  &quot;priority&quot;: &quot;P0&quot;,
+  &quot;code&quot;: &quot;ragged_csv_record&quot;,
+  &quot;source_id&quot;: &quot;91237a84f9b70125587652b10bacdd67b6730d942010872d85771187920d03a4&quot;,
+  &quot;line&quot;: 2,
+  &quot;expected_columns&quot;: 3,
+  &quot;actual_columns&quot;: 2
+}</pre></li><li><b>P1</b> missing_demo_metadata<pre>{
+  &quot;priority&quot;: &quot;P1&quot;,
+  &quot;code&quot;: &quot;missing_demo_metadata&quot;,
+  &quot;requirements&quot;: [
+    {
+      &quot;subject&quot;: &quot;demo_grid&quot;,
+      &quot;predicate&quot;: &quot;records_field&quot;,
+      &quot;object&quot;: &quot;demo_field&quot;
+    },
+    {
+      &quot;subject&quot;: &quot;demo_field&quot;,
+      &quot;predicate&quot;: &quot;uses_unit&quot;,
+      &quot;object&quot;: &quot;dimensionless&quot;
+    },
+    {
+      &quot;subject&quot;: &quot;demo_grid&quot;,
+      &quot;predicate&quot;: &quot;has_boundary&quot;,
+      &quot;object&quot;: &quot;periodic&quot;
+    }
+  ]
+}</pre></li></ul><p>原文保留；别名只统一标签，不自动进行物理数值单位换算。原文显式断言不是外部真实性证明。</p></main></html>

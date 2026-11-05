@@ -33,3 +33,18 @@ def render(result, evidence, trace):
 
 def save(output,result,evidence,trace):
     Path(output).write_text(render(result,evidence,trace),encoding='utf-8')
+
+def render_inputs(prepared):
+    """Standalone pre-agent quality report, including blocked inputs."""
+    summary=prepared['summary']
+    rows=''.join('<tr>'+''.join(f'<td>{escape(str(v))}</td>' for v in (
+        r['title'],r['classification'],r['status'],r['duplicate_of'] or '独立内容',
+        len(r['candidates'])))+'</tr>' for r in prepared['records'].values())
+    issues=''.join(f'<li><b>{escape(i["priority"])}</b> {escape(i["code"])}<pre>{escape(json.dumps(i,ensure_ascii=False,indent=2))}</pre></li>' for i in summary['issues'])
+    status='停止并先修复资料' if summary['blocked'] else '仍需补齐示例元数据' if not summary['ready_for_demo'] else '可进入示例协作流程'
+    return f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>智能体前置信息处理</title>
+<style>body{{font:16px/1.6 system-ui,sans-serif;background:#f5f7fb;color:#20334d;margin:0}}main{{max-width:1000px;margin:auto;padding:24px}}table{{width:100%;min-width:640px;border-collapse:collapse;background:white}}td,th{{padding:10px;text-align:left;border-bottom:1px solid #d8e0ed;overflow-wrap:anywhere}}pre{{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}}.table{{overflow-x:auto}}h1{{font-size:28px}}</style><main>
+<h1>智能体前置信息处理</h1><p><b>{status}</b>。先处理 P0 格式与来源冲突，再补齐 P1 元数据，最后分派智能体。</p>
+<p>原始资料 {summary['stored_sources']} 份，独立内容 {summary['unique_contents']} 份，重复 {summary['duplicate_sources']} 份，隔离 {summary['quarantined_sources']} 份。此步骤不使用 LLM，不启动实验，不把 CSV 当训练数据。</p>
+<div class="table"><table><thead><tr><th>资料</th><th>分类</th><th>状态</th><th>重复来源</th><th>候选事实</th></tr></thead><tbody>{rows}</tbody></table></div>
+<h2>按优先级处理的问题</h2><ul>{issues or '<li>本示例的前置格式与元数据检查通过。</li>'}</ul><p>原文保留；别名只统一标签，不自动进行物理数值单位换算。原文显式断言不是外部真实性证明。</p></main></html>'''

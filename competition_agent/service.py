@@ -7,6 +7,7 @@ from datetime import datetime,timezone
 import numpy as np
 from active_study import actions,provider,engine,acquisition,forecast,controller
 from competition_agent import evidence_quality as quality
+from competition_agent import preprocess as inputs
 from pde_discovery.generic_experiment import reference_metrics,forecast_metrics
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -25,7 +26,9 @@ def source_hashes():
     return {str(p.relative_to(ROOT)):file_sha(p) for name in packages for p in sorted((ROOT/name).glob('*.py'))}
 
 def setup_hash(s):
-    return digest({k:s[k] for k in ('seed','policy','budget','charged','_spec','_noise','train','dev','documents')})
+    payload={k:s[k] for k in ('seed','policy','budget','charged','_spec','_noise','train','dev','documents')}
+    if 'input_preparation' in s:payload['input_preparation']=s['input_preparation']
+    return digest(payload)
 
 class Lab:
     def __init__(self,directory=None):
@@ -74,6 +77,7 @@ class Lab:
           'uncertainty':{k:v for k,v in (s.get('model') or {}).get('uncertainty',{}).items() if k!='records'},
           'minimal_near_supports':(s.get('model') or {}).get('diagnostics',{}).get('minimal_near_supports',[]),
           'recovery_required':s['phase'] in ('creating','acquiring','validating'),'failure':s.get('failure'),'frequency_calibrated':False,'final_opened':s.get('final_opened',False),
+          'input_preparation':(s.get('input_preparation') or inputs.prepare(list(s['documents'].values())))['summary'],
           'ontology_version':s['ontology']['version'],'graph_facts':len(s['facts']),
           'evidence_quality':quality.assess(s,self.conflicts(s)),'graph_conflicts':self.conflicts(s),'pending_ontology_changes':sum(p['status']=='pending' for p in s['ontology_proposals']),
           'event_count':len(s['events']),'event_head':s['events'][-1]['sha256'] if s['events'] else None}
@@ -124,11 +128,43 @@ class Lab:
             require(s['phase'] not in ('frozen','validating','validated'),'Evidence is frozen')
             require(len(set(s['documents'])|{key for key,d in prepared})<=50,'Document count limit reached')
             for key,d in prepared:s['documents'][key]=d
+            s['input_preparation']=inputs.prepare(list(s['documents'].values()))
+            self.event(s,'input_preprocessor','input_prepared',{'sha256':digest(s['input_preparation']),'summary':s['input_preparation']['summary']})
             self.event(s,'asset_agent','documents_ingested',{'source_ids':[k for k,d in prepared]})
-            return {'sources':[{'source_id':k,'title':d['title'],'kind':d['kind']} for k,d in prepared]}
+            return {'sources':[{'source_id':k,'title':d['title'],'kind':d['kind'],'status':s['input_preparation']['records'][k]['status']} for k,d in prepared], 'input_preparation':s['input_preparation']['summary']}
+    def context_view(self,s,role,offset=0,limit=20):
+        prepared=s.get('input_preparation') or inputs.prepare(list(s['documents'].values()))
+        result={'case_id':s['id'],'role':role,'input_preparation':prepared['summary'],
+                'input_snapshot_sha256':digest(prepared),
+                'format':'prepared evidence only; role filter is not an authorization boundary',
+                'raw_document_bodies_included':False,'phase':s['phase']}
+        if role in ('asset_agent','graph_agent','pde_coordinator'):
+            result['source_catalog']=[{'source_id':k,'title':r['title'],'kind':r['kind'],'status':r['status'],
+                'classification':r['classification'],'duplicate_of':r['duplicate_of'],
+                'columns':r.get('columns'),'row_count':r.get('row_count')} for k,r in prepared['records'].items()]
+        if role=='graph_agent' and not prepared['summary']['blocked']:
+            items=prepared['candidates'];chosen=[];size=0
+            for item in items[offset:offset+limit]:
+                length=len(canonical(item))
+                if chosen and size+length>24576:break
+                chosen.append(item);size+=length
+            result['fact_candidates']=chosen
+            result['next_offset']=offset+len(chosen) if offset+len(chosen)<len(items) else None
+            result['candidate_packet_bytes']=size
+        elif role in ('pde_agent','experiment_agent','validation_agent'):
+            metadata=[{k:f[k] for k in ('subject','predicate','object','source_id')} for f in s['facts'] if (f['subject'],f['predicate']) in {(a,b) for a,b,c in inputs.REQUIREMENTS}]
+            result['metadata_evidence']=metadata[:20];result['metadata_records_total']=len(metadata);result['metadata_truncated']=len(metadata)>20
+            result['discovery_input']='controlled simulator observations only; uploaded CSV is not training data'
+            result['remaining_experiments']=s['budget']-s['charged']
+        return result
+    def context(self,case_id,role='graph_agent',offset=0,limit=20):
+        require(role in inputs.ROLES and integer(offset,0,100000) and integer(limit,1,40),'Invalid context role or pagination')
+        with self.case(case_id,readonly=True) as s:return self.context_view(s,role,offset,limit)
     def search(self,case_id,query,limit=5):
         require(isinstance(query,str) and 1<=len(query)<=300 and integer(limit,1,10),'Invalid search')
-        with self.case(case_id,readonly=True) as s:return quality.retrieve(s['documents'],query,limit)
+        with self.case(case_id,readonly=True) as s:
+            prepared=s.get('input_preparation') or inputs.prepare(list(s['documents'].values()))
+            return quality.retrieve({k:s['documents'][k] for k in prepared['usable_source_ids']},query,limit)
     def graph_propose(self,case_id,facts):
         require(isinstance(facts,list) and 1<=len(facts)<=40,'Need1..40 source-backed facts')
         with self.case(case_id) as s:
@@ -138,9 +174,13 @@ class Lab:
                 require(isinstance(f,dict) and set(f)=={'subject','predicate','object','source_id','quote'},'Invalid fact fields')
                 require(all(isinstance(v,str) and 1<=len(v)<=2000 for v in f.values()),'Invalid fact value')
                 require(f['source_id'] in s['documents'] and f['quote'] in s['documents'][f['source_id']]['text'],'Quote must match a registered source exactly')
-                require(f['subject'] in f['quote'] and f['object'] in f['quote'],'Subject and object must occur in cited evidence')
+                parsed=(s.get('input_preparation') or {}).get('records',{}).get(f['source_id'])
+                if parsed is None:parsed=inputs.parse_document(s['documents'][f['source_id']],f['source_id'])
+                require(parsed['status']=='ready','Quarantined source cannot supply graph facts')
+                matched=inputs.matching_fact(f,s['documents'],parsed)
+                require(matched is not None or f['subject'] in f['quote'] and f['object'] in f['quote'],'Fact must match parsed source or literal subject/object evidence')
                 require(re.fullmatch(r'[a-z][a-z0-9_]{0,63}',f['predicate']),'Invalid relation name')
-                checked.append(dict(f,id=digest(f),status='source_span_verified',citation=quality.span(s['documents'][f['source_id']],f['quote']),relation_assertion_verified=quality.assertion(f,s['documents'])))
+                checked.append(dict(f,id=digest(f),status='source_span_verified',citation=matched['citation'] if matched else quality.span(s['documents'][f['source_id']],f['quote']),transformations=matched['transformations'] if matched else [],relation_assertion_verified=quality.assertion(f,s['documents'],parsed)))
             checked=list({f['id']:f for f in checked}.values())
             proposal={'id':digest(checked),'facts':checked,'status':'proposed','ontology_version':s['ontology']['version']}
             if not any(p['id']==proposal['id'] for p in s['graph_proposals']):s['graph_proposals'].append(proposal)
@@ -252,7 +292,7 @@ class Lab:
             joint_success=recovery['exact_support'] and max_error<=.10 and mean is not None and mean<=.05
             conflicts=self.conflicts(s);pending=any(p['status']=='pending' for p in s['ontology_proposals'])
             evidence_quality=quality.assess(s,conflicts);evidence_ready=evidence_quality['metadata_ready']
-            s['report']={'case_id':s['id'],'origin':'controlled_synthetic_demo','nexent_live_llm_verified':False,'equation':(selected or {}).get('equation'),'terms':terms,'structure':recovery,'max_true_coefficient_relative_error':max_error,'numerical_joint_success':joint_success,'joint_success_rule':'exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%','predictions':rows,'evaluation_slots':3,'evaluation_reference_trajectories_generated':generated,'evaluation_measurement_scalars':generated*7104,'discovery_budget_excludes_final_evaluation':True,'prediction_failure_slots':failures,'mean_prediction_error':mean,'prediction_5pct_passed':mean is not None and mean<=.05,'evidence_ready':evidence_ready,'evidence_quality':evidence_quality,'evidence_conflicts':conflicts,'pending_ontology_review':pending,'evidence_sources':sorted(s['documents']),'graph':s['facts'],'freeze_sha256':s['freeze']['sha256'],'measurement_scalars_charged':s['charged']*7104,'charged_experiments':s['charged'],'frequency_is_probability':False,'real_industry_validation':False,'final_used_for_discovery':False,'note':'This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value.'}
+            s['report']={'case_id':s['id'],'origin':'controlled_synthetic_demo','nexent_live_llm_verified':False,'equation':(selected or {}).get('equation'),'terms':terms,'structure':recovery,'max_true_coefficient_relative_error':max_error,'numerical_joint_success':joint_success,'joint_success_rule':'exact support AND max true coefficient error <=10% AND all 3 predictions valid AND mean prediction error <=5%','predictions':rows,'evaluation_slots':3,'evaluation_reference_trajectories_generated':generated,'evaluation_measurement_scalars':generated*7104,'discovery_budget_excludes_final_evaluation':True,'prediction_failure_slots':failures,'mean_prediction_error':mean,'prediction_5pct_passed':mean is not None and mean<=.05,'evidence_ready':evidence_ready,'evidence_quality':evidence_quality,'input_preparation':(s.get('input_preparation') or inputs.prepare(list(s['documents'].values())))['summary'],'evidence_conflicts':conflicts,'pending_ontology_review':pending,'evidence_sources':sorted(s['documents']),'graph':s['facts'],'freeze_sha256':s['freeze']['sha256'],'measurement_scalars_charged':s['charged']*7104,'charged_experiments':s['charged'],'frequency_is_probability':False,'real_industry_validation':False,'final_used_for_discovery':False,'note':'This local run verifies tool contracts, not multi-agent LLM reasoning quality or industrial value.'}
             s['phase']='validated';self.event(s,'validation_agent','validation_completed',{'report_sha256':digest(s['report'])})
             return s['report']
     @staticmethod
@@ -281,6 +321,7 @@ class Lab:
     def handoff(self,case_id):
         with self.case(case_id,readonly=True) as s:
             self.verify_seals(s)
+            prepared=s.get('input_preparation') or inputs.prepare(list(s['documents'].values()))
             phase=s['phase'];evidence=quality.assess(s,self.conflicts(s));budget=s['budget']-s['charged']
             mapping={'ready':('pde_agent','pde_identify'),'observed':('pde_agent','pde_identify'),
                      'identified':('experiment_agent','experiment_propose') if budget else ('validation_agent','validation_freeze'),
@@ -289,6 +330,9 @@ class Lab:
             stop=phase in ('validated','initial_failed','creating','acquiring','validating')
             issue=None
             if stop:issue='terminal' if phase=='validated' else 'failed_or_pending_operation_do_not_resubmit'
+            elif prepared['summary']['blocked']:
+                role,tool,stop='local_operator',None,True
+                issue='P0_input_preparation_blocked; resolve source problems before agent dispatch'
             elif phase in ('ready','observed','identified') and not evidence['metadata_ready']:
                 role,tool=('asset_agent','asset_ingest') if not s['documents'] else ('graph_agent','graph_propose')
                 issue='evidence_review_required; numerical diagnostics remain possible but cannot imply metadata readiness'
@@ -301,7 +345,8 @@ class Lab:
                     'remaining_experiments':budget,'next_role':role,'next_tool':tool,
                     'next_arguments':args if tool else {},'required_inputs':{'asset_ingest':['documents'],'graph_propose':['facts']}.get(tool,[]),
                     'arguments_complete':tool is not None and tool not in ('asset_ingest','graph_propose'),'stop':stop,'terminal':phase in ('validated','initial_failed'),'reason':issue,
-                    'evidence_quality':evidence,'final_opened':s.get('final_opened',False),
+                    'next_context':self.context_view(s,role) if role in inputs.ROLES and not stop else None,
+                    'input_preparation':prepared['summary'],'evidence_quality':evidence,'final_opened':s.get('final_opened',False),
                     'source_ids':sorted(s['documents']),'freeze_sha256':s.get('freeze',{}).get('sha256'),
                     'authentication_claimed':False,'final_metrics_must_not_guide_new_selection':s.get('final_opened',False)}
     def evidence(self,case_id):

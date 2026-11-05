@@ -3,12 +3,9 @@ from collections import Counter, deque
 import math
 import re
 import unicodedata
+from competition_agent import preprocess as inputs
 
-REQUIREMENTS = (
-    ('demo_grid', 'records_field', 'demo_field'),
-    ('demo_field', 'uses_unit', 'dimensionless'),
-    ('demo_grid', 'has_boundary', 'periodic'),
-)
+REQUIREMENTS = inputs.REQUIREMENTS
 ALIASES = ({'单位', 'unit', 'units', 'uses_unit'},
            {'边界', 'boundary', 'has_boundary'},
            {'字段', 'field', 'records_field'},
@@ -47,11 +44,15 @@ def span(document, quote):
             'offset_unit': 'Unicode code points, half-open'}
 
 
-def assertion(fact, documents):
+def assertion(fact, documents, prepared_record=None):
     """Recognize a whole-line literal triple, NOT a substring of a negation."""
     doc = documents.get(fact['source_id'])
-    if not doc:
-        return False
+    if not doc:return False
+    doc={'title':doc.get('title','evidence'),'kind':doc.get('kind','text'),'text':doc['text']}
+    parsed=prepared_record if prepared_record is not None else inputs.parse_document(doc,fact['source_id'])
+    if parsed['status']=='blocked':return False
+    if inputs.matching_fact(fact,{fact['source_id']:doc},parsed) is not None:
+        return True
     literal = f"{fact['subject']} {fact['predicate']} {fact['object']}"
     return fact['quote'].strip() in (literal, literal + '.') and any(
         line.strip() == fact['quote'].strip() for line in doc['text'].splitlines())
@@ -104,14 +105,16 @@ def retrieve(documents, query, limit):
 
 def assess(state, conflicts):
     facts, docs = state['facts'], state['documents']
-    asserted = [f for f in facts if assertion(f, docs)]
+    prepared=state.get('input_preparation') or inputs.prepare(list(docs.values()))
+    asserted = [f for f in facts if assertion(f, docs, prepared['records'].get(f['source_id']))]
     covered = {(f['subject'], f['predicate'], f['object']) for f in asserted}
     missing = [dict(zip(('subject', 'predicate', 'object'), r)) for r in REQUIREMENTS if r not in covered]
-    unsupported = [f['id'] for f in facts if not assertion(f, docs)]
+    asserted_ids={f['id'] for f in asserted}
+    unsupported = [f['id'] for f in facts if f['id'] not in asserted_ids]
     mismatches = [f['id'] for f in facts for s, p, o in REQUIREMENTS
                   if (f['subject'], f['predicate']) == (s, p) and f['object'] != o]
     pending = [p['id'] for p in state['ontology_proposals'] if p['status'] == 'pending']
-    blockers = []
+    blockers = [{'code':'input_preparation_blocked','details':[i for i in prepared['summary']['issues'] if i['priority']=='P0']}] if prepared['summary']['blocked'] else []
     for code, values in [('missing_required_metadata', missing), ('unverified_relation_assertions', unsupported),
                          ('metadata_disagrees_with_simulator', mismatches), ('conflicting_sources', conflicts),
                          ('pending_ontology_review', pending)]:
@@ -126,6 +129,7 @@ def assess(state, conflicts):
 
 def paths(state, source, target, max_hops=4, limit=3):
     """Bounded directed evidence paths; every edge remains a cited assertion."""
+    prepared=state.get('input_preparation') or inputs.prepare(list(state['documents'].values()))
     adjacency = {}
     for fact in state['facts']:
         adjacency.setdefault(fact['subject'], []).append(fact)
@@ -145,7 +149,7 @@ def paths(state, source, target, max_hops=4, limit=3):
             trail = edges + [fact]
             if nxt == target:
                 found.append({'edges': trail, 'source_ids': sorted({f['source_id'] for f in trail}),
-                              'all_relations_asserted': all(assertion(f, state['documents']) for f in trail)})
+                              'all_relations_asserted': all(assertion(f, state['documents'],prepared['records'].get(f['source_id'])) for f in trail)})
                 if len(found) == limit:
                     break
             else:

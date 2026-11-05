@@ -158,7 +158,7 @@ class CompetitionAgentTests(unittest.TestCase):
             for a in payload['agent_info'].values():self.assertEqual(a['model_names'],[])
             self.assertEqual(len(list(Path(d).glob('*.zip'))),6)
             tools=set(t['class_name'] for a in payload['agent_info'].values() for t in a['tools'])
-            self.assertEqual(len(tools),14);self.assertNotIn('review_ontology',tools)
+            self.assertEqual(len(tools),15);self.assertNotIn('review_ontology',tools)
             self.assertEqual({t['class_name'] for t in payload['agent_info']['15']['tools']},{'case_status','validation_freeze','validation_evaluate','evidence_get'})
     def test_nexent_schema_rejects_missing_actual_required_field(self):
         with tempfile.TemporaryDirectory() as d:
