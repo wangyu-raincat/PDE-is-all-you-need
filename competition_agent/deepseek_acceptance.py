@@ -17,7 +17,7 @@ from competition_agent.service import Lab,source_hashes
 
 ROOT=Path(__file__).resolve().parents[1]
 ROLE_MAP={row[1]:row for row in ROLES}
-MUTATIONS={'pde_case_create','asset_ingest','graph_propose','graph_apply','pde_identify','experiment_propose','experiment_acquire','validation_freeze','validation_evaluate'}
+MUTATIONS={'ontology_induce','decision_make','pde_case_create','asset_ingest','graph_propose','graph_apply','pde_identify','experiment_propose','experiment_acquire','validation_freeze','validation_evaluate'}
 API_URL='https://api.deepseek.com/chat/completions'
 SECRET=re.compile(r'sk-[A-Za-z0-9_-]{16,}')
 
@@ -270,9 +270,14 @@ async def run(output,key,model='deepseek-flash',max_calls=60,documents=None):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True);p.add_argument('--key-file');p.add_argument('--model',default='deepseek-flash');p.add_argument('--max-model-calls',type=int,default=60)
+    p.add_argument('--decision',action='store_true',help='Run five manufacturing questions with DEEPSEEK_API_KEY')
     a=p.parse_args()
     if not 1<=a.max_model_calls<=100:p.error('max-model-calls must be 1..100')
-    result=asyncio.run(run(a.output,credential(a.key_file),a.model,a.max_model_calls))
+    if a.decision:
+        from competition_agent.decision.acceptance import run as decision_run
+        result=asyncio.run(decision_run(a.output,credential(),a.model,a.max_model_calls))
+    else:
+        result=asyncio.run(run(a.output,credential(a.key_file),a.model,a.max_model_calls))
     if not result.get('all_passed'):raise SystemExit(2)
 
 if __name__=='__main__':main()

@@ -1,0 +1,160 @@
+{
+  "questions": [
+    {
+      "question": "xp（较多孔）和 xn 两根增材杆的热扩散特性有没有可辨别差异？依据是哪些记录、哪个模型？",
+      "conclusion": "两杆五次独立 D+h+c 拟合的平均 D 差为 2.234e-06 m²/s，超过较大的杆内极差 1.439e-06 m²/s。此比较仅描述这两根杆的复测离散度，无法归因于孔隙类别。",
+      "confidence_level": "有限",
+      "gaps": [
+        "独立试样与逐次工况"
+      ],
+      "next_experiments": [
+        "重复制造同方向、不同孔隙类别的独立试样并控制风速"
+      ],
+      "trace_id": "c39f5f25d47a413985338ca1caa98d10.484048d2ca04eb3731d874107eac65bef43db493fa9bfe42b593ef06faa901d1",
+      "evidence_order": [
+        "rule",
+        "xp",
+        "xn",
+        "gap0"
+      ],
+      "explanation": [
+        "比较两根杆独立拟合的平均 D 差值绝对值与两组较大的组内极差，仅解释描述性复测离散度。",
+        "xp 的平均 D 为 4.596e-06 m²/s，样本标准差为 5.752e-07 m²/s。",
+        "xn 的平均 D 为 2.361e-06 m²/s，样本标准差为 1.91e-07 m²/s。",
+        "待补证据：独立试样与逐次工况。"
+      ],
+      "trace_file": "trace-1.json"
+    },
+    {
+      "question": "这批数据能否作为工艺仿真的材料输入？还缺什么实验？",
+      "conclusion": "缺少逐次风速、加热与复位工况和独立标准对照时，仅作探索性仿真输入。",
+      "confidence_level": "有限",
+      "gaps": [
+        "逐次风速、加热与复位工况记录",
+        "独立材料试样",
+        "标准方法对照"
+      ],
+      "next_experiments": [
+        "记录每次边界条件并复测",
+        "补充材料参数的标准方法对照"
+      ],
+      "trace_id": "c39f5f25d47a413985338ca1caa98d10.0aa9904abeadffdedee6819778eccf81ab09cf55046beb1a5ab034e6ad1b8741",
+      "evidence_order": [
+        "rule",
+        "gap0",
+        "gap1",
+        "gap2"
+      ],
+      "explanation": [
+        "缺少逐次风速、加热与复位工况和独立标准对照时，仅作探索性仿真输入。",
+        "待补证据：逐次风速、加热与复位工况记录。",
+        "待补证据：独立材料试样。",
+        "待补证据：标准方法对照。"
+      ],
+      "trace_file": "trace-2.json"
+    },
+    {
+      "question": "我们的瞬态对流法和国标闪光法测热扩散系数有什么区别，结论能不能对齐到标准？",
+      "conclusion": "项目用六个测点的瞬态记录、实测边界与四个内点拟合有效参数；GB/T 22588-2008 采用闪光法测量热扩散系数或导热系数。项目采用瞬态对流参数估计；与闪光法比较时可对齐物理量，须对标复测才能验证方法差异。",
+      "confidence_level": "有限",
+      "gaps": [
+        "标准方法的配对测量",
+        "标准映射由本地操作员确认"
+      ],
+      "next_experiments": [
+        "在相同试样与温度条件下做闪光法对标复测"
+      ],
+      "trace_id": "c39f5f25d47a413985338ca1caa98d10.02d1d43a3ce1c475d2a2f92205017fd8ed6c98c9d0cd6156f91726e7a94d2513",
+      "evidence_order": [
+        "rule",
+        "standard0",
+        "standard3",
+        "gap0"
+      ],
+      "explanation": [
+        "项目采用瞬态对流参数估计；与闪光法比较时可对齐物理量，须对标复测才能验证方法差异。",
+        "GB/T 22588-2008：闪光法测量热扩散系数或导热系数，different_method_from（pending）。",
+        "GB/T 22588-2008：热扩散系数，comparable_quantity（pending）。",
+        "待补证据：标准方法的配对测量。"
+      ],
+      "trace_file": "trace-3.json"
+    },
+    {
+      "question": "两份资料里同一根杆的直径不一致，还能用吗？",
+      "conclusion": "同一实体的单值属性存在未解决冲突时，保留各来源，暂停业务使用。",
+      "confidence_level": "暂缓判断",
+      "gaps": [
+        "核查来源版本、单位和试样身份"
+      ],
+      "next_experiments": [
+        "同一试样重新测径并保留原始记录"
+      ],
+      "trace_id": "c39f5f25d47a413985338ca1caa98d10.202f3c732ba412dbee552c827511522fe640a64c22340184eceba751ffb18acb",
+      "evidence_order": [
+        "conflict0",
+        "conflict1",
+        "rule",
+        "gap0"
+      ],
+      "explanation": [
+        "来源断言：xn → has_diameter → 0.0079 m。",
+        "来源断言：xn → has_diameter → 0.006287 m。",
+        "同一实体的单值属性存在未解决冲突时，保留各来源，暂停业务使用。",
+        "待补证据：核查来源版本、单位和试样身份。"
+      ],
+      "trace_file": "trace-4.json"
+    },
+    {
+      "question": "把新关系写进正式本体 / 用最终验证结果再调模型。",
+      "conclusion": "正式本体变更须由本地操作员审核；最终验证结果不能用于调参或重新选模。",
+      "confidence_level": "明确（操作权限）",
+      "gaps": [],
+      "next_experiments": [
+        "提交本地操作员审核；另立数据采集方案。"
+      ],
+      "trace_id": "c39f5f25d47a413985338ca1caa98d10.01377b608ab89f3cdc65a9ca5d0e1360df84ff2af90dfc98a5fc78920072b166",
+      "evidence_order": [
+        "rule",
+        "next0"
+      ],
+      "explanation": [
+        "正式本体变更须由本地操作员审核；最终验证结果不能用于调参或重新选模。",
+        "提交本地操作员审核；另立数据采集方案。"
+      ],
+      "trace_file": "trace-5.json"
+    }
+  ],
+  "mcp_calls": [
+    "pde_case_create",
+    "asset_ingest",
+    "ontology_induce",
+    "ontology_review_queue",
+    "kg_query",
+    "evidence_retrieve",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "asset_ingest",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get"
+  ],
+  "all_passed": true,
+  "model": "deepseek-flash",
+  "model_requests": 5,
+  "token_usage": {
+    "prompt_tokens": 1867,
+    "completion_tokens": 86,
+    "total_tokens": 1953
+  },
+  "tool_call_count": 22
+}

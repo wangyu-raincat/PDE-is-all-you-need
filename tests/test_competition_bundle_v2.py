@@ -66,7 +66,7 @@ class NexentV2BundleTests(unittest.TestCase):
                 names.add(tool['class_name'])
         self.assertEqual(server, 'pde_lab_tools')
         self.assertEqual(len(names), meta['mcp_tool_count'])
-        self.assertEqual(len(names), 21)
+        self.assertEqual(len(names), 26)
         # Inspect actual registrations, including imported heat tools; no network listener.
         import asyncio
         from competition_agent.mcp_server import build_server
@@ -104,17 +104,17 @@ class NexentV2BundleTests(unittest.TestCase):
         payload, meta = build(self.dest, nexent_version='legacy')
         expected = json.loads((ROOT/'competition_agent/config/nexent-agents.json').read_text(encoding='utf-8'))
         compatible = copy.deepcopy(payload)
-        heat_tools = {'heat_identify', 'heat_holdout_summary', 'heat_compare'}
+        heat_tools = {'heat_identify', 'heat_holdout_summary', 'heat_compare', 'heat_repeatability'}
         for key, agent in compatible['agent_info'].items():
             self.assertTrue(agent['prompt'])
             # Manufacturing prompts intentionally evolve; all other original fields stay fixed.
             agent['prompt'] = expected['agent_info'][key]['prompt']
             added = {tool['class_name'] for tool in agent['tools']} & heat_tools
             self.assertEqual(added, heat_tools if agent['name'] == 'pde_agent' else set())
-            ontology_tools={'ontology_induce','ontology_review_queue','standard_align'}
+            ontology_tools={'ontology_induce','ontology_review_queue','standard_align','kg_query','evidence_retrieve'}
             self.assertEqual({t['class_name'] for t in agent['tools']} & ontology_tools,
                              ontology_tools if agent['name']=='graph_agent' else set())
-            agent['tools']=[t for t in agent['tools'] if t['class_name'] not in ontology_tools]
+            agent['tools']=[t for t in agent['tools'] if t['class_name'] not in ontology_tools | {'decision_make','decision_trace_get'}]
             agent['tools'] = [tool for tool in agent['tools'] if tool['class_name'] not in heat_tools]
         self.assertEqual(compatible, expected)
         self.assertEqual(meta['schema_reference_commit'], SCHEMA_REFERENCES['legacy'][0])

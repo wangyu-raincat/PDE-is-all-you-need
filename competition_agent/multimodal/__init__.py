@@ -192,6 +192,10 @@ def project(asset):
     for block in asset['blocks']:
         text=block.get('text','')
         if not text: continue
+        if asset.get('modality') == 'pdf':
+            # PDF font/control placeholders are layout artifacts. Keep raw blocks
+            # and replace one code point with one space only in the search view.
+            text = ''.join(' ' if ord(c)<32 and c not in '\r\n\t' else c for c in text)
         spans.append({'start_char':offset,'end_char':offset+len(text),
                       'block_id':block['block_id'],'locator':block['locator'],
                       'needs_review':block['needs_review']})
