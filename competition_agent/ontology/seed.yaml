@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "classes": [
+    "Organization",
+    "Equipment",
+    "Sensor",
+    "MeasurementPoint",
+    "Specimen",
+    "Material",
+    "BuildDirection",
+    "PorosityClass",
+    "ProcessCondition",
+    "Experiment",
+    "ObservationField",
+    "Unit",
+    "PhysicalModel",
+    "ModelParameter",
+    "ValidationResult",
+    "StandardClause"
+  ],
+  "relations": {
+    "has_material": {
+      "domain": "Specimen",
+      "range": "Material",
+      "max": 1
+    },
+    "has_build_direction": {
+      "domain": "Specimen",
+      "range": "BuildDirection",
+      "max": 1
+    },
+    "has_porosity_class": {
+      "domain": "Specimen",
+      "range": "PorosityClass",
+      "max": 1
+    },
+    "has_test": {
+      "domain": "Specimen",
+      "range": "Experiment",
+      "max": null
+    },
+    "records_field": {
+      "domain": "Experiment",
+      "range": "ObservationField",
+      "max": null
+    },
+    "uses_unit": {
+      "domain": "ObservationField",
+      "range": "Unit",
+      "max": 1
+    },
+    "has_diameter": {
+      "domain": "Specimen",
+      "range": "ModelParameter",
+      "max": 1
+    },
+    "has_length": {
+      "domain": "Specimen",
+      "range": "ModelParameter",
+      "max": 1
+    },
+    "has_density": {
+      "domain": "Specimen",
+      "range": "ModelParameter",
+      "max": 1
+    },
+    "has_condition": {
+      "domain": "Experiment",
+      "range": "ProcessCondition",
+      "max": null
+    },
+    "uses_sensor": {
+      "domain": "Equipment",
+      "range": "Sensor",
+      "max": null
+    },
+    "at_point": {
+      "domain": "Sensor",
+      "range": "MeasurementPoint",
+      "max": 1
+    },
+    "different_method_from": {
+      "domain": "PhysicalModel",
+      "range": "StandardClause",
+      "max": null
+    },
+    "comparable_quantity": {
+      "domain": "PhysicalModel",
+      "range": "StandardClause",
+      "max": null
+    }
+  }
+}
