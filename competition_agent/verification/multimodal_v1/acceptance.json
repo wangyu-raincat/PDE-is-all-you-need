@@ -6,52 +6,885 @@
       "kind": "pdf",
       "sha256": "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36",
       "status": "parsed",
-      "blocks": 114,
-      "key_sentence_candidates": [
-        {
-          "type": "text",
-          "text": "The raw experimental data is given in the CSV documents is the raw data collected from run- \nning the experiment. Each ﬁle contains the time and temperature data from each thermocouple, \nand the power setting for the test using a 10 bit duty cycle PWM controller. The temperature \nis in the format of excess temperature ( θ). There are three sets of data: constant wind speed \nat different boundary temperatures [1] , constant boundary temperature at different wind speeds \n[1] , and additively manufactured stainless steel 304L [2] . The ﬁle naming convention for the ﬁles \nat a constant wind speed of 5 m/s is the boundary temperature, material, and test number (i.e. \n50ss1 would be for the ﬁrst test of SAE-304 at 50 °C). The ﬁle naming convention for the ﬁles at \na constant boundary temperature of 75 °C is material and wind speed (i.e. ss1 would be for the \ntest of SAE-304 at 1 m/s wind speed). The ﬁle naming convention for the additively manufac- \ntured materials are the build direction (x or y), if it is the more porous variety or not (p or n), \nand the test number (i.e. xp1 would be the ﬁrst test for the more porous specimen built along \nthe x direction). \nThe oneDkhEstimator Python code included with the article is used to analyze the data. This \ncode takes the raw data and performs the parameter estimation routine outlined in Section 2 . \nAlso given are the results from the parameter estimation given in an Excel document pro- \nduced by the Python code from the stainless steel (SAE-304), aluminum (Al6061-T6), copper (110 \nCu-H04), and four additively manufactured rods. The Excel ﬁle contains the values calculated us- \ning the parameter estimation code in Python and the list of output variables is given in Table 1 . \nThe top cell will have the ﬁlename of the data analyzed followed by the number of terms used \nin the Fourier series. The ﬁrst set of results is the ﬁnite difference boundary condition followed \nby the steady state model results and the results from the transient model. In each model, the \nestimated parameters are ﬁrst given followed by the mean standard error for the model then \nthe error for the individual parameters that is calculated according to Section 2.2.5 . ",
-          "locator": {
-            "page": 3,
-            "bbox": [
-              36.1349983215332,
-              353.6246032714844,
-              401.6490478515625,
-              602.1915893554688
-            ],
-            "coordinate_system": "PDF points, top-left",
-            "line": 1,
-            "end_line": 24,
-            "start_char": 0,
-            "end_char": 2215,
-            "offset_scope": "block text"
-          },
-          "block_id": "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36:33",
-          "needs_review": false
-        }
-      ],
-      "semantic_acceptance": "manual review of direction/porosity/repeats and page+bbox required"
+      "blocks": 114
     },
     {
       "path": "competition_agent/assets_raw/AdditiveRodResults.xlsx",
       "kind": "xlsx",
       "sha256": "dfbb0c03f6873aed83e4d8bab986fb3c310f0fe216f29cffd9b15f1520dff494",
       "status": "parsed",
-      "blocks": 4
+      "blocks": 4,
+      "sheets": [
+        {
+          "locator": {
+            "sheet": "xn",
+            "cell_range": "A1:F64"
+          },
+          "nonempty_cells": 129,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "xn1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "xn2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "xn3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "xn4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "xn5",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100,
+              "formula_cache_missing": false
+            }
+          ]
+        },
+        {
+          "locator": {
+            "sheet": "xp",
+            "cell_range": "A1:F64"
+          },
+          "nonempty_cells": 129,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "xp1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "xp2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "xp3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "xp4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "xp5",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100,
+              "formula_cache_missing": false
+            }
+          ]
+        },
+        {
+          "locator": {
+            "sheet": "yn",
+            "cell_range": "A1:F64"
+          },
+          "nonempty_cells": 129,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "yn1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "yn2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "yn3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "yn4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "yn5",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100,
+              "formula_cache_missing": false
+            }
+          ]
+        },
+        {
+          "locator": {
+            "sheet": "yp",
+            "cell_range": "A1:F62"
+          },
+          "nonempty_cells": 129,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "yp1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "yp2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "yp3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "yp4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "yp5",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100,
+              "formula_cache_missing": false
+            }
+          ]
+        }
+      ],
+      "source_xml_formula_count": 0,
+      "formula_count_verified": true,
+      "note": "Zero source formulas means real files cannot exercise formula/cache preservation; use generated fixture."
     },
     {
       "path": "competition_agent/assets_raw/Temperature Results.xlsx",
       "kind": "xlsx",
       "sha256": "27ce776bf998cb13d8e57036f5021c3794df93496b6280544086d075c8f871f5",
       "status": "parsed",
-      "blocks": 3
+      "blocks": 3,
+      "sheets": [
+        {
+          "locator": {
+            "sheet": "SS",
+            "cell_range": "A1:J64"
+          },
+          "nonempty_cells": 215,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "50ss1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "50ss2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "50ss3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "75ss1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "75ss2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "G1",
+              "formula": null,
+              "value": "75ss3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "H1",
+              "formula": null,
+              "value": "100ss1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "I1",
+              "formula": null,
+              "value": "100ss2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "J1",
+              "formula": null,
+              "value": "100ss3",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            }
+          ]
+        },
+        {
+          "locator": {
+            "sheet": "Al",
+            "cell_range": "A1:Z1000"
+          },
+          "nonempty_cells": 215,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "50al1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "50al2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "50al3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "75al1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "75al2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "G1",
+              "formula": null,
+              "value": "75al3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "H1",
+              "formula": null,
+              "value": "100al1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "I1",
+              "formula": null,
+              "value": "100al2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "J1",
+              "formula": null,
+              "value": "100al3",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            }
+          ]
+        },
+        {
+          "locator": {
+            "sheet": "Cu",
+            "cell_range": "A1:Z1000"
+          },
+          "nonempty_cells": 215,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "50cu1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "50cu2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "50cu3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "75cu1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "75cu2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "G1",
+              "formula": null,
+              "value": "75cu3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "H1",
+              "formula": null,
+              "value": "100cu1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "I1",
+              "formula": null,
+              "value": "100cu2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "J1",
+              "formula": null,
+              "value": "100cu3",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            }
+          ]
+        }
+      ],
+      "source_xml_formula_count": 0,
+      "formula_count_verified": true,
+      "note": "Zero source formulas means real files cannot exercise formula/cache preservation; use generated fixture."
     },
     {
       "path": "competition_agent/assets_raw/Wind Results.xlsx",
       "kind": "xlsx",
       "sha256": "78bd2f780196f4f7f63dca6f5ad490072fed54e0023d57c13375b035840a6fc2",
       "status": "parsed",
-      "blocks": 3
+      "blocks": 3,
+      "sheets": [
+        {
+          "locator": {
+            "sheet": "SS",
+            "cell_range": "A1:K64"
+          },
+          "nonempty_cells": 234,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "ss1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "ss2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "ss3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "ss4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "ss5",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "G1",
+              "formula": null,
+              "value": "ss6",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "H1",
+              "formula": null,
+              "value": "ss7",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "I1",
+              "formula": null,
+              "value": "ss8",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "J1",
+              "formula": null,
+              "value": "ss9",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "K1",
+              "formula": null,
+              "value": "ss10",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            }
+          ]
+        },
+        {
+          "locator": {
+            "sheet": "Al",
+            "cell_range": "A1:Z1000"
+          },
+          "nonempty_cells": 236,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "al1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "al2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "al3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "al4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "al5",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "G1",
+              "formula": null,
+              "value": "al6",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "H1",
+              "formula": null,
+              "value": "al7",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "I1",
+              "formula": null,
+              "value": "al8",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "J1",
+              "formula": null,
+              "value": "al9",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "K1",
+              "formula": null,
+              "value": "al10",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            }
+          ]
+        },
+        {
+          "locator": {
+            "sheet": "Cu",
+            "cell_range": "A1:Z1000"
+          },
+          "nonempty_cells": 236,
+          "formula_count": 0,
+          "cached_formula_count": 0,
+          "missing_formula_cache_count": 0,
+          "header_cells": [
+            {
+              "cell": "A1",
+              "formula": null,
+              "value": "Variable",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "cu1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "cu2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "cu3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "cu4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "cu5",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "G1",
+              "formula": null,
+              "value": "cu6",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "H1",
+              "formula": null,
+              "value": "cu7",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "I1",
+              "formula": null,
+              "value": "cu8",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "J1",
+              "formula": null,
+              "value": "cu9",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "K1",
+              "formula": null,
+              "value": "cu10",
+              "formula_cache_missing": false
+            }
+          ],
+          "value_examples": [
+            {
+              "cell": "A2",
+              "formula": null,
+              "value": "N",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "B2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C2",
+              "formula": null,
+              "value": 100.0,
+              "formula_cache_missing": false
+            }
+          ]
+        }
+      ],
+      "source_xml_formula_count": 0,
+      "formula_count_verified": true,
+      "note": "Zero source formulas means real files cannot exercise formula/cache preservation; use generated fixture."
     },
     {
       "path": "pde_discovery/data/mendeley_heat/author_oneDkhEstimator_V1.0.0_full_source.txt",
@@ -438,64 +1271,163 @@
       "sha256": "852b00e054ebf722bf9e7afa94b49183322d29dd01b859bb1c503dd00ff66e79",
       "status": "parsed",
       "blocks": 1,
-      "conflicts": [
+      "ocr": [
         {
-          "candidate": {
-            "subject": "xn",
-            "predicate": "has_build_direction",
-            "object": "y",
-            "source_id": "record_card",
-            "quote": "xn has_build_direction y"
-          },
-          "existing_facts": [
-            {
-              "subject": "xn",
-              "predicate": "has_build_direction",
-              "object": "x",
-              "source_id": "c1bd3d61fe36e4c35b5f78aa896b08e339f1543df0c9acb621c439e637184c61",
-              "quote": "| xn | x / 非较多孔类别 | 0.006287 | 0.15209 | 7812.98 | 226–230 |",
-              "locator": {
-                "file": "pde_discovery/data/additive_heat/metadata_verification.md",
-                "line": 21
-              },
-              "origin": "public metadata reference for acceptance; not an existing case graph"
-            }
+          "text": "自制示例／实验记录卡",
+          "bbox": [
+            [
+              42.0,
+              25.0
+            ],
+            [
+              362.0,
+              25.0
+            ],
+            [
+              362.0,
+              53.0
+            ],
+            [
+              42.0,
+              53.0
+            ]
           ],
-          "locations": [
-            {
-              "start_char": 18,
-              "end_char": 42,
-              "block_id": "852b00e054ebf722bf9e7afa94b49183322d29dd01b859bb1c503dd00ff66e79:0",
-              "locator": {
-                "file": "E:\\PDE-is-all-you-need\\competition_agent\\assets_raw\\examples\\自制示例-xn.png",
-                "coordinate_system": "image pixels, top-left",
-                "bbox": [
-                  [
-                    33.0,
-                    174.0
-                  ],
-                  [
-                    414.0,
-                    178.0
-                  ],
-                  [
-                    414.0,
-                    208.0
-                  ],
-                  [
-                    33.0,
-                    205.0
-                  ]
-                ]
-              },
-              "needs_review": true
-            }
+          "confidence": 0.9794778406620026
+        },
+        {
+          "text": "试样号：xn",
+          "bbox": [
+            [
+              34.0,
+              98.0
+            ],
+            [
+              197.0,
+              100.0
+            ],
+            [
+              196.0,
+              134.0
+            ],
+            [
+              34.0,
+              131.0
+            ]
           ],
-          "status": "requires_review_not_automatically_resolved"
+          "confidence": 0.9961037437121073
+        },
+        {
+          "text": "xn has_build_direction y",
+          "bbox": [
+            [
+              33.0,
+              174.0
+            ],
+            [
+              414.0,
+              178.0
+            ],
+            [
+              414.0,
+              208.0
+            ],
+            [
+              33.0,
+              205.0
+            ]
+          ],
+          "confidence": 0.9898599858085314
+        },
+        {
+          "text": "测试日期：未记录",
+          "bbox": [
+            [
+              36.0,
+              250.0
+            ],
+            [
+              286.0,
+              250.0
+            ],
+            [
+              286.0,
+              281.0
+            ],
+            [
+              36.0,
+              281.0
+            ]
+          ],
+          "confidence": 0.9991323724389076
+        },
+        {
+          "text": "环境温度：20.8C(源码设定，非实测)",
+          "bbox": [
+            [
+              35.0,
+              324.0
+            ],
+            [
+              581.0,
+              325.0
+            ],
+            [
+              581.0,
+              356.0
+            ],
+            [
+              35.0,
+              355.0
+            ]
+          ],
+          "confidence": 0.9778827250003814
+        },
+        {
+          "text": "风速：5m/s(源码猜测，非实测)",
+          "bbox": [
+            [
+              37.0,
+              400.0
+            ],
+            [
+              503.0,
+              400.0
+            ],
+            [
+              503.0,
+              430.0
+            ],
+            [
+              37.0,
+              430.0
+            ]
+          ],
+          "confidence": 0.9948649897294886
+        },
+        {
+          "text": "仅用于解析演示，不是原始实验记录",
+          "bbox": [
+            [
+              37.0,
+              477.0
+            ],
+            [
+              538.0,
+              477.0
+            ],
+            [
+              538.0,
+              505.0
+            ],
+            [
+              37.0,
+              505.0
+            ]
+          ],
+          "confidence": 0.9996078871190548
         }
       ],
-      "expected_conflicts": 1,
-      "conflict_check_passed": true
+      "needs_review": true
     },
     {
       "path": "competition_agent/assets_raw/examples/自制示例-xp.png",
@@ -503,11 +1435,1138 @@
       "sha256": "b63e910aa534a0db9da53b2a7d29779d10fb47070a9333da67e90d8fd3d8f895",
       "status": "parsed",
       "blocks": 1,
-      "conflicts": [],
-      "expected_conflicts": 0,
-      "conflict_check_passed": true
+      "ocr": [
+        {
+          "text": "自制示例／实验记录卡",
+          "bbox": [
+            [
+              42.0,
+              26.0
+            ],
+            [
+              363.0,
+              26.0
+            ],
+            [
+              363.0,
+              54.0
+            ],
+            [
+              42.0,
+              54.0
+            ]
+          ],
+          "confidence": 0.9840935468673706
+        },
+        {
+          "text": "试样号：xp",
+          "bbox": [
+            [
+              34.0,
+              97.0
+            ],
+            [
+              195.0,
+              102.0
+            ],
+            [
+              194.0,
+              135.0
+            ],
+            [
+              33.0,
+              130.0
+            ]
+          ],
+          "confidence": 0.9253521859645844
+        },
+        {
+          "text": "xp has_build_direction x",
+          "bbox": [
+            [
+              34.0,
+              177.0
+            ],
+            [
+              415.0,
+              174.0
+            ],
+            [
+              416.0,
+              205.0
+            ],
+            [
+              34.0,
+              208.0
+            ]
+          ],
+          "confidence": 0.9801533271869024
+        },
+        {
+          "text": "测试日期：未记录",
+          "bbox": [
+            [
+              36.0,
+              250.0
+            ],
+            [
+              285.0,
+              250.0
+            ],
+            [
+              285.0,
+              281.0
+            ],
+            [
+              36.0,
+              281.0
+            ]
+          ],
+          "confidence": 0.9991723150014877
+        },
+        {
+          "text": "环境温度：20.8C(源码设定，非实测)",
+          "bbox": [
+            [
+              35.0,
+              324.0
+            ],
+            [
+              581.0,
+              325.0
+            ],
+            [
+              581.0,
+              356.0
+            ],
+            [
+              35.0,
+              355.0
+            ]
+          ],
+          "confidence": 0.9778827250003814
+        },
+        {
+          "text": "风速：5m/s(源码猜测，非实测)",
+          "bbox": [
+            [
+              37.0,
+              400.0
+            ],
+            [
+              503.0,
+              400.0
+            ],
+            [
+              503.0,
+              430.0
+            ],
+            [
+              37.0,
+              430.0
+            ]
+          ],
+          "confidence": 0.9948649897294886
+        },
+        {
+          "text": "仅用于解析演示，不是原始实验记录",
+          "bbox": [
+            [
+              37.0,
+              477.0
+            ],
+            [
+              538.0,
+              477.0
+            ],
+            [
+              538.0,
+              505.0
+            ],
+            [
+              37.0,
+              505.0
+            ]
+          ],
+          "confidence": 0.9996078871190548
+        }
+      ],
+      "needs_review": true
     }
   ],
   "complete": false,
-  "vlm": "optional, disabled; no network calls"
+  "vlm": "disabled",
+  "pdf_acceptance": {
+    "status": "passed_with_source_exception",
+    "source_id": "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36",
+    "direction_porosity": {
+      "quote": "The raw experimental data is given in the CSV documents is the raw data collected from run- \nning the experiment. Each ﬁle contains the time and temperature data from each thermocouple, \nand the power setting for the test using a 10 bit duty cycle PWM controller. The temperature \nis in the format of excess temperature ( θ). There are three sets of data: constant wind speed \nat different boundary temperatures [1] , constant boundary temperature at different wind speeds \n[1] , and additively manufactured stainless steel 304L [2] . The ﬁle naming convention for the ﬁles \nat a constant wind speed of 5 m/s is the boundary temperature, material, and test number (i.e. \n50ss1 would be for the ﬁrst test of SAE-304 at 50 °C). The ﬁle naming convention for the ﬁles at \na constant boundary temperature of 75 °C is material and wind speed (i.e. ss1 would be for the \ntest of SAE-304 at 1 m/s wind speed). The ﬁle naming convention for the additively manufac- \ntured materials are the build direction (x or y), if it is the more porous variety or not (p or n), \nand the test number (i.e. xp1 would be the ﬁrst test for the more porous specimen built along \nthe x direction). \nThe oneDkhEstimator Python code included with the article is used to analyze the data. This \ncode takes the raw data and performs the parameter estimation routine outlined in Section 2 . \nAlso given are the results from the parameter estimation given in an Excel document pro- \nduced by the Python code from the stainless steel (SAE-304), aluminum (Al6061-T6), copper (110 \nCu-H04), and four additively manufactured rods. The Excel ﬁle contains the values calculated us- \ning the parameter estimation code in Python and the list of output variables is given in Table 1 . \nThe top cell will have the ﬁlename of the data analyzed followed by the number of terms used \nin the Fourier series. The ﬁrst set of results is the ﬁnite difference boundary condition followed \nby the steady state model results and the results from the transient model. In each model, the \nestimated parameters are ﬁrst given followed by the mean standard error for the model then \nthe error for the individual parameters that is calculated according to Section 2.2.5 . ",
+      "locator": {
+        "page": 3,
+        "bbox": [
+          36.1349983215332,
+          353.6246032714844,
+          401.6490478515625,
+          602.1915893554688
+        ],
+        "coordinate_system": "PDF points, top-left",
+        "line": 1,
+        "end_line": 24,
+        "start_char": 0,
+        "end_char": 2215,
+        "offset_scope": "block text"
+      }
+    },
+    "pages_inspected": 7,
+    "repeat_sentence_matches": [],
+    "source_exception": "No explicit five-tests-per-rod sentence located in this data paper. Do not attribute the alternate evidence to the PDF.",
+    "repeat_count_alternate_evidence": [
+      {
+        "group": "xn",
+        "count": 5,
+        "code_evidence": {
+          "source_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b",
+          "quote": "filenames=['xn1','xn2','xn3','xn4','xn5']",
+          "locator": {
+            "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+            "line": 227,
+            "end_line": 227,
+            "start_char": 7540,
+            "end_char": 7581
+          }
+        },
+        "xlsx_evidence": {
+          "source_id": "dfbb0c03f6873aed83e4d8bab986fb3c310f0fe216f29cffd9b15f1520dff494",
+          "locator": {
+            "sheet": "xn",
+            "cell_range": "B1:F1"
+          },
+          "cells": [
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "xn1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "xn2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "xn3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "xn4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "xn5",
+              "formula_cache_missing": false
+            }
+          ]
+        }
+      },
+      {
+        "group": "xp",
+        "count": 5,
+        "code_evidence": {
+          "source_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b",
+          "quote": "filenames=['xp1','xp2','xp3','xp4','xp5']",
+          "locator": {
+            "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+            "line": 237,
+            "end_line": 237,
+            "start_char": 7848,
+            "end_char": 7889
+          }
+        },
+        "xlsx_evidence": {
+          "source_id": "dfbb0c03f6873aed83e4d8bab986fb3c310f0fe216f29cffd9b15f1520dff494",
+          "locator": {
+            "sheet": "xp",
+            "cell_range": "B1:F1"
+          },
+          "cells": [
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "xp1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "xp2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "xp3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "xp4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "xp5",
+              "formula_cache_missing": false
+            }
+          ]
+        }
+      },
+      {
+        "group": "yn",
+        "count": 5,
+        "code_evidence": {
+          "source_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b",
+          "quote": "filenames=['yn1','yn2','yn3','yn4','yn5']",
+          "locator": {
+            "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+            "line": 232,
+            "end_line": 232,
+            "start_char": 7694,
+            "end_char": 7735
+          }
+        },
+        "xlsx_evidence": {
+          "source_id": "dfbb0c03f6873aed83e4d8bab986fb3c310f0fe216f29cffd9b15f1520dff494",
+          "locator": {
+            "sheet": "yn",
+            "cell_range": "B1:F1"
+          },
+          "cells": [
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "yn1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "yn2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "yn3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "yn4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "yn5",
+              "formula_cache_missing": false
+            }
+          ]
+        }
+      },
+      {
+        "group": "yp",
+        "count": 5,
+        "code_evidence": {
+          "source_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b",
+          "quote": "filenames=['yp1','yp2','yp3','yp4','yp5']",
+          "locator": {
+            "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+            "line": 242,
+            "end_line": 242,
+            "start_char": 8002,
+            "end_char": 8043
+          }
+        },
+        "xlsx_evidence": {
+          "source_id": "dfbb0c03f6873aed83e4d8bab986fb3c310f0fe216f29cffd9b15f1520dff494",
+          "locator": {
+            "sheet": "yp",
+            "cell_range": "B1:F1"
+          },
+          "cells": [
+            {
+              "cell": "B1",
+              "formula": null,
+              "value": "yp1",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "C1",
+              "formula": null,
+              "value": "yp2",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "D1",
+              "formula": null,
+              "value": "yp3",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "E1",
+              "formula": null,
+              "value": "yp4",
+              "formula_cache_missing": false
+            },
+            {
+              "cell": "F1",
+              "formula": null,
+              "value": "yp5",
+              "formula_cache_missing": false
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "graph_acceptance": {
+    "status": "passed",
+    "case_id": "af7881bca21d442ba93b129fdd2fcba9",
+    "storage": "real Lab SQLite in disposable acceptance directory",
+    "fixture_notice": "Synthetic demo case; ontology operator approval is simulated only in this isolated test. Not a production human review.",
+    "existing_graph_facts": [
+      {
+        "citation": {
+          "end_char": 1206,
+          "end_line": 21,
+          "line": 21,
+          "offset_unit": "Unicode code points, half-open",
+          "start_char": 1146
+        },
+        "id": "ba6eff3c0dd5bece0e607bdab1a8f6e211a70ffcc6b9ded9f6f8f5db4d16b4a2",
+        "object": "x",
+        "predicate": "has_build_direction",
+        "quote": "| xn | x / 非较多孔类别 | 0.006287 | 0.15209 | 7812.98 | 226–230 |",
+        "relation_assertion_verified": false,
+        "source_id": "ae95f7d92608ce4f2119f9ed27e560776176a6e411210911cb3797d11fb48de6",
+        "status": "source_span_verified",
+        "subject": "xn",
+        "transformations": []
+      },
+      {
+        "citation": {
+          "end_char": 1266,
+          "end_line": 22,
+          "line": 22,
+          "offset_unit": "Unicode code points, half-open",
+          "start_char": 1207
+        },
+        "id": "ec48db8d589ac2b8a1ed19aa86db19dec3de11f1d5a01bc07cbdac8d36c7e8bf",
+        "object": "x",
+        "predicate": "has_build_direction",
+        "quote": "| xp | x / 较多孔类别 | 0.005302 | 0.15233 | 7392.47 | 236–240 |",
+        "relation_assertion_verified": false,
+        "source_id": "ae95f7d92608ce4f2119f9ed27e560776176a6e411210911cb3797d11fb48de6",
+        "status": "source_span_verified",
+        "subject": "xp",
+        "transformations": []
+      }
+    ],
+    "ocr_sources": {
+      "xn": {
+        "source_id": "6eda6cee75dbad20282f98760e657ca50fae10edfcd0247c06f31059e7f6fae3",
+        "asset_id": "852b00e054ebf722bf9e7afa94b49183322d29dd01b859bb1c503dd00ff66e79",
+        "ocr": [
+          {
+            "bbox": [
+              [
+                42.0,
+                25.0
+              ],
+              [
+                362.0,
+                25.0
+              ],
+              [
+                362.0,
+                53.0
+              ],
+              [
+                42.0,
+                53.0
+              ]
+            ],
+            "confidence": 0.9794778406620026,
+            "text": "自制示例／实验记录卡"
+          },
+          {
+            "bbox": [
+              [
+                34.0,
+                98.0
+              ],
+              [
+                197.0,
+                100.0
+              ],
+              [
+                196.0,
+                134.0
+              ],
+              [
+                34.0,
+                131.0
+              ]
+            ],
+            "confidence": 0.9961037437121073,
+            "text": "试样号：xn"
+          },
+          {
+            "bbox": [
+              [
+                33.0,
+                174.0
+              ],
+              [
+                414.0,
+                178.0
+              ],
+              [
+                414.0,
+                208.0
+              ],
+              [
+                33.0,
+                205.0
+              ]
+            ],
+            "confidence": 0.9898599858085314,
+            "text": "xn has_build_direction y"
+          },
+          {
+            "bbox": [
+              [
+                36.0,
+                250.0
+              ],
+              [
+                286.0,
+                250.0
+              ],
+              [
+                286.0,
+                281.0
+              ],
+              [
+                36.0,
+                281.0
+              ]
+            ],
+            "confidence": 0.9991323724389076,
+            "text": "测试日期：未记录"
+          },
+          {
+            "bbox": [
+              [
+                35.0,
+                324.0
+              ],
+              [
+                581.0,
+                325.0
+              ],
+              [
+                581.0,
+                356.0
+              ],
+              [
+                35.0,
+                355.0
+              ]
+            ],
+            "confidence": 0.9778827250003814,
+            "text": "环境温度：20.8C(源码设定，非实测)"
+          },
+          {
+            "bbox": [
+              [
+                37.0,
+                400.0
+              ],
+              [
+                503.0,
+                400.0
+              ],
+              [
+                503.0,
+                430.0
+              ],
+              [
+                37.0,
+                430.0
+              ]
+            ],
+            "confidence": 0.9948649897294886,
+            "text": "风速：5m/s(源码猜测，非实测)"
+          },
+          {
+            "bbox": [
+              [
+                37.0,
+                477.0
+              ],
+              [
+                538.0,
+                477.0
+              ],
+              [
+                538.0,
+                505.0
+              ],
+              [
+                37.0,
+                505.0
+              ]
+            ],
+            "confidence": 0.9996078871190548,
+            "text": "仅用于解析演示，不是原始实验记录"
+          }
+        ],
+        "thumbnail_sha256": "be19e8b265dfe4f096051fadbe025c9dda988c6a0fabfac77b9a0e92c9116f99",
+        "needs_review": true,
+        "vlm_status": "disabled"
+      },
+      "xp": {
+        "source_id": "35025971c5ccb37fdd5cb837f48595c99d8f4ddc83b95d757f6c56b1b101380d",
+        "asset_id": "b63e910aa534a0db9da53b2a7d29779d10fb47070a9333da67e90d8fd3d8f895",
+        "ocr": [
+          {
+            "bbox": [
+              [
+                42.0,
+                26.0
+              ],
+              [
+                363.0,
+                26.0
+              ],
+              [
+                363.0,
+                54.0
+              ],
+              [
+                42.0,
+                54.0
+              ]
+            ],
+            "confidence": 0.9840935468673706,
+            "text": "自制示例／实验记录卡"
+          },
+          {
+            "bbox": [
+              [
+                34.0,
+                97.0
+              ],
+              [
+                195.0,
+                102.0
+              ],
+              [
+                194.0,
+                135.0
+              ],
+              [
+                33.0,
+                130.0
+              ]
+            ],
+            "confidence": 0.9253521859645844,
+            "text": "试样号：xp"
+          },
+          {
+            "bbox": [
+              [
+                34.0,
+                177.0
+              ],
+              [
+                415.0,
+                174.0
+              ],
+              [
+                416.0,
+                205.0
+              ],
+              [
+                34.0,
+                208.0
+              ]
+            ],
+            "confidence": 0.9801533271869024,
+            "text": "xp has_build_direction x"
+          },
+          {
+            "bbox": [
+              [
+                36.0,
+                250.0
+              ],
+              [
+                285.0,
+                250.0
+              ],
+              [
+                285.0,
+                281.0
+              ],
+              [
+                36.0,
+                281.0
+              ]
+            ],
+            "confidence": 0.9991723150014877,
+            "text": "测试日期：未记录"
+          },
+          {
+            "bbox": [
+              [
+                35.0,
+                324.0
+              ],
+              [
+                581.0,
+                325.0
+              ],
+              [
+                581.0,
+                356.0
+              ],
+              [
+                35.0,
+                355.0
+              ]
+            ],
+            "confidence": 0.9778827250003814,
+            "text": "环境温度：20.8C(源码设定，非实测)"
+          },
+          {
+            "bbox": [
+              [
+                37.0,
+                400.0
+              ],
+              [
+                503.0,
+                400.0
+              ],
+              [
+                503.0,
+                430.0
+              ],
+              [
+                37.0,
+                430.0
+              ]
+            ],
+            "confidence": 0.9948649897294886,
+            "text": "风速：5m/s(源码猜测，非实测)"
+          },
+          {
+            "bbox": [
+              [
+                37.0,
+                477.0
+              ],
+              [
+                538.0,
+                477.0
+              ],
+              [
+                538.0,
+                505.0
+              ],
+              [
+                37.0,
+                505.0
+              ]
+            ],
+            "confidence": 0.9996078871190548,
+            "text": "仅用于解析演示，不是原始实验记录"
+          }
+        ],
+        "thumbnail_sha256": "f0aebfbeddecce137b08342853c0e150131d43f2429013ef07a5c2e0c0d77d84",
+        "needs_review": true,
+        "vlm_status": "disabled"
+      }
+    },
+    "conflicts": [
+      {
+        "candidate": {
+          "subject": "xn",
+          "predicate": "has_build_direction",
+          "object": "y",
+          "source_id": "6eda6cee75dbad20282f98760e657ca50fae10edfcd0247c06f31059e7f6fae3",
+          "quote": "xn has_build_direction y"
+        },
+        "existing_facts": [
+          {
+            "citation": {
+              "end_char": 1206,
+              "end_line": 21,
+              "line": 21,
+              "offset_unit": "Unicode code points, half-open",
+              "start_char": 1146
+            },
+            "id": "ba6eff3c0dd5bece0e607bdab1a8f6e211a70ffcc6b9ded9f6f8f5db4d16b4a2",
+            "object": "x",
+            "predicate": "has_build_direction",
+            "quote": "| xn | x / 非较多孔类别 | 0.006287 | 0.15209 | 7812.98 | 226–230 |",
+            "relation_assertion_verified": false,
+            "source_id": "ae95f7d92608ce4f2119f9ed27e560776176a6e411210911cb3797d11fb48de6",
+            "status": "source_span_verified",
+            "subject": "xn",
+            "transformations": []
+          }
+        ],
+        "locations": [
+          {
+            "block_id": "852b00e054ebf722bf9e7afa94b49183322d29dd01b859bb1c503dd00ff66e79:0",
+            "end_char": 42,
+            "locator": {
+              "bbox": [
+                [
+                  33.0,
+                  174.0
+                ],
+                [
+                  414.0,
+                  178.0
+                ],
+                [
+                  414.0,
+                  208.0
+                ],
+                [
+                  33.0,
+                  205.0
+                ]
+              ],
+              "coordinate_system": "image pixels, top-left",
+              "file": "E:\\PDE-is-all-you-need\\competition_agent\\assets_raw\\examples\\自制示例-xn.png"
+            },
+            "needs_review": true,
+            "start_char": 18
+          }
+        ],
+        "status": "requires_review_not_automatically_resolved"
+      }
+    ],
+    "xn_conflicts": 1,
+    "xp_conflicts": 0,
+    "original_graph_unchanged": true,
+    "automatic_apply_refused": "OCR/VLM evidence requires human review before graph application",
+    "network_calls_forbidden": true,
+    "vlm_environment_cleared": true,
+    "events": [
+      {
+        "actor": "asset_agent",
+        "at_utc": "2026-11-26T14:40:47.775073+00:00",
+        "details": {
+          "experiments": 5,
+          "is_physical_data": false
+        },
+        "operation": "initial_budget_charged",
+        "previous": null,
+        "sequence": 1,
+        "sha256": "2ac626826bd418a0267370c23fa1b128cd8634f22eb6cad7c2b9bb20dabb851a"
+      },
+      {
+        "actor": "asset_agent",
+        "at_utc": "2026-11-26T14:40:47.842843+00:00",
+        "details": {
+          "observations": 5
+        },
+        "operation": "initial_observations_registered",
+        "previous": "2ac626826bd418a0267370c23fa1b128cd8634f22eb6cad7c2b9bb20dabb851a",
+        "sequence": 2,
+        "sha256": "8410afa2dccffd868490f05660af2fb9ee0a5029700f18fa976c73d4304759db"
+      },
+      {
+        "actor": "input_preprocessor",
+        "at_utc": "2026-11-26T14:40:47.846833+00:00",
+        "details": {
+          "sha256": "e2378c1daa17b7ed3b65d0f9724b1c501b8a8f59fe33adc439aaf66892939f81",
+          "summary": {
+            "blocked": false,
+            "candidate_facts": 0,
+            "duplicate_sources": 0,
+            "input_documents": 1,
+            "issues": [
+              {
+                "code": "missing_demo_metadata",
+                "priority": "P1",
+                "requirements": [
+                  {
+                    "object": "demo_field",
+                    "predicate": "records_field",
+                    "subject": "demo_grid"
+                  },
+                  {
+                    "object": "dimensionless",
+                    "predicate": "uses_unit",
+                    "subject": "demo_field"
+                  },
+                  {
+                    "object": "periodic",
+                    "predicate": "has_boundary",
+                    "subject": "demo_grid"
+                  }
+                ]
+              },
+              {
+                "code": "unstructured_text_for_retrieval_only",
+                "priority": "P1",
+                "source_id": "ae95f7d92608ce4f2119f9ed27e560776176a6e411210911cb3797d11fb48de6"
+              }
+            ],
+            "issues_truncated": false,
+            "llm_used": false,
+            "numerical_training_input": false,
+            "parser_version": "input-preparation-v1",
+            "priority_order": [
+              "P0: stop and resolve format/conflicts",
+              "P1: fill schema/metadata gaps",
+              "P2: optional enrichment"
+            ],
+            "quarantined_sources": 0,
+            "ready_for_demo": false,
+            "stored_sources": 1,
+            "unique_contents": 1
+          }
+        },
+        "operation": "input_prepared",
+        "previous": "8410afa2dccffd868490f05660af2fb9ee0a5029700f18fa976c73d4304759db",
+        "sequence": 3,
+        "sha256": "3697c91c3a72225dbefc4a9d7c0ed2c6fc80b0133f31a90d4758734bb1eec6e2"
+      },
+      {
+        "actor": "asset_agent",
+        "at_utc": "2026-11-26T14:40:47.846833+00:00",
+        "details": {
+          "source_ids": [
+            "ae95f7d92608ce4f2119f9ed27e560776176a6e411210911cb3797d11fb48de6"
+          ]
+        },
+        "operation": "documents_ingested",
+        "previous": "3697c91c3a72225dbefc4a9d7c0ed2c6fc80b0133f31a90d4758734bb1eec6e2",
+        "sequence": 4,
+        "sha256": "6d5037893c151198ecb79293b44262a9d8d956c05220d0af40fb1bed2336af3f"
+      },
+      {
+        "actor": "graph_agent",
+        "at_utc": "2026-11-26T14:40:47.850831+00:00",
+        "details": {
+          "proposal_id": "ede4fcdd5107dcfe39a2dfd27710c74db2e3cff19dc1cfde4ff697208d1ba818",
+          "unknown_predicates": [
+            "has_build_direction"
+          ]
+        },
+        "operation": "graph_proposed",
+        "previous": "6d5037893c151198ecb79293b44262a9d8d956c05220d0af40fb1bed2336af3f",
+        "sequence": 5,
+        "sha256": "01200191ef71c31066688daed011a5ec030967db7fd159efbfff41a8066f8003"
+      },
+      {
+        "actor": "local_operator",
+        "at_utc": "2026-11-26T14:40:47.853832+00:00",
+        "details": {
+          "accepted": true,
+          "proposal_id": "334c9111cf984b1175e0465653e0493fb838743a3e0933ca67ff1840dc4ac614"
+        },
+        "operation": "ontology_review",
+        "previous": "01200191ef71c31066688daed011a5ec030967db7fd159efbfff41a8066f8003",
+        "sequence": 6,
+        "sha256": "47efb08d1426ec9bc0c71fdbbe99300722c76cab7fdf727c9d67c6a373fc59c2"
+      },
+      {
+        "actor": "graph_agent",
+        "at_utc": "2026-11-26T14:40:47.856834+00:00",
+        "details": {
+          "human_semantic_review": false,
+          "proposal_id": "ede4fcdd5107dcfe39a2dfd27710c74db2e3cff19dc1cfde4ff697208d1ba818"
+        },
+        "operation": "source_grounded_graph_applied",
+        "previous": "47efb08d1426ec9bc0c71fdbbe99300722c76cab7fdf727c9d67c6a373fc59c2",
+        "sequence": 7,
+        "sha256": "10ff5278877fdc5f698965dbf6f2e8a8399823402624d72ebd9816c529ce6433"
+      },
+      {
+        "actor": "input_preprocessor",
+        "at_utc": "2026-11-26T14:40:51.702467+00:00",
+        "details": {
+          "sha256": "e6dad8f87d3973527a636bbba7e5996c2923919b53ae0046ff80d0b4286e7747",
+          "summary": {
+            "blocked": false,
+            "candidate_facts": 1,
+            "duplicate_sources": 0,
+            "input_documents": 2,
+            "issues": [
+              {
+                "code": "missing_demo_metadata",
+                "priority": "P1",
+                "requirements": [
+                  {
+                    "object": "demo_field",
+                    "predicate": "records_field",
+                    "subject": "demo_grid"
+                  },
+                  {
+                    "object": "dimensionless",
+                    "predicate": "uses_unit",
+                    "subject": "demo_field"
+                  },
+                  {
+                    "object": "periodic",
+                    "predicate": "has_boundary",
+                    "subject": "demo_grid"
+                  }
+                ]
+              },
+              {
+                "code": "unstructured_text_for_retrieval_only",
+                "priority": "P1",
+                "source_id": "ae95f7d92608ce4f2119f9ed27e560776176a6e411210911cb3797d11fb48de6"
+              }
+            ],
+            "issues_truncated": false,
+            "llm_used": false,
+            "numerical_training_input": false,
+            "parser_version": "input-preparation-v1",
+            "priority_order": [
+              "P0: stop and resolve format/conflicts",
+              "P1: fill schema/metadata gaps",
+              "P2: optional enrichment"
+            ],
+            "quarantined_sources": 0,
+            "ready_for_demo": false,
+            "stored_sources": 2,
+            "unique_contents": 2
+          }
+        },
+        "operation": "input_prepared",
+        "previous": "10ff5278877fdc5f698965dbf6f2e8a8399823402624d72ebd9816c529ce6433",
+        "sequence": 8,
+        "sha256": "05dea965cf7d15e66d4e3b4ecacf15e78ec1c0d938549f84459c3f21de85423b"
+      },
+      {
+        "actor": "asset_agent",
+        "at_utc": "2026-11-26T14:40:51.702467+00:00",
+        "details": {
+          "source_ids": [
+            "6eda6cee75dbad20282f98760e657ca50fae10edfcd0247c06f31059e7f6fae3"
+          ]
+        },
+        "operation": "documents_ingested",
+        "previous": "05dea965cf7d15e66d4e3b4ecacf15e78ec1c0d938549f84459c3f21de85423b",
+        "sequence": 9,
+        "sha256": "5a9abdf72a31abe242da8fd30db160998b1d378ef4d193507a44c87edb7f6f3c"
+      },
+      {
+        "actor": "input_preprocessor",
+        "at_utc": "2026-11-26T14:40:55.727037+00:00",
+        "details": {
+          "sha256": "812f66cc4d8db75a78eb172518733dc6194b699064020e49694a2365504dd699",
+          "summary": {
+            "blocked": false,
+            "candidate_facts": 2,
+            "duplicate_sources": 0,
+            "input_documents": 3,
+            "issues": [
+              {
+                "code": "missing_demo_metadata",
+                "priority": "P1",
+                "requirements": [
+                  {
+                    "object": "demo_field",
+                    "predicate": "records_field",
+                    "subject": "demo_grid"
+                  },
+                  {
+                    "object": "dimensionless",
+                    "predicate": "uses_unit",
+                    "subject": "demo_field"
+                  },
+                  {
+                    "object": "periodic",
+                    "predicate": "has_boundary",
+                    "subject": "demo_grid"
+                  }
+                ]
+              },
+              {
+                "code": "unstructured_text_for_retrieval_only",
+                "priority": "P1",
+                "source_id": "ae95f7d92608ce4f2119f9ed27e560776176a6e411210911cb3797d11fb48de6"
+              }
+            ],
+            "issues_truncated": false,
+            "llm_used": false,
+            "numerical_training_input": false,
+            "parser_version": "input-preparation-v1",
+            "priority_order": [
+              "P0: stop and resolve format/conflicts",
+              "P1: fill schema/metadata gaps",
+              "P2: optional enrichment"
+            ],
+            "quarantined_sources": 0,
+            "ready_for_demo": false,
+            "stored_sources": 3,
+            "unique_contents": 3
+          }
+        },
+        "operation": "input_prepared",
+        "previous": "5a9abdf72a31abe242da8fd30db160998b1d378ef4d193507a44c87edb7f6f3c",
+        "sequence": 10,
+        "sha256": "ad42f0b73f37b75b61d5a4c40f331edce4053202c5ac43fac5ed2fafdef97a90"
+      },
+      {
+        "actor": "asset_agent",
+        "at_utc": "2026-11-26T14:40:55.727037+00:00",
+        "details": {
+          "source_ids": [
+            "35025971c5ccb37fdd5cb837f48595c99d8f4ddc83b95d757f6c56b1b101380d"
+          ]
+        },
+        "operation": "documents_ingested",
+        "previous": "ad42f0b73f37b75b61d5a4c40f331edce4053202c5ac43fac5ed2fafdef97a90",
+        "sequence": 11,
+        "sha256": "492684aeeba723664381a13ab67bf0fda22a3944465d74af5c2e028c2281c931"
+      },
+      {
+        "actor": "graph_agent",
+        "at_utc": "2026-11-26T14:40:55.754894+00:00",
+        "details": {
+          "proposal_id": "00d681da97b4d39845e539966075cd57127c6f6be50be3034f701e43a7c90721",
+          "unknown_predicates": []
+        },
+        "operation": "graph_proposed",
+        "previous": "492684aeeba723664381a13ab67bf0fda22a3944465d74af5c2e028c2281c931",
+        "sequence": 12,
+        "sha256": "03b98b03592cb7418b108645822a83c904a669515b1b267edced605c255aed6d"
+      }
+    ]
+  },
+  "execution_checks_passed": true,
+  "strict_task_card_pdf_repeats_satisfied": false
 }

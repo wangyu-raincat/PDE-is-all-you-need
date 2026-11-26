@@ -1,8 +1,10 @@
 """T03 fixtures are synthetic; dependency-gated tests are not real-file acceptance."""
+from contextlib import ExitStack
 import importlib.util
 import json
 import re
 import zipfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 import tempfile
 import unittest
@@ -125,21 +127,33 @@ class MultimodalTests(unittest.TestCase):
     def test_generated_xlsx_formula_and_missing_cache(self):
         import openpyxl
         p=self.root/'fixture.xlsx';book=openpyxl.Workbook();ws=book.active
-        ws.append(['diameter','formula']);ws.append([.006287,'=A2*1000']);book.save(p);book.close()
+        ws.append(['diameter','formula','cached_formula']);ws.append([.006287,'=A2*1000','=A2*2000']);book.save(p);book.close()
         # Author workbooks can omit the optional worksheet dimension element.
         with zipfile.ZipFile(p) as z: members={n:z.read(n) for n in z.namelist()}
         members['xl/worksheets/sheet1.xml']=re.sub(rb'<dimension[^>]*/>',b'',members['xl/worksheets/sheet1.xml'])
+        # Deliberately stale manufactured cache: parser must preserve it, not calculate.
+        tree=ET.fromstring(members['xl/worksheets/sheet1.xml'])
+        ns={'m':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+        tree.find(".//m:c[@r='C2']/m:v",ns).text='123.25'
+        members['xl/worksheets/sheet1.xml']=ET.tostring(tree)
         with zipfile.ZipFile(p,'w') as z:
             for name,data in members.items(): z.writestr(name,data)
         a=mm.parse_asset(p,'xlsx');b=a['blocks'][0]
-        self.assertEqual(b['locator']['cell_range'],'A1:B2')
+        self.assertEqual(b['locator']['cell_range'],'A1:C2')
         formula=b['rows'][0][1];self.assertEqual(formula['formula'],'=A2*1000')
         self.assertIsNone(formula['value']);self.assertTrue(formula['formula_cache_missing'])
+        cached=b['rows'][0][2]
+        self.assertEqual(cached['formula'],'=A2*2000');self.assertEqual(cached['value'],123.25)
+        self.assertFalse(cached['formula_cache_missing'])
 
     @unittest.skipUnless(available('rapidocr_onnxruntime'),'manual installation required: rapidocr-onnxruntime')
     def test_real_example_ocr_without_vlm_key(self):
         p=mm.ROOT/'competition_agent/assets_raw/examples/自制示例-xn.png'
-        with patch.dict('os.environ',{},clear=True): a=mm.parse_asset(p,'image',self.root/'thumbs')
+        with ExitStack() as stack:
+            stack.enter_context(patch.dict('os.environ',{},clear=True))
+            for name in ('socket.socket.connect','socket.socket.connect_ex','socket.create_connection'):
+                stack.enter_context(patch(name,side_effect=AssertionError('Network forbidden in offline OCR test')))
+            a=mm.parse_asset(p,'image',self.root/'thumbs')
         block=a['blocks'][0]
         self.assertEqual(block['vlm_status'],'disabled');self.assertTrue(block['needs_review'])
         self.assertTrue(block['ocr']);self.assertTrue(Path(block['thumbnail_path']).is_file())
