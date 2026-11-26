@@ -8,6 +8,7 @@ import numpy as np
 from active_study import actions,provider,engine,acquisition,forecast,controller
 from competition_agent import evidence_quality as quality
 from competition_agent import preprocess as inputs
+from competition_agent import multimodal
 from pde_discovery.generic_experiment import reference_metrics,forecast_metrics
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -23,12 +24,13 @@ def integer(v,lo,hi):return type(v) is int and lo<=v<=hi
 def source_hashes():
     packages=('active_study','pde_discovery','coefficient_study','prefix_study','five_study',
               'resolved_study','weak_study','l1_study','fusion_study','challenge_study','competition_agent',
-              'competition_agent/scenario_am')
+              'competition_agent/scenario_am','competition_agent/multimodal')
     return {p.relative_to(ROOT).as_posix():file_sha(p) for name in packages for p in sorted((ROOT/name).glob('*.py'))}
 
 def setup_hash(s):
     payload={k:s[k] for k in ('seed','policy','budget','charged','_spec','_noise','train','dev','documents')}
     if 'input_preparation' in s:payload['input_preparation']=s['input_preparation']
+    if 'multimodal_assets' in s:payload['multimodal_assets']=s['multimodal_assets']
     return digest(payload)
 
 class Lab:
@@ -120,7 +122,15 @@ class Lab:
     def ingest(self,case_id,documents):
         require(isinstance(documents,list) and 1<=len(documents)<=10,'Need1..10 documents')
         prepared=[]
+        assets={}
         for d in documents:
+            if isinstance(d,dict) and set(d)=={'path','kind'}:
+                path=Path(d['path']).resolve()
+                allowed=[ROOT/'competition_agent/assets_raw',ROOT/'competition_agent/scenario_am',ROOT/'pde_discovery/data',self.root/'uploads']
+                require(any(path.is_relative_to(p.resolve()) for p in allowed),'Asset path outside approved input roots')
+                asset=multimodal.parse_asset(path,d['kind'],self.root/'thumbnails')
+                d,spans=multimodal.project(asset)
+                assets[digest(d)]={'asset':asset,'spans':spans,'document':d}
             require(isinstance(d,dict) and set(d)=={'title','kind','text'},'Document requires title,kind,text')
             require(d['kind'] in ('text','csv') and isinstance(d['text'],str) and 1<=len(d['text'].encode())<=131072,'Only bounded text/CSV input is supported')
             require(isinstance(d['title'],str) and 1<=len(d['title'])<=160,'Invalid title')
@@ -129,6 +139,7 @@ class Lab:
             require(s['phase'] not in ('frozen','validating','validated'),'Evidence is frozen')
             require(len(set(s['documents'])|{key for key,d in prepared})<=50,'Document count limit reached')
             for key,d in prepared:s['documents'][key]=d
+            s.setdefault('multimodal_assets',{}).update(assets)
             s['input_preparation']=inputs.prepare(list(s['documents'].values()))
             self.event(s,'input_preprocessor','input_prepared',{'sha256':digest(s['input_preparation']),'summary':s['input_preparation']['summary']})
             self.event(s,'asset_agent','documents_ingested',{'source_ids':[k for k,d in prepared]})
@@ -139,16 +150,24 @@ class Lab:
                 'input_snapshot_sha256':digest(prepared),
                 'format':'prepared evidence only; role filter is not an authorization boundary',
                 'raw_document_bodies_included':False,'phase':s['phase']}
+        result['multimodal_conflicts']=multimodal.conflicts(s.get('multimodal_assets',{}),s['facts'])
+        result['multimodal']=multimodal.summaries(s.get('multimodal_assets',{}),role,offset,limit)
         if role in ('asset_agent','graph_agent','pde_coordinator'):
             result['source_catalog']=[{'source_id':k,'title':r['title'],'kind':r['kind'],'status':r['status'],
                 'classification':r['classification'],'duplicate_of':r['duplicate_of'],
                 'columns':r.get('columns'),'row_count':r.get('row_count')} for k,r in prepared['records'].items()]
         if role=='graph_agent' and not prepared['summary']['blocked']:
-            items=prepared['candidates'];chosen=[];size=0
+            items=prepared['candidates']+multimodal.literal_candidates(s.get('multimodal_assets',{}));chosen=[];size=0
             for item in items[offset:offset+limit]:
                 length=len(canonical(item))
                 if chosen and size+length>24576:break
                 chosen.append(item);size+=length
+            chosen=json.loads(json.dumps(chosen))
+            for candidate in chosen:
+                record=s.get('multimodal_assets',{}).get(candidate['fact']['source_id'])
+                if record:
+                    candidate['citation'].setdefault('multimodal_locations',multimodal.locate(record,candidate['fact']['quote']))
+                    candidate['needs_review']=any(x['needs_review'] for x in candidate['citation']['multimodal_locations'])
             result['fact_candidates']=chosen
             result['next_offset']=offset+len(chosen) if offset+len(chosen)<len(items) else None
             result['candidate_packet_bytes']=size
@@ -179,9 +198,18 @@ class Lab:
                 if parsed is None:parsed=inputs.parse_document(s['documents'][f['source_id']],f['source_id'])
                 require(parsed['status']=='ready','Quarantined source cannot supply graph facts')
                 matched=inputs.matching_fact(f,s['documents'],parsed)
+                if matched is None:
+                    matched=next((c for c in multimodal.literal_candidates(s.get('multimodal_assets',{})) if c['fact']==f),None)
                 require(matched is not None or f['subject'] in f['quote'] and f['object'] in f['quote'],'Fact must match parsed source or literal subject/object evidence')
                 require(re.fullmatch(r'[a-z][a-z0-9_]{0,63}',f['predicate']),'Invalid relation name')
                 checked.append(dict(f,id=digest(f),status='source_span_verified',citation=matched['citation'] if matched else quality.span(s['documents'][f['source_id']],f['quote']),transformations=matched['transformations'] if matched else [],relation_assertion_verified=quality.assertion(f,s['documents'],parsed)))
+            for fact in checked:
+                record=s.get('multimodal_assets',{}).get(fact['source_id'])
+                if record:
+                    locations=fact['citation'].get('multimodal_locations') or multimodal.locate(record,fact['quote'])
+                    require(bool(locations),'Quote must stay inside a multimodal block')
+                    fact['citation']['multimodal_locations']=locations
+                    fact['needs_review']=any(x['needs_review'] for x in locations)
             checked=list({f['id']:f for f in checked}.values())
             proposal={'id':digest(checked),'facts':checked,'status':'proposed','ontology_version':s['ontology']['version']}
             if not any(p['id']==proposal['id'] for p in s['graph_proposals']):s['graph_proposals'].append(proposal)
@@ -197,6 +225,7 @@ class Lab:
             require(s['phase'] not in ('frozen','validating','validated'),'Evidence is frozen')
             p=next((p for p in s['graph_proposals'] if p['id']==proposal_id),None);require(p is not None,'Unknown graph proposal')
             require(all(f['predicate'] in s['ontology']['predicates'] for f in p['facts']),'New ontology relations require local operator review')
+            require(not any(f.get('needs_review') for f in p['facts']),'OCR/VLM evidence requires human review before graph application')
             existing={f['id'] for f in s['facts']}
             require(len(existing|{f['id'] for f in p['facts']})<=500,'Graph fact limit reached')
             s['facts'].extend(f for f in p['facts'] if f['id'] not in existing);p['status']='applied'
