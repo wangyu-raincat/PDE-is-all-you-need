@@ -2,7 +2,7 @@
 from __future__ import annotations
 import hashlib,json,re,sqlite3,uuid
 from pathlib import Path
-from contextlib import contextmanager
+from contextlib import contextmanager, closing
 from datetime import datetime,timezone
 import numpy as np
 from active_study import actions,provider,engine,acquisition,forecast,controller
@@ -22,8 +22,9 @@ def integer(v,lo,hi):return type(v) is int and lo<=v<=hi
 
 def source_hashes():
     packages=('active_study','pde_discovery','coefficient_study','prefix_study','five_study',
-              'resolved_study','weak_study','l1_study','fusion_study','challenge_study','competition_agent')
-    return {str(p.relative_to(ROOT)):file_sha(p) for name in packages for p in sorted((ROOT/name).glob('*.py'))}
+              'resolved_study','weak_study','l1_study','fusion_study','challenge_study','competition_agent',
+              'competition_agent/scenario_am')
+    return {p.relative_to(ROOT).as_posix():file_sha(p) for name in packages for p in sorted((ROOT/name).glob('*.py'))}
 
 def setup_hash(s):
     payload={k:s[k] for k in ('seed','policy','budget','charged','_spec','_noise','train','dev','documents')}
@@ -34,7 +35,7 @@ class Lab:
     def __init__(self,directory=None):
         self.root=Path(directory or ROOT/'competition_agent/runtime').resolve()
         self.root.mkdir(parents=True,exist_ok=True)
-        with self.connect() as db:
+        with closing(self.connect()) as db, db:
             db.execute('CREATE TABLE IF NOT EXISTS cases (id TEXT PRIMARY KEY,payload TEXT NOT NULL)')
             db.execute('CREATE TABLE IF NOT EXISTS requests (request_id TEXT PRIMARY KEY, config_sha256 TEXT NOT NULL, case_id TEXT NOT NULL)')
     def connect(self):return sqlite3.connect(self.root/'cases.sqlite',timeout=120)
@@ -96,7 +97,7 @@ class Lab:
           'queries':[],'model':None,'documents':{},'facts':[],'graph_proposals':[],
           'ontology':{'version':1,'predicates':list(PREDICATES)},'ontology_proposals':[],'events':[]}
         self.event(s,'asset_agent','initial_budget_charged',{'experiments':5,'is_physical_data':False})
-        with self.connect() as db:
+        with closing(self.connect()) as db, db:
             db.execute('BEGIN IMMEDIATE')
             previous=db.execute('SELECT config_sha256,case_id FROM requests WHERE request_id=?',(request_id,)).fetchone() if request_id else None
             if previous:

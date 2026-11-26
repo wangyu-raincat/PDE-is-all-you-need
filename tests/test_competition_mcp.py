@@ -1,5 +1,5 @@
 """Real stdio and Streamable HTTP MCP negotiation; no mock transport or LLM."""
-import asyncio,json,socket,subprocess,sys,tempfile,unittest
+import asyncio,json,os,socket,subprocess,sys,tempfile,unittest
 from datetime import timedelta
 from pathlib import Path
 import httpx
@@ -21,6 +21,9 @@ class CompetitionMCPTests(unittest.IsolatedAsyncioTestCase):
         for t in listing.tools:self.assertEqual(t.inputSchema['type'],'object')
         bad=await session.call_tool('case_status',{'case_id':'../escape'});self.assertTrue(bad.isError)
         bad=await session.call_tool('pde_case_create',{'fixture':'not_supported'});self.assertTrue(bad.isError)
+        scores=await session.call_tool('heat_holdout_summary',{'asset_group':'all'})
+        self.assertFalse(scores.isError);self.assertEqual(len(value(scores)['records']),12)
+        bad=await session.call_tool('heat_identify',{'asset_group':'xn','split':'final'});self.assertTrue(bad.isError)
         return listing
     async def test_stdio_end_to_end_lifecycle_and_frozen_error(self):
         with tempfile.TemporaryDirectory() as d:
@@ -60,7 +63,11 @@ class CompetitionMCPTests(unittest.IsolatedAsyncioTestCase):
                         async with streamable_http_client(f'http://127.0.0.1:{port}/mcp',http_client=client) as (r,w,_):
                             async with ClientSession(r,w,read_timeout_seconds=timedelta(seconds=30)) as s:await self.check_catalog_and_errors(s)
                 finally:
-                    proc.terminate()
+                    if os.name == 'nt':
+                        # Windows venv launchers can leave the interpreter child alive.
+                        subprocess.run(['taskkill','/PID',str(proc.pid),'/T','/F'],
+                                       stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,check=False)
+                    else:proc.terminate()
                     try:proc.wait(timeout=5)
                     except subprocess.TimeoutExpired:proc.kill();proc.wait(timeout=5)
 

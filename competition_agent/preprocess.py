@@ -34,6 +34,40 @@ TEXT_TRIPLE = re.compile(r'([^\W\d][\w:-]*)\s+([a-z][a-z0-9_]{0,63})\s+(.+?)\.?$
 ROLES = ('pde_coordinator','asset_agent','graph_agent','pde_agent','experiment_agent','validation_agent')
 
 
+def prepare_am_catalog(catalog=None):
+    """Read only CSV headers and manifests as separately cited metadata.
+
+    This packet is for the manufacturing route, not synthetic demo readiness.
+    Numerical rows are never returned or submitted to the text parser.
+    """
+    from competition_agent.scenario_am.catalog import ROOT, asset_id, evidence, sha
+    if catalog is None:
+        catalog = json.loads((ROOT / 'competition_agent/scenario_am/asset_catalog.json').read_text(encoding='utf-8'))
+    records = []
+    for card in catalog['assets']:
+        if card['modality'] != 'csv' and Path(card['path']).name != 'manifest.json':
+            continue
+        path = (ROOT / card['path']).resolve()
+        if not any(path.is_relative_to((ROOT / 'pde_discovery/data' / name).resolve())
+                   for name in ('additive_heat', 'mendeley_heat')):
+            raise ValueError('Catalog metadata path escapes approved datasets')
+        if sha(path) != card['sha256']:
+            raise ValueError('Catalog metadata hash mismatch')
+        if asset_id(path) != card['asset_id']:
+            raise ValueError('Catalog asset identity mismatch')
+        if card['modality'] == 'csv':
+            with path.open(encoding='utf-8') as stream:
+                header = stream.readline().rstrip('\r\n')
+            record = {'asset_id': card['asset_id'], 'columns': next(csv.reader([header])),
+                      'classification': 'measurement_header', 'evidence': [evidence(path, header)]}
+        else:
+            record = {'asset_id': card['asset_id'], 'metadata': json.loads(path.read_text(encoding='utf-8')),
+                      'classification': 'measurement_manifest', 'evidence': [evidence(path)]}
+        records.append(record)
+    return {'records': records, 'numerical_training_input': False, 'llm_used': False,
+            'route': 'manufacturing_heat', 'numerical_tool': 'heat_identify'}
+
+
 def digest(value):
     return hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=False,allow_nan=False,separators=(',',':')).encode()).hexdigest()
 
@@ -206,8 +240,17 @@ def matching_fact(fact,documents,record=None):
 
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--input',required=True);p.add_argument('--output',required=True)
-    a=p.parse_args();path=Path(a.input)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--input');p.add_argument('--output',required=True)
+    p.add_argument('--am-catalog', action='store_true', help='Prepare manufacturing CSV headers and manifests only')
+    a=p.parse_args()
+    if a.am_catalog:
+        if a.input:p.error('--am-catalog does not accept --input')
+        prepared=prepare_am_catalog()
+        with Path(a.output).open('x',encoding='utf-8') as f:json.dump(prepared,f,ensure_ascii=False,indent=2)
+        print(json.dumps({'metadata_records':len(prepared['records']),'numerical_training_input':False}))
+        return
+    if not a.input:p.error('--input is required unless --am-catalog is selected')
+    path=Path(a.input)
     if path.stat().st_size>7*1024*1024:raise ValueError('Input manifest exceeds 7 MiB')
     payload=json.loads(path.read_text(encoding='utf-8-sig'))
     prepared=prepare(payload['documents'] if isinstance(payload,dict) else payload)

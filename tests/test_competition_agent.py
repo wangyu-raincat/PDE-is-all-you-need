@@ -37,7 +37,7 @@ class CompetitionAgentTests(unittest.TestCase):
         self.assertFalse(self.lab.status(self.case)['final_opened'])
     def test_source_closure_covers_integration_and_numerical_engine(self):
         hashes=source_hashes()
-        for f in ['competition_agent/service.py','competition_agent/mcp_server.py','active_study/engine.py','pde_discovery/generic_experiment.py','coefficient_study/generators.py']:self.assertIn(f,hashes)
+        for f in ['competition_agent/service.py','competition_agent/mcp_server.py','competition_agent/scenario_am/heat_tools.py','active_study/engine.py','pde_discovery/generic_experiment.py','coefficient_study/generators.py']:self.assertIn(f,hashes)
     def test_failed_acquisition_charged_once_and_retry_idempotent(self):
         p=self.proposal();self.generator.side_effect=OSError('manufactured outage')
         a=self.lab.acquire(self.case,p['id']);b=self.lab.acquire(self.case,p['id'])
@@ -158,7 +158,7 @@ class CompetitionAgentTests(unittest.TestCase):
             for a in payload['agent_info'].values():self.assertEqual(a['model_names'],[])
             self.assertEqual(len(list(Path(d).glob('*.zip'))),6)
             tools=set(t['class_name'] for a in payload['agent_info'].values() for t in a['tools'])
-            self.assertEqual(len(tools),15);self.assertNotIn('review_ontology',tools)
+            self.assertEqual(len(tools),18);self.assertNotIn('review_ontology',tools)
             self.assertEqual({t['class_name'] for t in payload['agent_info']['15']['tools']},{'case_status','validation_freeze','validation_evaluate','evidence_get'})
     def test_nexent_schema_rejects_missing_actual_required_field(self):
         with tempfile.TemporaryDirectory() as d:

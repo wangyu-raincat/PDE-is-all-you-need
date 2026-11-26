@@ -1,4 +1,4 @@
-import asyncio,json,tempfile,unittest
+import asyncio,json,os,tempfile,unittest
 from pathlib import Path
 from unittest.mock import AsyncMock,patch
 import httpx
@@ -75,7 +75,13 @@ class DeepSeekContracts(unittest.IsolatedAsyncioTestCase):
     def test_private_credential_file_and_redaction(self):
         p=self.root/'key';p.write_text(self.key);p.chmod(0o644)
         with self.assertRaises(AcceptanceError):credential(p)
-        p.chmod(0o600);self.assertEqual(credential(p),self.key)
+        p.chmod(0o600)
+        if os.name == 'nt':
+            # chmod cannot establish a private Windows ACL: keep the file guard closed.
+            with self.assertRaises(AcceptanceError):credential(p)
+            with patch.dict('os.environ', {'DEEPSEEK_API_KEY': self.key}):
+                self.assertEqual(credential(), self.key)
+        else:self.assertEqual(credential(p),self.key)
         self.assertNotIn(self.key,str(redact({'authorization':self.key,'nested':['Bearer '+self.key]},self.key)))
     def test_final_report_requires_exact_sources_and_metrics(self):
         report={'case_id':'a','structure':{'exact_support':True},'evidence_ready':True,'charged_experiments':6,'max_true_coefficient_relative_error':.001,'mean_prediction_error':.002,'evidence_sources':['source']}
