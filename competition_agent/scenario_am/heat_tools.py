@@ -78,10 +78,16 @@ def heat_identify(asset_group: str, split: str = 'train') -> dict:
         except (ValueError, RuntimeError, FloatingPointError):
             continue
     selected = None
+    near = []
     if eligible:
         best = min(c['development']['rmse'] for c in eligible)
         near = [c for c in eligible if c['development']['rmse'] <= best * NEAR_OPTIMAL_FACTOR + 1e-12]
         selected = min(near, key=lambda c: (c['support_size'], c['development']['rmse'], c['model_name']))
+    candidate_table = [
+        {'name': c['model_name'], 'fit_success': c['fit_success'], 'rank': c['diagnostics'].get('jacobian_rank'),
+         'support_size': c['support_size'], 'dev_rmse_K': c.get('development', {}).get('rmse'),
+         'near_optimal': any(c is other for other in near), 'selected': c is selected}
+        for c in candidates]
     previous = baseline['selected']
     same_terms = bool(selected and previous and
                       [t['name'] for t in selected['terms']] == [t['name'] for t in previous['terms']])
@@ -93,6 +99,7 @@ def heat_identify(asset_group: str, split: str = 'train') -> dict:
         path = (manifest_path.parent / manifest['splits'][role]['file']).resolve()
         sources.append(evidence(path, path.read_text(encoding='utf-8').splitlines()[0]))
     return {'asset_group': asset_group, 'method': METHOD, 'selected': selected,
+            'candidate_table': candidate_table, 'near_optimal_factor': NEAR_OPTIMAL_FACTOR,
             'failure_reason': None if selected else '训练/开发阶段没有可用候选', 'terms': selected['terms'] if selected else [],
             'frozen_consistency': {'matches': consistent, 'rtol': 1e-6, 'atol': 1e-12,
                                    'reference_terms': previous['terms'] if previous else [],
