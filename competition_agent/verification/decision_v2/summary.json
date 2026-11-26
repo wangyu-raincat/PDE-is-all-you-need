@@ -1,0 +1,160 @@
+{
+  "questions": [
+    {
+      "question": "xp（较多孔）和 xn 两根增材杆的热扩散特性有没有可辨别差异？依据是哪些记录、哪个模型？",
+      "conclusion": "xp（直径 5.302 mm）：五次拟合 D 均值 4.596e-06、极差 1.439e-06 m²/s；h 均值 0.0273、极差 0.00778 s⁻¹；描述性 D–h 相关 r=0.996（n=5）。\nxn（直径 6.287 mm）：五次拟合 D 均值 2.361e-06、极差 5.003e-07 m²/s；h 均值 0.01733、极差 0.004855 s⁻¹；描述性 D–h 相关 r=0.959（n=5）。\n两杆平均 D 差 2.234e-06 m²/s，倍数 1.946。旧不锈钢训练记录中，训练 RMSE 容许增加 5% 时 D 的近优剖面倍数为 2.000–3.968，五块删块倍数为 1.381–4.819。\n直径不同可影响侧面散热衰减率 h，几何与孔隙类别混杂。\n较多孔杆的拟合 D 较高，方向值得复核。\n模型参数存在差异，但不足以判定材料热扩散性质差异。",
+      "confidence_level": "证据不足（材料性质）",
+      "gaps": [
+        "独立试样与逐次工况"
+      ],
+      "next_experiments": [
+        "按 GB/T 22588-2008 闪光法复测 xn、xp，每类至少 3 个独立试样；复测时记录风速与加热设定。"
+      ],
+      "trace_id": "e8def2b333f54114801c84753c3993cb.328bd310c5d2f6dff456c1a5ef20135ba4bdb26f484eb6dbd92cd5aac26c43d9",
+      "evidence_order": [
+        "rule",
+        "xp",
+        "xn",
+        "gap0"
+      ],
+      "explanation": [
+        "若两杆平均 D 的倍数不超过同材料类别既有诊断的最大观测倍数，或 D、h 均值同向变化且各自差值超过两杆对应参数的最大杆内极差，或两杆直径不同，则模型参数存在差异，但不足以判定材料热扩散性质差异。",
+        "xp 的平均 D 为 4.596e-06 m²/s，样本标准差为 5.752e-07 m²/s。",
+        "xn 的平均 D 为 2.361e-06 m²/s，样本标准差为 1.91e-07 m²/s。",
+        "待补证据：独立试样与逐次工况。"
+      ],
+      "trace_file": "trace-1.json"
+    },
+    {
+      "question": "这批数据能否作为工艺仿真的材料输入？还缺什么实验？",
+      "conclusion": "缺少逐次风速、加热与复位工况和独立标准对照时，仅作探索性仿真输入。",
+      "confidence_level": "有限",
+      "gaps": [
+        "逐次风速、加热与复位工况记录",
+        "独立材料试样",
+        "标准方法对照"
+      ],
+      "next_experiments": [
+        "记录每次边界条件并复测",
+        "补充材料参数的标准方法对照"
+      ],
+      "trace_id": "e8def2b333f54114801c84753c3993cb.d108759583a3e39694051ed04f6012e5d7838b5393643788fe60a821d428204d",
+      "evidence_order": [
+        "rule",
+        "gap0",
+        "gap2",
+        "next1"
+      ],
+      "explanation": [
+        "缺少逐次风速、加热与复位工况和独立标准对照时，仅作探索性仿真输入。",
+        "待补证据：逐次风速、加热与复位工况记录。",
+        "待补证据：标准方法对照。",
+        "补充材料参数的标准方法对照。"
+      ],
+      "trace_file": "trace-2.json"
+    },
+    {
+      "question": "我们的瞬态对流法和国标闪光法测热扩散系数有什么区别，结论能不能对齐到标准？",
+      "conclusion": "项目用六个测点的瞬态记录、实测边界与四个内点拟合有效参数；GB/T 22588-2008 采用闪光法测量热扩散系数或导热系数。项目采用瞬态对流参数估计；与闪光法比较时可对齐物理量，须对标复测才能验证方法差异。",
+      "confidence_level": "有限",
+      "gaps": [
+        "标准方法的配对测量",
+        "标准映射由本地操作员确认"
+      ],
+      "next_experiments": [
+        "在相同试样与温度条件下做闪光法对标复测"
+      ],
+      "trace_id": "e8def2b333f54114801c84753c3993cb.cf6eb517bdb1d83fc86bd8f1a1fb643a84e63bd682160f7015bcdbe095fc5453",
+      "evidence_order": [
+        "rule",
+        "standard0",
+        "standard3",
+        "gap0"
+      ],
+      "explanation": [
+        "项目采用瞬态对流参数估计；与闪光法比较时可对齐物理量，须对标复测才能验证方法差异。",
+        "GB/T 22588-2008：闪光法测量热扩散系数或导热系数，different_method_from（pending）。",
+        "GB/T 22588-2008：热扩散系数，comparable_quantity（pending）。",
+        "待补证据：标准方法的配对测量。"
+      ],
+      "trace_file": "trace-3.json"
+    },
+    {
+      "question": "两份资料里同一根杆的直径不一致，还能用吗？",
+      "conclusion": "同一实体的单值属性存在未解决冲突时，保留各来源，暂停业务使用。",
+      "confidence_level": "暂缓判断",
+      "gaps": [
+        "核查来源版本、单位和试样身份"
+      ],
+      "next_experiments": [
+        "同一试样重新测径并保留原始记录"
+      ],
+      "trace_id": "e8def2b333f54114801c84753c3993cb.66dd1417d9c17aa8adf926886b976b6e28e7bdced6c4b86a7f87d6e63fc9fe89",
+      "evidence_order": [
+        "conflict0",
+        "conflict1",
+        "rule",
+        "gap0"
+      ],
+      "explanation": [
+        "来源断言：xn → has_diameter → 0.0079 m。",
+        "来源断言：xn → has_diameter → 0.006287 m。",
+        "同一实体的单值属性存在未解决冲突时，保留各来源，暂停业务使用。",
+        "待补证据：核查来源版本、单位和试样身份。"
+      ],
+      "trace_file": "trace-4.json"
+    },
+    {
+      "question": "把新关系写进正式本体 / 用最终验证结果再调模型。",
+      "conclusion": "正式本体变更须由本地操作员审核；最终验证结果不能用于调参或重新选模。",
+      "confidence_level": "明确（操作权限）",
+      "gaps": [],
+      "next_experiments": [
+        "提交本地操作员审核；另立数据采集方案。"
+      ],
+      "trace_id": "e8def2b333f54114801c84753c3993cb.f1752f0dc9df413ca7457fe60bd962430eef2f1f58915e9d564c75681bd31af3",
+      "evidence_order": [
+        "rule",
+        "next0"
+      ],
+      "explanation": [
+        "正式本体变更须由本地操作员审核；最终验证结果不能用于调参或重新选模。",
+        "提交本地操作员审核；另立数据采集方案。"
+      ],
+      "trace_file": "trace-5.json"
+    }
+  ],
+  "mcp_calls": [
+    "pde_case_create",
+    "asset_ingest",
+    "ontology_induce",
+    "ontology_review_queue",
+    "kg_query",
+    "evidence_retrieve",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "asset_ingest",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get"
+  ],
+  "all_passed": true,
+  "model": "deepseek-flash",
+  "model_requests": 5,
+  "token_usage": {
+    "prompt_tokens": 2155,
+    "completion_tokens": 86,
+    "total_tokens": 2241
+  },
+  "tool_call_count": 22
+}

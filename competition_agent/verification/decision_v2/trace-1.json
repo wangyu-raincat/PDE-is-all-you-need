@@ -1,0 +1,2206 @@
+{
+  "case_id": "e8def2b333f54114801c84753c3993cb",
+  "decision": {
+    "conclusion": "xp（直径 5.302 mm）：五次拟合 D 均值 4.596e-06、极差 1.439e-06 m²/s；h 均值 0.0273、极差 0.00778 s⁻¹；描述性 D–h 相关 r=0.996（n=5）。\nxn（直径 6.287 mm）：五次拟合 D 均值 2.361e-06、极差 5.003e-07 m²/s；h 均值 0.01733、极差 0.004855 s⁻¹；描述性 D–h 相关 r=0.959（n=5）。\n两杆平均 D 差 2.234e-06 m²/s，倍数 1.946。旧不锈钢训练记录中，训练 RMSE 容许增加 5% 时 D 的近优剖面倍数为 2.000–3.968，五块删块倍数为 1.381–4.819。\n直径不同可影响侧面散热衰减率 h，几何与孔隙类别混杂。\n较多孔杆的拟合 D 较高，方向值得复核。\n模型参数存在差异，但不足以判定材料热扩散性质差异。",
+    "confidence_level": "证据不足（材料性质）",
+    "gaps": [
+      "独立试样与逐次工况"
+    ],
+    "next_experiments": [
+      "按 GB/T 22588-2008 闪光法复测 xn、xp，每类至少 3 个独立试样；复测时记录风速与加热设定。"
+    ]
+  },
+  "graph_version": 1,
+  "loop_reason": "model_ambiguous",
+  "question": "xp（较多孔）和 xn 两根增材杆的热扩散特性有没有可辨别差异？依据是哪些记录、哪个模型？",
+  "reasoning": {
+    "acquisition_links": [
+      {
+        "edges": [
+          [
+            "xp",
+            "has_test",
+            "xp1"
+          ],
+          [
+            "xp1",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xp1.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 5.17755206688232e-06,
+            "c": -0.11240848910488827,
+            "h": 0.03021834615129415
+          },
+          "reason": null,
+          "repeat": 1
+        },
+        "group": "xp",
+        "historical_score": null,
+        "test": "xp1"
+      },
+      {
+        "edges": [
+          [
+            "xp",
+            "has_test",
+            "xp2"
+          ],
+          [
+            "xp2",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xp2.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 5.061674822333738e-06,
+            "c": -0.1123363172572499,
+            "h": 0.030248071876294306
+          },
+          "reason": null,
+          "repeat": 2
+        },
+        "group": "xp",
+        "historical_score": null,
+        "test": "xp2"
+      },
+      {
+        "edges": [
+          [
+            "xp",
+            "has_test",
+            "xp4"
+          ],
+          [
+            "xp4",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xp4.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 3.7390287070101315e-06,
+            "c": -0.07297209211448963,
+            "h": 0.022468276754283895
+          },
+          "reason": null,
+          "repeat": 4
+        },
+        "group": "xp",
+        "historical_score": {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xp/repeat4/report.json",
+            "locator": {
+              "end_char": 34161,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xp/repeat4/report.json",
+              "start_char": 34125
+            },
+            "quote": "\"relative_l2\": 0.014927967386277554,",
+            "source_id": "am:artifacts/additive_heat/xp/repeat4/report.json"
+          },
+          "relative_l2": 0.014927967386277554,
+          "test": "xp4"
+        },
+        "test": "xp4"
+      },
+      {
+        "edges": [
+          [
+            "xp",
+            "has_test",
+            "xp3"
+          ],
+          [
+            "xp3",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xp3.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 4.5873332434977256e-06,
+            "c": -0.09123019201263212,
+            "h": 0.02707005058373433
+          },
+          "reason": null,
+          "repeat": 3
+        },
+        "group": "xp",
+        "historical_score": {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xp/repeat3/report.json",
+            "locator": {
+              "end_char": 34160,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xp/repeat3/report.json",
+              "start_char": 34125
+            },
+            "quote": "\"relative_l2\": 0.01054737587638552,",
+            "source_id": "am:artifacts/additive_heat/xp/repeat3/report.json"
+          },
+          "relative_l2": 0.01054737587638552,
+          "test": "xp3"
+        },
+        "test": "xp3"
+      },
+      {
+        "edges": [
+          [
+            "xp",
+            "has_test",
+            "xp5"
+          ],
+          [
+            "xp5",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xp5.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 4.412410292065768e-06,
+            "c": -0.08667855252756301,
+            "h": 0.02651356678221766
+          },
+          "reason": null,
+          "repeat": 5
+        },
+        "group": "xp",
+        "historical_score": {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xp/repeat5/report.json",
+            "locator": {
+              "end_char": 34161,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xp/repeat5/report.json",
+              "start_char": 34125
+            },
+            "quote": "\"relative_l2\": 0.011084417613449856,",
+            "source_id": "am:artifacts/additive_heat/xp/repeat5/report.json"
+          },
+          "relative_l2": 0.011084417613449856,
+          "test": "xp5"
+        },
+        "test": "xp5"
+      },
+      {
+        "edges": [
+          [
+            "xn",
+            "has_test",
+            "xn1"
+          ],
+          [
+            "xn1",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xn1.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 2.0888647222778803e-06,
+            "c": 0.04228819002295568,
+            "h": 0.015003655912752467
+          },
+          "reason": null,
+          "repeat": 1
+        },
+        "group": "xn",
+        "historical_score": null,
+        "test": "xn1"
+      },
+      {
+        "edges": [
+          [
+            "xn",
+            "has_test",
+            "xn5"
+          ],
+          [
+            "xn5",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xn5.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 2.2739534877215252e-06,
+            "c": 0.050396200253042735,
+            "h": 0.01643670687082737
+          },
+          "reason": null,
+          "repeat": 5
+        },
+        "group": "xn",
+        "historical_score": {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xn/repeat5/report.json",
+            "locator": {
+              "end_char": 34180,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xn/repeat5/report.json",
+              "start_char": 34144
+            },
+            "quote": "\"relative_l2\": 0.029660454612451804,",
+            "source_id": "am:artifacts/additive_heat/xn/repeat5/report.json"
+          },
+          "relative_l2": 0.029660454612451804,
+          "test": "xn5"
+        },
+        "test": "xn5"
+      },
+      {
+        "edges": [
+          [
+            "xn",
+            "has_test",
+            "xn4"
+          ],
+          [
+            "xn4",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xn4.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 2.4688580350864314e-06,
+            "c": 0.06406326009886917,
+            "h": 0.017476136767863196
+          },
+          "reason": null,
+          "repeat": 4
+        },
+        "group": "xn",
+        "historical_score": {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xn/repeat4/report.json",
+            "locator": {
+              "end_char": 34179,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xn/repeat4/report.json",
+              "start_char": 34144
+            },
+            "quote": "\"relative_l2\": 0.04279253811834892,",
+            "source_id": "am:artifacts/additive_heat/xn/repeat4/report.json"
+          },
+          "relative_l2": 0.04279253811834892,
+          "test": "xn4"
+        },
+        "test": "xn4"
+      },
+      {
+        "edges": [
+          [
+            "xn",
+            "has_test",
+            "xn2"
+          ],
+          [
+            "xn2",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xn2.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 2.5891838251879602e-06,
+            "c": 0.0521180176111056,
+            "h": 0.019858522575893548
+          },
+          "reason": null,
+          "repeat": 2
+        },
+        "group": "xn",
+        "historical_score": null,
+        "test": "xn2"
+      },
+      {
+        "edges": [
+          [
+            "xn",
+            "has_test",
+            "xn3"
+          ],
+          [
+            "xn3",
+            "records_field",
+            "TC1"
+          ]
+        ],
+        "fit": {
+          "evidence": {
+            "asset_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv",
+            "locator": {
+              "end_char": 45,
+              "line": 1,
+              "path": "pde_discovery/data/additive_heat/raw/xn3.csv",
+              "start_char": 0
+            },
+            "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+            "source_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv"
+          },
+          "fit_success": true,
+          "parameters": {
+            "D": 2.385265956029458e-06,
+            "c": 0.05422590808908565,
+            "h": 0.017883811883054847
+          },
+          "reason": null,
+          "repeat": 3
+        },
+        "group": "xn",
+        "historical_score": {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xn/repeat3/report.json",
+            "locator": {
+              "end_char": 34180,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xn/repeat3/report.json",
+              "start_char": 34144
+            },
+            "quote": "\"relative_l2\": 0.034521202729760475,",
+            "source_id": "am:artifacts/additive_heat/xn/repeat3/report.json"
+          },
+          "relative_l2": 0.034521202729760475,
+          "test": "xn3"
+        },
+        "test": "xn3"
+      }
+    ],
+    "conflicts": [],
+    "graph_paths": [
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E2",
+              "issues": [],
+              "locator": {
+                "bbox": [
+                  36.1349983215332,
+                  353.6246032714844,
+                  401.6490478515625,
+                  602.1915893554688
+                ],
+                "coordinate_system": "PDF points, top-left",
+                "end_char": 2215,
+                "end_line": 24,
+                "line": 1,
+                "offset_scope": "block text",
+                "page": 3,
+                "start_char": 0
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "dib-2021-107632.pdf [edbf589d488dc12e]",
+              "quote": "xp1 would be the ﬁrst test for the more porous specimen built along \nthe x direction",
+              "raw": [
+                "xp",
+                "has_porosity_class",
+                "higher-porosity category"
+              ],
+              "source_id": "422577e9a17b05ee85c1447934e4e97849579e6623f4e79540536919dad746b9"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.7,
+            "standard_term": 0
+          },
+          "id": "567a4bb02016cc7b036d262ed9825c0eff9bad669962966a413d36a6f79535d0",
+          "priority": 0.9845363309503934,
+          "score": 0.4378234991142018,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_porosity_class",
+            "higher-porosity category"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "multimodal_locations": [
+                  {
+                    "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:84",
+                    "end_char": 1942,
+                    "locator": {
+                      "end_char": 7932,
+                      "end_line": 238,
+                      "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+                      "line": 238,
+                      "start_char": 7920
+                    },
+                    "needs_review": false,
+                    "start_char": 1930
+                  }
+                ]
+              },
+              "measurement": {
+                "si_unit": "m",
+                "significant_digits": 4,
+                "value": "0.005302"
+              },
+              "needs_review": false,
+              "path": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]",
+              "quote": "D=5.302/1000",
+              "raw": [
+                "xp",
+                "has_diameter",
+                "0.005302 m"
+              ],
+              "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "0910dc61c9548bfbf54d8b097ab0849acfbcb60080e9b1bb2772db3f31175fba",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_diameter",
+            "0.005302 m"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "B1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp1",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp1"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "3033cfb69763889c2fbbda9f6f9d7668ba3410011998e9ba0dcf35f1a180de19",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp1"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp1",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "C1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp2",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp2"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "3bc486d74df521616ca72f8f4d101b2a69beb85710dfff2b5ff260dc20e985dd",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp2"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp2",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "E1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp4",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp4"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "74dfb1a8230f84f1a9f7dc31082e89e825200cd5645302e8391867879da581c2",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp4"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp4.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp4",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "D1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp3",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp3"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "903ae611aab43b27e9347f8652945d5580debe3620e24e8f30ec89548abc3f24",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp3"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp3.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp3",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "F1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp5",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp5"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "b35a39539dde98539bf8376890aa1d5b851d7f4621929736ec1cdb3ed34f4cd2",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp5"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp5.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp5",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "multimodal_locations": [
+                  {
+                    "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:76",
+                    "end_char": 1780,
+                    "locator": {
+                      "end_char": 7624,
+                      "end_line": 228,
+                      "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+                      "line": 228,
+                      "start_char": 7612
+                    },
+                    "needs_review": false,
+                    "start_char": 1768
+                  }
+                ]
+              },
+              "measurement": {
+                "si_unit": "m",
+                "significant_digits": 4,
+                "value": "0.006287"
+              },
+              "needs_review": false,
+              "path": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]",
+              "quote": "D=6.287/1000",
+              "raw": [
+                "xn",
+                "has_diameter",
+                "0.006287 m"
+              ],
+              "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "fa1b7caa0df24ea3d7e231115fd0ceb23a96a2eb785daa22fb87cec2ca540964",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_diameter",
+            "0.006287 m"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "B1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn1",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn1"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "6ba9737f7a0808abef982de0aec54bd28e25c5ad381f14650c7da7709650014a",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn1"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn1",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "F1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn5",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn5"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "7b6b567803f9655fdb1d4f63334d6b718b580e091d7444b34f235d81b6a7791a",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn5"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn5.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn5",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "E1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn4",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn4"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "88e5051c10bce4c8fb7b4058dd7c0789c36aa71f82e1231f0f747c4b523dcd66",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn4"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn4.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn4",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "C1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn2",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn2"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "929f0d83517073d5d6f0c1ff4dc1f221a91562472ae11c62d36af7eb4c6257db",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn2"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn2",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "D1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn3",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn3"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "b228de560419daaa27df43fdb9de644eab7c584a629e874a7d211c6f0836cd42",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn3"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn3.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn3",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ]
+    ],
+    "numerical_tools": {
+      "diameters": {
+        "xn": {
+          "evidence": {
+            "locator": {
+              "end_char": 7624,
+              "end_line": 228,
+              "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+              "line": 228,
+              "start_char": 7612
+            },
+            "quote": "D=6.287/1000",
+            "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6"
+          },
+          "mm": 6.287
+        },
+        "xp": {
+          "evidence": {
+            "locator": {
+              "end_char": 7932,
+              "end_line": 238,
+              "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+              "line": 238,
+              "start_char": 7920
+            },
+            "quote": "D=5.302/1000",
+            "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6"
+          },
+          "mm": 5.3020000000000005
+        }
+      },
+      "downgrade_triggers": {
+        "different_diameters": true,
+        "large_same_direction_changes": true,
+        "within_observed_sensitivity": true
+      },
+      "heat_compare": {
+        "model_evidence": {
+          "xn": {
+            "asset_id": "am:artifacts/additive_heat/xn/frozen_model.json",
+            "locator": {
+              "end_char": 6044,
+              "line": 174,
+              "path": "artifacts/additive_heat/xn/frozen_model.json",
+              "start_char": 6022
+            },
+            "quote": "\"model_name\": \"D+h+c\",",
+            "source_id": "am:artifacts/additive_heat/xn/frozen_model.json"
+          },
+          "xp": {
+            "asset_id": "am:artifacts/additive_heat/xp/frozen_model.json",
+            "locator": {
+              "end_char": 6022,
+              "line": 174,
+              "path": "artifacts/additive_heat/xp/frozen_model.json",
+              "start_char": 6000
+            },
+            "quote": "\"model_name\": \"D+h+c\",",
+            "source_id": "am:artifacts/additive_heat/xp/frozen_model.json"
+          }
+        },
+        "parameter_comparison": [
+          {
+            "difference_b_minus_a": -3.0886873446044398e-06,
+            "group_a": 5.17755206688232e-06,
+            "group_b": 2.0888647222778803e-06,
+            "parameter": "D",
+            "unit": "m^2/s"
+          },
+          {
+            "difference_b_minus_a": -0.015214690238541684,
+            "group_a": 0.03021834615129415,
+            "group_b": 0.015003655912752467,
+            "parameter": "h",
+            "unit": "s^-1"
+          },
+          {
+            "difference_b_minus_a": 0.15469667912784396,
+            "group_a": -0.11240848910488827,
+            "group_b": 0.04228819002295568,
+            "parameter": "c",
+            "unit": "K/s"
+          }
+        ],
+        "selected_models": {
+          "xn": "D+h+c",
+          "xp": "D+h+c"
+        }
+      },
+      "heat_repeatability": {
+        "xn": {
+          "D_h_correlation": {
+            "method": "描述性 Pearson r",
+            "n": 5,
+            "r": 0.9587422300857066
+          },
+          "fits": [
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xn1.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 2.0888647222778803e-06,
+                "c": 0.04228819002295568,
+                "h": 0.015003655912752467
+              },
+              "reason": null,
+              "repeat": 1
+            },
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xn2.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 2.5891838251879602e-06,
+                "c": 0.0521180176111056,
+                "h": 0.019858522575893548
+              },
+              "reason": null,
+              "repeat": 2
+            },
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xn3.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 2.385265956029458e-06,
+                "c": 0.05422590808908565,
+                "h": 0.017883811883054847
+              },
+              "reason": null,
+              "repeat": 3
+            },
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xn4.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 2.4688580350864314e-06,
+                "c": 0.06406326009886917,
+                "h": 0.017476136767863196
+              },
+              "reason": null,
+              "repeat": 4
+            },
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xn5.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 2.2739534877215252e-06,
+                "c": 0.050396200253042735,
+                "h": 0.01643670687082737
+              },
+              "reason": null,
+              "repeat": 5
+            }
+          ],
+          "frozen_scores_modified": false,
+          "group": "xn",
+          "manifest": {
+            "asset_id": "am:pde_discovery/data/additive_heat/xn/manifest.json",
+            "locator": {
+              "end_char": 2248,
+              "line": 85,
+              "path": "pde_discovery/data/additive_heat/xn/manifest.json",
+              "start_char": 2144
+            },
+            "quote": "File suffix 1 training, 2 development, 3/4/5 project-new holdout; complete acquisitions, no row slicing.",
+            "source_id": "am:pde_discovery/data/additive_heat/xn/manifest.json"
+          },
+          "model": "D+h+c",
+          "scope": "描述性复测离散度",
+          "summary": {
+            "D": {
+              "max": 2.5891838251879602e-06,
+              "mean": 2.3612252052606513e-06,
+              "min": 2.0888647222778803e-06,
+              "range": 5.003191029100799e-07,
+              "sample_std": 1.9100032822343117e-07,
+              "unit": "m^2/s"
+            },
+            "c": {
+              "max": 0.06406326009886917,
+              "mean": 0.05261831521501177,
+              "min": 0.04228819002295568,
+              "range": 0.02177507007591349,
+              "sample_std": 0.007833752251053443,
+              "unit": "K/s"
+            },
+            "h": {
+              "max": 0.019858522575893548,
+              "mean": 0.017331766802078284,
+              "min": 0.015003655912752467,
+              "range": 0.004854866663141081,
+              "sample_std": 0.0017980074939004196,
+              "unit": "s^-1"
+            }
+          }
+        },
+        "xp": {
+          "D_h_correlation": {
+            "method": "描述性 Pearson r",
+            "n": 5,
+            "r": 0.9961069164301157
+          },
+          "fits": [
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xp1.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 5.17755206688232e-06,
+                "c": -0.11240848910488827,
+                "h": 0.03021834615129415
+              },
+              "reason": null,
+              "repeat": 1
+            },
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xp2.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 5.061674822333738e-06,
+                "c": -0.1123363172572499,
+                "h": 0.030248071876294306
+              },
+              "reason": null,
+              "repeat": 2
+            },
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xp3.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 4.5873332434977256e-06,
+                "c": -0.09123019201263212,
+                "h": 0.02707005058373433
+              },
+              "reason": null,
+              "repeat": 3
+            },
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xp4.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 3.7390287070101315e-06,
+                "c": -0.07297209211448963,
+                "h": 0.022468276754283895
+              },
+              "reason": null,
+              "repeat": 4
+            },
+            {
+              "evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xp5.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv"
+              },
+              "fit_success": true,
+              "parameters": {
+                "D": 4.412410292065768e-06,
+                "c": -0.08667855252756301,
+                "h": 0.02651356678221766
+              },
+              "reason": null,
+              "repeat": 5
+            }
+          ],
+          "frozen_scores_modified": false,
+          "group": "xp",
+          "manifest": {
+            "asset_id": "am:pde_discovery/data/additive_heat/xp/manifest.json",
+            "locator": {
+              "end_char": 2226,
+              "line": 85,
+              "path": "pde_discovery/data/additive_heat/xp/manifest.json",
+              "start_char": 2122
+            },
+            "quote": "File suffix 1 training, 2 development, 3/4/5 project-new holdout; complete acquisitions, no row slicing.",
+            "source_id": "am:pde_discovery/data/additive_heat/xp/manifest.json"
+          },
+          "model": "D+h+c",
+          "scope": "描述性复测离散度",
+          "summary": {
+            "D": {
+              "max": 5.17755206688232e-06,
+              "mean": 4.595599826357937e-06,
+              "min": 3.7390287070101315e-06,
+              "range": 1.4385233598721886e-06,
+              "sample_std": 5.751597900784424e-07,
+              "unit": "m^2/s"
+            },
+            "c": {
+              "max": -0.07297209211448963,
+              "mean": -0.09512512860336458,
+              "min": -0.11240848910488827,
+              "range": 0.03943639699039864,
+              "sample_std": 0.0171187891601072,
+              "unit": "K/s"
+            },
+            "h": {
+              "max": 0.030248071876294306,
+              "mean": 0.02730366242956487,
+              "min": 0.022468276754283895,
+              "range": 0.007779795122010411,
+              "sample_std": 0.0032103235211924127,
+              "unit": "s^-1"
+            }
+          }
+        }
+      },
+      "historical_holdouts": [
+        {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xp/repeat3/report.json",
+            "locator": {
+              "end_char": 34160,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xp/repeat3/report.json",
+              "start_char": 34125
+            },
+            "quote": "\"relative_l2\": 0.01054737587638552,",
+            "source_id": "am:artifacts/additive_heat/xp/repeat3/report.json"
+          },
+          "relative_l2": 0.01054737587638552,
+          "test": "xp3"
+        },
+        {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xp/repeat4/report.json",
+            "locator": {
+              "end_char": 34161,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xp/repeat4/report.json",
+              "start_char": 34125
+            },
+            "quote": "\"relative_l2\": 0.014927967386277554,",
+            "source_id": "am:artifacts/additive_heat/xp/repeat4/report.json"
+          },
+          "relative_l2": 0.014927967386277554,
+          "test": "xp4"
+        },
+        {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xp/repeat5/report.json",
+            "locator": {
+              "end_char": 34161,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xp/repeat5/report.json",
+              "start_char": 34125
+            },
+            "quote": "\"relative_l2\": 0.011084417613449856,",
+            "source_id": "am:artifacts/additive_heat/xp/repeat5/report.json"
+          },
+          "relative_l2": 0.011084417613449856,
+          "test": "xp5"
+        },
+        {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xn/repeat3/report.json",
+            "locator": {
+              "end_char": 34180,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xn/repeat3/report.json",
+              "start_char": 34144
+            },
+            "quote": "\"relative_l2\": 0.034521202729760475,",
+            "source_id": "am:artifacts/additive_heat/xn/repeat3/report.json"
+          },
+          "relative_l2": 0.034521202729760475,
+          "test": "xn3"
+        },
+        {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xn/repeat4/report.json",
+            "locator": {
+              "end_char": 34179,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xn/repeat4/report.json",
+              "start_char": 34144
+            },
+            "quote": "\"relative_l2\": 0.04279253811834892,",
+            "source_id": "am:artifacts/additive_heat/xn/repeat4/report.json"
+          },
+          "relative_l2": 0.04279253811834892,
+          "test": "xn4"
+        },
+        {
+          "evidence": {
+            "asset_id": "am:artifacts/additive_heat/xn/repeat5/report.json",
+            "locator": {
+              "end_char": 34180,
+              "line": 1104,
+              "path": "artifacts/additive_heat/xn/repeat5/report.json",
+              "start_char": 34144
+            },
+            "quote": "\"relative_l2\": 0.029660454612451804,",
+            "source_id": "am:artifacts/additive_heat/xn/repeat5/report.json"
+          },
+          "relative_l2": 0.029660454612451804,
+          "test": "xn5"
+        }
+      ],
+      "identifiability_evidence": {
+        "deletion_ratio": {
+          "max": 4.819,
+          "min": 1.381
+        },
+        "groups": {
+          "100ss": {
+            "deletion_ratio": 4.819,
+            "evidence": {
+              "asset_id": "am:experiments/IDENTIFIABILITY_REPORT.md",
+              "locator": {
+                "end_char": 1776,
+                "line": 27,
+                "path": "experiments/IDENTIFIABILITY_REPORT.md",
+                "start_char": 1685
+              },
+              "quote": "| 100ss | 5.38955e-06 | 3.39542e-06–1.34739e-05 | 3.968 | 5.26765e-06–2.53848e-05 | 4.819 |",
+              "source_id": "am:experiments/IDENTIFIABILITY_REPORT.md"
+            },
+            "profile_ratio": 3.968
+          },
+          "50ss": {
+            "deletion_ratio": 2.872,
+            "evidence": {
+              "asset_id": "am:experiments/IDENTIFIABILITY_REPORT.md",
+              "locator": {
+                "end_char": 1595,
+                "line": 25,
+                "path": "experiments/IDENTIFIABILITY_REPORT.md",
+                "start_char": 1505
+              },
+              "quote": "| 50ss | 3.90321e-06 | 3.12257e-06–6.24514e-06 | 2.000 | 1.40041e-06–4.02158e-06 | 2.872 |",
+              "source_id": "am:experiments/IDENTIFIABILITY_REPORT.md"
+            },
+            "profile_ratio": 2.0
+          },
+          "75ss": {
+            "deletion_ratio": 1.381,
+            "evidence": {
+              "asset_id": "am:experiments/IDENTIFIABILITY_REPORT.md",
+              "locator": {
+                "end_char": 1684,
+                "line": 26,
+                "path": "experiments/IDENTIFIABILITY_REPORT.md",
+                "start_char": 1596
+              },
+              "quote": "| 75ss | 4.57226e-06 | 2.88053e-06–7.31562e-06 | 2.540 | 4.5171e-06–6.2395e-06 | 1.381 |",
+              "source_id": "am:experiments/IDENTIFIABILITY_REPORT.md"
+            },
+            "profile_ratio": 2.54
+          }
+        },
+        "profile_ratio": {
+          "max": 3.968,
+          "min": 2.0
+        },
+        "scope": "旧不锈钢温度组三条训练记录；有限采样和训练损失敏感性参照"
+      },
+      "larger_within_rod_range": 1.4385233598721886e-06,
+      "mean_D_difference": 2.234374621097286e-06,
+      "mean_D_ratio": 1.9462776426912813
+    },
+    "pending_review_count": 173,
+    "standard_align": []
+  },
+  "retrieval": [
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:20",
+      "locator": {
+        "end_char": 4490,
+        "end_line": 132,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 132,
+        "start_char": 4480
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "XP = False",
+      "ranks": {
+        "bm25": 3,
+        "vector": 1
+      },
+      "rrf": 0.032266458495966696,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:18",
+      "locator": {
+        "end_char": 4428,
+        "end_line": 130,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 130,
+        "start_char": 4418
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "XN = False",
+      "ranks": {
+        "bm25": 2,
+        "vector": 4
+      },
+      "rrf": 0.031754032258064516,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36:88",
+      "locator": {
+        "bbox": [
+          25.757999420166016,
+          428.3741455078125,
+          391.1573486328125,
+          447.7967224121094
+        ],
+        "coordinate_system": "PDF points, top-left",
+        "end_char": 123,
+        "end_line": 2,
+        "line": 1,
+        "offset_scope": "block text",
+        "page": 6,
+        "start_char": 0
+      },
+      "modality": "pdf",
+      "needs_review": false,
+      "quote": "where the thermal diffusivity, the diffusion rate coeﬃcient, and βn are deﬁned by Eqs. (7), (8) , \nand (9) , respectively: ",
+      "ranks": {
+        "bm25": 1,
+        "vector": 7
+      },
+      "rrf": 0.03131881575727918,
+      "source_id": "422577e9a17b05ee85c1447934e4e97849579e6623f4e79540536919dad746b9",
+      "title": "dib-2021-107632.pdf [edbf589d488dc12e]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:25",
+      "locator": {
+        "end_char": 4649,
+        "end_line": 139,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 139,
+        "start_char": 4639
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "XP = False",
+      "ranks": {
+        "bm25": 6,
+        "vector": 2
+      },
+      "rrf": 0.03128054740957967,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:21",
+      "locator": {
+        "end_char": 4535,
+        "end_line": 134,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 134,
+        "start_char": 4525
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "XN = False",
+      "ranks": {
+        "bm25": 4,
+        "vector": 5
+      },
+      "rrf": 0.031009615384615385,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:28",
+      "locator": {
+        "end_char": 4720,
+        "end_line": 143,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 143,
+        "start_char": 4710
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "XP = False",
+      "ranks": {
+        "bm25": 7,
+        "vector": 3
+      },
+      "rrf": 0.030798389007344232,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36:33",
+      "locator": {
+        "bbox": [
+          36.1349983215332,
+          353.6246032714844,
+          401.6490478515625,
+          602.1915893554688
+        ],
+        "coordinate_system": "PDF points, top-left",
+        "end_char": 2215,
+        "end_line": 24,
+        "line": 1,
+        "offset_scope": "block text",
+        "page": 3,
+        "start_char": 0
+      },
+      "modality": "pdf",
+      "needs_review": false,
+      "quote": "The raw experimental data is given in the CSV documents is the raw data collected from run- \nning the experiment. Each ﬁle contains the time and temperature data from each thermocouple, \nand the power setting for the test using a 10 bit duty cycle PWM controller. The temperature \nis in the format of excess temperature ( θ). There are three sets of data: constant wind speed \nat different boundary temperatures [1] , constant boundary temperature at different wind speeds \n[1] , and additively manufactured stainless steel 304L [2] . The ﬁle naming convention for the ﬁles \nat a constant wind speed of 5 m/s is the boundary temperature, material, and test number (i.e. \n50ss1 would be for the ﬁrst test of SAE-304 at 50 °C). The ﬁle naming convention for the ﬁles at \na constant boundary temperature of 75 °C is material and wind speed (i.e. ss1 would be for the \ntest of SAE-304 at 1 m/s wind speed). The ﬁle naming convention for the additively manufac- \ntured materials are the build direction (x or y), if it is the more porous variety or not (p or n), \nand the test number (i.e. xp1 would be the ﬁrst test for the more porous specimen built along \nthe x direction). \nThe oneDkhEstimator Python ",
+      "ranks": {
+        "bm25": 1,
+        "graph": 1,
+        "vector": 32
+      },
+      "rrf": 0.043656450463292945,
+      "source_id": "422577e9a17b05ee85c1447934e4e97849579e6623f4e79540536919dad746b9",
+      "title": "dib-2021-107632.pdf [edbf589d488dc12e]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:24",
+      "locator": {
+        "end_char": 4626,
+        "end_line": 138,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 138,
+        "start_char": 4616
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "XN = False",
+      "ranks": {
+        "bm25": 5,
+        "vector": 6
+      },
+      "rrf": 0.030536130536130537,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:79",
+      "locator": {
+        "end_char": 7735,
+        "end_line": 232,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 232,
+        "start_char": 7694
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "filenames=['yn1','yn2','yn3','yn4','yn5']",
+      "ranks": {
+        "bm25": 12,
+        "vector": 8
+      },
+      "rrf": 0.028594771241830064,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:87",
+      "locator": {
+        "end_char": 8043,
+        "end_line": 242,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 242,
+        "start_char": 8002
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "filenames=['yp1','yp2','yp3','yp4','yp5']",
+      "ranks": {
+        "bm25": 14,
+        "vector": 7
+      },
+      "rrf": 0.028438886647841874,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:75",
+      "locator": {
+        "end_char": 7581,
+        "end_line": 227,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 227,
+        "start_char": 7540
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "filenames=['xn1','xn2','xn3','xn4','xn5']",
+      "ranks": {
+        "bm25": 11,
+        "vector": 10
+      },
+      "rrf": 0.028370221327967807,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:83",
+      "locator": {
+        "end_char": 7889,
+        "end_line": 237,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 237,
+        "start_char": 7848
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "filenames=['xp1','xp2','xp3','xp4','xp5']",
+      "ranks": {
+        "bm25": 13,
+        "vector": 9
+      },
+      "rrf": 0.02819138376017471,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:33",
+      "locator": {
+        "end_char": 5264,
+        "end_line": 164,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 164,
+        "start_char": 5178
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "filenames=['50cu1','50cu2','50cu3','75cu1','75cu2','75cu3','100cu1','100cu2','100cu3']",
+      "ranks": {
+        "bm25": 16,
+        "vector": 12
+      },
+      "rrf": 0.027046783625730993,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    }
+  ],
+  "rounds": [
+    {
+      "blocks": [
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:20",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:18",
+        "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36:88",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:25",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:21",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:28"
+      ],
+      "query": "xp（较多孔）和 xn 两根增材杆的热扩散特性有没有可辨别差异？依据是哪些记录、哪个模型？",
+      "stage": "retrieve"
+    },
+    {
+      "blocks": [
+        "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36:33",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:20",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:18",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:25",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:21",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:28",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:24",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:79",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:87",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:75",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:83",
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:33"
+      ],
+      "loop_reason": "evidence_gap",
+      "query": "xp xn more porous specimen built along direction filenames diameter has_test",
+      "stage": "retrieve"
+    }
+  ],
+  "rule": {
+    "evidence": {
+      "asset_id": "am:competition_agent/decision/rules.yaml",
+      "locator": {
+        "end_char": 469,
+        "line": 9,
+        "path": "competition_agent/decision/rules.yaml",
+        "start_char": 371
+      },
+      "quote": "若两杆平均 D 的倍数不超过同材料类别既有诊断的最大观测倍数，或 D、h 均值同向变化且各自差值超过两杆对应参数的最大杆内极差，或两杆直径不同，则模型参数存在差异，但不足以判定材料热扩散性质差异。",
+      "source_id": "am:competition_agent/decision/rules.yaml"
+    },
+    "id": "identifiability"
+  },
+  "event_sha256": "7fd56ab773f8e902ce7693d3b509db6e3b42b654d85c863b7f9b2076a4dfee14",
+  "trace_id": "e8def2b333f54114801c84753c3993cb.328bd310c5d2f6dff456c1a5ef20135ba4bdb26f484eb6dbd92cd5aac26c43d9"
+}

@@ -125,7 +125,7 @@ def heat_holdout_summary(asset_group: str) -> dict:
 
 
 def heat_compare(group_a: str, group_b: str) -> dict:
-    """Compare training/development fits; no bootstrap support in this engine."""
+    """Compare original selections and, for additive rods, separate descriptive five-repeat D/h fits."""
     a, b = heat_identify(group_a), heat_identify(group_b)
     parameters_a = (a.get('selected') or {}).get('parameters') or {}
     parameters_b = (b.get('selected') or {}).get('parameters') or {}
@@ -136,8 +136,9 @@ def heat_compare(group_a: str, group_b: str) -> dict:
                    if name in parameters_a and name in parameters_b]
     return {'method': METHOD, 'group_a': a, 'group_b': b,
             'parameter_comparison': differences,
+            'repeatability': {g: heat_repeatability(g) for g in dict.fromkeys((group_a, group_b)) if g in ADDITIVE},
             'bootstrap_intervals': None,
-            'comparison_scope': '仅点估计；当前实测轨迹拟合接口不提供 bootstrap 区间。训练半段诊断不是置信区间，不能据此断言物性差异显著。',
+            'comparison_scope': '训练/开发点估计与增材杆五次独立拟合分别返回。描述性复测离散度不能确立材料物性差异。',
             'evidence': a['evidence'] + b['evidence']}
 
 
@@ -171,6 +172,11 @@ def heat_repeatability(group: str) -> dict:
             summary[name] = {'unit': unit, 'mean': float(np.mean(values)), 'min': min(values),
                              'max': max(values), 'range': max(values)-min(values),
                              'sample_std': float(np.std(values, ddof=1))}
-    return {'group': group, 'scope': '描述性复测离散度', 'model': 'D+h+c', 'fits': fits,
+    pairs = [(row['parameters']['D'], row['parameters']['h']) for row in fits if row['fit_success']]
+    correlation = None
+    if len(pairs) == 5 and summary['D']['range'] > 0 and summary['h']['range'] > 0:
+        correlation = float(np.corrcoef(np.array(pairs).T)[0, 1])
+    return {'D_h_correlation': {'method': '描述性 Pearson r', 'n': len(pairs), 'r': correlation},
+            'group': group, 'scope': '描述性复测离散度', 'model': 'D+h+c', 'fits': fits,
             'summary': summary, 'manifest': evidence(manifest_path, manifest['assignment']),
             'frozen_scores_modified': False}

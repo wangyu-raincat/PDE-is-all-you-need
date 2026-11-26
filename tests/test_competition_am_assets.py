@@ -119,6 +119,10 @@ class ManufacturingAssetsTests(unittest.TestCase):
         with patch('competition_agent.scenario_am.heat_tools.heat_identify', side_effect=[a, b]) as identify:
             result = heat_compare('xn', 'xp')
         self.assertEqual(identify.call_count, 2)
+        for group in ("xn", "xp"):
+            repeats = result["repeatability"][group]
+            self.assertEqual(repeats["D_h_correlation"]["n"], 5)
+            self.assertEqual(len(repeats["fits"]), 5)
         self.assertIsNone(result['bootstrap_intervals'])
         self.assertIn('不能', result['comparison_scope'])
         self.assertAlmostEqual(result['parameter_comparison'][0]['difference_b_minus_a'], 1e-6)

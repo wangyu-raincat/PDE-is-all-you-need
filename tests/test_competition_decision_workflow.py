@@ -5,7 +5,7 @@ import unittest
 
 import numpy as np
 
-from competition_agent.decision import decide, get_trace, QUESTIONS
+from competition_agent.decision import decide, downgrade_triggers, get_trace, QUESTIONS, stainless_diagnostics
 from competition_agent.decision.retrieval import export_knowledge, fused, typed_paths
 from competition_agent.multimodal import project
 from competition_agent.scenario_am.heat_tools import heat_repeatability
@@ -29,8 +29,26 @@ class DecisionWorkflowTests(unittest.TestCase):
             self.assertAlmostEqual(stats["mean"],np.mean(values))
             self.assertAlmostEqual(stats["sample_std"],np.std(values,ddof=1))
             self.assertAlmostEqual(stats["range"],np.ptp(values))
+        correlation = result["D_h_correlation"]
+        self.assertEqual(correlation["n"], 5)
+        paired = [[row["parameters"][key] for row in result["fits"]] for key in ("D","h")]
+        self.assertAlmostEqual(correlation["r"], np.corrcoef(paired)[0,1])
         with self.assertRaises(ValueError):
             heat_repeatability("50ss")
+
+    def test_downgrade_reasons_operate_independently(self):
+        baseline = {"D": {"mean": 1, "range": 1}, "h": {"mean": 1, "range": 1}}
+        def triggers(d, h, diameter):
+            other = {"D": {"mean": d, "range": 1}, "h": {"mean": h, "range": 1}}
+            _, flags = downgrade_triggers(other, baseline, diameter, 5, 2)
+            return {key for key,value in flags.items() if value}
+        self.assertEqual(triggers(2, 1, 5), {"within_observed_sensitivity"})
+        self.assertEqual(triggers(3, 3, 5), {"large_same_direction_changes"})
+        self.assertEqual(triggers(3, 1, 6), {"different_diameters"})
+        self.assertFalse(triggers(3, 0.5, 5))
+        report = stainless_diagnostics()
+        self.assertEqual(report["profile_ratio"], {"min": 2.0, "max": 3.968})
+        self.assertEqual(report["deletion_ratio"], {"min": 1.381, "max": 4.819})
 
     def test_typed_paths_rrf_and_export(self):
         inputs = [{"title":"自制表头","kind":"text","text":"probe measures temperature"},

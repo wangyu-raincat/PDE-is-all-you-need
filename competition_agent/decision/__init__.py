@@ -6,7 +6,7 @@ import re
 
 from competition_agent.ontology.tools import induce_case, queue, standard_align
 from competition_agent.scenario_am.catalog import ROOT, evidence
-from competition_agent.scenario_am.heat_tools import heat_compare, heat_holdout_summary, heat_repeatability
+from competition_agent.scenario_am.heat_tools import heat_compare, heat_holdout_summary
 from competition_agent.service import digest
 from .retrieval import fused, graph_edges, typed_paths
 
@@ -50,9 +50,58 @@ def rod_paths(state, groups=("xp","xn")):
     return paths
 
 
-def comparison():
-    repeats = {g:heat_repeatability(g) for g in ("xp","xn")}
+def stainless_diagnostics():
+    report = ROOT / "experiments/IDENTIFIABILITY_REPORT.md"
+    groups = {}
+    for line in report.read_text(encoding="utf8").splitlines():
+        cells = [cell.strip() for cell in line.strip("|").split("|")]
+        if cells[0] in ("50ss", "75ss", "100ss"):
+            if len(cells) != 6 or cells[0] in groups:
+                raise ValueError("不锈钢可识别性诊断表格式异常")
+            groups[cells[0]] = dict(profile_ratio=float(cells[3]), deletion_ratio=float(cells[5]),
+                                    evidence=evidence(report, line))
+    if len(groups) != 3:
+        raise ValueError("不锈钢诊断缺组")
+    result = {"scope": "旧不锈钢温度组三条训练记录；有限采样和训练损失敏感性参照", "groups": groups}
+    for key in ("profile_ratio", "deletion_ratio"):
+        values = [g[key] for g in groups.values()]
+        result[key] = {"min": min(values), "max": max(values)}
+    return result
+
+
+def author_diameters(paths):
+    diameters = {}
+    for path in paths:
+        edge = path[0]
+        group, relation, _ = edge["triple"]
+        if relation != "has_diameter" or group not in ("xp", "xn"):
+            continue
+        for ev in edge["evidence"]:
+            for location in ev["locator"].get("multimodal_locations", []):
+                loc = location["locator"]
+                if Path(loc.get("file", "")).name != "author_oneDkhEstimator_V1.0.0_full_source.txt":
+                    continue
+                measurement = ev.get("measurement") or {}
+                if measurement.get("si_unit") == "m":
+                    diameters[group] = {"mm": float(measurement["value"]) * 1000,
+                                        "evidence": {"source_id": ev["source_id"], "locator": loc, "quote": ev["quote"]}}
+    return diameters
+
+
+def downgrade_triggers(a, b, diameter_a, diameter_b, observed_upper):
+    delta_d = a["D"]["mean"] - b["D"]["mean"]
+    delta_h = a["h"]["mean"] - b["h"]["mean"]
+    ratio = max(a["D"]["mean"], b["D"]["mean"]) / min(a["D"]["mean"], b["D"]["mean"])
+    return ratio, {"within_observed_sensitivity": ratio <= observed_upper,
+                   "large_same_direction_changes": delta_d * delta_h > 0
+                       and abs(delta_d) > max(a["D"]["range"], b["D"]["range"])
+                       and abs(delta_h) > max(a["h"]["range"], b["h"]["range"]),
+                   "different_diameters": diameter_a != diameter_b}
+
+
+def comparison(paths):
     selection = heat_compare("xp","xn")
+    repeats = selection["repeatability"]
     historical = []
     for group in repeats:
         for rec in heat_holdout_summary(group)["records"]:
@@ -74,12 +123,39 @@ def comparison():
         line = next(line.strip() for line in source.read_text(encoding="utf8").splitlines()
                     if line.strip().startswith(f'"model_name": "{label}"'))
         numeric["heat_compare"].setdefault("model_evidence",{})[group] = evidence(source,line)
-    a,b = [r["summary"]["D"] for r in repeats.values()]
-    delta,spread = abs(a["mean"]-b["mean"]), max(a["range"],b["range"])
-    numeric.update(mean_D_difference=delta,larger_within_rod_range=spread)
-    direction = "超过" if delta>spread else "未超过"
-    return numeric, (f"两杆五次独立 D+h+c 拟合的平均 D 差为 {delta:.4g} m²/s，{direction}较大的杆内极差 "
-                     f"{spread:.4g} m²/s。此比较仅描述这两根杆的复测离散度，无法归因于孔隙类别。"), True
+    diag = stainless_diagnostics()
+    diameters = author_diameters(paths)
+    numeric.update(identifiability_evidence=diag, diameters=diameters)
+    if set(diameters) != {"xp", "xn"}:
+        return numeric, "缺少作者源码中可定位的两杆直径，暂缓材料比较。", False
+    a, b = (repeats[g]["summary"] for g in ("xp", "xn"))
+    upper = max(diag["profile_ratio"]["max"], diag["deletion_ratio"]["max"])
+    ratio, triggers = downgrade_triggers(a, b, diameters["xp"]["mm"], diameters["xn"]["mm"], upper)
+    delta = abs(a["D"]["mean"] - b["D"]["mean"])
+    spread = max(a["D"]["range"], b["D"]["range"])
+    numeric.update(mean_D_difference=delta, larger_within_rod_range=spread,
+                   mean_D_ratio=ratio, downgrade_triggers=triggers)
+    lines = []
+    for group in ("xp", "xn"):
+        stats = repeats[group]["summary"]
+        corr = repeats[group]["D_h_correlation"]["r"]
+        r_text = f"{corr:.3f}" if corr is not None else "未定义"
+        lines.append(f"{group}（直径 {diameters[group]['mm']:.3f} mm）：五次拟合 D 均值 {stats['D']['mean']:.4g}、"
+                     f"极差 {stats['D']['range']:.4g} m²/s；h 均值 {stats['h']['mean']:.4g}、"
+                     f"极差 {stats['h']['range']:.4g} s⁻¹；描述性 D–h 相关 r={r_text}（n=5）。")
+    profile, deletion = diag["profile_ratio"], diag["deletion_ratio"]
+    lines.append(f"两杆平均 D 差 {delta:.4g} m²/s，倍数 {ratio:.3f}。旧不锈钢训练记录中，"
+                 f"训练 RMSE 容许增加 5% 时 D 的近优剖面倍数为 {profile['min']:.3f}–{profile['max']:.3f}，"
+                 f"五块删块倍数为 {deletion['min']:.3f}–{deletion['max']:.3f}。")
+    if triggers["different_diameters"]:
+        lines.append("直径不同可影响侧面散热衰减率 h，几何与孔隙类别混杂。")
+    if a["D"]["mean"] > b["D"]["mean"]:
+        lines.append("较多孔杆的拟合 D 较高，方向值得复核。")
+    if any(triggers.values()):
+        lines.append("模型参数存在差异，但不足以判定材料热扩散性质差异。")
+    else:
+        lines.append("仅报告两根杆的模型参数比较，材料性质仍需独立验证。")
+    return numeric, "\n".join(lines), True
 
 
 def decide(lab,case_id,question):
@@ -147,12 +223,16 @@ def decide(lab,case_id,question):
             gaps = ["标准方法的配对测量", "标准映射由本地操作员确认"]
             experiments = ["在相同试样与温度条件下做闪光法对标复测"]
         elif key == "dispersion" and {"pdf","xlsx","code"} <= modalities:
-            numeric, conclusion, ok = comparison()
+            numeric, conclusion, ok = comparison(paths)
             if not ok:
                 model_ambiguous = True
-                gaps.append("有效拟合不足")
+                gaps.append("可比较的拟合或几何证据不足")
+            elif any(numeric["downgrade_triggers"].values()):
+                key = "identifiability"
+                confidence = "证据不足（材料性质）"
+                model_ambiguous = True
             gaps.append("独立试样与逐次工况")
-            experiments = ["重复制造同方向、不同孔隙类别的独立试样并控制风速"]
+            experiments = ["按 GB/T 22588-2008 闪光法复测 xn、xp，每类至少 3 个独立试样；复测时记录风速与加热设定。"]
         elif key == "transfer" and paths:
             counts = {g:len({p[0]["triple"][2] for p in paths if p[0]["triple"][:2]==[g,"has_test"]}) for g in groups}
             scopes = []
@@ -180,7 +260,7 @@ def decide(lab,case_id,question):
                                 "conflicts":conflicts,"pending_review_count":pending},
                      retrieval=[{**h,"quote":h["quote"][:1200]} for h in hits],
                      rounds=rounds,loop_reason=reason,graph_version=state.get("induction",{}).get("graph",{}).get("version",0))
-        if key=="dispersion" and numeric.get("heat_repeatability"):
+        if kind=="dispersion" and numeric.get("heat_repeatability"):
             # Explicit joins: specimen -> named acquisition -> raw CSV -> fixed fit -> saved score.
             indexed = {item["test"]:item for item in numeric["historical_holdouts"]}
             links = []

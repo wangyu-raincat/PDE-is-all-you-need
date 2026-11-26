@@ -19,13 +19,20 @@ def save(path,data):
 
 def validate(index, trace):
     reasoning = trace["reasoning"]
-    expected = ["dispersion","transfer","standard","conflict","refuse"][index]
+    expected = ["identifiability","transfer","standard","conflict","refuse"][index]
     if trace["rule"]["id"] != expected or not trace["rule"]["evidence"]["quote"]:
         raise ValueError("Decision did not follow the expected rule")
     if index == 0:
         fits = reasoning["numerical_tools"]
         assert all(len(v["fits"])==5 and v["summary"] for v in fits["heat_repeatability"].values())
         assert len(fits["historical_holdouts"])==6
+        assert all(fits["downgrade_triggers"].values())
+        assert {g:v["evidence"]["locator"]["line"] for g,v in fits["diameters"].items()} == {"xp":238,"xn":228}
+        for row in fits["identifiability_evidence"]["groups"].values():
+            ev = row["evidence"]
+            assert ev["quote"] == (ROOT/ev["locator"]["path"]).read_text(encoding="utf8").splitlines()[ev["locator"]["line"]-1]
+        assert trace["decision"]["confidence_level"] == "证据不足（材料性质）"
+        assert "GB/T 22588-2008" in trace["decision"]["next_experiments"][0]
         edges = [e for p in reasoning["graph_paths"] for e in p]
         assert {"has_porosity_class","has_diameter","has_test","records_field"} <= {e["triple"][1] for e in edges}
         assert any(len(p)>=2 for p in reasoning["graph_paths"])
