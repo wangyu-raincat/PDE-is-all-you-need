@@ -43,7 +43,7 @@ def annotate(packet, directory, reviewer):
             done.add(record["id"])
     for item in json.loads(raw)["items"]:
         if item["id"] in done: continue
-        print(json.dumps(item,ensure_ascii=False,indent=2))
+        print(json.dumps({k:v for k,v in item.items() if k!="strata"},ensure_ascii=False,indent=2))
         answer=input("1 支持 / 0 不支持 / ? 不确定 / q 保存退出 > ").strip()
         while answer not in ("1","0","?","q"):
             answer=input("请输入 1、0、? 或 q > ").strip()
@@ -54,13 +54,48 @@ def annotate(packet, directory, reviewer):
             f.write(json.dumps(record,ensure_ascii=False)+"\n")
 
 
+def missing(subset, directory, reviewer):
+    """Annotate every source record independently, including zero-fact decisions."""
+    if not reviewer.isidentifier(): raise ValueError("invalid reviewer identifier")
+    raw=subset.read_bytes()
+    digest=hashlib.sha256(raw).hexdigest()
+    directory.mkdir(parents=True,exist_ok=True)
+    journal=directory/(reviewer+".missing.jsonl")
+    done=set()
+    if journal.exists():
+        for line in journal.read_text(encoding="utf8").splitlines():
+            entry=json.loads(line)
+            if entry["subset_sha256"]!=digest: raise ValueError("subset changed")
+            if entry["action"]=="done": done.add(entry["index"])
+    def save(action,index,source,**fields):
+        record=dict(reviewer=reviewer,subset_sha256=digest,index=index,action=action,**source,**fields)
+        with journal.open("a",encoding="utf8") as stream:
+            stream.write(json.dumps(record,ensure_ascii=False)+"\n")
+    for i,source in enumerate(json.loads(raw)):
+        if i in done: continue
+        print(json.dumps(source,ensure_ascii=False,indent=2))
+        while True:
+            subject=input("主语（可补充任意遗漏事实），回车完成本片段，:q 退出 > ").strip()
+            if subject==":q": return
+            if not subject:
+                save("done",i,source);break
+            predicate=input("关系 > ").strip()
+            obj=input("宾语 > ").strip()
+            quote=input("逐字引文（回车使用整个片段） > ") or source["text"]
+            if not predicate or not obj or not quote or quote not in source["text"]:
+                print("关系、宾语及可定位引文均为必填");continue
+            save("fact",i,source,triple=[subject,predicate,obj],quote=quote)
+
+
 def main():
     parser=argparse.ArgumentParser()
     cmds=parser.add_subparsers(dest="cmd",required=True)
     p=cmds.add_parser("prepare");p.add_argument("snapshot",type=Path);p.add_argument("packet",type=Path)
     p.add_argument("--count",type=int,default=100);p.add_argument("--seed",type=int,default=42)
     a=cmds.add_parser("label");a.add_argument("packet",type=Path);a.add_argument("directory",type=Path);a.add_argument("reviewer")
+    m=cmds.add_parser("missing");m.add_argument("subset",type=Path);m.add_argument("directory",type=Path);m.add_argument("reviewer")
     args=parser.parse_args()
+    if args.cmd=="missing": return missing(args.subset,args.directory,args.reviewer)
     if args.cmd=="prepare": prepare(args.snapshot,args.packet,args.count,args.seed)
     else: annotate(args.packet,args.directory,args.reviewer)
 
