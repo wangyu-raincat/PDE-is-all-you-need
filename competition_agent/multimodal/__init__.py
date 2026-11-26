@@ -121,6 +121,8 @@ def parse_xlsx(path, modules):
     try:
         cached=api.load_workbook(path, data_only=True, read_only=True, keep_links=False)
         for ws in formulas:
+            if ws.max_row is None or ws.max_column is None:
+                ws.calculate_dimension(force=True)
             if ws.max_row>5000 or ws.max_column>100: raise ValueError('XLSX sheet size limit')
             rows=[]
             for row in ws.iter_rows():

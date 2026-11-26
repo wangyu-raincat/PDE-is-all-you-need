@@ -1,6 +1,6 @@
 # 多模态资产接入
 
-T03 将本地文件转为统一资产和可定位证据；不执行作者代码、不计算 Excel 公式、不发送图片到外网。当前环境缺解析依赖，真实 PDF/XLSX/OCR 验收尚未完成，见 `codex_plan/progress/T03.md`。
+T03 将本地文件转为统一资产和可定位证据；不执行作者代码、不计算 Excel 公式、不发送图片到外网。依赖已安装，真实 PDF/XLSX/OCR 已解析；部分语义验收仍未完成，见 `codex_plan/progress/T03.md`。
 
 ## 使用
 
@@ -28,6 +28,6 @@ competition_agent/build/t02-env/Scripts/python.exe -m unittest discover -s tests
 
 记录卡渲染脚本使用 Windows 自带 System.Drawing 和楷体；不依赖 Pillow、不下载字体。cards.json 的 expected_text 只用于夹具，不会交给解析器当成 OCR 结果。日期写“未记录”；20.8 C / 5 m/s 分别注明源码设定和猜测。xn 的方向 y 为唯一故意植入的事实冲突，不能引用为真实实验依据。
 
-缺失依赖交人工安装，版本写在 competition_agent/requirements.txt：PyMuPDF 1.24.14、pdfplumber 0.11.4、openpyxl 3.1.5、rapidocr-onnxruntime 1.4.4。当前未实测这些版本的联合安装；RapidOCR 传递依赖包括 OpenCV/ONNX Runtime。无外网/无密钥时不调用 VLM；缺 OCR 包时返回清晰错误，不伪造识别结果。
+缺失依赖交人工安装，版本写在 competition_agent/requirements.txt：PyMuPDF 1.24.14、pdfplumber 0.11.4、openpyxl 3.1.5、rapidocr-onnxruntime 1.4.4。2026-11-26 已实测这些版本联合安装及接入层 116/116 通过；RapidOCR 传递依赖包括 OpenCV/ONNX Runtime。无外网/无密钥时不调用 VLM；缺 OCR 包时返回清晰错误，不伪造识别结果。
 
 解析 API 参考：[PyMuPDF](https://pymupdf.readthedocs.io/en/latest/recipes-images.html)、[openpyxl](https://openpyxl.readthedocs.io/en/stable/api/openpyxl.reader.excel.html)、[pdfplumber](https://github.com/jsvine/pdfplumber)。

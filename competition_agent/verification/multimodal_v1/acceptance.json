@@ -5,29 +5,53 @@
       "path": "competition_agent/assets_raw/dib-2021-107632.pdf",
       "kind": "pdf",
       "sha256": "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36",
-      "status": "pending",
-      "reason": "Install manually in build/t02-env: PyMuPDF, pdfplumber"
+      "status": "parsed",
+      "blocks": 114,
+      "key_sentence_candidates": [
+        {
+          "type": "text",
+          "text": "The raw experimental data is given in the CSV documents is the raw data collected from run- \nning the experiment. Each ﬁle contains the time and temperature data from each thermocouple, \nand the power setting for the test using a 10 bit duty cycle PWM controller. The temperature \nis in the format of excess temperature ( θ). There are three sets of data: constant wind speed \nat different boundary temperatures [1] , constant boundary temperature at different wind speeds \n[1] , and additively manufactured stainless steel 304L [2] . The ﬁle naming convention for the ﬁles \nat a constant wind speed of 5 m/s is the boundary temperature, material, and test number (i.e. \n50ss1 would be for the ﬁrst test of SAE-304 at 50 °C). The ﬁle naming convention for the ﬁles at \na constant boundary temperature of 75 °C is material and wind speed (i.e. ss1 would be for the \ntest of SAE-304 at 1 m/s wind speed). The ﬁle naming convention for the additively manufac- \ntured materials are the build direction (x or y), if it is the more porous variety or not (p or n), \nand the test number (i.e. xp1 would be the ﬁrst test for the more porous specimen built along \nthe x direction). \nThe oneDkhEstimator Python code included with the article is used to analyze the data. This \ncode takes the raw data and performs the parameter estimation routine outlined in Section 2 . \nAlso given are the results from the parameter estimation given in an Excel document pro- \nduced by the Python code from the stainless steel (SAE-304), aluminum (Al6061-T6), copper (110 \nCu-H04), and four additively manufactured rods. The Excel ﬁle contains the values calculated us- \ning the parameter estimation code in Python and the list of output variables is given in Table 1 . \nThe top cell will have the ﬁlename of the data analyzed followed by the number of terms used \nin the Fourier series. The ﬁrst set of results is the ﬁnite difference boundary condition followed \nby the steady state model results and the results from the transient model. In each model, the \nestimated parameters are ﬁrst given followed by the mean standard error for the model then \nthe error for the individual parameters that is calculated according to Section 2.2.5 . ",
+          "locator": {
+            "page": 3,
+            "bbox": [
+              36.1349983215332,
+              353.6246032714844,
+              401.6490478515625,
+              602.1915893554688
+            ],
+            "coordinate_system": "PDF points, top-left",
+            "line": 1,
+            "end_line": 24,
+            "start_char": 0,
+            "end_char": 2215,
+            "offset_scope": "block text"
+          },
+          "block_id": "edbf589d488dc12e86d7e581727db40e76e14633d6731b7774105a6518454e36:33",
+          "needs_review": false
+        }
+      ],
+      "semantic_acceptance": "manual review of direction/porosity/repeats and page+bbox required"
     },
     {
       "path": "competition_agent/assets_raw/AdditiveRodResults.xlsx",
       "kind": "xlsx",
       "sha256": "dfbb0c03f6873aed83e4d8bab986fb3c310f0fe216f29cffd9b15f1520dff494",
-      "status": "pending",
-      "reason": "Install manually in build/t02-env: openpyxl"
+      "status": "parsed",
+      "blocks": 4
     },
     {
       "path": "competition_agent/assets_raw/Temperature Results.xlsx",
       "kind": "xlsx",
       "sha256": "27ce776bf998cb13d8e57036f5021c3794df93496b6280544086d075c8f871f5",
-      "status": "pending",
-      "reason": "Install manually in build/t02-env: openpyxl"
+      "status": "parsed",
+      "blocks": 3
     },
     {
       "path": "competition_agent/assets_raw/Wind Results.xlsx",
       "kind": "xlsx",
       "sha256": "78bd2f780196f4f7f63dca6f5ad490072fed54e0023d57c13375b035840a6fc2",
-      "status": "pending",
-      "reason": "Install manually in build/t02-env: openpyxl"
+      "status": "parsed",
+      "blocks": 3
     },
     {
       "path": "pde_discovery/data/mendeley_heat/author_oneDkhEstimator_V1.0.0_full_source.txt",
@@ -412,15 +436,76 @@
       "path": "competition_agent/assets_raw/examples/自制示例-xn.png",
       "kind": "image",
       "sha256": "852b00e054ebf722bf9e7afa94b49183322d29dd01b859bb1c503dd00ff66e79",
-      "status": "pending",
-      "reason": "Install manually in build/t02-env: rapidocr-onnxruntime"
+      "status": "parsed",
+      "blocks": 1,
+      "conflicts": [
+        {
+          "candidate": {
+            "subject": "xn",
+            "predicate": "has_build_direction",
+            "object": "y",
+            "source_id": "record_card",
+            "quote": "xn has_build_direction y"
+          },
+          "existing_facts": [
+            {
+              "subject": "xn",
+              "predicate": "has_build_direction",
+              "object": "x",
+              "source_id": "c1bd3d61fe36e4c35b5f78aa896b08e339f1543df0c9acb621c439e637184c61",
+              "quote": "| xn | x / 非较多孔类别 | 0.006287 | 0.15209 | 7812.98 | 226–230 |",
+              "locator": {
+                "file": "pde_discovery/data/additive_heat/metadata_verification.md",
+                "line": 21
+              },
+              "origin": "public metadata reference for acceptance; not an existing case graph"
+            }
+          ],
+          "locations": [
+            {
+              "start_char": 18,
+              "end_char": 42,
+              "block_id": "852b00e054ebf722bf9e7afa94b49183322d29dd01b859bb1c503dd00ff66e79:0",
+              "locator": {
+                "file": "E:\\PDE-is-all-you-need\\competition_agent\\assets_raw\\examples\\自制示例-xn.png",
+                "coordinate_system": "image pixels, top-left",
+                "bbox": [
+                  [
+                    33.0,
+                    174.0
+                  ],
+                  [
+                    414.0,
+                    178.0
+                  ],
+                  [
+                    414.0,
+                    208.0
+                  ],
+                  [
+                    33.0,
+                    205.0
+                  ]
+                ]
+              },
+              "needs_review": true
+            }
+          ],
+          "status": "requires_review_not_automatically_resolved"
+        }
+      ],
+      "expected_conflicts": 1,
+      "conflict_check_passed": true
     },
     {
       "path": "competition_agent/assets_raw/examples/自制示例-xp.png",
       "kind": "image",
       "sha256": "b63e910aa534a0db9da53b2a7d29779d10fb47070a9333da67e90d8fd3d8f895",
-      "status": "pending",
-      "reason": "Install manually in build/t02-env: rapidocr-onnxruntime"
+      "status": "parsed",
+      "blocks": 1,
+      "conflicts": [],
+      "expected_conflicts": 0,
+      "conflict_check_passed": true
     }
   ],
   "complete": false,

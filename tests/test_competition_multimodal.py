@@ -1,6 +1,8 @@
 """T03 fixtures are synthetic; dependency-gated tests are not real-file acceptance."""
 import importlib.util
 import json
+import re
+import zipfile
 from pathlib import Path
 import tempfile
 import unittest
@@ -124,6 +126,11 @@ class MultimodalTests(unittest.TestCase):
         import openpyxl
         p=self.root/'fixture.xlsx';book=openpyxl.Workbook();ws=book.active
         ws.append(['diameter','formula']);ws.append([.006287,'=A2*1000']);book.save(p);book.close()
+        # Author workbooks can omit the optional worksheet dimension element.
+        with zipfile.ZipFile(p) as z: members={n:z.read(n) for n in z.namelist()}
+        members['xl/worksheets/sheet1.xml']=re.sub(rb'<dimension[^>]*/>',b'',members['xl/worksheets/sheet1.xml'])
+        with zipfile.ZipFile(p,'w') as z:
+            for name,data in members.items(): z.writestr(name,data)
         a=mm.parse_asset(p,'xlsx');b=a['blocks'][0]
         self.assertEqual(b['locator']['cell_range'],'A1:B2')
         formula=b['rows'][0][1];self.assertEqual(formula['formula'],'=A2*1000')
