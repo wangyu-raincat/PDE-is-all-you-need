@@ -76,6 +76,7 @@ async def run(output,fixture='diffusion',noise=.01,budget=7,seed=240,policy='fix
             result={'created_at_utc':datetime.now(timezone.utc).isoformat(),'execution':'actual MCP stdio with deterministic routing; no LLM','inputs':{'fixture':fixture,'noise':noise,'budget':budget,'seed':seed,'policy':policy},'protocol_version':init.protocolVersion,'tools':sorted(t.name for t in catalog.tools),'tool_calls':len(trace),'report':report,'chain_consistent':evidence['chain_consistent'],'live_nexent_verified':False,'evidence_paths':evidence_paths,'final_handoff':handoff,'pre_agent_input_preparation':prepared['summary']}
             (output/'report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
             (output/'evidence.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2)+'\n')
+            (output/'alignment.json').write_text(json.dumps(evidence.get('alignment',[]),ensure_ascii=False,indent=2),encoding='utf8')
             save_html(output/'report.html',result,evidence,trace)
             return result
 
@@ -83,8 +84,23 @@ async def run(output,fixture='diffusion',noise=.01,budget=7,seed=240,policy='fix
 def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
     d=sub.add_parser('run');d.add_argument('--output',default='competition_agent/build/demo');d.add_argument('--fixture',default='diffusion');d.add_argument('--noise',type=float,default=.01);d.add_argument('--budget',type=int,default=7);d.add_argument('--seed',type=int,default=240);d.add_argument('--policy',default='fixed_rich')
-    o=sub.add_parser('review-ontology');o.add_argument('--directory',required=True);o.add_argument('--case-id',required=True);o.add_argument('--proposal-id',required=True);o.add_argument('--decision',required=True,choices=['accept','reject'])
+    o=sub.add_parser('review-ontology');o.add_argument('--directory',required=True);o.add_argument('--case-id',required=True);g=o.add_mutually_exclusive_group(required=True);g.add_argument('--proposal-id');g.add_argument('--batch',type=Path);o.add_argument('--decision',choices=['accept','reject'])
+    rb=sub.add_parser('rollback-induction');rb.add_argument('--directory',required=True);rb.add_argument('--case-id',required=True);rb.add_argument('--kind',choices=['graph','ontology'],required=True);rb.add_argument('--version',type=int,required=True)
+    ex=sub.add_parser('export-induction');ex.add_argument('--directory',required=True);ex.add_argument('--case-id',required=True);ex.add_argument('--output',type=Path,required=True)
     a=p.parse_args()
+    if a.command=='export-induction':
+        from competition_agent.ontology.tools import alignments
+        with Lab(a.directory).case(a.case_id,readonly=True) as state:
+            a.output.mkdir(parents=True,exist_ok=True)
+            for name,value in [('alignment',alignments(state)),('versions',state.get('induction',{}))]:
+                (a.output/(name+'.json')).write_text(json.dumps(value,ensure_ascii=False,indent=2),encoding='utf8')
+        return
+    from competition_agent.ontology.tools import review,rollback
+    if a.command=='rollback-induction':
+        print(json.dumps(rollback(Lab(a.directory),a.case_id,a.kind,a.version)));return
+    if a.command=='review-ontology' and a.batch:
+        print(json.dumps(review(Lab(a.directory),a.case_id,json.loads(a.batch.read_text(encoding='utf8')))));return
+    if a.command=='review-ontology' and not a.decision:p.error('--proposal-id requires --decision')
     if a.command=='run':r=asyncio.run(run(a.output,a.fixture,a.noise,a.budget,a.seed,a.policy));print(json.dumps(r['report'],ensure_ascii=False,indent=2))
     else:print(json.dumps(Lab(a.directory).review_ontology(a.case_id,a.proposal_id,a.decision=='accept'),ensure_ascii=False,indent=2))
 if __name__=='__main__':main()
