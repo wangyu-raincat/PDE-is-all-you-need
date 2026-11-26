@@ -2,7 +2,7 @@
 from __future__ import annotations
 import hashlib,json,re,sqlite3,uuid
 from pathlib import Path
-from contextlib import contextmanager,closing
+from contextlib import contextmanager, closing
 from datetime import datetime,timezone
 import numpy as np
 from active_study import actions,provider,engine,acquisition,forecast,controller
@@ -22,7 +22,8 @@ def integer(v,lo,hi):return type(v) is int and lo<=v<=hi
 
 def source_hashes():
     packages=('active_study','pde_discovery','coefficient_study','prefix_study','five_study',
-              'resolved_study','weak_study','l1_study','fusion_study','challenge_study','competition_agent')
+              'resolved_study','weak_study','l1_study','fusion_study','challenge_study','competition_agent',
+              'competition_agent/scenario_am')
     return {p.relative_to(ROOT).as_posix():file_sha(p) for name in packages for p in sorted((ROOT/name).glob('*.py'))}
 
 def setup_hash(s):

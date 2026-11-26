@@ -66,13 +66,12 @@ class NexentV2BundleTests(unittest.TestCase):
                 names.add(tool['class_name'])
         self.assertEqual(server, 'pde_lab_tools')
         self.assertEqual(len(names), meta['mcp_tool_count'])
-        self.assertEqual(len(names), 15)
-        # Compare against the actual MCP registration declarations without starting a server.
-        import ast
-        tree = ast.parse((ROOT/'competition_agent/mcp_server.py').read_text(encoding='utf-8'))
-        registered = {n.name for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)
-                      and any(isinstance(d, ast.Call) and isinstance(d.func, ast.Attribute)
-                              and d.func.attr == 'tool' for d in n.decorator_list)}
+        self.assertEqual(len(names), 18)
+        # Inspect actual registrations, including imported heat tools; no network listener.
+        import asyncio
+        from competition_agent.mcp_server import build_server
+        app = build_server(self.dest / 'mcp-runtime')
+        registered = {tool.name for tool in asyncio.run(app.list_tools())}
         self.assertEqual(names, registered)
 
     def test_six_skill_zips_match_each_agent(self):
@@ -101,10 +100,19 @@ class NexentV2BundleTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     ExportAndImportDataFormat.model_validate(broken)
 
-    def test_legacy_payload_matches_committed_original(self):
+    def test_legacy_preserves_contract_and_original_tools_with_heat_extension(self):
         payload, meta = build(self.dest, nexent_version='legacy')
         expected = json.loads((ROOT/'competition_agent/config/nexent-agents.json').read_text(encoding='utf-8'))
-        self.assertEqual(payload, expected)
+        compatible = copy.deepcopy(payload)
+        heat_tools = {'heat_identify', 'heat_holdout_summary', 'heat_compare'}
+        for key, agent in compatible['agent_info'].items():
+            self.assertTrue(agent['prompt'])
+            # Manufacturing prompts intentionally evolve; all other original fields stay fixed.
+            agent['prompt'] = expected['agent_info'][key]['prompt']
+            added = {tool['class_name'] for tool in agent['tools']} & heat_tools
+            self.assertEqual(added, heat_tools if agent['name'] == 'pde_agent' else set())
+            agent['tools'] = [tool for tool in agent['tools'] if tool['class_name'] not in heat_tools]
+        self.assertEqual(compatible, expected)
         self.assertEqual(meta['schema_reference_commit'], SCHEMA_REFERENCES['legacy'][0])
         SCHEMA_REFERENCES['legacy'][1].model_validate(payload)
 
