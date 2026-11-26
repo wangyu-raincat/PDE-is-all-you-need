@@ -13,6 +13,7 @@ from .retrieval import fused, graph_edges, typed_paths
 RULE_FILE = Path(__file__).with_name("rules.yaml")
 RULES = json.loads(RULE_FILE.read_bytes())
 QUESTIONS = [
+    "这批增材杆测温数据遵循什么传热规律？哪些结论可靠？",
     "xp（较多孔）和 xn 两根增材杆的热扩散特性有没有可辨别差异？依据是哪些记录、哪个模型？",
     "这批数据能否作为工艺仿真的材料输入？还缺什么实验？",
     "我们的瞬态对流法和国标闪光法测热扩散系数有什么区别，结论能不能对齐到标准？",
@@ -29,6 +30,8 @@ def intent(question):
         return "conflict"
     if any(term in q for term in ("国标","闪光","标准","flash method")):
         return "standard"
+    if any(term in q for term in ("传热规律", "传热方程", "测温数据遵循")):
+        return "equation"
     if "xp" in q and "xn" in q:
         return "dispersion"
     if any(term in q for term in ("材料输入","工艺仿真","仿真输入","缺什么实验")):
@@ -177,7 +180,7 @@ def decide(lab,case_id,question):
                 indexed = {k[7:] for k in space["values"] if k.startswith("source:")}
                 if ready != indexed:
                     raise ValueError("资料集刚发生变更，请重新运行增量归纳及决策")
-        groups = ("xn","xp","yn","yp") if kind=="transfer" else ("xp","xn")
+        groups = ("xn","xp","yn","yp") if kind in ("equation","transfer") else ("xp","xn")
         paths = rod_paths(state,groups) if kind!="refuse" else []
         conflicts = [e for e in graph_edges(state) if e.get("conflict")]
         conflicts.extend(lab.conflicts(state))
@@ -197,7 +200,7 @@ def decide(lab,case_id,question):
                     "xlsx": ROOT/"competition_agent/assets_raw/AdditiveRodResults.xlsx",
                     "code": ROOT/"pde_discovery/data/mendeley_heat/author_oneDkhEstimator_V1.0.0_full_source.txt"}
         modalities = set()
-        if key == "dispersion":
+        if key in ("dispersion","equation"):
             for source,record in state.get("multimodal_assets",{}).items():
                 asset = record["asset"]
                 path = expected.get(asset["modality"])
@@ -215,6 +218,14 @@ def decide(lab,case_id,question):
             conclusion = RULES[key] if conflicts else "尚未定位到两份相互冲突的原文，暂缓使用该直径。"
             gaps = ["核查来源版本、单位和试样身份"]
             experiments = ["同一试样重新测径并保留原始记录"]
+        elif key == "equation" and {"pdf","xlsx","code"} <= modalities:
+            from .equation import equation_evidence, render_equation
+            numeric = equation_evidence(stainless_diagnostics(), QUESTIONS[1])
+            conclusion = render_equation(numeric)
+            confidence = ("候选族内结构与条件预测可靠，单个系数受限" if all(
+                r["supported"] for r in numeric["rods"].values()) else "结构与预测证据不足")
+            gaps = ["独立材料系数验证"]
+            experiments = ["参见 Q1 的独立试样闪光法复测方案"]
         elif key == "standard":
             method = ROOT/"competition_agent/scenario_am/heat_tools.py"
             numeric["method_evidence"] = evidence(method,"给定实测边界的四内点条件预测（物理先验 D+h+c）")

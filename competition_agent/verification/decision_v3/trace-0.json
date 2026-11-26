@@ -1,0 +1,3784 @@
+{
+  "case_id": "ed1445f132084c42b337c8e4c85adb98",
+  "decision": {
+    "conclusion": "在物理先验约束的候选结构中识别方程，并用留出数据验证。编号 1 拟合，编号 2 选模。先保留满秩、能预测开发记录的候选，再从开发 RMSE 最优值的 1.05 倍以内选项数最少者，同项数取较低 RMSE。\n三项结构写为 θ_t = D·θ_xx − h·θ + c。θ 为相对环境温升（K）；D 为轴向导热的有效热扩散参数（m²/s），h 为侧面散热衰减率（s⁻¹），c 为加热或环境漂移项（K/s）。\n候选结构（各行开发 RMSE 单位为 K）\n\n| 杆 | 结构 | 拟合成功 | Jacobian 秩 | 开发 RMSE | 近优 | 选中 |\n|---|---|---|---:|---:|---|---|\n| xn | D | 是 | 1 | 4.9489 | 否 | 否 |\n| xn | D+h | 是 | 2 | 0.71316 | 否 | 否 |\n| xn | D+c | 是 | 2 | 2.5675 | 否 | 否 |\n| xn | D+h+c | 是 | 3 | 0.66198 | 是 | 是 |\n| xp | D | 是 | 1 | 5.774 | 否 | 否 |\n| xp | D+h | 是 | 2 | 0.49107 | 否 | 否 |\n| xp | D+c | 是 | 2 | 2.7684 | 否 | 否 |\n| xp | D+h+c | 是 | 3 | 0.27238 | 是 | 是 |\n| yn | D | 是 | 1 | 4.5445 | 否 | 否 |\n| yn | D+h | 是 | 2 | 0.41989 | 否 | 否 |\n| yn | D+c | 是 | 2 | 1.4361 | 否 | 否 |\n| yn | D+h+c | 是 | 3 | 0.36991 | 是 | 是 |\n| yp | D | 是 | 1 | 4.2363 | 否 | 否 |\n| yp | D+h | 是 | 2 | 0.31924 | 否 | 否 |\n| yp | D+c | 是 | 2 | 1.5782 | 否 | 否 |\n| yp | D+h+c | 是 | 3 | 0.30395 | 是 | 是 |\n\n历史留出：两端使用实测边界，预测四个内点。下列 RMSE 单位均为 K。\n\n| 记录 | 相对 L2 | 模型 | 初值持久值 | 边界线性插值 |\n|---|---:|---:|---:|---:|\n| xn3 | 3.4521% | 0.53491 | 15.514 | 10.397 |\n| xn4 | 4.2793% | 0.70892 | 15.959 | 10.331 |\n| xn5 | 2.9660% | 0.4678 | 16.144 | 10.33 |\n| xp3 | 1.0547% | 0.19075 | 18.104 | 13.744 |\n| xp4 | 1.4928% | 0.25053 | 17.621 | 13.094 |\n| xp5 | 1.1084% | 0.19358 | 17.863 | 13.485 |\n| yn3 | 2.2165% | 0.36289 | 16.925 | 7.9721 |\n| yn4 | 2.7778% | 0.49266 | 17.3 | 8.0618 |\n| yn5 | 2.2288% | 0.37531 | 16.293 | 8.103 |\n| yp3 | 2.1912% | 0.33167 | 15.552 | 8.1872 |\n| yp4 | 1.9664% | 0.30241 | 15.624 | 7.9533 |\n| yp5 | 1.9117% | 0.28962 | 15.054 | 7.976 |\n\n无物理先验的 L1 对照使用 1、θ、θ²、θ_x、θ_xx 候选库。\n- xn：L1 为 theta_t = 0.015554107 + 5.731708e-08 theta_xx（开发 RMSE 6.3397 K）；物理先验选中 D+h+c，theta_t = 0.04228819 - 0.0150036559 theta + 2.08886472e-06 theta_xx；五次复测的描述性 D–h 相关 r=0.959。\n- xp：L1 为 theta_t = - 7.0730963e-05 theta^2 + 3.881211e-07 theta_xx（开发 RMSE 3.9902 K）；物理先验选中 D+h+c，theta_t = - 0.112408489 - 0.0302183462 theta + 5.17755207e-06 theta_xx；五次复测的描述性 D–h 相关 r=0.996。\n- yn：L1 为 theta_t = 0.049883155 - 0.0073182187 theta + 0.00014728455 theta^2 + 5.4060563e-07 theta_xx（开发 RMSE 2.3104 K）；物理先验选中 D+h+c，theta_t = - 0.0636113757 - 0.0173902225 theta + 5.14032274e-06 theta_xx；五次复测的描述性 D–h 相关 r=0.973。\n- yp：L1 为 theta_t = - 0.00016221614 theta^2 - 1.643555e-05 theta_x + 6.4866614e-07 theta_xx（开发 RMSE 2.1413 K）；物理先验选中 D+h+c，theta_t = - 0.0148232969 - 0.0150317588 theta + 3.55426706e-06 theta_xx；五次复测的描述性 D–h 相关 r=1.000。\n\n采用物理先验的开发选模结果：结构具有传热解释，L1 的支持集随杆变化。结构与条件预测在此候选族和上述记录内可靠，12 条历史留出均优于两种基线。\n单个 D、h 受可识别性限制。旧不锈钢训练组三组的 D 近优剖面倍数为 2.000–3.968，删块倍数为 1.381–4.819。见 [Q1 两杆差异与几何混杂](trace-1.json)。",
+    "confidence_level": "候选族内结构与条件预测可靠，单个系数受限",
+    "gaps": [
+      "独立材料系数验证"
+    ],
+    "next_experiments": [
+      "参见 Q1 的独立试样闪光法复测方案"
+    ]
+  },
+  "graph_version": 1,
+  "loop_reason": "evidence_gap",
+  "question": "这批增材杆测温数据遵循什么传热规律？哪些结论可靠？",
+  "reasoning": {
+    "conflicts": [],
+    "graph_paths": [
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "multimodal_locations": [
+                  {
+                    "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:76",
+                    "end_char": 1780,
+                    "locator": {
+                      "end_char": 7624,
+                      "end_line": 228,
+                      "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+                      "line": 228,
+                      "start_char": 7612
+                    },
+                    "needs_review": false,
+                    "start_char": 1768
+                  }
+                ]
+              },
+              "measurement": {
+                "si_unit": "m",
+                "significant_digits": 4,
+                "value": "0.006287"
+              },
+              "needs_review": false,
+              "path": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]",
+              "quote": "D=6.287/1000",
+              "raw": [
+                "xn",
+                "has_diameter",
+                "0.006287 m"
+              ],
+              "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "fa1b7caa0df24ea3d7e231115fd0ceb23a96a2eb785daa22fb87cec2ca540964",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_diameter",
+            "0.006287 m"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "B1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn1",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn1"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "6ba9737f7a0808abef982de0aec54bd28e25c5ad381f14650c7da7709650014a",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn1"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn1",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "F1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn5",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn5"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "7b6b567803f9655fdb1d4f63334d6b718b580e091d7444b34f235d81b6a7791a",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn5"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn5.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn5",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "E1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn4",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn4"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "88e5051c10bce4c8fb7b4058dd7c0789c36aa71f82e1231f0f747c4b523dcd66",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn4"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn4.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn4",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "C1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn2",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn2"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "929f0d83517073d5d6f0c1ff4dc1f221a91562472ae11c62d36af7eb4c6257db",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn2"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn2",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "D1",
+                "sheet": "xn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xn3",
+              "raw": [
+                "xn",
+                "has_test",
+                "xn3"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "b228de560419daaa27df43fdb9de644eab7c584a629e874a7d211c6f0836cd42",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xn",
+            "has_test",
+            "xn3"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn3.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xn3",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E2",
+              "issues": [],
+              "locator": {
+                "bbox": [
+                  36.1349983215332,
+                  353.6246032714844,
+                  401.6490478515625,
+                  602.1915893554688
+                ],
+                "coordinate_system": "PDF points, top-left",
+                "end_char": 2215,
+                "end_line": 24,
+                "line": 1,
+                "offset_scope": "block text",
+                "page": 3,
+                "start_char": 0
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "dib-2021-107632.pdf [edbf589d488dc12e]",
+              "quote": "xp1 would be the ﬁrst test for the more porous specimen built along \nthe x direction",
+              "raw": [
+                "xp",
+                "has_porosity_class",
+                "higher-porosity category"
+              ],
+              "source_id": "422577e9a17b05ee85c1447934e4e97849579e6623f4e79540536919dad746b9"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.7,
+            "standard_term": 0
+          },
+          "id": "567a4bb02016cc7b036d262ed9825c0eff9bad669962966a413d36a6f79535d0",
+          "priority": 0.9845363309503934,
+          "score": 0.4378234991142018,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_porosity_class",
+            "higher-porosity category"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "multimodal_locations": [
+                  {
+                    "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:84",
+                    "end_char": 1942,
+                    "locator": {
+                      "end_char": 7932,
+                      "end_line": 238,
+                      "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+                      "line": 238,
+                      "start_char": 7920
+                    },
+                    "needs_review": false,
+                    "start_char": 1930
+                  }
+                ]
+              },
+              "measurement": {
+                "si_unit": "m",
+                "significant_digits": 4,
+                "value": "0.005302"
+              },
+              "needs_review": false,
+              "path": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]",
+              "quote": "D=5.302/1000",
+              "raw": [
+                "xp",
+                "has_diameter",
+                "0.005302 m"
+              ],
+              "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "0910dc61c9548bfbf54d8b097ab0849acfbcb60080e9b1bb2772db3f31175fba",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_diameter",
+            "0.005302 m"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "B1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp1",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp1"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "3033cfb69763889c2fbbda9f6f9d7668ba3410011998e9ba0dcf35f1a180de19",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp1"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp1",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "C1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp2",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp2"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "3bc486d74df521616ca72f8f4d101b2a69beb85710dfff2b5ff260dc20e985dd",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp2"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp2",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "E1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp4",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp4"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "74dfb1a8230f84f1a9f7dc31082e89e825200cd5645302e8391867879da581c2",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp4"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp4.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp4",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "D1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp3",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp3"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "903ae611aab43b27e9347f8652945d5580debe3620e24e8f30ec89548abc3f24",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp3"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp3.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp3",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "F1",
+                "sheet": "xp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "xp5",
+              "raw": [
+                "xp",
+                "has_test",
+                "xp5"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "b35a39539dde98539bf8376890aa1d5b851d7f4621929736ec1cdb3ed34f4cd2",
+          "priority": 0.9177857400000918,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "xp",
+            "has_test",
+            "xp5"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp5.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "xp5",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "multimodal_locations": [
+                  {
+                    "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:80",
+                    "end_char": 1861,
+                    "locator": {
+                      "end_char": 7778,
+                      "end_line": 233,
+                      "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+                      "line": 233,
+                      "start_char": 7766
+                    },
+                    "needs_review": false,
+                    "start_char": 1849
+                  }
+                ]
+              },
+              "measurement": {
+                "si_unit": "m",
+                "significant_digits": 3,
+                "value": "0.00623"
+              },
+              "needs_review": false,
+              "path": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]",
+              "quote": "D=6.230/1000",
+              "raw": [
+                "yn",
+                "has_diameter",
+                "0.00623 m"
+              ],
+              "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "4348893bb68c444649fdbec877a16ab30351a0322ed567e0a0a6088e8e9ab18c",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yn",
+            "has_diameter",
+            "0.00623 m"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "C1",
+                "sheet": "yn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yn2",
+              "raw": [
+                "yn",
+                "has_test",
+                "yn2"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "56b75bba6a058ea8fc380bd03f92fb3f593ad56eb7a2c18b7b96528ec2ed460b",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yn",
+            "has_test",
+            "yn2"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yn2.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yn2.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yn2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yn2.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yn2",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "E1",
+                "sheet": "yn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yn4",
+              "raw": [
+                "yn",
+                "has_test",
+                "yn4"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "7379b5eba53970997ac53a7bfa9045aac77e0be284149cba8008a83d8b9e3f0f",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yn",
+            "has_test",
+            "yn4"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yn4.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yn4.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yn4.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yn4.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yn4",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "F1",
+                "sheet": "yn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yn5",
+              "raw": [
+                "yn",
+                "has_test",
+                "yn5"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "9b328aa90403de3802a9e3cb237b972678f6f80734bc67b19c0e117a0eaa34a0",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yn",
+            "has_test",
+            "yn5"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yn5.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yn5.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yn5.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yn5.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yn5",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "D1",
+                "sheet": "yn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yn3",
+              "raw": [
+                "yn",
+                "has_test",
+                "yn3"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "9cd55a11cbf45cc6e3c6ec285836db65258e009c0986d80e6cfceb1e5a7c078e",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yn",
+            "has_test",
+            "yn3"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yn3.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yn3.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yn3.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yn3.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yn3",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "B1",
+                "sheet": "yn"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yn1",
+              "raw": [
+                "yn",
+                "has_test",
+                "yn1"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "b00abe696506c3cb24b2ed8f52017281221a5da6dd17060f6fd36b6f30a727b2",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yn",
+            "has_test",
+            "yn1"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yn1.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yn1.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yn1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yn1.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yn1",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "multimodal_locations": [
+                  {
+                    "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:88",
+                    "end_char": 2023,
+                    "locator": {
+                      "end_char": 8086,
+                      "end_line": 243,
+                      "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+                      "line": 243,
+                      "start_char": 8074
+                    },
+                    "needs_review": false,
+                    "start_char": 2011
+                  }
+                ]
+              },
+              "measurement": {
+                "si_unit": "m",
+                "significant_digits": 4,
+                "value": "0.006206"
+              },
+              "needs_review": false,
+              "path": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]",
+              "quote": "D=6.206/1000",
+              "raw": [
+                "yp",
+                "has_diameter",
+                "0.006206 m"
+              ],
+              "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "0110d4d235ed12d864ca5b1c3c710844dd624de8b4b0923e0b546a3eee85fd56",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yp",
+            "has_diameter",
+            "0.006206 m"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "B1",
+                "sheet": "yp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yp1",
+              "raw": [
+                "yp",
+                "has_test",
+                "yp1"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "196afc813a6eebb269829bd34c260837960f03b5053e111f1faeba1a9fff52d2",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yp",
+            "has_test",
+            "yp1"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yp1.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yp1.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yp1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yp1.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yp1",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "E1",
+                "sheet": "yp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yp4",
+              "raw": [
+                "yp",
+                "has_test",
+                "yp4"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "43e69c11e8250333b7bd6771426b94f897043bf128ad3dd7a23a2ade99d0ae1a",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yp",
+            "has_test",
+            "yp4"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yp4.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yp4.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yp4.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yp4.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yp4",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "D1",
+                "sheet": "yp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yp3",
+              "raw": [
+                "yp",
+                "has_test",
+                "yp3"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "466cc001dbfb732f4ac09d1d05198e5d0533476cbb80bd51084c002db7456e64",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yp",
+            "has_test",
+            "yp3"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yp3.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yp3.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yp3.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yp3.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yp3",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "C1",
+                "sheet": "yp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yp2",
+              "raw": [
+                "yp",
+                "has_test",
+                "yp2"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "5253782294428f9946128c3fe113dd7e7698cb758b4d2b9a0030c1cc0649bcba",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yp",
+            "has_test",
+            "yp2"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yp2.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yp2.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yp2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yp2.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yp2",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ],
+      [
+        {
+          "conflict": false,
+          "e3_only": false,
+          "evidence": [
+            {
+              "extractor": "E1",
+              "issues": [],
+              "locator": {
+                "cell": "F1",
+                "sheet": "yp"
+              },
+              "measurement": null,
+              "needs_review": false,
+              "path": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]",
+              "quote": "yp5",
+              "raw": [
+                "yp",
+                "has_test",
+                "yp5"
+              ],
+              "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60"
+            }
+          ],
+          "features": {
+            "constraints": 1,
+            "extractor_votes": 1,
+            "independent_files": 1,
+            "prior": 0.94,
+            "standard_term": 0
+          },
+          "id": "8aef7f6a1a420a0ae9e11648910ae7fd441d219ea36ef137a9f5b5cd775a3278",
+          "priority": 0.7342285920000735,
+          "score": 0.6433651456944017,
+          "status": "queue",
+          "tier": "queue",
+          "triple": [
+            "yp",
+            "has_test",
+            "yp5"
+          ]
+        },
+        {
+          "conflict": false,
+          "evidence": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yp5.csv",
+              "block_id": "am:pde_discovery/data/additive_heat/raw/yp5.csv:header",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yp5.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yp5.csv"
+            }
+          ],
+          "status": "dataset_header",
+          "triple": [
+            "yp5",
+            "records_field",
+            "TC1"
+          ]
+        }
+      ]
+    ],
+    "numerical_tools": {
+      "followup": {
+        "question": "xp（较多孔）和 xn 两根增材杆的热扩散特性有没有可辨别差异？依据是哪些记录、哪个模型？",
+        "same_case": true,
+        "tool": "decision_make"
+      },
+      "identifiability_evidence": {
+        "deletion_ratio": {
+          "max": 4.819,
+          "min": 1.381
+        },
+        "groups": {
+          "100ss": {
+            "deletion_ratio": 4.819,
+            "evidence": {
+              "asset_id": "am:experiments/IDENTIFIABILITY_REPORT.md",
+              "locator": {
+                "end_char": 1776,
+                "line": 27,
+                "path": "experiments/IDENTIFIABILITY_REPORT.md",
+                "start_char": 1685
+              },
+              "quote": "| 100ss | 5.38955e-06 | 3.39542e-06–1.34739e-05 | 3.968 | 5.26765e-06–2.53848e-05 | 4.819 |",
+              "source_id": "am:experiments/IDENTIFIABILITY_REPORT.md"
+            },
+            "profile_ratio": 3.968
+          },
+          "50ss": {
+            "deletion_ratio": 2.872,
+            "evidence": {
+              "asset_id": "am:experiments/IDENTIFIABILITY_REPORT.md",
+              "locator": {
+                "end_char": 1595,
+                "line": 25,
+                "path": "experiments/IDENTIFIABILITY_REPORT.md",
+                "start_char": 1505
+              },
+              "quote": "| 50ss | 3.90321e-06 | 3.12257e-06–6.24514e-06 | 2.000 | 1.40041e-06–4.02158e-06 | 2.872 |",
+              "source_id": "am:experiments/IDENTIFIABILITY_REPORT.md"
+            },
+            "profile_ratio": 2.0
+          },
+          "75ss": {
+            "deletion_ratio": 1.381,
+            "evidence": {
+              "asset_id": "am:experiments/IDENTIFIABILITY_REPORT.md",
+              "locator": {
+                "end_char": 1684,
+                "line": 26,
+                "path": "experiments/IDENTIFIABILITY_REPORT.md",
+                "start_char": 1596
+              },
+              "quote": "| 75ss | 4.57226e-06 | 2.88053e-06–7.31562e-06 | 2.540 | 4.5171e-06–6.2395e-06 | 1.381 |",
+              "source_id": "am:experiments/IDENTIFIABILITY_REPORT.md"
+            },
+            "profile_ratio": 2.54
+          }
+        },
+        "profile_ratio": {
+          "max": 3.968,
+          "min": 2.0
+        },
+        "scope": "旧不锈钢温度组三条训练记录；有限采样和训练损失敏感性参照"
+      },
+      "method_sources": [
+        {
+          "asset_id": "am:pde_discovery/real_heat_refined.py",
+          "locator": {
+            "end_char": 7252,
+            "line": 161,
+            "path": "pde_discovery/real_heat_refined.py",
+            "start_char": 7208
+          },
+          "quote": "def fit_candidate(t, u, dx, model_name: str)",
+          "source_id": "am:pde_discovery/real_heat_refined.py"
+        },
+        {
+          "asset_id": "am:competition_agent/scenario_am/heat_tools.py",
+          "locator": {
+            "end_char": 3807,
+            "line": 85,
+            "path": "competition_agent/scenario_am/heat_tools.py",
+            "start_char": 3773
+          },
+          "quote": "selected = min(near, key=lambda c:",
+          "source_id": "am:competition_agent/scenario_am/heat_tools.py"
+        },
+        {
+          "asset_id": "am:pde_discovery/real_experiment.py",
+          "locator": {
+            "end_char": 2341,
+            "line": 62,
+            "path": "pde_discovery/real_experiment.py",
+            "start_char": 2288
+          },
+          "quote": "def select_model(t_train, u_train, t_dev, u_dev, dx):",
+          "source_id": "am:pde_discovery/real_experiment.py"
+        },
+        {
+          "asset_id": "am:pde_discovery/real_heat.py",
+          "locator": {
+            "end_char": 981,
+            "line": 23,
+            "path": "pde_discovery/real_heat.py",
+            "start_char": 920
+          },
+          "quote": "TERM_NAMES = [\"1\", \"theta\", \"theta^2\", \"theta_x\", \"theta_xx\"]",
+          "source_id": "am:pde_discovery/real_heat.py"
+        }
+      ],
+      "rods": {
+        "xn": {
+          "D_h_correlation": {
+            "method": "描述性 Pearson r",
+            "n": 5,
+            "r": 0.9587422300857066
+          },
+          "candidates": [
+            {
+              "dev_rmse_K": 4.9488937373622575,
+              "fit_success": true,
+              "name": "D",
+              "near_optimal": false,
+              "rank": 1,
+              "selected": false,
+              "support_size": 1
+            },
+            {
+              "dev_rmse_K": 0.713163243891836,
+              "fit_success": true,
+              "name": "D+h",
+              "near_optimal": false,
+              "rank": 2,
+              "selected": false,
+              "support_size": 2
+            },
+            {
+              "dev_rmse_K": 2.567545843543601,
+              "fit_success": true,
+              "name": "D+c",
+              "near_optimal": false,
+              "rank": 2,
+              "selected": false,
+              "support_size": 2
+            },
+            {
+              "dev_rmse_K": 0.6619754695924791,
+              "fit_success": true,
+              "name": "D+h+c",
+              "near_optimal": true,
+              "rank": 3,
+              "selected": true,
+              "support_size": 3
+            }
+          ],
+          "equation": "theta_t = 0.04228819 - 0.0150036559 theta + 2.08886472e-06 theta_xx",
+          "holdouts": [
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xn3.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xn3.csv"
+              },
+              "linear_boundary_rmse_K": 10.39676371675864,
+              "persistence_rmse_K": 15.51360555637601,
+              "relative_l2": 0.034521202729760475,
+              "report_path": "artifacts/additive_heat/xn/repeat3/report.json",
+              "rmse_K": 0.5349137605090533,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1467,
+                  "line": 23,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1416
+                },
+                "quote": "| xn3 | 3.4521 | 0.534914 | 15.513606 | 10.396764 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "xn3"
+            },
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xn4.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv"
+              },
+              "linear_boundary_rmse_K": 10.331258889705888,
+              "persistence_rmse_K": 15.95937130974929,
+              "relative_l2": 0.04279253811834892,
+              "report_path": "artifacts/additive_heat/xn/repeat4/report.json",
+              "rmse_K": 0.7089152857606279,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1519,
+                  "line": 24,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1468
+                },
+                "quote": "| xn4 | 4.2793 | 0.708915 | 15.959371 | 10.331259 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "xn4"
+            },
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xn5.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv"
+              },
+              "linear_boundary_rmse_K": 10.329687222343352,
+              "persistence_rmse_K": 16.14413944441289,
+              "relative_l2": 0.029660454612451804,
+              "report_path": "artifacts/additive_heat/xn/repeat5/report.json",
+              "rmse_K": 0.4677990620863603,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1571,
+                  "line": 25,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1520
+                },
+                "quote": "| xn5 | 2.9660 | 0.467799 | 16.144139 | 10.329687 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "xn5"
+            }
+          ],
+          "l1": {
+            "candidates": [
+              {
+                "development_rmse_K": 6.3396664078065195,
+                "eligible": true,
+                "id": "candidate-01",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.015554107474205443,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 5.731708027886158e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-02",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": 0.000515647070245934,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.020575254728650145,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.0002266164407392796,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.00036030534920709504,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -4.5417968438021427e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 6.564577925806739,
+                "eligible": true,
+                "id": "candidate-03",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.014881574809811119,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 5.3141689376222816e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-04",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.0195743923362657,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.00022493458737168854,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.00034834735524569266,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -4.632485586447404e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-05",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.0048459434348689335,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.019229866352476418,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.0002467756128674242,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.00035481560629841964,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -4.832858762697567e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 6.935184279321802,
+                "eligible": true,
+                "id": "candidate-06",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.013168981788308744,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 5.030811570665008e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-07",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.018068989253410078,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.00021409943669852978,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.00032535426112780187,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -4.47442654110543e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-08",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.01166546710126042,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.017177903839503253,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.00026702920657093745,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0003402927898989044,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -4.960454831003596e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              }
+            ],
+            "library": [
+              "1",
+              "theta",
+              "theta^2",
+              "theta_x",
+              "theta_xx"
+            ],
+            "near_supports": [
+              [
+                "1",
+                "theta_xx"
+              ]
+            ],
+            "selected": {
+              "candidate_id": "candidate-01",
+              "development": {
+                "excluded_initial_row": true,
+                "mae": 4.673454576350622,
+                "max_absolute_error": 17.197358589103448,
+                "per_sensor_rmse": [
+                  9.992925632086829,
+                  6.3664320869300814,
+                  3.8182257141554152,
+                  2.40761559201904
+                ],
+                "relative_error": 0.4196143566906736,
+                "rmse": 6.3396664078065195,
+                "scored_rows": 4007
+              },
+              "equation": "theta_t = 0.015554107 + 5.731708e-08 theta_xx",
+              "terms": [
+                {
+                  "coefficient": 0.015554107474205443,
+                  "name": "1"
+                },
+                {
+                  "coefficient": 5.731708027886158e-08,
+                  "name": "theta_xx"
+                }
+              ],
+              "window_seconds": 16.0366
+            },
+            "selection_repeat": 2,
+            "training_repeat": 1
+          },
+          "matches_frozen": true,
+          "near_optimal_factor": 1.05,
+          "parameters": {
+            "D": 2.0888647222778803e-06,
+            "c": 0.04228819002295568,
+            "h": 0.015003655912752467
+          },
+          "selected": "D+h+c",
+          "selection_sources": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv"
+            },
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xn2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv"
+            }
+          ],
+          "supported": true
+        },
+        "xp": {
+          "D_h_correlation": {
+            "method": "描述性 Pearson r",
+            "n": 5,
+            "r": 0.9961069164301157
+          },
+          "candidates": [
+            {
+              "dev_rmse_K": 5.774038990123855,
+              "fit_success": true,
+              "name": "D",
+              "near_optimal": false,
+              "rank": 1,
+              "selected": false,
+              "support_size": 1
+            },
+            {
+              "dev_rmse_K": 0.49107108453045334,
+              "fit_success": true,
+              "name": "D+h",
+              "near_optimal": false,
+              "rank": 2,
+              "selected": false,
+              "support_size": 2
+            },
+            {
+              "dev_rmse_K": 2.768430549778941,
+              "fit_success": true,
+              "name": "D+c",
+              "near_optimal": false,
+              "rank": 2,
+              "selected": false,
+              "support_size": 2
+            },
+            {
+              "dev_rmse_K": 0.2723847940144524,
+              "fit_success": true,
+              "name": "D+h+c",
+              "near_optimal": true,
+              "rank": 3,
+              "selected": true,
+              "support_size": 3
+            }
+          ],
+          "equation": "theta_t = - 0.112408489 - 0.0302183462 theta + 5.17755207e-06 theta_xx",
+          "holdouts": [
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xp3.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xp3.csv"
+              },
+              "linear_boundary_rmse_K": 13.744415757330946,
+              "persistence_rmse_K": 18.10393628639787,
+              "relative_l2": 0.01054737587638552,
+              "report_path": "artifacts/additive_heat/xp/repeat3/report.json",
+              "rmse_K": 0.1907482552961321,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1623,
+                  "line": 26,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1572
+                },
+                "quote": "| xp3 | 1.0547 | 0.190748 | 18.103936 | 13.744416 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "xp3"
+            },
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xp4.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xp4.csv"
+              },
+              "linear_boundary_rmse_K": 13.09425468465833,
+              "persistence_rmse_K": 17.621432083330077,
+              "relative_l2": 0.014927967386277554,
+              "report_path": "artifacts/additive_heat/xp/repeat4/report.json",
+              "rmse_K": 0.2505270396245578,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1675,
+                  "line": 27,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1624
+                },
+                "quote": "| xp4 | 1.4928 | 0.250527 | 17.621432 | 13.094255 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "xp4"
+            },
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/xp5.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/xp5.csv"
+              },
+              "linear_boundary_rmse_K": 13.484752998123284,
+              "persistence_rmse_K": 17.86292694042693,
+              "relative_l2": 0.011084417613449856,
+              "report_path": "artifacts/additive_heat/xp/repeat5/report.json",
+              "rmse_K": 0.19357643102885239,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1727,
+                  "line": 28,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1676
+                },
+                "quote": "| xp5 | 1.1084 | 0.193576 | 17.862927 | 13.484753 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "xp5"
+            }
+          ],
+          "l1": {
+            "candidates": [
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-01",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.01210646638372182,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 1.8632555138496398e-06,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 7.520710098749202,
+                "eligible": true,
+                "id": "candidate-02",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.011536024491491909,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 7.682484425546527e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-03",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.027290967409941698,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.020249088845982588,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.00010209854325563127,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": 2.8302263663592713e-06,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-04",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": 0.034690257443229094,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.06557356717084305,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.00032265401664275414,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0006898245323324944,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -8.576840044221222e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 7.800142946073726,
+                "eligible": true,
+                "id": "candidate-05",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.010416838917712026,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 7.392716351679866e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-06",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.04253413362952554,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.01479368155393188,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 2.5345062148010826e-06,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-07",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.019937811881307815,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.00015125887651690345,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": 2.4145843787475807e-06,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-08",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": 0.038036098779551365,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.0650647268529731,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.0003214778766478887,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0006951655370580816,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -1.0182417215965072e-06,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 3.9901759920449584,
+                "eligible": true,
+                "id": "candidate-09",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": -7.073096284861287e-05,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": 3.881211026195165e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 8.335704567296201,
+                "eligible": true,
+                "id": "candidate-10",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.008298900887623447,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 7.043855316551002e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-11",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.03596763962255542,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.012454167119357843,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 2.1497254125667135e-06,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-12",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": 0.02182924923338661,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.055628701392102915,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.000280835521651551,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0005325122451440658,
+                    "name": "theta_x"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-13",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": 0.04419879464357698,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.06576304649876132,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.00033493739831853966,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0007072104806282115,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -1.1663785148464694e-06,
+                    "name": "theta_xx"
+                  }
+                ]
+              }
+            ],
+            "library": [
+              "1",
+              "theta",
+              "theta^2",
+              "theta_x",
+              "theta_xx"
+            ],
+            "near_supports": [
+              [
+                "theta^2",
+                "theta_xx"
+              ]
+            ],
+            "selected": {
+              "candidate_id": "candidate-09",
+              "development": {
+                "excluded_initial_row": true,
+                "mae": 3.160677619478686,
+                "max_absolute_error": 11.253830215597619,
+                "per_sensor_rmse": [
+                  4.670171224605913,
+                  4.7759216246485945,
+                  3.782758920137038,
+                  2.18101492662668
+                ],
+                "relative_error": 0.22572534540383085,
+                "rmse": 3.9901759920449584,
+                "scored_rows": 4004
+              },
+              "equation": "theta_t = - 7.0730963e-05 theta^2 + 3.881211e-07 theta_xx",
+              "terms": [
+                {
+                  "coefficient": -7.073096284861287e-05,
+                  "name": "theta^2"
+                },
+                {
+                  "coefficient": 3.881211026195165e-07,
+                  "name": "theta_xx"
+                }
+              ],
+              "window_seconds": 80.08300000000001
+            },
+            "selection_repeat": 2,
+            "training_repeat": 1
+          },
+          "matches_frozen": true,
+          "near_optimal_factor": 1.05,
+          "parameters": {
+            "D": 5.17755206688232e-06,
+            "c": -0.11240848910488827,
+            "h": 0.03021834615129415
+          },
+          "selected": "D+h+c",
+          "selection_sources": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp1.csv"
+            },
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/xp2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/xp2.csv"
+            }
+          ],
+          "supported": true
+        },
+        "yn": {
+          "D_h_correlation": {
+            "method": "描述性 Pearson r",
+            "n": 5,
+            "r": 0.9730603752818096
+          },
+          "candidates": [
+            {
+              "dev_rmse_K": 4.544469168082194,
+              "fit_success": true,
+              "name": "D",
+              "near_optimal": false,
+              "rank": 1,
+              "selected": false,
+              "support_size": 1
+            },
+            {
+              "dev_rmse_K": 0.419894981291939,
+              "fit_success": true,
+              "name": "D+h",
+              "near_optimal": false,
+              "rank": 2,
+              "selected": false,
+              "support_size": 2
+            },
+            {
+              "dev_rmse_K": 1.436061254028972,
+              "fit_success": true,
+              "name": "D+c",
+              "near_optimal": false,
+              "rank": 2,
+              "selected": false,
+              "support_size": 2
+            },
+            {
+              "dev_rmse_K": 0.3699123902292492,
+              "fit_success": true,
+              "name": "D+h+c",
+              "near_optimal": true,
+              "rank": 3,
+              "selected": true,
+              "support_size": 3
+            }
+          ],
+          "equation": "theta_t = - 0.0636113757 - 0.0173902225 theta + 5.14032274e-06 theta_xx",
+          "holdouts": [
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/yn3.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/yn3.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/yn3.csv"
+              },
+              "linear_boundary_rmse_K": 7.972100852472923,
+              "persistence_rmse_K": 16.92517773251379,
+              "relative_l2": 0.02216484030158927,
+              "report_path": "artifacts/additive_heat/yn/repeat3/report.json",
+              "rmse_K": 0.3628886599382361,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1778,
+                  "line": 29,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1728
+                },
+                "quote": "| yn3 | 2.2165 | 0.362889 | 16.925178 | 7.972101 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "yn3"
+            },
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/yn4.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/yn4.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/yn4.csv"
+              },
+              "linear_boundary_rmse_K": 8.061826960994185,
+              "persistence_rmse_K": 17.30000034312231,
+              "relative_l2": 0.027777571805386102,
+              "report_path": "artifacts/additive_heat/yn/repeat4/report.json",
+              "rmse_K": 0.4926565271478221,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1829,
+                  "line": 30,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1779
+                },
+                "quote": "| yn4 | 2.7778 | 0.492657 | 17.300000 | 8.061827 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "yn4"
+            },
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/yn5.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/yn5.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/yn5.csv"
+              },
+              "linear_boundary_rmse_K": 8.102967793997207,
+              "persistence_rmse_K": 16.29273678406223,
+              "relative_l2": 0.022288284925509272,
+              "report_path": "artifacts/additive_heat/yn/repeat5/report.json",
+              "rmse_K": 0.37531149699904665,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1880,
+                  "line": 31,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1830
+                },
+                "quote": "| yn5 | 2.2288 | 0.375311 | 16.292737 | 8.102968 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "yn5"
+            }
+          ],
+          "l1": {
+            "candidates": [
+              {
+                "development_rmse_K": 6.407884557129572,
+                "eligible": true,
+                "id": "candidate-01",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.013339764504348699,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 1.1149186559658074e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 2.9689283286258967,
+                "eligible": true,
+                "id": "candidate-02",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.02350865802582648,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.0022205459059852985,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 4.64480480543538e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-03",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.03899012797115361,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 7.543176909129773e-05,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0005841615199616805,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -6.46962029797372e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-04",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.005899097514874099,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.0388418572010962,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 5.739873723195148e-05,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.000593615002616979,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -6.678737080820401e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 6.90194760407698,
+                "eligible": true,
+                "id": "candidate-05",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.013646575465601017,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 9.161201144654865e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-06",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.033983037153309456,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.0005450503395531791,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -7.76280902937866e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 2.3104274572731547,
+                "eligible": true,
+                "id": "candidate-07",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.049883154582101484,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.0073182187498899215,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.00014728455366518506,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": 5.406056334562253e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-08",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.011323705335275934,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.036964458664314054,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 2.8589234387016296e-05,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0005824485112400813,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -7.036053414734455e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 7.578111138939142,
+                "eligible": true,
+                "id": "candidate-09",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.012443403087122778,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 7.854344783340568e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-10",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.032233590564586016,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.000518323764781683,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -7.476949529310624e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 4.927051567958936,
+                "eligible": true,
+                "id": "candidate-11",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.01218750328738076,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -2.779295514707907e-05,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": 2.1307055562960458e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-12",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.017449757037704607,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.03482693534001057,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.0005670056168524863,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -7.223805284773605e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-13",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.018273730019726122,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.03472278020206692,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -3.943108747109876e-06,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0005677557136451175,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -7.279281898285876e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              }
+            ],
+            "library": [
+              "1",
+              "theta",
+              "theta^2",
+              "theta_x",
+              "theta_xx"
+            ],
+            "near_supports": [
+              [
+                "1",
+                "theta",
+                "theta^2",
+                "theta_xx"
+              ]
+            ],
+            "selected": {
+              "candidate_id": "candidate-07",
+              "development": {
+                "excluded_initial_row": true,
+                "mae": 1.7441749316053607,
+                "max_absolute_error": 7.1474314141212325,
+                "per_sensor_rmse": [
+                  3.220715894715329,
+                  2.6688559276576815,
+                  1.6431599161885384,
+                  1.075417497557366
+                ],
+                "relative_error": 0.13597201331539704,
+                "rmse": 2.3104274572731547,
+                "scored_rows": 4002
+              },
+              "equation": "theta_t = 0.049883155 - 0.0073182187 theta + 0.00014728455 theta^2 + 5.4060563e-07 theta_xx",
+              "terms": [
+                {
+                  "coefficient": 0.049883154582101484,
+                  "name": "1"
+                },
+                {
+                  "coefficient": -0.0073182187498899215,
+                  "name": "theta"
+                },
+                {
+                  "coefficient": 0.00014728455366518506,
+                  "name": "theta^2"
+                },
+                {
+                  "coefficient": 5.406056334562253e-07,
+                  "name": "theta_xx"
+                }
+              ],
+              "window_seconds": 40.0215
+            },
+            "selection_repeat": 2,
+            "training_repeat": 1
+          },
+          "matches_frozen": true,
+          "near_optimal_factor": 1.05,
+          "parameters": {
+            "D": 5.140322736449808e-06,
+            "c": -0.06361137570653877,
+            "h": 0.01739022245438295
+          },
+          "selected": "D+h+c",
+          "selection_sources": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yn1.csv",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yn1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yn1.csv"
+            },
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yn2.csv",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yn2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yn2.csv"
+            }
+          ],
+          "supported": true
+        },
+        "yp": {
+          "D_h_correlation": {
+            "method": "描述性 Pearson r",
+            "n": 5,
+            "r": 0.9999938116781499
+          },
+          "candidates": [
+            {
+              "dev_rmse_K": 4.236311161300856,
+              "fit_success": true,
+              "name": "D",
+              "near_optimal": false,
+              "rank": 1,
+              "selected": false,
+              "support_size": 1
+            },
+            {
+              "dev_rmse_K": 0.3192440563301335,
+              "fit_success": true,
+              "name": "D+h",
+              "near_optimal": false,
+              "rank": 2,
+              "selected": false,
+              "support_size": 2
+            },
+            {
+              "dev_rmse_K": 1.578155019746706,
+              "fit_success": true,
+              "name": "D+c",
+              "near_optimal": false,
+              "rank": 2,
+              "selected": false,
+              "support_size": 2
+            },
+            {
+              "dev_rmse_K": 0.3039485930687366,
+              "fit_success": true,
+              "name": "D+h+c",
+              "near_optimal": true,
+              "rank": 3,
+              "selected": true,
+              "support_size": 3
+            }
+          ],
+          "equation": "theta_t = - 0.0148232969 - 0.0150317588 theta + 3.55426706e-06 theta_xx",
+          "holdouts": [
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/yp3.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/yp3.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/yp3.csv"
+              },
+              "linear_boundary_rmse_K": 8.1872481912287,
+              "persistence_rmse_K": 15.552149309088565,
+              "relative_l2": 0.021911719629609396,
+              "report_path": "artifacts/additive_heat/yp/repeat3/report.json",
+              "rmse_K": 0.33167236391821564,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1931,
+                  "line": 32,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1881
+                },
+                "quote": "| yp3 | 2.1912 | 0.331672 | 15.552149 | 8.187248 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "yp3"
+            },
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/yp4.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/yp4.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/yp4.csv"
+              },
+              "linear_boundary_rmse_K": 7.953275824121426,
+              "persistence_rmse_K": 15.624353783755382,
+              "relative_l2": 0.019663854163566405,
+              "report_path": "artifacts/additive_heat/yp/repeat4/report.json",
+              "rmse_K": 0.302413988121793,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 1982,
+                  "line": 33,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1932
+                },
+                "quote": "| yp4 | 1.9664 | 0.302414 | 15.624354 | 7.953276 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "yp4"
+            },
+            {
+              "beats_both": true,
+              "csv_evidence": {
+                "asset_id": "am:pde_discovery/data/additive_heat/raw/yp5.csv",
+                "locator": {
+                  "end_char": 45,
+                  "line": 1,
+                  "path": "pde_discovery/data/additive_heat/raw/yp5.csv",
+                  "start_char": 0
+                },
+                "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+                "source_id": "am:pde_discovery/data/additive_heat/raw/yp5.csv"
+              },
+              "linear_boundary_rmse_K": 7.976048611175102,
+              "persistence_rmse_K": 15.053878649501236,
+              "relative_l2": 0.019116947310380328,
+              "report_path": "artifacts/additive_heat/yp/repeat5/report.json",
+              "rmse_K": 0.28962166260257316,
+              "score_evidence": {
+                "asset_id": "am:experiments/ADDITIVE_REPORT.md",
+                "locator": {
+                  "end_char": 2033,
+                  "line": 34,
+                  "path": "experiments/ADDITIVE_REPORT.md",
+                  "start_char": 1983
+                },
+                "quote": "| yp5 | 1.9117 | 0.289622 | 15.053879 | 7.976049 |",
+                "source_id": "am:experiments/ADDITIVE_REPORT.md"
+              },
+              "test": "yp5"
+            }
+          ],
+          "l1": {
+            "candidates": [
+              {
+                "development_rmse_K": 6.2390751156921445,
+                "eligible": true,
+                "id": "candidate-01",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.015074696579033074,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 7.663063831745983e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-02",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.0019557738554797695,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.00015250609298479215,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": 1.2205352607593756e-06,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-03",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": -0.008908504577362057,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.028524234538406988,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.00044496630622191586,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -3.211600703200572e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-04",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": 0.02340827061085005,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.03817451945005861,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.0002201255459576977,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0005303816004976362,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -9.032419769599316e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-05",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.00017740122494649025,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": 9.470877131640684e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 6.54770448885837,
+                "eligible": true,
+                "id": "candidate-06",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.014604959295838273,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 6.939058509706286e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-07",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.006872518761062523,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.025492173560446807,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": -0.0003778401165360464,
+                    "name": "theta_x"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-08",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": 0.024258747607814903,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.037292564756084154,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.00022124295235571831,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0005180855988930421,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -9.2173946326572e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 6.973478984382517,
+                "eligible": true,
+                "id": "candidate-09",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": 0.013084390698216462,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": 6.573444833070883e-08,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-10",
+                "rejection": "热杆候选积分超过40000次求值预算。",
+                "terms": [
+                  {
+                    "coefficient": -0.02466052758821547,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 3.1585884970336063e-05,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.00035103750567692075,
+                    "name": "theta_x"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": 2.141262953028857,
+                "eligible": true,
+                "id": "candidate-11",
+                "rejection": null,
+                "terms": [
+                  {
+                    "coefficient": -0.0001622161380539197,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -1.6435549573886424e-05,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": 6.486661358100962e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              },
+              {
+                "development_rmse_K": null,
+                "eligible": false,
+                "id": "candidate-12",
+                "rejection": "负扩散系数候选不用于正向热传导验证。",
+                "terms": [
+                  {
+                    "coefficient": 0.023908410756544863,
+                    "name": "1"
+                  },
+                  {
+                    "coefficient": -0.03568292730580353,
+                    "name": "theta"
+                  },
+                  {
+                    "coefficient": 0.00021334070238879504,
+                    "name": "theta^2"
+                  },
+                  {
+                    "coefficient": -0.0004962674289569299,
+                    "name": "theta_x"
+                  },
+                  {
+                    "coefficient": -8.989278501336011e-07,
+                    "name": "theta_xx"
+                  }
+                ]
+              }
+            ],
+            "library": [
+              "1",
+              "theta",
+              "theta^2",
+              "theta_x",
+              "theta_xx"
+            ],
+            "near_supports": [
+              [
+                "theta^2",
+                "theta_x",
+                "theta_xx"
+              ]
+            ],
+            "selected": {
+              "candidate_id": "candidate-11",
+              "development": {
+                "excluded_initial_row": true,
+                "mae": 1.695912897225999,
+                "max_absolute_error": 5.889650920884954,
+                "per_sensor_rmse": [
+                  1.9595010978699938,
+                  2.4763187766428505,
+                  2.3532571861234577,
+                  1.6823820956923232
+                ],
+                "relative_error": 0.14049558585011887,
+                "rmse": 2.141262953028857,
+                "scored_rows": 4016
+              },
+              "equation": "theta_t = - 0.00016221614 theta^2 - 1.643555e-05 theta_x + 6.4866614e-07 theta_xx",
+              "terms": [
+                {
+                  "coefficient": -0.0001622161380539197,
+                  "name": "theta^2"
+                },
+                {
+                  "coefficient": -1.6435549573886424e-05,
+                  "name": "theta_x"
+                },
+                {
+                  "coefficient": 6.486661358100962e-07,
+                  "name": "theta_xx"
+                }
+              ],
+              "window_seconds": 80.08300000000001
+            },
+            "selection_repeat": 2,
+            "training_repeat": 1
+          },
+          "matches_frozen": true,
+          "near_optimal_factor": 1.05,
+          "parameters": {
+            "D": 3.5542670555470804e-06,
+            "c": -0.014823296885619688,
+            "h": 0.015031758768730606
+          },
+          "selected": "D+h+c",
+          "selection_sources": [
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yp1.csv",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yp1.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yp1.csv"
+            },
+            {
+              "asset_id": "am:pde_discovery/data/additive_heat/raw/yp2.csv",
+              "locator": {
+                "end_char": 45,
+                "line": 1,
+                "path": "pde_discovery/data/additive_heat/raw/yp2.csv",
+                "start_char": 0
+              },
+              "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+              "source_id": "am:pde_discovery/data/additive_heat/raw/yp2.csv"
+            }
+          ],
+          "supported": true
+        }
+      }
+    },
+    "pending_review_count": 173,
+    "standard_align": []
+  },
+  "retrieval": [
+    {
+      "block_id": "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:76",
+      "locator": {
+        "end_char": 7624,
+        "end_line": 228,
+        "file": "E:\\PDE-is-all-you-need\\pde_discovery\\data\\mendeley_heat\\author_oneDkhEstimator_V1.0.0_full_source.txt",
+        "line": 228,
+        "start_char": 7612
+      },
+      "modality": "code",
+      "needs_review": false,
+      "quote": "D=6.287/1000",
+      "ranks": {
+        "graph": 1
+      },
+      "rrf": 0.01639344262295082,
+      "source_id": "1e10fa490ac78e357f5d4198413f337e7740042869f6d5faa75dd2e3961accb6",
+      "title": "author_oneDkhEstimator_V1.0.0_full_source.txt [5044781cecc93c27]"
+    },
+    {
+      "block_id": "dfbb0c03f6873aed83e4d8bab986fb3c310f0fe216f29cffd9b15f1520dff494:0",
+      "locator": {
+        "cell_range": "A1:F64",
+        "sheet": "xn"
+      },
+      "modality": "xlsx",
+      "needs_review": false,
+      "quote": "[[{\"cell\": \"A1\", \"formula\": null, \"value\": \"Variable\", \"formula_cache_missing\": false}, {\"cell\": \"B1\", \"formula\": null, \"value\": \"xn1\", \"formula_cache_missing\": false}, {\"cell\": \"C1\", \"formula\": null, \"value\": \"xn2\", \"formula_cache_missing\": false}, {\"cell\": \"D1\", \"formula\": null, \"value\": \"xn3\", \"formula_cache_missing\": false}, {\"cell\": \"E1\", \"formula\": null, \"value\": \"xn4\", \"formula_cache_missing\": false}, {\"cell\": \"F1\", \"formula\": null, \"value\": \"xn5\", \"formula_cache_missing\": false}], [{\"cell\": \"A2\", \"formula\": null, \"value\": \"N\", \"formula_cache_missing\": false}, {\"cell\": \"B2\", \"formula\": null, \"value\": 100, \"formula_cache_missing\": false}, {\"cell\": \"C2\", \"formula\": null, \"value\": 100, \"formula_cache_missing\": false}, {\"cell\": \"D2\", \"formula\": null, \"value\": 100, \"formula_cache_missing\": false}, {\"cell\": \"E2\", \"formula\": null, \"value\": 100, \"formula_cache_missing\": false}, {\"cell\": \"F2\", \"formula\": null, \"value\": 100, \"formula_cache_missing\": false}], [{\"cell\": \"A3\", \"formula\": null, \"value\": \"Finite difference boundary model\", \"formula_cache_missing\": false}], [{\"cell\": \"A4\", \"formula\": null, \"value\": \"temp_grad\", \"formula_cache_missing\": false}, {\"cell\": \"B4\", \"formula\": null",
+      "ranks": {
+        "graph": 2
+      },
+      "rrf": 0.016129032258064516,
+      "source_id": "c8af9a21b03bddab114c9fba7207df2a0ea0096b9764371d90fd47455329ca60",
+      "title": "AdditiveRodResults.xlsx [dfbb0c03f6873aed]"
+    },
+    {
+      "asset_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv",
+      "block_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv:header",
+      "locator": {
+        "end_char": 45,
+        "line": 1,
+        "path": "pde_discovery/data/additive_heat/raw/xn1.csv",
+        "start_char": 0
+      },
+      "modality": "csv",
+      "needs_review": false,
+      "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+      "ranks": {
+        "graph": 3
+      },
+      "rrf": 0.015873015873015872,
+      "source_id": "am:pde_discovery/data/additive_heat/raw/xn1.csv",
+      "title": "xn1.csv"
+    },
+    {
+      "asset_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv",
+      "block_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv:header",
+      "locator": {
+        "end_char": 45,
+        "line": 1,
+        "path": "pde_discovery/data/additive_heat/raw/xn5.csv",
+        "start_char": 0
+      },
+      "modality": "csv",
+      "needs_review": false,
+      "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+      "ranks": {
+        "graph": 4
+      },
+      "rrf": 0.015625,
+      "source_id": "am:pde_discovery/data/additive_heat/raw/xn5.csv",
+      "title": "xn5.csv"
+    },
+    {
+      "asset_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv",
+      "block_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv:header",
+      "locator": {
+        "end_char": 45,
+        "line": 1,
+        "path": "pde_discovery/data/additive_heat/raw/xn4.csv",
+        "start_char": 0
+      },
+      "modality": "csv",
+      "needs_review": false,
+      "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+      "ranks": {
+        "graph": 5
+      },
+      "rrf": 0.015384615384615385,
+      "source_id": "am:pde_discovery/data/additive_heat/raw/xn4.csv",
+      "title": "xn4.csv"
+    },
+    {
+      "asset_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv",
+      "block_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv:header",
+      "locator": {
+        "end_char": 45,
+        "line": 1,
+        "path": "pde_discovery/data/additive_heat/raw/xn2.csv",
+        "start_char": 0
+      },
+      "modality": "csv",
+      "needs_review": false,
+      "quote": "Time,TC1,TC2,TC3,TC4,TC5,TC6,Power (1023 Max)",
+      "ranks": {
+        "graph": 6
+      },
+      "rrf": 0.015151515151515152,
+      "source_id": "am:pde_discovery/data/additive_heat/raw/xn2.csv",
+      "title": "xn2.csv"
+    }
+  ],
+  "rounds": [
+    {
+      "blocks": [
+        "5044781cecc93c27258980253e04056ca979a0f6697ae4fbcdbec8b8729b803b:76",
+        "dfbb0c03f6873aed83e4d8bab986fb3c310f0fe216f29cffd9b15f1520dff494:0",
+        "am:pde_discovery/data/additive_heat/raw/xn1.csv:header",
+        "am:pde_discovery/data/additive_heat/raw/xn5.csv:header",
+        "am:pde_discovery/data/additive_heat/raw/xn4.csv:header",
+        "am:pde_discovery/data/additive_heat/raw/xn2.csv:header"
+      ],
+      "query": "这批增材杆测温数据遵循什么传热规律？哪些结论可靠？",
+      "stage": "retrieve"
+    }
+  ],
+  "rule": {
+    "evidence": {
+      "asset_id": "am:competition_agent/decision/rules.yaml",
+      "locator": {
+        "end_char": 538,
+        "line": 10,
+        "path": "competition_agent/decision/rules.yaml",
+        "start_char": 487
+      },
+      "quote": "训练与开发记录确定候选结构；以既有留出评分核对冻结模型的条件预测，以训练敏感性证据限定单个系数的解释。",
+      "source_id": "am:competition_agent/decision/rules.yaml"
+    },
+    "id": "equation"
+  },
+  "event_sha256": "48dbcf8c0576b2e3be4fed6fe3b2c76b468dd17399f08ae31c006646c414aeb4",
+  "trace_id": "ed1445f132084c42b337c8e4c85adb98.ac6b40d52650b3ba716494a99f15cd121071ed0c888809858874e14895c816b7"
+}

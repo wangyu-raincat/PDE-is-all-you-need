@@ -76,14 +76,14 @@ class DecisionWorkflowTests(unittest.TestCase):
                 self.assertEqual(len(index["embeddings"]),len(manifest["files"]))
 
     def test_conflict_refusal_missing_data_and_trace_integrity(self):
-        answer = decide(self.lab,self.case,QUESTIONS[0])
+        answer = decide(self.lab,self.case,QUESTIONS[1])
         self.assertEqual(get_trace(self.lab,answer["trace_id"])["rule"]["id"],"gap")
         self.lab.ingest(self.case,[{"title":f"自制记录{i}","kind":"text","text":f"xn diameter = {i} mm"} for i in (6,7)])
-        answer = decide(self.lab,self.case,QUESTIONS[3])
+        answer = decide(self.lab,self.case,QUESTIONS[4])
         trace = get_trace(self.lab,answer["trace_id"])
         self.assertEqual(trace["rule"]["id"],"conflict")
         self.assertEqual(len(trace["reasoning"]["conflicts"]),2)
-        answer = decide(self.lab,self.case,QUESTIONS[4])
+        answer = decide(self.lab,self.case,QUESTIONS[5])
         trace = get_trace(self.lab,answer["trace_id"])
         self.assertEqual(trace["rule"]["id"],"refuse")
         self.assertFalse(trace["reasoning"]["numerical_tools"])

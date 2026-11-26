@@ -19,10 +19,20 @@ def save(path,data):
 
 def validate(index, trace):
     reasoning = trace["reasoning"]
-    expected = ["identifiability","transfer","standard","conflict","refuse"][index]
+    expected = ["equation","identifiability","transfer","standard","conflict","refuse"][index]
     if trace["rule"]["id"] != expected or not trace["rule"]["evidence"]["quote"]:
         raise ValueError("Decision did not follow the expected rule")
     if index == 0:
+        data = reasoning["numerical_tools"]
+        assert set(data["rods"]) == {"xp","xn","yp","yn"}
+        for group, rod in data["rods"].items():
+            assert [r["name"] for r in rod["candidates"]] == ["D","D+h","D+c","D+h+c"]
+            assert [r["name"] for r in rod["candidates"] if r["selected"]] == [rod["selected"]]
+            assert all(r["rank"] is not None and r["dev_rmse_K"] is not None for r in rod["candidates"])
+            assert rod["supported"] and [r["test"] for r in rod["holdouts"]] == [group+str(i) for i in (3,4,5)]
+            assert rod["l1"]["candidates"] and rod["D_h_correlation"]["n"] == 5
+        assert data["method_sources"] and data["identifiability_evidence"]["groups"]
+    if index == 1:
         fits = reasoning["numerical_tools"]
         assert all(len(v["fits"])==5 and v["summary"] for v in fits["heat_repeatability"].values())
         assert len(fits["historical_holdouts"])==6
@@ -38,11 +48,11 @@ def validate(index, trace):
         assert any(len(p)>=2 for p in reasoning["graph_paths"])
         locations = json.dumps([v["locator"] for e in edges for v in e["evidence"]])
         assert all(k in locations for k in ('"bbox"','"sheet"','"cell"','"line"'))
-    if index == 2:
-        assert {m["relation"] for m in reasoning["standard_align"]}=={"comparable_quantity","different_method_from"}
     if index == 3:
-        assert len({tuple(e["triple"]) for e in reasoning["conflicts"] if e.get("triple",[])[:2]==["xn","has_diameter"]})>=2
+        assert {m["relation"] for m in reasoning["standard_align"]}=={"comparable_quantity","different_method_from"}
     if index == 4:
+        assert len({tuple(e["triple"]) for e in reasoning["conflicts"] if e.get("triple",[])[:2]==["xn","has_diameter"]})>=2
+    if index == 5:
         assert not reasoning["numerical_tools"] and not reasoning["standard_align"]
 
 
@@ -54,6 +64,8 @@ def statements(trace):
         for group,r in why["numerical_tools"]["heat_repeatability"].items():
             d = r["summary"]["D"]
             facts[group] = f"{group} 的平均 D 为 {d['mean']:.4g} m²/s，样本标准差为 {d['sample_std']:.4g} m²/s。"
+    for group, rod in why["numerical_tools"].get("rods", {}).items():
+        facts[group] = f"{group} 的开发记录选中 {rod['selected']}；对照的 L1 支持集见本题候选与验证表。"
     for group,count in why["numerical_tools"].get("documented_acquisitions",{}).items():
         facts[group] = f"{group} 有 {count} 条可定位测试记录。"
     for i,item in enumerate(why["standard_align"]):
@@ -103,14 +115,19 @@ async def run(output,key,model,max_calls):
             with Lab(runtime).case(case,readonly=True) as state:
                 export_knowledge(state,output/"knowledge")
             for i,question in enumerate(QUESTIONS):
-                if i == 3:
+                if i == 4:
                     await call("asset_ingest",case_id=case,documents=[{"title":"自制冲突样例（仅验收）","kind":"text","text":"xn diameter = 7.9 mm"}])
                 answer = await call("decision_make",case_id=case,question=question)
                 handoff = await call("case_handoff",case_id=case)
                 assert handoff["next_tool"]=="decision_trace_get" and handoff["next_arguments"]["trace_id"]==answer["trace_id"]
                 trace = await call("decision_trace_get",trace_id=answer["trace_id"])
                 validate(i,trace)
-                save(output/f"trace-{i+1}.json",trace)
+                if i:
+                    previous = ROOT / f"competition_agent/verification/decision_v2/trace-{i}.json"
+                    baseline = json.loads(previous.read_bytes())
+                    if question != baseline["question"] or trace["decision"] != baseline["decision"]:
+                        raise ValueError(f"Q{i} changed relative to decision_v2")
+                save(output/f"trace-{i}.json",trace)
                 choices = statements(trace)
                 msg = await client.complete("pde_coordinator",[
                     {"role":"system","content":"你为工程师编排已核验的证据解释。按问题相关性从给定字典选择一到四个不同的键并排序。只返回 JSON 对象 { \"evidence_order\": [键,...] }。"},
@@ -119,7 +136,7 @@ async def run(output,key,model,max_calls):
                 if not isinstance(order,list) or not 1<=len(order)<=4 or any(k not in choices for k in order) or len(set(order))!=len(order):
                     raise ValueError("模型引用了无效证据")
                 result["questions"].append(dict(question=question,**answer,evidence_order=order,
-                                                explanation=[choices[k] for k in order],trace_file=f"trace-{i+1}.json"))
+                                                explanation=[choices[k] for k in order],trace_file=f"trace-{i}.json"))
         result["all_passed"]=True
     except Exception as exc:
         while isinstance(exc, BaseExceptionGroup):

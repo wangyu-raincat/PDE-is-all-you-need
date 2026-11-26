@@ -270,7 +270,7 @@ async def run(output,key,model='deepseek-flash',max_calls=60,documents=None):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True);p.add_argument('--key-file');p.add_argument('--model',default='deepseek-flash');p.add_argument('--max-model-calls',type=int,default=60)
-    p.add_argument('--decision',action='store_true',help='Run five manufacturing questions with DEEPSEEK_API_KEY')
+    p.add_argument('--decision',action='store_true',help='Run six manufacturing questions with DEEPSEEK_API_KEY')
     a=p.parse_args()
     if not 1<=a.max_model_calls<=100:p.error('max-model-calls must be 1..100')
     if a.decision:
