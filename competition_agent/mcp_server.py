@@ -19,7 +19,7 @@ def build_server(directory=None, host='127.0.0.1', port=8769):
         return lab.status(case_id)
     @app.tool()
     def asset_ingest(case_id:str,documents:list[dict[str,str]])->dict:
-        """Register 1..10 text or CSV evidence documents, each with title,kind,text. Parse text/CSV before agent dispatch, retain originals, quarantine malformed tables, deduplicate content and return prioritized issues. Uploaded CSV is never numerical training input. Returns source IDs. Frozen evidence cannot change."""
+        """Register 1..10 evidence documents: title/kind/text for text or CSV; path/kind for pdf, xlsx, image or code under assets_raw, scenario_am, pde_discovery/data or runtime uploads. Missing parser dependencies require manual installation. OCR is review-only. Parse text/CSV before agent dispatch, retain originals, quarantine malformed tables, deduplicate content and return prioritized issues. Uploaded CSV is never numerical training input. Returns source IDs. Frozen evidence cannot change."""
         return lab.ingest(case_id,documents)
     @app.tool()
     def asset_context(case_id:str,role:str='graph_agent',offset:int=0,limit:int=20)->dict:
