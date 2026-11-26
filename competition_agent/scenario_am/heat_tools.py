@@ -139,3 +139,38 @@ def heat_compare(group_a: str, group_b: str) -> dict:
             'bootstrap_intervals': None,
             'comparison_scope': '仅点估计；当前实测轨迹拟合接口不提供 bootstrap 区间。训练半段诊断不是置信区间，不能据此断言物性差异显著。',
             'evidence': a['evidence'] + b['evidence']}
+
+
+def heat_repeatability(group: str) -> dict:
+    """Descriptive separate fixed D+h+c fits to the five acquisitions of one additive rod."""
+    from pde_discovery.real_heat_refined import fit_candidate
+
+    if group not in ADDITIVE:
+        raise ValueError('仅支持增材杆 xn/xp/yn/yp')
+    data, _ = _paths(group)
+    _frozen(group)
+    manifest_path = data / group / 'manifest.json'
+    manifest = json.loads(manifest_path.read_bytes())
+    records = [*manifest['splits'].values(), *manifest['holdouts']]
+    if sorted(record['repeat'] for record in records) != list(range(1, 6)):
+        raise ValueError('需要五条独立复测记录')
+    fits = []
+    for record in sorted(records, key=lambda r: r['repeat']):
+        path = (manifest_path.parent / record['file']).resolve()
+        t, u = load_measurements(manifest_path.parent, record, manifest['csv_format'])
+        fit = fit_candidate(t, u, float(manifest['spacing_m']), 'D+h+c')
+        ok = fit['fit_success'] and fit['diagnostics']['jacobian_rank'] == 3
+        fits.append({'repeat': record['repeat'], 'fit_success': bool(ok),
+                     'parameters': fit['parameters'] if ok else None,
+                     'reason': None if ok else fit.get('failure_reason') or 'rank or convergence',
+                     'evidence': evidence(path, path.read_text(encoding='utf8').splitlines()[0])})
+    summary = {}
+    if all(row['fit_success'] for row in fits):
+        for name, unit in [('D','m^2/s'), ('h','s^-1'), ('c','K/s')]:
+            values = [row['parameters'][name] for row in fits]
+            summary[name] = {'unit': unit, 'mean': float(np.mean(values)), 'min': min(values),
+                             'max': max(values), 'range': max(values)-min(values),
+                             'sample_std': float(np.std(values, ddof=1))}
+    return {'group': group, 'scope': '描述性复测离散度', 'model': 'D+h+c', 'fits': fits,
+            'summary': summary, 'manifest': evidence(manifest_path, manifest['assignment']),
+            'frozen_scores_modified': False}

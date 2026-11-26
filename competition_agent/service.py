@@ -24,8 +24,10 @@ def integer(v,lo,hi):return type(v) is int and lo<=v<=hi
 def source_hashes():
     packages=('active_study','pde_discovery','coefficient_study','prefix_study','five_study',
               'resolved_study','weak_study','l1_study','fusion_study','challenge_study','competition_agent',
-              'competition_agent/scenario_am','competition_agent/multimodal','competition_agent/ontology')
-    return {p.relative_to(ROOT).as_posix():file_sha(p) for name in packages for p in sorted((ROOT/name).glob('*.py'))}
+              'competition_agent/scenario_am','competition_agent/multimodal','competition_agent/ontology','competition_agent/decision')
+    files=[p for name in packages for p in sorted((ROOT/name).glob('*.py'))]
+    files.append(ROOT/'competition_agent/decision/rules.yaml')
+    return {p.relative_to(ROOT).as_posix():file_sha(p) for p in files}
 
 def setup_hash(s):
     payload={k:s[k] for k in ('seed','policy','budget','charged','_spec','_noise','train','dev','documents')}
@@ -343,7 +345,12 @@ class Lab:
         if s['phase']=='validated':
             seals=[e['details'].get('report_sha256') for e in s['events'] if e['operation']=='validation_completed']
             require(seals and seals[-1]==digest(s['report']),'Final report changed after validation')
-    def evidence_path(self,case_id,source,target,max_hops=4,limit=3):
+    def evidence_path(self,case_id,source,target,max_hops=4,limit=3,pattern=None):
+        if pattern is not None:
+            from competition_agent.decision.retrieval import typed_paths
+            with self.case(case_id,readonly=True) as state:
+                self.verify_seals(state)
+                return {"case_id":case_id,"paths":typed_paths(state,pattern,source,limit,target),"pattern":pattern}
         require(all(isinstance(x,str) and 1<=len(x)<=2000 for x in (source,target)) and source!=target,'Distinct bounded source and target required')
         require(integer(max_hops,1,6) and integer(limit,1,5),'Invalid path bounds')
         with self.case(case_id,readonly=True) as s:
@@ -372,7 +379,15 @@ class Lab:
                     issue='manual_evidence_review_required; no automatic conflict resolution'
             args={'case_id':case_id}
             if tool=='experiment_acquire':args['proposal_id']=s['proposal']['id']
-            return {'contract_version':1,'case_id':case_id,'phase':phase,'state_head':s['events'][-1]['sha256'],
+            latest = s['events'][-1]
+            loop_reason = ('conflict' if self.conflicts(s) or prepared['summary']['blocked'] else
+                           'evidence_gap' if issue and not stop else
+                           'model_ambiguous' if phase=='identified' and not s.get('model') else None)
+            if latest['operation']=='decision_made':
+                loop_reason = latest['details']['trace']['loop_reason']
+                role,tool,stop='validation_agent','decision_trace_get',False
+                args={'trace_id':latest['details']['trace_id']}
+            return {'stop_after_next_tool':tool=='decision_trace_get','loop_reason':loop_reason,'contract_version':1,'case_id':case_id,'phase':phase,'state_head':s['events'][-1]['sha256'],
                     'remaining_experiments':budget,'next_role':role,'next_tool':tool,
                     'next_arguments':args if tool else {},'required_inputs':{'asset_ingest':['documents'],'graph_propose':['facts']}.get(tool,[]),
                     'arguments_complete':tool is not None and tool not in ('asset_ingest','graph_propose'),'stop':stop,'terminal':phase in ('validated','initial_failed'),'reason':issue,

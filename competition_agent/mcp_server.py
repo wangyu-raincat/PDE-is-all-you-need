@@ -38,9 +38,9 @@ def build_server(directory=None, host='127.0.0.1', port=8769):
         """Apply verified source spans using known predicates, retaining conflicting facts. Unknown ontology relations cannot be self-approved by an agent."""
         return lab.graph_apply(case_id,proposal_id)
     @app.tool()
-    def evidence_path(case_id:str,source:str,target:str,max_hops:int=4,limit:int=3)->dict:
+    def evidence_path(case_id:str,source:str='',target:str='',max_hops:int=4,limit:int=3,pattern:list[str]|None=None)->dict:
         """Trace bounded directed paths through applied evidence facts across documents. Every edge retains its source and quote. Returns conflicts and assertion status, never invents causal facts; no path is not proof of absence."""
-        return lab.evidence_path(case_id,source,target,max_hops,limit)
+        return lab.evidence_path(case_id,source,target,max_hops,limit,pattern)
     @app.tool()
     def case_handoff(case_id:str)->dict:
         """Return structured handoff: current phase, state hash, remaining budget, next role/tool/arguments, required inputs, evidence blockers and stop flag. Never overrides actual tool guards or authenticates role identity. Stop on manual review, pending execution or terminal state."""
@@ -82,6 +82,36 @@ def build_server(directory=None, host='127.0.0.1', port=8769):
         """List pending case-local concepts, relations, standard mappings and graph candidates."""
         return queue(lab,case_id,limit)
     app.tool()(standard_align)
+    from competition_agent.decision import decide, get_trace
+    from competition_agent.decision.retrieval import fused, typed_paths
+    from competition_agent.scenario_am.heat_tools import heat_repeatability
+    app.tool()(heat_repeatability)
+
+    @app.tool()
+    def kg_query(case_id:str, pattern:list[str], start:str="", limit:int=12)->dict:
+        """Follow alternating ontology types and predicates through T04 cited edges."""
+        return lab.evidence_path(case_id,start,"",limit=limit,pattern=pattern)
+
+    @app.tool()
+    def evidence_retrieve(case_id:str, query:str, pattern:list[str]|None=None, start:str="", limit:int=8)->dict:
+        """Fuse block-level Chinese LSA embeddings, BM25 and typed T04 evidence paths by reciprocal rank."""
+        if not 1<=len(query.strip())<=600 or not 1<=limit<=30:
+            raise ValueError("Invalid search bounds")
+        from competition_agent.decision import rod_paths
+        with lab.case(case_id,readonly=True) as state:
+            lab.verify_seals(state)
+            paths=typed_paths(state,pattern,start) if pattern else rod_paths(state)
+            return {"evidence":fused(state,query,paths,limit),"paths":paths}
+
+    @app.tool()
+    def decision_make(case_id:str,question:str)->dict:
+        """Retrieve evidence, apply manufacturing decision rules and persist a trace."""
+        return decide(lab,case_id,question)
+
+    @app.tool()
+    def decision_trace_get(trace_id:str)->dict:
+        """Expand a decision to its rules, model results, graph paths and original evidence."""
+        return get_trace(lab,trace_id)
     return app
 
 
