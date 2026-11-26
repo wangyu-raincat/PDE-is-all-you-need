@@ -235,6 +235,9 @@ def decide(lab,case_id,question):
             experiments = ["在相同试样与温度条件下做闪光法对标复测"]
         elif key == "dispersion" and {"pdf","xlsx","code"} <= modalities:
             numeric, conclusion, ok = comparison(paths)
+            from competition_agent.scenario_am.joint_fit import read_joint_evidence
+            joint = read_joint_evidence()
+            numeric['heat_joint_fit'] = joint
             if not ok:
                 model_ambiguous = True
                 gaps.append("可比较的拟合或几何证据不足")
@@ -242,6 +245,17 @@ def decide(lab,case_id,question):
                 key = "identifiability"
                 confidence = "证据不足（材料性质）"
                 model_ambiguous = True
+            if ok and joint.get('available') and joint['comparison']['distinguishable']:
+                key = 'joint_identifiability'
+                confidence = '有效参数可辨别（同装置同模型）'
+                model_ambiguous = False
+                comp = joint['comparison']
+                values = joint['rods']
+                conclusion = (f"预注册联合拟合：xp 的 D*={values['xp']['joint']['D']:.9g} m²/s，"
+                    f"xn 的 D*={values['xn']['joint']['D']:.9g} m²/s；"
+                    f"较大/较小比值 {comp['D_ratio']:.6f}，严格超过 LORO 倍数之积 {comp['loro_ratio_product']:.6f}。"
+                    "两杆均满足联合剖面≤1.5、LORO≤1.3 的固定门槛。"
+                    "同一装置、同一模型下两杆有效热扩散参数可辨别；仍不等于材料性质差异或材料证书，仍建议标准方法复核。")
             gaps.append("独立试样与逐次工况")
             experiments = ["按 GB/T 22588-2008 闪光法复测 xn、xp，每类至少 3 个独立试样；复测时记录风速与加热设定。"]
         elif key == "transfer" and paths:
