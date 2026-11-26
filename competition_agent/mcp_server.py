@@ -75,7 +75,8 @@ def build_server(directory=None, host='127.0.0.1', port=8769):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--directory');p.add_argument('--transport',choices=['stdio','streamable-http','sse'],default='stdio')
-    p.add_argument('--host',default='127.0.0.1');p.add_argument('--port',type=int,default=8769)
+    p.add_argument('--host',default='127.0.0.1',help='Bind address (default: local only). For Docker Desktop use 0.0.0.0 and connect via host.docker.internal on a trusted network; no built-in authentication.')
+    p.add_argument('--port',type=int,default=8769)
     a=p.parse_args();build_server(a.directory,a.host,a.port).run(transport=a.transport)
 
 if __name__=='__main__':main()
