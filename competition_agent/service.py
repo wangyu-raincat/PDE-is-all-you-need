@@ -24,13 +24,14 @@ def integer(v,lo,hi):return type(v) is int and lo<=v<=hi
 def source_hashes():
     packages=('active_study','pde_discovery','coefficient_study','prefix_study','five_study',
               'resolved_study','weak_study','l1_study','fusion_study','challenge_study','competition_agent',
-              'competition_agent/scenario_am','competition_agent/multimodal')
+              'competition_agent/scenario_am','competition_agent/multimodal','competition_agent/ontology')
     return {p.relative_to(ROOT).as_posix():file_sha(p) for name in packages for p in sorted((ROOT/name).glob('*.py'))}
 
 def setup_hash(s):
     payload={k:s[k] for k in ('seed','policy','budget','charged','_spec','_noise','train','dev','documents')}
     if 'input_preparation' in s:payload['input_preparation']=s['input_preparation']
     if 'multimodal_assets' in s:payload['multimodal_assets']=s['multimodal_assets']
+    if 'induction' in s:payload['induction']=s['induction']
     return digest(payload)
 
 class Lab:
@@ -382,4 +383,5 @@ class Lab:
     def evidence(self,case_id):
         with self.case(case_id,readonly=True) as s:
             self.verify_seals(s)
-            return {'status':self.view(s),'events':s['events'],'facts':s['facts'],'ontology':s['ontology'],'report':s.get('report'),'chain_consistent':True,'historical_runtime_independently_authenticated':False}
+            from competition_agent.ontology.tools import alignments
+            return {'alignment':alignments(s),'status':self.view(s),'events':s['events'],'facts':s['facts'],'ontology':s['ontology'],'report':s.get('report'),'chain_consistent':True,'historical_runtime_independently_authenticated':False}

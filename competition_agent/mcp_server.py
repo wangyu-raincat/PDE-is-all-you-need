@@ -72,6 +72,16 @@ def build_server(directory=None, host='127.0.0.1', port=8769):
     from competition_agent.scenario_am.heat_tools import heat_identify, heat_holdout_summary, heat_compare
     for tool in (heat_identify, heat_holdout_summary, heat_compare):
         app.tool()(tool)
+    from competition_agent.ontology.tools import induce_case, queue, standard_align
+    @app.tool()
+    def ontology_induce(case_id:str)->dict:
+        """Incrementally update case-local ontology and graph drafts from registered evidence."""
+        return induce_case(lab,case_id)
+    @app.tool()
+    def ontology_review_queue(case_id:str,limit:int=20)->dict:
+        """List pending case-local concepts, relations, standard mappings and graph candidates."""
+        return queue(lab,case_id,limit)
+    app.tool()(standard_align)
     return app
 
 

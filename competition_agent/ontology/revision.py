@@ -158,7 +158,7 @@ def aggregate(rows,facts):
         evidence[triple].append({"extractor":engine,"raw":raw,"source_id":r["source_id"],"path":r["path"],
            "quote":quote,"locator":r["locator"],"measurement":measurement,"issues":issues,"needs_review":r.get("needs_review",False)})
     for i,r in enumerate(rows):
-        for engine,candidates in [("E1",r.get("structured",[])),("E2",extract_e2(r["text"]))]:
+        for engine,candidates in [(r.get("structured_engine","E1"),r.get("structured",[])),("E2",() if r.get("preextracted") else extract_e2(r["text"]))]:
             for s,p,o,q in candidates:add(i,engine,[s,p,o],q)
     for i,r in enumerate(rows):
         if r["path"].endswith("/standards.yaml"):
