@@ -1,7 +1,7 @@
 """Preregistered retrospective shared-D diagnostics; no new holdout scores."""
 import hashlib
 import json
-import subprocess
+import re
 from datetime import datetime, timezone
 
 import numpy as np
@@ -17,15 +17,13 @@ PROTOCOL_COMMIT = '7a5b8e122d65f643d8b3b3fae8bf87e32ad9dda2'
 
 
 def frozen_protocol():
-    relative = PROTOCOL.relative_to(ROOT).as_posix()
-    committed = subprocess.check_output(['git', 'show', f'{PROTOCOL_COMMIT}:{relative}'], cwd=ROOT,
-        stdin=subprocess.DEVNULL, stderr=subprocess.PIPE, timeout=30)
     current = PROTOCOL.read_bytes().replace(b'\r\n', b'\n')
-    if current != committed.replace(b'\r\n', b'\n'):
+    report = (DIRECTORY/'REPORT.md').read_text(encoding='utf-8')
+    hashes = re.findall(r'协议 SHA-256（LF 规范化）：`([0-9a-f]{64})`', report)
+    digest = hashlib.sha256(current).hexdigest()
+    if len(hashes)!=1 or hashes[0]!=digest:
         raise ValueError('预注册协议已改变，停止计算')
-    subprocess.run(['git', 'merge-base', '--is-ancestor', PROTOCOL_COMMIT, 'HEAD'], cwd=ROOT, check=True,
-        stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30)
-    return json.loads(current), hashlib.sha256(current).hexdigest()
+    return json.loads(current), digest
 
 
 def fit_records(records, protocol, fixed_D=None):

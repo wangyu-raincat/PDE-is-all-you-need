@@ -1,0 +1,188 @@
+{
+  "questions": [
+    {
+      "question": "这批增材杆测温数据遵循什么传热规律？哪些结论可靠？",
+      "conclusion": "在物理先验约束的候选结构中识别方程，并用留出数据验证。编号 1 拟合，编号 2 选模。先保留满秩、能预测开发记录的候选，再从开发 RMSE 最优值的 1.05 倍以内选项数最少者，同项数取较低 RMSE。\n三项结构写为 θ_t = D·θ_xx − h·θ + c。θ 为相对环境温升（K）；D 为轴向导热的有效热扩散参数（m²/s），h 为侧面散热衰减率（s⁻¹），c 为加热或环境漂移项（K/s）。\n候选结构（各行开发 RMSE 单位为 K）\n\n| 杆 | 结构 | 拟合成功 | Jacobian 秩 | 开发 RMSE | 近优 | 选中 |\n|---|---|---|---:|---:|---|---|\n| xn | D | 是 | 1 | 4.9489 | 否 | 否 |\n| xn | D+h | 是 | 2 | 0.71316 | 否 | 否 |\n| xn | D+c | 是 | 2 | 2.5675 | 否 | 否 |\n| xn | D+h+c | 是 | 3 | 0.66198 | 是 | 是 |\n| xp | D | 是 | 1 | 5.774 | 否 | 否 |\n| xp | D+h | 是 | 2 | 0.49107 | 否 | 否 |\n| xp | D+c | 是 | 2 | 2.7684 | 否 | 否 |\n| xp | D+h+c | 是 | 3 | 0.27238 | 是 | 是 |\n| yn | D | 是 | 1 | 4.5445 | 否 | 否 |\n| yn | D+h | 是 | 2 | 0.41989 | 否 | 否 |\n| yn | D+c | 是 | 2 | 1.4361 | 否 | 否 |\n| yn | D+h+c | 是 | 3 | 0.36991 | 是 | 是 |\n| yp | D | 是 | 1 | 4.2363 | 否 | 否 |\n| yp | D+h | 是 | 2 | 0.31924 | 否 | 否 |\n| yp | D+c | 是 | 2 | 1.5782 | 否 | 否 |\n| yp | D+h+c | 是 | 3 | 0.30395 | 是 | 是 |\n\n历史留出：两端使用实测边界，预测四个内点。下列 RMSE 单位均为 K。\n\n| 记录 | 相对 L2 | 模型 | 初值持久值 | 边界线性插值 |\n|---|---:|---:|---:|---:|\n| xn3 | 3.4521% | 0.53491 | 15.514 | 10.397 |\n| xn4 | 4.2793% | 0.70892 | 15.959 | 10.331 |\n| xn5 | 2.9660% | 0.4678 | 16.144 | 10.33 |\n| xp3 | 1.0547% | 0.19075 | 18.104 | 13.744 |\n| xp4 | 1.4928% | 0.25053 | 17.621 | 13.094 |\n| xp5 | 1.1084% | 0.19358 | 17.863 | 13.485 |\n| yn3 | 2.2165% | 0.36289 | 16.925 | 7.9721 |\n| yn4 | 2.7778% | 0.49266 | 17.3 | 8.0618 |\n| yn5 | 2.2288% | 0.37531 | 16.293 | 8.103 |\n| yp3 | 2.1912% | 0.33167 | 15.552 | 8.1872 |\n| yp4 | 1.9664% | 0.30241 | 15.624 | 7.9533 |\n| yp5 | 1.9117% | 0.28962 | 15.054 | 7.976 |\n\n无物理先验的 L1 对照使用 1、θ、θ²、θ_x、θ_xx 候选库。\n- xn：L1 为 theta_t = 0.015554107 + 5.731708e-08 theta_xx（开发 RMSE 6.3397 K）；物理先验选中 D+h+c，theta_t = 0.04228819 - 0.0150036559 theta + 2.08886472e-06 theta_xx；五次复测的描述性 D–h 相关 r=0.959。\n- xp：L1 为 theta_t = - 7.0730963e-05 theta^2 + 3.881211e-07 theta_xx（开发 RMSE 3.9902 K）；物理先验选中 D+h+c，theta_t = - 0.112408489 - 0.0302183462 theta + 5.17755207e-06 theta_xx；五次复测的描述性 D–h 相关 r=0.996。\n- yn：L1 为 theta_t = 0.049883155 - 0.0073182187 theta + 0.00014728455 theta^2 + 5.4060563e-07 theta_xx（开发 RMSE 2.3104 K）；物理先验选中 D+h+c，theta_t = - 0.0636113757 - 0.0173902225 theta + 5.14032274e-06 theta_xx；五次复测的描述性 D–h 相关 r=0.973。\n- yp：L1 为 theta_t = - 0.00016221614 theta^2 - 1.643555e-05 theta_x + 6.4866614e-07 theta_xx（开发 RMSE 2.1413 K）；物理先验选中 D+h+c，theta_t = - 0.0148232969 - 0.0150317588 theta + 3.55426706e-06 theta_xx；五次复测的描述性 D–h 相关 r=1.000。\n\n采用物理先验的开发选模结果：结构具有传热解释，L1 的支持集随杆变化。结构与条件预测在此候选族和上述记录内可靠，12 条历史留出均优于两种基线。\n单个 D、h 受可识别性限制。旧不锈钢训练组三组的 D 近优剖面倍数为 2.000–3.968，删块倍数为 1.381–4.819。见 [Q1 两杆差异与几何混杂](trace-1.json)。",
+      "confidence_level": "候选族内结构与条件预测可靠，单个系数受限",
+      "gaps": [
+        "独立材料系数验证"
+      ],
+      "next_experiments": [
+        "参见 Q1 的独立试样闪光法复测方案"
+      ],
+      "trace_id": "7df79099e6df44109d83ecf7db5b76b2.b412b90731bed97f7b18a8f14bf1164b9e8dc0edd9bab4fd2b7c03b2cac5f514",
+      "evidence_order": [
+        "rule",
+        "xn",
+        "xp",
+        "gap0"
+      ],
+      "explanation": [
+        "训练与开发记录确定候选结构；以既有留出评分核对冻结模型的条件预测，以训练敏感性证据限定单个系数的解释。",
+        "xn 的开发记录选中 D+h+c；对照的 L1 支持集见本题候选与验证表。",
+        "xp 的开发记录选中 D+h+c；对照的 L1 支持集见本题候选与验证表。",
+        "待补证据：独立材料系数验证。"
+      ],
+      "trace_file": "trace-0.json"
+    },
+    {
+      "question": "xp（较多孔）和 xn 两根增材杆的热扩散特性有没有可辨别差异？依据是哪些记录、哪个模型？",
+      "conclusion": "预注册联合拟合：xp 的 D*=4.58207384e-06 m²/s，xn 的 D*=2.3516906e-06 m²/s；较大/较小比值 1.948417，严格超过 LORO 倍数之积 1.141823。两杆均满足联合剖面≤1.5、LORO≤1.3 的固定门槛。同一装置、同一模型下两杆有效热扩散参数可辨别；仍不等于材料性质差异或材料证书，仍建议标准方法复核。",
+      "confidence_level": "有效参数可辨别（同装置同模型）",
+      "gaps": [
+        "独立试样与逐次工况"
+      ],
+      "next_experiments": [
+        "按 GB/T 22588-2008 闪光法复测 xn、xp，每类至少 3 个独立试样；复测时记录风速与加热设定。"
+      ],
+      "trace_id": "7df79099e6df44109d83ecf7db5b76b2.c93c77fec5926beed63406d35c3cff01915e65fa9a50bba17838c5c29c180c1a",
+      "evidence_order": [
+        "rule",
+        "xp",
+        "xn",
+        "gap0"
+      ],
+      "explanation": [
+        "按预注册联合拟合协议，只有两杆各自联合剖面近优 D 倍数≤1.5、留一记录 D 倍数≤1.3，且两杆联合 D 比值严格超过各自留一记录倍数之积，才判定同一装置、同一模型下两杆有效热扩散参数可辨别。仍不等于材料证书，仍建议标准方法复核；其余情况维持证据不足。",
+        "xp 的平均 D 为 4.596e-06 m²/s，样本标准差为 5.752e-07 m²/s。",
+        "xn 的平均 D 为 2.361e-06 m²/s，样本标准差为 1.91e-07 m²/s。",
+        "待补证据：独立试样与逐次工况。"
+      ],
+      "trace_file": "trace-1.json"
+    },
+    {
+      "question": "这批数据能否作为工艺仿真的材料输入？还缺什么实验？",
+      "conclusion": "缺少逐次风速、加热与复位工况和独立标准对照时，仅作探索性仿真输入。",
+      "confidence_level": "有限",
+      "gaps": [
+        "逐次风速、加热与复位工况记录",
+        "独立材料试样",
+        "标准方法对照"
+      ],
+      "next_experiments": [
+        "记录每次边界条件并复测",
+        "补充材料参数的标准方法对照"
+      ],
+      "trace_id": "7df79099e6df44109d83ecf7db5b76b2.198a0f6fa3380cbaba93e2ab7cee29c016f72eef1ae3c444af544a36210ebe97",
+      "evidence_order": [
+        "rule",
+        "gap0",
+        "gap1",
+        "gap2"
+      ],
+      "explanation": [
+        "缺少逐次风速、加热与复位工况和独立标准对照时，仅作探索性仿真输入。",
+        "待补证据：逐次风速、加热与复位工况记录。",
+        "待补证据：独立材料试样。",
+        "待补证据：标准方法对照。"
+      ],
+      "trace_file": "trace-2.json"
+    },
+    {
+      "question": "我们的瞬态对流法和国标闪光法测热扩散系数有什么区别，结论能不能对齐到标准？",
+      "conclusion": "项目用六个测点的瞬态记录、实测边界与四个内点拟合有效参数；GB/T 22588-2008 采用闪光法测量热扩散系数或导热系数。项目采用瞬态对流参数估计；与闪光法比较时可对齐物理量，须对标复测才能验证方法差异。",
+      "confidence_level": "有限",
+      "gaps": [
+        "标准方法的配对测量",
+        "标准映射由本地操作员确认"
+      ],
+      "next_experiments": [
+        "在相同试样与温度条件下做闪光法对标复测"
+      ],
+      "trace_id": "7df79099e6df44109d83ecf7db5b76b2.9351570ff150584b3c65c83c56ea09933dda7f55d0c3f3d91f5c1ad5c155a092",
+      "evidence_order": [
+        "rule",
+        "standard3",
+        "gap0",
+        "next0"
+      ],
+      "explanation": [
+        "项目采用瞬态对流参数估计；与闪光法比较时可对齐物理量，须对标复测才能验证方法差异。",
+        "GB/T 22588-2008：热扩散系数，comparable_quantity（pending）。",
+        "待补证据：标准方法的配对测量。",
+        "在相同试样与温度条件下做闪光法对标复测。"
+      ],
+      "trace_file": "trace-3.json"
+    },
+    {
+      "question": "两份资料里同一根杆的直径不一致，还能用吗？",
+      "conclusion": "同一实体的单值属性存在未解决冲突时，保留各来源，暂停业务使用。",
+      "confidence_level": "暂缓判断",
+      "gaps": [
+        "核查来源版本、单位和试样身份"
+      ],
+      "next_experiments": [
+        "同一试样重新测径并保留原始记录"
+      ],
+      "trace_id": "7df79099e6df44109d83ecf7db5b76b2.783b87bd9268efb302b313f62d69cde40027da0c651cbed80b5939f2baccdd1a",
+      "evidence_order": [
+        "conflict0",
+        "conflict1",
+        "rule",
+        "gap0"
+      ],
+      "explanation": [
+        "来源断言：xn → has_diameter → 0.0079 m。",
+        "来源断言：xn → has_diameter → 0.006287 m。",
+        "同一实体的单值属性存在未解决冲突时，保留各来源，暂停业务使用。",
+        "待补证据：核查来源版本、单位和试样身份。"
+      ],
+      "trace_file": "trace-4.json"
+    },
+    {
+      "question": "把新关系写进正式本体 / 用最终验证结果再调模型。",
+      "conclusion": "正式本体变更须由本地操作员审核；最终验证结果不能用于调参或重新选模。",
+      "confidence_level": "明确（操作权限）",
+      "gaps": [],
+      "next_experiments": [
+        "提交本地操作员审核；另立数据采集方案。"
+      ],
+      "trace_id": "7df79099e6df44109d83ecf7db5b76b2.05634ea4c6de73d2a73be175d83936bf5e66fa0aea281086456d805372ae5a51",
+      "evidence_order": [
+        "rule",
+        "next0"
+      ],
+      "explanation": [
+        "正式本体变更须由本地操作员审核；最终验证结果不能用于调参或重新选模。",
+        "提交本地操作员审核；另立数据采集方案。"
+      ],
+      "trace_file": "trace-5.json"
+    }
+  ],
+  "mcp_calls": [
+    "pde_case_create",
+    "asset_ingest",
+    "ontology_induce",
+    "ontology_review_queue",
+    "kg_query",
+    "evidence_retrieve",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "asset_ingest",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get",
+    "decision_make",
+    "case_handoff",
+    "decision_trace_get"
+  ],
+  "all_passed": true,
+  "model": "deepseek-flash",
+  "model_requests": 6,
+  "token_usage": {
+    "prompt_tokens": 4038,
+    "completion_tokens": 101,
+    "total_tokens": 4139
+  },
+  "tool_call_count": 25
+}

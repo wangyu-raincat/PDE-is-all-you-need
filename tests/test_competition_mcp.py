@@ -56,7 +56,7 @@ class CompetitionMCPTests(unittest.IsolatedAsyncioTestCase):
         with socket.socket() as sock:sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
         with tempfile.TemporaryDirectory() as d:
             with open(Path(d)/'server.log','wb') as log:
-                proc=subprocess.Popen([sys.executable,'-m','competition_agent.mcp_server','--directory',d,'--transport','streamable-http','--port',str(port)],cwd=ROOT,stdout=log,stderr=log)
+                proc=subprocess.Popen([sys.executable,'-m','competition_agent.mcp_server','--directory',d,'--transport','streamable-http','--port',str(port),'--allowed-host','prep-one.internal:*','--allowed-host','prep-two.internal:8769'],cwd=ROOT,stdout=log,stderr=log)
                 try:
                     ready=False
                     for _ in range(100):
@@ -66,6 +66,17 @@ class CompetitionMCPTests(unittest.IsolatedAsyncioTestCase):
                         except OSError:await asyncio.sleep(.1)
                     self.assertTrue(ready,'MCP HTTP server did not start in 10 seconds')
                     async with httpx.AsyncClient(trust_env=False,timeout=30) as client:
+                        payload={'jsonrpc':'2.0','id':1,'method':'tools/list','params':{}}
+                        for host,status in [('host.docker.internal:8769',200),('untrusted.example:8769',421),
+                                            ('host.docker.internal.evil:8769',421),('prep-one.internal:9999',200),
+                                            ('prep-two.internal:8769',200),('prep-two.internal:7777',421)]:
+                            response=await client.post(f'http://127.0.0.1:{port}/mcp',json=payload,
+                                headers={'Host':host,'Accept':'application/json, text/event-stream'})
+                            self.assertEqual(response.status_code,status,(host,response.text))
+                        response=await client.post(f'http://127.0.0.1:{port}/mcp',json=payload,
+                            headers={'Host':'host.docker.internal:8769','Origin':'http://untrusted.example',
+                                     'Accept':'application/json, text/event-stream'})
+                        self.assertEqual(response.status_code,403)
                         async with streamable_http_client(f'http://127.0.0.1:{port}/mcp',http_client=client) as (r,w,_):
                             async with ClientSession(r,w,read_timeout_seconds=timedelta(seconds=30)) as s:await self.check_catalog_and_errors(s)
                 finally:
