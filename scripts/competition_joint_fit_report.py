@@ -1,14 +1,29 @@
 """Render T05d archived diagnostics only; never run an optimizer."""
 import json
 import sys
+import subprocess
+import hashlib
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from competition_agent.scenario_am.joint_fit import DIRECTORY, read_joint_evidence
+from competition_agent.scenario_am.joint_fit import DIRECTORY, PROTOCOL, PROTOCOL_COMMIT, read_joint_evidence
+
+
+def archive_protocol_check():
+    options=dict(cwd=ROOT,stdin=subprocess.DEVNULL,stderr=subprocess.PIPE,timeout=30)
+    committed=subprocess.check_output(['git','show',f'{PROTOCOL_COMMIT}:{PROTOCOL.relative_to(ROOT).as_posix()}'],**options)
+    current=PROTOCOL.read_bytes().replace(b'\r\n',b'\n')
+    if current!=committed.replace(b'\r\n',b'\n'):
+        raise ValueError('归档协议与预注册提交不一致')
+    subprocess.run(['git','merge-base','--is-ancestor',PROTOCOL_COMMIT,'HEAD'],stdout=subprocess.PIPE,check=True,**options)
+    return dict(protocol_commit=PROTOCOL_COMMIT,protocol_sha256=hashlib.sha256(current).hexdigest(),
+                ancestor_verified=True,committed_bytes_verified=True,checked_at=datetime.now(timezone.utc).isoformat())
 
 
 def render():
+    archive_check=archive_protocol_check()
     result=read_joint_evidence()
     if not result['available']:
         raise ValueError('尚无归档结果')
@@ -63,6 +78,7 @@ def render():
         '几何、风速与加热工况仍可能混杂。按 GB/T 22588-2008 闪光法对独立试样复测，并记录工况。',
         '既有研究代码、历史模型、旧评分与训练/开发/留出划分均未修改。Q1 只读取此归档，不在答复时重新拟合。','']
     (DIRECTORY/'REPORT.md').write_text('\n'.join(lines),encoding='utf-8')
+    (DIRECTORY/'archive_verification.json').write_text(json.dumps(archive_check,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
 
 if __name__=='__main__':render()

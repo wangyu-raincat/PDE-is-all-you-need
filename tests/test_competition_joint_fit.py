@@ -78,14 +78,24 @@ class JointFitTests(unittest.TestCase):
             with self.assertRaises(ValueError):j.heat_joint_fit('xn')
             load.assert_not_called()
 
-    def test_git_guard_does_not_inherit_mcp_input(self):
-        with patch.object(j.subprocess,'check_output',return_value=j.PROTOCOL.read_bytes()) as show, \
-             patch.object(j.subprocess,'run') as ancestor:
-            j.frozen_protocol()
-        for call in (show.call_args,ancestor.call_args):
-            self.assertEqual(call.kwargs['stdin'],j.subprocess.DEVNULL)
-            self.assertEqual(call.kwargs['stderr'],j.subprocess.PIPE)
-            self.assertEqual(call.kwargs['timeout'],30)
+    def test_runtime_has_no_subprocess_and_checks_report_hash(self):
+        with patch('subprocess.Popen',side_effect=AssertionError('Runtime must not invoke git')):
+            self.assertTrue(j.read_joint_evidence()['available'])
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as d:
+            directory=Path(d)
+            protocol=directory/'protocol.json'
+            protocol.write_bytes(j.PROTOCOL.read_bytes())
+            report=directory/'REPORT.md'
+            report.write_bytes((j.DIRECTORY/'REPORT.md').read_bytes())
+            with patch.object(j,'DIRECTORY',directory),patch.object(j,'PROTOCOL',protocol):
+                j.frozen_protocol()
+                protocol.write_text('{}',encoding='utf-8')
+                with self.assertRaises(ValueError):j.frozen_protocol()
+                protocol.write_bytes((j.ROOT/'competition_agent/verification/joint_fit/protocol.json').read_bytes())
+                report.write_text('missing hash',encoding='utf-8')
+                with self.assertRaises(ValueError):j.frozen_protocol()
 
     def test_loro_omits_entire_record_from_fit(self):
         record=self.records()[0]
