@@ -20,6 +20,8 @@ def save(path,data):
 def validate(index, trace):
     reasoning = trace["reasoning"]
     expected = ["equation","identifiability","transfer","standard","conflict","refuse"][index]
+    if index == 1 and reasoning['numerical_tools'].get('heat_joint_fit',{}).get('comparison',{}).get('distinguishable'):
+        expected = 'joint_identifiability'
     if trace["rule"]["id"] != expected or not trace["rule"]["evidence"]["quote"]:
         raise ValueError("Decision did not follow the expected rule")
     if index == 0:
@@ -41,7 +43,11 @@ def validate(index, trace):
         for row in fits["identifiability_evidence"]["groups"].values():
             ev = row["evidence"]
             assert ev["quote"] == (ROOT/ev["locator"]["path"]).read_text(encoding="utf8").splitlines()[ev["locator"]["line"]-1]
-        assert trace["decision"]["confidence_level"] == "证据不足（材料性质）"
+        from competition_agent.scenario_am.joint_fit import read_joint_evidence
+        archived = read_joint_evidence()
+        assert fits['heat_joint_fit'] == archived
+        assert trace["decision"]["confidence_level"] == (
+            '有效参数可辨别（同装置同模型）' if archived['comparison']['distinguishable'] else '证据不足（材料性质）')
         assert "GB/T 22588-2008" in trace["decision"]["next_experiments"][0]
         edges = [e for p in reasoning["graph_paths"] for e in p]
         assert {"has_porosity_class","has_diameter","has_test","records_field"} <= {e["triple"][1] for e in edges}
@@ -125,7 +131,8 @@ async def run(output,key,model,max_calls):
                 if i:
                     previous = ROOT / f"competition_agent/verification/decision_v2/trace-{i}.json"
                     baseline = json.loads(previous.read_bytes())
-                    if question != baseline["question"] or trace["decision"] != baseline["decision"]:
+                    upgraded = i == 1 and trace['rule']['id']=='joint_identifiability'
+                    if question != baseline["question"] or (not upgraded and trace["decision"] != baseline["decision"]):
                         raise ValueError(f"Q{i} changed relative to decision_v2")
                 save(output/f"trace-{i}.json",trace)
                 choices = statements(trace)

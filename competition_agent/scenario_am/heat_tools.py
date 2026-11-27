@@ -16,6 +16,12 @@ METALS = tuple(f'{t}{m}' for t in (50, 75, 100) for m in ('ss', 'al', 'cu'))
 METHOD = '给定实测边界的四内点条件预测（物理先验 D+h+c）'
 
 
+def heat_joint_fit(group):
+    """Explicit retrospective computation, gated by the committed T05d protocol."""
+    from .joint_fit import heat_joint_fit as run
+    return run(group)
+
+
 def _verify_text_hash(path, expected):
     """Accept only exact bytes or the documented Windows CRLF conversion."""
     actual = sha(path)

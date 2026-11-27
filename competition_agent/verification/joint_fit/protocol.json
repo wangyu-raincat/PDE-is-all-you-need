@@ -1,0 +1,109 @@
+{
+  "id": "T05d-joint-fit-v1",
+  "groups": [
+    "xn",
+    "xp",
+    "yn",
+    "yp"
+  ],
+  "records_per_group": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "scope": "回顾性可识别性分析；编号3–5已查看，不是盲测，不产生新的留出评分；不修改既有划分或冻结结果",
+  "model": "theta_t = D theta_xx - h_k theta + c_k; shared D, independent h_k,c_k",
+  "data": {
+    "root": "pde_discovery/data/additive_heat",
+    "spacing_m": 0.007,
+    "format": "reuse each group manifest and load_measurements; all complete records, no smoothing, no resampling",
+    "prediction": "real_heat_refined._prepare/_advance; original six sensors, measured two boundary histories and four initial interior values; score four interior values excluding initial frame"
+  },
+  "objective": "sqrt(mean of per-record MSE); each record equal weight regardless of length; residual concatenate each record errors / sqrt(number_records * record_error_count)",
+  "bounds": {
+    "D": [
+      1e-08,
+      0.001
+    ],
+    "h": [
+      0,
+      1
+    ],
+    "c": [
+      -1,
+      1
+    ]
+  },
+  "optimizer": {
+    "coordinates": "log(D), h_k/0.01, c_k/0.1",
+    "method": "trf",
+    "jac": "2-point",
+    "loss": "linear",
+    "max_nfev": 250,
+    "ftol": 1e-09,
+    "xtol": 1e-09,
+    "gtol": 1e-09,
+    "starts_D_h_c": [
+      [
+        1e-06,
+        0.001,
+        0
+      ],
+      [
+        1e-05,
+        0.01,
+        0
+      ],
+      [
+        0.0001,
+        0.1,
+        0
+      ]
+    ],
+    "joint_starts": "broadcast each fixed h,c to all included records",
+    "selection": "lowest RMSE among finite successful starts; ties select first; retain all starts including failures"
+  },
+  "profile": {
+    "multipliers": [
+      0.25,
+      0.4,
+      0.63,
+      0.8,
+      1.0,
+      1.25,
+      1.6,
+      2.5,
+      4.0
+    ],
+    "center": "joint optimum D for joint curve; each independent optimum D for its single-record baseline; same multiplier grid",
+    "bounds_handling": "clip D to bounds and deduplicate; preserve requested to actual mapping",
+    "fixed_D": "refit every included h_k,c_k using all three fixed h,c starts, same optimizer",
+    "near_optimal_factor": 1.05,
+    "near_optimal": "successful RMSE <= minimum successful profile RMSE * 1.05; no additive tolerance",
+    "report": "all points, all near points, bound hits and grid-edge flags; discrete tolerance range, not confidence interval"
+  },
+  "loro": {
+    "folds": 5,
+    "omit": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "fit": "four included complete records, same shared-D objective and three starts",
+    "excluded_record": "not loaded into fold fit; no excluded-record prediction score"
+  },
+  "decision": {
+    "identifiable": "complete successful joint fit/profile/LORO and profile_D_max_over_min <= 1.5 AND LORO_D_max_over_min <= 1.3",
+    "profile_ratio_max": 1.5,
+    "loro_ratio_max": 1.3,
+    "xp_xn_distinguishable": "both identifiable AND max(D_xp,D_xn)/min(D_xp,D_xn) > loro_ratio_xp * loro_ratio_xn",
+    "otherwise": "维持T05b证据不足结论",
+    "upgrade_text": "同一装置、同一模型下两杆有效热扩散参数可辨别；不等于材料证书，仍建议标准方法复核"
+  },
+  "failure_policy": "retain every rod, record, start and fold; failed or missing required fits => diagnostic incomplete, no upgrade; no new starts, grid extension, threshold changes or selected-group omission",
+  "freeze": "commit this protocol before any T05d fitting or temperature-data parsing; record commit SHA in results; subsequent execution checks committed protocol bytes"
+}
